@@ -8,11 +8,11 @@
   "pi": {
     "package": "@earendil-works/pi-coding-agent",
     "version": "0.84.3",
-    "status": "planned_pending_install"
+    "status": "installed_validated"
   },
   "providers": {
     "kimi_oauth": {
-      "status": "planned_pending_empirical_selection",
+      "status": "installed_validated_builtin",
       "candidates": [
         {
           "package": "pi-provider-kimi-code",

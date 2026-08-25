@@ -25,11 +25,13 @@ runtime:
 pi:
   package: "@earendil-works/pi-coding-agent"
   version: "0.84.3"
-  status: "planned_pending_install"
+  validated_at_utc: "2026-08-25T16:52:13Z"
+  status: "installed_validated"
 
 provider:
-  active: "kimi-oauth"
-  status: "planned_pending_oauth"
+  active: "pi-built-in-kimi-coding"
+  validated_at_utc: "2026-08-25T16:52:13Z"
+  status: "installed_validated"
   future:
     - "claude-api"
     - "openrouter-api"
