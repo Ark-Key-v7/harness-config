@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "discovered_at_utc": "2026-08-25T09:48:05Z",
+  "node": {
+    "version": "24.18.1",
+    "status": "installed_validated"
+  },
+  "pi": {
+    "package": "@earendil-works/pi-coding-agent",
+    "version": "0.84.3",
+    "status": "planned_pending_install"
+  },
+  "providers": {
+    "kimi_oauth": {
+      "status": "planned_pending_empirical_selection",
+      "candidates": [
+        {
+          "package": "pi-provider-kimi-code",
+          "version": "0.6.11"
+        },
+        {
+          "package": "@zgltyq/pi-provider-kimi-code",
+          "version": "0.4.1"
+        }
+      ]
+    }
+  },
+  "factory_floor": {
+    "worktrunk": {
+      "version": "0.74.0",
+      "status": "planned"
+    },
+    "qmd": {
+      "package": "@tobilu/qmd",
+      "version": "2.8.3",
+      "status": "planned"
+    },
+    "lancedb": {
+      "package": "@lancedb/lancedb",
+      "version": "0.37.1",
+      "status": "planned"
+    },
+    "semgrep": {
+      "version": "1.174.0",
+      "status": "planned"
+    },
+    "betterleaks": {
+      "version": "1.8.1",
+      "status": "planned"
+    },
+    "fallow": {
+      "package": "fallow",
+      "version": "3.18.0",
+      "status": "planned"
+    },
+    "pr_agent": {
+      "image": "pragent/pr-agent",
+      "version": "0.42.0",
+      "status": "planned_report_only"
+    }
+  }
+}

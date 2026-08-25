@@ -1,0 +1,43 @@
+# Local environment and secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.keystore
+*.jks
+
+# Common credential and session files
+**/auth.json
+**/credentials.json
+**/credentials*.json
+**/session.json
+**/*session*.json
+**/sessions/
+
+# Pi/provider runtime state
+**/.pi-cache/
+**/.provider-cache/
+
+# Trace ledgers and local indexes
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+trace-ledger.sqlite*
+.qmd/
+
+# Package/build output
+node_modules/
+dist/
+build/
+coverage/
+
+# Python cache
+__pycache__/
+.pytest_cache/
+
+# OS noise
+.DS_Store
+Thumbs.db
