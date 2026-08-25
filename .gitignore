@@ -41,3 +41,11 @@ __pycache__/
 # OS noise
 .DS_Store
 Thumbs.db
+
+# Pi machine-local runtime state
+trust.json
+/git/
+/npm/
+/logs/
+/cache/
+/tmp/
