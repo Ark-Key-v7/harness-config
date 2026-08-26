@@ -51,16 +51,29 @@
     },
     "semgrep": {
       "version": "1.174.0",
-      "status": "planned"
+      "status": "installed_validated",
+      "package": "semgrep",
+      "artifact": "semgrep-1.174.0-cp310.cp311.cp312.cp313.cp314.py310.py311.py312.py313.py314-none-manylinux_2_34_x86_64.whl",
+      "sha256": "f974909997147387e5413aaf1b68f0bf67895213aa6ba92e1284d52736f62ea3",
+      "install_scope": "python_venv",
+      "validated_at_utc": "2026-08-26T09:11:51Z"
     },
     "betterleaks": {
       "version": "1.8.1",
-      "status": "planned"
+      "status": "installed_validated",
+      "package": "betterleaks",
+      "asset": "betterleaks_1.8.1_linux_x64.tar.gz",
+      "sha256": "efa407244e1ea8e35f582b8a42becdeac08bdead04f68eb752adda722d583c2a",
+      "install_scope": "user_local",
+      "validated_at_utc": "2026-08-26T09:11:51Z"
     },
     "fallow": {
       "package": "fallow",
       "version": "3.18.0",
-      "status": "planned"
+      "status": "installed_validated",
+      "integrity": "sha512-9cVAFeByGlqAKcGE4qfICQtzT4zEha0KUF/tLzpaM8DD74sVn08Km2GAyMLktZ7KdSm41AdtmW64/Cny2v1p4A==",
+      "install_mode": "minimal_omit_optional",
+      "validated_at_utc": "2026-08-26T09:11:51Z"
     },
     "pr_agent": {
       "image": "pragent/pr-agent",
@@ -73,6 +86,13 @@
       "integrity": "sha512-PAmTlvNJBE+0t27bBS3PVLt1pSULhnDRSlNSOXkB1roK8g5ay1X6djifkIAkkebM/PCkaJc2aEf3l9lXm2NoAQ==",
       "status": "installed_validated",
       "validated_at_utc": "2026-08-26T08:29:38Z"
+    },
+    "fallow_native": {
+      "package": "@fallow-cli/linux-x64-gnu",
+      "version": "3.18.0",
+      "integrity": "sha512-4hHPWzkxYMgI5vf6W6b+XgeftgB7fSQdDK1Vg6DklwZ8K10wbN2dXvt7MAvq9FrPZhSuxE5SyPe5mJryukqZvA==",
+      "status": "installed_validated",
+      "validated_at_utc": "2026-08-26T09:11:51Z"
     }
   }
 }

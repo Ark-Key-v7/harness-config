@@ -58,14 +58,17 @@ factory_floor:
     validated_at_utc: "2026-08-26T08:26:15Z"
   semgrep:
     version: "1.174.0"
-    status: "planned"
+    status: "installed_validated"
+    validated_at_utc: "2026-08-26T09:11:51Z"
   betterleaks:
     version: "1.8.1"
-    status: "planned"
+    status: "installed_validated"
+    validated_at_utc: "2026-08-26T09:11:51Z"
   fallow:
     package: "fallow"
     version: "3.18.0"
-    status: "planned"
+    status: "installed_validated"
+    validated_at_utc: "2026-08-26T09:11:51Z"
   pr_agent:
     image_namespace: "pragent/pr-agent"
     version: "0.42.0"
