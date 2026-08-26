@@ -49,11 +49,13 @@ factory_floor:
   qmd:
     package: "@tobilu/qmd"
     version: "2.8.3"
-    status: "planned"
+    status: "installed_validated"
+    validated_at_utc: "2026-08-26T08:26:15Z"
   lancedb:
     package: "@lancedb/lancedb"
     version: "0.37.1"
-    status: "planned"
+    status: "installed_validated"
+    validated_at_utc: "2026-08-26T08:26:15Z"
   semgrep:
     version: "1.174.0"
     status: "planned"

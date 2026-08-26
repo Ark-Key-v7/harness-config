@@ -36,12 +36,18 @@
     "qmd": {
       "package": "@tobilu/qmd",
       "version": "2.8.3",
-      "status": "planned"
+      "status": "installed_validated",
+      "integrity": "sha512-zjfVwrObPB618B6x8SdhlGv/tX9OxRHsbQnr5DUtBvqPK6HGQ27lM+9/BAY5okpjrHVnW56hLyDkqoTcsrVLzA==",
+      "install_scope": "global",
+      "validated_at_utc": "2026-08-26T08:29:38Z"
     },
     "lancedb": {
       "package": "@lancedb/lancedb",
       "version": "0.37.1",
-      "status": "planned"
+      "status": "installed_validated",
+      "integrity": "sha512-l+si3t+bQ1JNxrnEfbbfKt9gWk2HcWYWx0dzoEBTVAs8B0BP79OrAv+mKTJ0EwG5wRDS3MwEChEg0g0Wh8I3tQ==",
+      "install_mode": "minimal_omit_optional",
+      "validated_at_utc": "2026-08-26T08:29:38Z"
     },
     "semgrep": {
       "version": "1.174.0",
@@ -60,6 +66,13 @@
       "image": "pragent/pr-agent",
       "version": "0.42.0",
       "status": "planned_report_only"
+    },
+    "lancedb_native": {
+      "package": "@lancedb/lancedb-linux-x64-gnu",
+      "version": "0.37.1",
+      "integrity": "sha512-PAmTlvNJBE+0t27bBS3PVLt1pSULhnDRSlNSOXkB1roK8g5ay1X6djifkIAkkebM/PCkaJc2aEf3l9lXm2NoAQ==",
+      "status": "installed_validated",
+      "validated_at_utc": "2026-08-26T08:29:38Z"
     }
   }
 }
