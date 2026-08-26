@@ -1,5 +1,9 @@
 {
   "enableInstallTelemetry": false,
   "defaultProjectTrust": "ask",
-  "externalEditor": "nano"
+  "externalEditor": "nano",
+  "lastChangelogVersion": "0.84.3",
+  "theme": "dark",
+  "defaultProvider": "kimi-coding",
+  "defaultModel": "kimi-for-coding"
 }
