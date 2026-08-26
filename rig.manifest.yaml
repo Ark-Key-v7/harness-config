@@ -73,7 +73,9 @@ factory_floor:
   pr_agent:
     image_namespace: "pragent/pr-agent"
     version: "0.42.0"
-    status: "planned_report_only"
+    repo_digest: "docker.io/pragent/pr-agent@sha256:0d5537028c5d4203ed059aebefc05fa850cef2c767bf09616a4ac0f6fd2b0549"
+    status: "installed_validated_report_only"
+    validated_at_utc: "2026-08-26T10:37:08Z"
 
 repository:
   authoring_copy: "~/factory-rig/sources/harness-config"
