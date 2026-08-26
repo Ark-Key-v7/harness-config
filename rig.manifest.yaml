@@ -40,7 +40,8 @@ provider:
 factory_floor:
   worktrunk:
     version: "0.74.0"
-    status: "planned"
+    status: "installed_validated"
+    validated_at_utc: "2026-08-26T07:13:26Z"
   amux:
     source_repository: "https://github.com/mixpeek/amux"
     pin: "pending_commit_sha"

@@ -27,8 +27,11 @@
   },
   "factory_floor": {
     "worktrunk": {
+      "package": "worktrunk",
       "version": "0.74.0",
-      "status": "planned"
+      "asset": "worktrunk-x86_64-unknown-linux-musl.tar.xz",
+      "sha256": "28392033912ab0a9027192d9975284787b29f080b4f2fd6298c89fffecf34c1f",
+      "status": "installed_validated"
     },
     "qmd": {
       "package": "@tobilu/qmd",
