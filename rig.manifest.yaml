@@ -44,8 +44,9 @@ factory_floor:
     validated_at_utc: "2026-08-26T07:13:26Z"
   amux:
     source_repository: "https://github.com/mixpeek/amux"
-    pin: "pending_commit_sha"
-    status: "planned"
+    pin: "a78ed2256691192837573410b6be87b67a24459d"
+    status: "installed_validated"
+    validated_at_utc: "2026-08-26T10:19:04Z"
   qmd:
     package: "@tobilu/qmd"
     version: "2.8.3"
