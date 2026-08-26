@@ -81,3 +81,7 @@ repository:
   authoring_copy: "~/factory-rig/sources/harness-config"
   active_clone: "~/.pi/agent"
   remote_status: "pending_private_remote"
+
+acceptance:
+  status: "installed_validated"
+  validated_at_utc: "2026-08-26T11:00:49Z"

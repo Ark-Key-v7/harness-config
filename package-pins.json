@@ -84,7 +84,10 @@
       "publish_output": false,
       "provider_status": "inactive",
       "wrapper": "~/.local/bin/pr-agent",
-      "validated_at_utc": "2026-08-26T10:37:08Z"
+      "validated_at_utc": "2026-08-26T10:37:08Z",
+      "read_only_rootfs": true,
+      "azure_devops_cache_tmpfs": true,
+      "litellm_local_model_cost_map": true
     },
     "lancedb_native": {
       "package": "@lancedb/lancedb-linux-x64-gnu",
@@ -100,5 +103,9 @@
       "status": "installed_validated",
       "validated_at_utc": "2026-08-26T09:11:51Z"
     }
+  },
+  "acceptance": {
+    "status": "installed_validated",
+    "validated_at_utc": "2026-08-26T11:00:49Z"
   }
 }
