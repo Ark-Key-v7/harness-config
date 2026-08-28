@@ -46,7 +46,7 @@ function segments(command: string): string[] {
     .filter((s) => s.length > 0);
 }
 
-const FORK_BOMB = /:\s*\(\s*\)\s*\{\s*:\s*\|\s*:\s*&\s*\}\s*;\s*:/;
+const FORK_BOMB = /:\s*\(\s*\)\s*\{\s*:\s*\|\s*:\s*&\s*\}/;
 const SPAWN_LOOP = /\bwhile\s+true\b[^;|&]*\bdo\b[^;|&]*&/;
 const PIPE_TO_SHELL =
   /\b(curl|wget|fetch)\b[^|;&]*\|\s*(sudo\s+)?(env\s+\S+\s+)?(bash|sh|zsh|dash|ash|ksh|python[0-9.]*|perl|ruby|node)\b/;
