@@ -253,6 +253,8 @@ Every canon-named tool not yet installed, with its class, seat, and trigger. Int
 | Daytona | Sandbox infra | Worktree mount injection (v1.2 §3.3) | **CORE, deferred** | Container-isolated worker spawn |
 | Turborepo | Project dependency | Monorepo build orchestration — **product rig, not factory** | **PROJECT** | Per-repo decision |
 | STATE.md | Pattern (not a tool) | Per-worktree working memory, E.2 schema | **WP9** | — |
+| Zed + pi-acp | Editor + ACP bridge | Operator chat-plane candidate; ACP adapter bridging Pi RPC mode into Zed | **PILOT** | Operator UI evaluation vs integrated terminal |
+| AionUI | Desktop GUI | Multi-agent GUI wrapper claiming Pi support | **PILOT, gate: inheritance test** | Must prove it launches the real `pi` binary and inherits `~/.pi/agent/extensions/` — bash-guard, file-changes, memory-toggle must all fire inside it before any real use |
 
 **Register law:** a tool enters the active rig only through this register → intake procedure → manifest entry. Nothing lives in memory alone.
 
