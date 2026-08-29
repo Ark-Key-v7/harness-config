@@ -1,0 +1,3 @@
+# driver scratch — fixtures, shims, and under-test copies created at run time
+**/.[!.]*
+**/node_modules/
