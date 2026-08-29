@@ -1,0 +1,66 @@
+#!/usr/bin/env node
+/**
+ * assert-projection-fresh.mjs — WP3 spawn-time staleness assertion.
+ *
+ * Law (v1.2 §2.4): a projection is at its source's HEAD or invalid. No
+ * time-based staleness. The Worktrunk post-create hook (WP9) runs this at
+ * spawn; a projection whose recorded source_head differs from the current
+ * HEAD blocks the spawn.
+ *
+ * Usage:
+ *   node tools/assert-projection-fresh.mjs [--expected SHA] [--file PATH]
+ *
+ * Defaults: --expected = `git rev-parse HEAD` at repo root; checks
+ * projections/pi/append-system.md and projections/pi/pi-settings.json.
+ * Exit 0 = fresh. Exit 1 = stale or corrupt.
+ */
+
+import { existsSync, readFileSync } from "node:fs";
+import { join, dirname } from "node:path";
+import { fileURLToPath } from "node:url";
+import { execSync } from "node:child_process";
+
+const HERE = dirname(fileURLToPath(import.meta.url));
+const ROOT = join(HERE, "..");
+
+const args = process.argv.slice(2);
+function argValue(flag) {
+  const i = args.indexOf(flag);
+  return i >= 0 ? args[i + 1] : undefined;
+}
+
+function gitHead() {
+  try {
+    return execSync("git rev-parse HEAD", { cwd: ROOT, stdio: ["ignore", "pipe", "ignore"] }).toString().trim();
+  } catch {
+    return "unknown";
+  }
+}
+const EXPECTED = argValue("--expected") ?? gitHead();
+
+const files = argValue("--file")
+  ? [argValue("--file")]
+  : [join(ROOT, "projections", "pi", "append-system.md"), join(ROOT, "projections", "pi", "pi-settings.json")];
+
+let stale = 0;
+for (const f of files) {
+  if (!existsSync(f)) {
+    console.error(`STALE: ${f} missing`);
+    stale++;
+    continue;
+  }
+  const content = readFileSync(f, "utf8");
+  const m = content.match(/source_head: (\S+) -->/) ?? content.match(/"_sourceHead": "(\S+)"/);
+  if (!m) {
+    console.error(`STALE: ${f} has no source head marker — hand-edited or corrupt`);
+    stale++;
+    continue;
+  }
+  if (m[1] !== EXPECTED) {
+    console.error(`STALE: ${f} is at source head ${m[1]}, expected ${EXPECTED}`);
+    stale++;
+    continue;
+  }
+  console.log(`FRESH: ${f} @ ${m[1]}`);
+}
+process.exit(stale > 0 ? 1 : 0);
