@@ -1,5 +1,5 @@
 <!-- GENERATED FILE — do not hand-edit (WP3, L4). Regenerate: node tools/generate-projections.mjs -->
-<!-- source_head: 31b77e5d7226af66c5363071e377443e6f44b4ee -->
+<!-- source_head: aacecf021452198d785818272d7a3659b4b008ba -->
 <!-- projection: pi/append-system.md -->
 
 # Factory projection — Pi append-system (stable part)
@@ -12,11 +12,11 @@ pointed-to files when a task touches their domain.
 
 | File | Precedence |
 |---|---|
+| templates/tmd/rules.md | 1 |
 | templates/tmd/gravity.md | 2 |
 | templates/tmd/promises.md | 3 |
 | templates/tmd/glossary.md | 4 |
 | templates/tmd/design.md | 5 |
-| templates/tmd/rules.md | unranked |
 
 ## Role roster bindings
 

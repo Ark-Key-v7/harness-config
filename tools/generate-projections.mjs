@@ -57,7 +57,7 @@ const SOURCE_HEAD = argValue("--source-head") ?? gitHead();
 
 // --- Inputs ------------------------------------------------------------------
 /** Canonical manifold precedence (WP4 contract table). Unknown files sort after, alphabetically. */
-const PRECEDENCE = { "compass.md": 1, "gravity.md": 2, "promises.md": 3, "glossary.md": 4, "design.md": 5 };
+const PRECEDENCE = { "rules.md": 1, "gravity.md": 2, "promises.md": 3, "glossary.md": 4, "design.md": 5 };
 
 function listMd(dir) {
   if (!existsSync(dir)) return [];

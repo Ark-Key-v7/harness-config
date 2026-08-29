@@ -61,18 +61,18 @@ check("L4 header: source_head recorded", emptyAppend.includes(`source_head: ${HE
 mkdirSync(join(FIX, "templates", "tmd"), { recursive: true });
 mkdirSync(join(FIX, "templates", "agents", "profiles"), { recursive: true });
 writeFileSync(join(FIX, "templates", "tmd", "gravity.md"), "# gravity\n");
-writeFileSync(join(FIX, "templates", "tmd", "compass.md"), "# compass\n");
+writeFileSync(join(FIX, "templates", "tmd", "rules.md"), "# rules\n");
 writeFileSync(join(FIX, "templates", "tmd", "promises.md"), "# promises\n");
 writeFileSync(join(FIX, "templates", "agents", "profiles", "worker.md"), "# worker\n");
 writeFileSync(join(FIX, "templates", "agents", "profiles", "scout.md"), "# scout\n");
 run("generate-projections.mjs", ["--source-head", HEAD_A]);
 const full = readFileSync(appendPath, "utf8");
 
-check("pointer: compass.md present", full.includes("templates/tmd/compass.md"));
+check("pointer: rules.md present", full.includes("templates/tmd/rules.md"));
 check("pointer: gravity.md present", full.includes("templates/tmd/gravity.md"));
 check("pointer: promises.md present", full.includes("templates/tmd/promises.md"));
-check("precedence order: compass(1) before gravity(2) before promises(3)",
-  full.indexOf("compass.md") < full.indexOf("gravity.md") && full.indexOf("gravity.md") < full.indexOf("promises.md"));
+check("precedence order: rules(1) before gravity(2) before promises(3)",
+  full.indexOf("rules.md") < full.indexOf("gravity.md") && full.indexOf("gravity.md") < full.indexOf("promises.md"));
 check("roster binding: worker profile", full.includes("templates/agents/profiles/worker.md"));
 check("roster binding: scout profile", full.includes("templates/agents/profiles/scout.md"));
 check("cache-boundary declared (stable part only)", full.includes("STABLE part"));
