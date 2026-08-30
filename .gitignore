@@ -49,3 +49,4 @@ trust.json
 /logs/
 /cache/
 /tmp/
+*:Zone.Identifier
