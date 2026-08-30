@@ -1,0 +1,56 @@
+# FACTORY_STATUS.md — Governance Plane State
+
+_Rig: `harness-config` · Harness: pi-coding-agent 0.84.3 · Regime: Kimi OAuth subscription_
+_This document is regenerated against the finished rig at each tagged release. It reports state; it does not restate law (canon lives in the handbooks and the TMD templates — L5)._
+
+## Work package ledger (WP0–WP10)
+
+| WP | Deliverable | Plane | Validation | Status |
+|---|---|---|---|---|
+| WP0 | Factory floor: Node 24.18.1, Pi 0.84.3, worktrunk, qmd, lancedb, semgrep, betterleaks, fallow, pr_agent (see `package-pins.json`) | floor | install-validated per pins ledger | ✅ |
+| WP1 | Baseline extensions: `bash-guard`, `file-changes`, `memory-toggle`, `ask-user` | enforcement | 4 smoke drivers | ✅ |
+| WP2 | `sandbox-guard` — contract-scoped write/read enforcement + stale-read guard | enforcement | 37-check driver | ✅ |
+| WP3 | Projection generator + drift check + freshness assert (`generate/check/assert-projections`) | projection | 21-check driver | ✅ |
+| WP4 | TMD manifold templates (rules/gravity/promises/glossary/design, three-zone, canon-verbatim) + AGENTS.md router | templates | `lint-tmd` + 10-check driver | ✅ |
+| WP5 | Roster profiles: scout / planner / worker / reviewer (E.5) | templates | `lint-profiles` + 7-check driver | ✅ |
+| WP6 | Skills: `rig-change`, `pr-review`, `tool-intake`, `template-skill` (E.6) | procedures | `lint-skills` + 8-check driver | ✅ |
+| WP7 | Task Contract template (E.1) + `lint-contract` + `contract-scope` resolver | templates | 9-check driver incl. WP2 end-to-end | ✅ |
+| WP8 | Project `.pi/` layer + `lint-mcp` curation gate + `seat-switch` extension + `pi-mcp-adapter` 2.31.0 pin | templates + enforcement | 15 + 14-check drivers | ✅ |
+| WP9 | STATE.md schema (E.2) + genesis + `lint-state` + `wt.toml` hook contract + `lint-wt-hook` | templates | 17-check driver | ✅ |
+| WP10 | `onboard-project` — fresh-project procedure (executable Phase 1 + projection) | templates | 14-check driver, full acceptance chain | ✅ |
+
+## Plane architecture
+
+1. **Enforcement (extensions/)** — operational law at the tool-call layer: bash-guard (DANGER rules), sandbox-guard (scope), file-changes, memory-toggle, ask-user, seat-switch. Blocking = fail-closed.
+2. **Projection (projections/pi/)** — the stable, cache-safe system-prompt appendix + settings projection. Generated, never hand-edited; drift-checked against source HEAD.
+3. **Templates (templates/)** — canon law verbatim in Zone A/B, fillable Zone C slots. Onboarded per project by `tools/onboard-project.mjs`.
+4. **Procedures (templates/agents/skills/ → Pi skills)** — rig-change, pr-review, tool-intake, template-skill.
+5. **Ledger** — `package-pins.json` (WP0 discovery + pins), `docs/GOVERNANCE_PLANE_SPEC.md` (the plan + deferred-tools register).
+
+## L-law → plane mapping
+
+| Law | Enforced by |
+|---|---|
+| L4 (manifest header, last_verified = SHA) | `lint-tmd.mjs` (rejects dates), WP4 headers |
+| L5 (no duplicated law — reference, never restate) | WP3 projection design (pointers only); onboarding copies projection verbatim |
+| Fail-closed boot (WP9 hook contract) | `lint-wt-hook.mjs` (order, abort-only, append-only) + `state-genesis.mjs` self-lint |
+| Meta-Harness (§5.4 — human ratifies rig changes) | `rig-change` skill Step 5 confirmation; read-only deployed clone (pull-only chain) |
+| Two-subdirectory rule (§3.9) | `.pi/.gitignore` (scope.json, memory.md); STATE.md per-worktree, never committed; `lint-state` topology check |
+| Context Budget Law (§1.4) | injection caps in memory-toggle (8KB) and seat-switch (16KB); contract `sizing_budget_tokens` |
+| Curation/pins (v1.2 §2.11, §7) | `lint-mcp.mjs`, `package-pins.json`, `tool-intake` skill |
+| Dual failure vocabulary (E.2/E.3 reconciliation) | `lint-state.mjs` (both enums, never remapped) |
+
+## Deferred-tools register
+
+Lives in `docs/GOVERNANCE_PLANE_SPEC.md` §6 — statuses current as of this tag. Notable: Zed+pi-acp and AionUI are operator-UI **PILOTs** (AionUI gated on the inheritance test); `pi-mcp-adapter` is pinned but **pending install** (activates with the curated MCP stack); BetterDB/Headroom/Ponytail await their gates.
+
+## Known open decisions (spec §9)
+
+- Model-class mapping under Kimi-only subscription (provisionally: all classes resolve to the rig's Kimi model; `effort_level` is the live differentiator — stated in every profile's `substitution_bounds`).
+- GitNexus PolyForm Noncommercial license decision (or bake-off resolution: GitNexus vs CodeGraph vs codebase-memory-mcp).
+- Gateway-tier deferral (regime activates when a gateway is adopted).
+- AMUX↔Pi adapter boundary.
+
+## Regeneration
+
+After any rig change that alters the ledger above: update this file in the same commit (the `rig-change` skill's Step 6 checklist points here).
