@@ -79,7 +79,7 @@ const subGraph = text.match(/sub_graph:\s*(\S+)/)?.[1];
 if (GRAVITY && subGraph) {
   if (!existsSync(GRAVITY)) bad(`gravity file not found: ${GRAVITY}`);
   else {
-    const g = readFileSync(GRAVITY, "utf8");
+    const g = readFileSync(GRAVITY, "utf8").replace(/<!--[\s\S]*?-->/g, ""); // Zone B examples live in comments — not the Registry
     if (!new RegExp(`-\\s*name:\\s*${subGraph}\\b`).test(g)) {
       bad(`sub_graph "${subGraph}" is not registered in gravity.md's Sub-Graph Registry — contract must not spawn`);
     }

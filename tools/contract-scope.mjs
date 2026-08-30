@@ -39,22 +39,31 @@ const contract = readFileSync(CONTRACT, "utf8");
 const contractId = contract.match(/contract_id:\s*(\S+)/)?.[1] ?? fail("contract missing manifest.contract_id");
 const subGraph = contract.match(/sub_graph:\s*(\S+)/)?.[1] ?? fail("contract missing manifest.sub_graph");
 
-const gravity = readFileSync(GRAVITY, "utf8");
-const regBlock = gravity.match(/subgraphs:\n([\s\S]*?)(?=\n```|\n#|\n\S)/);
-if (!regBlock) fail("gravity.md has no subgraphs: registry block");
+const gravityRaw = readFileSync(GRAVITY, "utf8");
+// Zone B teaches by example inside HTML comments — those blocks are NOT the
+// Registry. Strip comments first so resolution reads only the filled Zone C.
+const gravity = gravityRaw.replace(/<!--[\s\S]*?-->/g, "");
 
-// Registry entries: "- name: X" followed by indented keys with flow-style arrays.
-const entries = regBlock[1].split(/(?:^|\n)\s*-\s*name:\s*/).slice(1);
-let node = null;
-for (const e of entries) {
-  const name = e.match(/^(\S+)/)?.[1];
-  if (name === subGraph) {
-    const write = e.match(/write_scope:\s*\[([^\]]*)\]/)?.[1];
-    const read = e.match(/read_scope:\s*\[([^\]]*)\]/)?.[1];
-    if (write === undefined || read === undefined) fail(`registry node "${subGraph}" lacks write_scope/read_scope arrays`);
-    const parse = (s) => s.split(",").map((x) => x.trim().replace(/^["']|["']$/g, "")).filter((x) => x.length > 0);
-    node = { write: parse(write), read: parse(read) };
+// Registry blocks: one or more ```yaml subgraphs: blocks; entries merge, last wins.
+const blocks = [...gravity.matchAll(/subgraphs:\n([\s\S]*?)(?=\n```|\n#|\n\S)/g)];
+if (blocks.length === 0) fail("gravity.md has no subgraphs: registry block (Zone C unfilled?)");
+
+const entries = new Map();
+for (const b of blocks) {
+  for (const e of b[1].split(/(?:^|\n)\s*-\s*name:\s*/).slice(1)) {
+    const name = e.match(/^(\S+)/)?.[1];
+    if (name) entries.set(name, e);
   }
+}
+
+let node = null;
+const e = entries.get(subGraph);
+if (e) {
+  const write = e.match(/write_scope:\s*\[([^\]]*)\]/)?.[1];
+  const read = e.match(/read_scope:\s*\[([^\]]*)\]/)?.[1];
+  if (write === undefined || read === undefined) fail(`registry node "${subGraph}" lacks write_scope/read_scope arrays`);
+  const parse = (s) => s.split(",").map((x) => x.trim().replace(/^["']|["']$/g, "")).filter((x) => x.length > 0);
+  node = { write: parse(write), read: parse(read) };
 }
 if (!node) fail(`sub_graph "${subGraph}" is not registered in the Sub-Graph Registry`);
 
