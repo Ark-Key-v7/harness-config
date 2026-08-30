@@ -1,5 +1,5 @@
 <!-- GENERATED FILE — do not hand-edit (WP3, L4). Regenerate: node tools/generate-projections.mjs -->
-<!-- source_head: aacecf021452198d785818272d7a3659b4b008ba -->
+<!-- source_head: 54b5522be633a04cb9c7a0993024274e5c86cd5d -->
 <!-- projection: pi/append-system.md -->
 
 # Factory projection — Pi append-system (stable part)
@@ -20,7 +20,10 @@ pointed-to files when a task touches their domain.
 
 ## Role roster bindings
 
-- (none committed yet — WP5 lands the roster profiles)
+- templates/agents/profiles/planner.md
+- templates/agents/profiles/reviewer.md
+- templates/agents/profiles/scout.md
+- templates/agents/profiles/worker.md
 
 ## Composition boundary (v1.2 §2.4)
 
