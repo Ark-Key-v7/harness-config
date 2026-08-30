@@ -46,7 +46,13 @@ const OUT_DIR = argValue("--out") ?? join(ROOT, "projections");
 
 function gitHead() {
   try {
-    return execSync("git rev-parse HEAD", { cwd: ROOT, stdio: ["ignore", "pipe", "ignore"] })
+    // Record the INPUT head — the last commit touching the projection inputs
+    // (templates/tmd, profiles, skills, this generator). Repo HEAD includes
+    // docs/tools commits that change nothing about the projection; recording
+    // them would make every commit stale the marker (v1.2 §2.4: the marker
+    // tracks the SOURCE's head). Must stay in lockstep with
+    // assert-projection-fresh.mjs's expectation.
+    return execSync("git log -1 --format=%H -- templates/tmd templates/agents/profiles templates/agents/skills tools/generate-projections.mjs", { cwd: ROOT, stdio: ["ignore", "pipe", "ignore"] })
       .toString()
       .trim();
   } catch {
