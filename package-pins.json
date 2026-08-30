@@ -1,16 +1,120 @@
 {
+  "schema_version": 1,
+  "discovered_at_utc": "2026-08-25T09:48:05Z",
   "_policy": "Exact pins only. Install with --ignore-scripts. Never npm audit fix --force. Never curl|sh. A pin advances only via rig-change (§5.4 human ratification).",
-  "_verified_against": "pi-coding-agent 0.84.3 (pi/extensions/API-VERIFIED-0.84.3.md)",
-  "pins": {
-    "@earendil-works/pi-coding-agent": {
-      "version": "0.84.3",
-      "seat": "CORE",
-      "note": "The harness binary itself (WP0)."
-    },
-    "pi-mcp-adapter": {
-      "version": "2.31.0",
-      "seat": "CORE",
-      "note": "MCP client half (v1.2 §2.11). Adopted, pinned, committed — not built. Peer @earendil-works/pi-ai ^0.84.1 satisfied by 0.84.3; engines node>=20 satisfied by rig Node 24. Publishes MCP 2026-07-28 client (@modelcontextprotocol/client 2.0.0). Verified 2026-08-30."
+  "node": {
+    "version": "24.18.1",
+    "status": "installed_validated"
+  },
+  "pi": {
+    "package": "@earendil-works/pi-coding-agent",
+    "version": "0.84.3",
+    "status": "installed_validated"
+  },
+  "providers": {
+    "kimi_oauth": {
+      "status": "installed_validated_builtin",
+      "candidates": [
+        {
+          "package": "pi-provider-kimi-code",
+          "version": "0.6.11"
+        },
+        {
+          "package": "@zgltyq/pi-provider-kimi-code",
+          "version": "0.4.1"
+        }
+      ]
     }
+  },
+  "pi_mcp_adapter": {
+    "package": "pi-mcp-adapter",
+    "version": "2.31.0",
+    "seat": "CORE",
+    "status": "pinned_committed_pending_install",
+    "note": "MCP client half (v1.2 §2.11). Adopted, pinned, committed — not built. Peer @earendil-works/pi-ai ^0.84.1 satisfied by pi 0.84.3; engines node>=20 satisfied by node 24.18.1; MCP client 2026-07-28 (@modelcontextprotocol/client 2.0.0). Verified 2026-08-30. Activates with the MCP stack (Curated Servers).",
+    "recorded_by": "WP8"
+  },
+  "factory_floor": {
+    "worktrunk": {
+      "package": "worktrunk",
+      "version": "0.74.0",
+      "asset": "worktrunk-x86_64-unknown-linux-musl.tar.xz",
+      "sha256": "28392033912ab0a9027192d9975284787b29f080b4f2fd6298c89fffecf34c1f",
+      "status": "installed_validated"
+    },
+    "qmd": {
+      "package": "@tobilu/qmd",
+      "version": "2.8.3",
+      "status": "installed_validated",
+      "integrity": "sha512-zjfVwrObPB618B6x8SdhlGv/tX9OxRHsbQnr5DUtBvqPK6HGQ27lM+9/BAY5okpjrHVnW56hLyDkqoTcsrVLzA==",
+      "install_scope": "global",
+      "validated_at_utc": "2026-08-26T08:29:38Z"
+    },
+    "lancedb": {
+      "package": "@lancedb/lancedb",
+      "version": "0.37.1",
+      "status": "installed_validated",
+      "integrity": "sha512-l+si3t+bQ1JNxrnEfbbfKt9gWk2HcWYWx0dzoEBTVAs8B0BP79OrAv+mKTJ0EwG5wRDS3MwEChEg0g0Wh8I3tQ==",
+      "install_mode": "minimal_omit_optional",
+      "validated_at_utc": "2026-08-26T08:29:38Z"
+    },
+    "semgrep": {
+      "version": "1.174.0",
+      "status": "installed_validated",
+      "package": "semgrep",
+      "artifact": "semgrep-1.174.0-cp310.cp311.cp312.cp313.cp314.py310.py311.py312.py313.py314-none-manylinux_2_34_x86_64.whl",
+      "sha256": "f974909997147387e5413aaf1b68f0bf67895213aa6ba92e1284d52736f62ea3",
+      "install_scope": "python_venv",
+      "validated_at_utc": "2026-08-26T09:11:51Z"
+    },
+    "betterleaks": {
+      "version": "1.8.1",
+      "status": "installed_validated",
+      "package": "betterleaks",
+      "asset": "betterleaks_1.8.1_linux_x64.tar.gz",
+      "sha256": "efa407244e1ea8e35f582b8a42becdeac08bdead04f68eb752adda722d583c2a",
+      "install_scope": "user_local",
+      "validated_at_utc": "2026-08-26T09:11:51Z"
+    },
+    "fallow": {
+      "package": "fallow",
+      "version": "3.18.0",
+      "status": "installed_validated",
+      "integrity": "sha512-9cVAFeByGlqAKcGE4qfICQtzT4zEha0KUF/tLzpaM8DD74sVn08Km2GAyMLktZ7KdSm41AdtmW64/Cny2v1p4A==",
+      "install_mode": "minimal_omit_optional",
+      "validated_at_utc": "2026-08-26T09:11:51Z"
+    },
+    "pr_agent": {
+      "image": "pragent/pr-agent",
+      "version": "0.42.0",
+      "status": "installed_validated_report_only",
+      "repo_digest": "docker.io/pragent/pr-agent@sha256:0d5537028c5d4203ed059aebefc05fa850cef2c767bf09616a4ac0f6fd2b0549",
+      "network_mode": "none",
+      "publish_output": false,
+      "provider_status": "inactive",
+      "wrapper": "~/.local/bin/pr-agent",
+      "validated_at_utc": "2026-08-26T10:37:08Z",
+      "read_only_rootfs": true,
+      "azure_devops_cache_tmpfs": true,
+      "litellm_local_model_cost_map": true
+    },
+    "lancedb_native": {
+      "package": "@lancedb/lancedb-linux-x64-gnu",
+      "version": "0.37.1",
+      "integrity": "sha512-PAmTlvNJBE+0t27bBS3PVLt1pSULhnDRSlNSOXkB1roK8g5ay1X6djifkIAkkebM/PCkaJc2aEf3l9lXm2NoAQ==",
+      "status": "installed_validated",
+      "validated_at_utc": "2026-08-26T08:29:38Z"
+    },
+    "fallow_native": {
+      "package": "@fallow-cli/linux-x64-gnu",
+      "version": "3.18.0",
+      "integrity": "sha512-4hHPWzkxYMgI5vf6W6b+XgeftgB7fSQdDK1Vg6DklwZ8K10wbN2dXvt7MAvq9FrPZhSuxE5SyPe5mJryukqZvA==",
+      "status": "installed_validated",
+      "validated_at_utc": "2026-08-26T09:11:51Z"
+    }
+  },
+  "acceptance": {
+    "status": "installed_validated",
+    "validated_at_utc": "2026-08-26T11:00:49Z"
   }
 }

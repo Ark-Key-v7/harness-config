@@ -59,9 +59,12 @@ check("template .mcp.json passes lint (empty is valid)", lint(join(PROJ, ".pi", 
 const gi = readFileSync(join(PROJ, ".pi", ".gitignore"), "utf8");
 check(".gitignore covers scope.json + memory.md", gi.includes("scope.json") && gi.includes("memory.md"));
 
-// 5. package-pins.json records pi-mcp-adapter exact pin
+// 5. package-pins.json (WP0 discovery ledger) records the pi-mcp-adapter exact pin
+//    without losing the WP0 factory_floor entries.
 const pins = JSON.parse(readFileSync(join(REPO, "package-pins.json"), "utf8"));
-check("package-pins.json pins pi-mcp-adapter exactly", /^\d+\.\d+\.\d+$/.test(pins.pins["pi-mcp-adapter"].version));
+check("package-pins.json pins pi-mcp-adapter exactly", /^\d+\.\d+\.\d+$/.test(pins.pi_mcp_adapter?.version ?? ""));
+check("WP0 ledger preserved (factory_floor + acceptance intact)",
+  typeof pins.factory_floor === "object" && pins.factory_floor.worktrunk?.status === "installed_validated" && pins.acceptance?.status === "installed_validated");
 
 // --- lint-mcp curation rulings ------------------------------------------------
 const mcpCase = (name, doc) => {
