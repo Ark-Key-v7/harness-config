@@ -1,0 +1,5 @@
+# Project-local .pi/ layer — resolved/volatile artifacts are never committed.
+# scope.json is emitted per-contract by tools/contract-scope.mjs (WP7/WP2 bridge).
+scope.json
+# memory.md is telemetry (two-subdirectory rule, §3.9) — git-ignored by law.
+memory.md
