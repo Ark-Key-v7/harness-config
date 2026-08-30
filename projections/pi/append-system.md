@@ -1,5 +1,5 @@
 <!-- GENERATED FILE — do not hand-edit (WP3, L4). Regenerate: node tools/generate-projections.mjs -->
-<!-- source_head: 54b5522be633a04cb9c7a0993024274e5c86cd5d -->
+<!-- source_head: 98d70a4ec3dc016092977df3e8c6552dbb8a69b8 -->
 <!-- projection: pi/append-system.md -->
 
 # Factory projection — Pi append-system (stable part)
@@ -24,6 +24,17 @@ pointed-to files when a task touches their domain.
 - templates/agents/profiles/reviewer.md
 - templates/agents/profiles/scout.md
 - templates/agents/profiles/worker.md
+
+## Skill routing table
+
+When a task matches a trigger, invoke the named skill — procedure follows, never improvise:
+
+| Skill | Trigger phrases |
+|---|---|
+| pr-review | review this PR · verify this contract · stage 2 review · adversarial review |
+| rig-change | new rig files · place these files · update the rig · commit and sync harness-config · I downloaded the new version |
+| template-skill | author a new skill · create a skill |
+| tool-intake | install a tool · adopt this skill · a register trigger fired · add an MCP server · tool intake |
 
 ## Composition boundary (v1.2 §2.4)
 

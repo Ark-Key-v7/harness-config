@@ -72,8 +72,27 @@ function listMd(dir) {
 
 const tmdDir = join(ROOT, "templates", "tmd");
 const profilesDir = join(ROOT, "templates", "agents", "profiles");
+const skillsDir = join(ROOT, "templates", "agents", "skills");
 const manifoldFiles = listMd(tmdDir);
 const profileFiles = listMd(profilesDir);
+
+/** Skill routing: folder name + trigger phrases parsed from frontmatter (E.6). */
+function listSkills(dir) {
+  if (!existsSync(dir)) return [];
+  return readdirSync(dir)
+    .filter((f) => existsSync(join(dir, f, "SKILL.md")))
+    .sort()
+    .map((folder) => {
+      const text = readFileSync(join(dir, folder, "SKILL.md"), "utf8");
+      const phrases = text.match(/trigger_phrases:\s*\[([^\]]*)\]/)?.[1] ?? "";
+      const triggers = phrases
+        .split(",")
+        .map((s) => s.trim().replace(/^["']|["']$/g, ""))
+        .filter((s) => s.length > 0);
+      return { folder, triggers };
+    });
+}
+const skills = listSkills(skillsDir);
 
 // --- Emit: append-system.md (STABLE part only) --------------------------------
 const generatedBanner = (name) =>
@@ -93,6 +112,13 @@ const rosterList =
     ? "- (none committed yet — WP5 lands the roster profiles)"
     : profileFiles.map((f) => `- templates/agents/profiles/${f}`).join("\n");
 
+const skillsTable =
+  skills.length === 0
+    ? "| (none committed yet — WP6 lands the skills library) | — |"
+    : skills
+        .map((s) => `| ${s.folder} | ${s.triggers.length > 0 ? s.triggers.join(" · ") : "(no trigger phrases)"} |`)
+        .join("\n");
+
 const appendSystem =
   generatedBanner("pi/append-system.md") +
   `\n# Factory projection — Pi append-system (stable part)\n` +
@@ -103,6 +129,9 @@ const appendSystem =
   `\n| File | Precedence |\n|---|---|\n${manifoldTable}\n` +
   `\n## Role roster bindings\n` +
   `\n${rosterList}\n` +
+  `\n## Skill routing table\n` +
+  `\nWhen a task matches a trigger, invoke the named skill — procedure follows, never improvise:\n` +
+  `\n| Skill | Trigger phrases |\n|---|---|\n${skillsTable}\n` +
   `\n## Composition boundary (v1.2 §2.4)\n` +
   `\nThis block is the STABLE part of the system prompt and is cache-safe.\n` +
   `Dynamic per-turn content (memory, active contract scope) is injected by rig\n` +
@@ -128,4 +157,4 @@ writeFileSync(join(piOut, "append-system.md"), appendSystem);
 writeFileSync(join(piOut, "pi-settings.json"), settingsJson);
 
 console.log(`projections written to ${piOut} (source_head: ${SOURCE_HEAD})`);
-console.log(`  manifold files: ${manifoldFiles.length}, profiles: ${profileFiles.length}`);
+console.log(`  manifold files: ${manifoldFiles.length}, profiles: ${profileFiles.length}, skills: ${skills.length}`);
