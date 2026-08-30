@@ -37,14 +37,16 @@ The `rig-change` skill operationalizes this inside a Pi session. This runbook is
 
 ```bash
 cd ~/factory-rig/sources/harness-config
-for d in validation/*/; do node "$d"*.test.mjs || break; done
+for f in validation/*/*.test.mjs; do node "$f" || break; done
 node tools/check-projections.mjs        # drift: committed projections == regenerated
-node tools/assert-projection-fresh.mjs  # freshness: source_head == HEAD
+node tools/assert-projection-fresh.mjs  # freshness: recorded head == last input-touching commit
 node tools/lint-tmd.mjs templates/tmd --agents templates/AGENTS.md
 node tools/lint-profiles.mjs
 node tools/lint-skills.mjs
 node tools/lint-mcp.mjs templates/pi/.mcp.json
 ```
+
+_Freshness semantics: a projection stales only when its **inputs** (`templates/tmd`, `templates/agents/profiles`, `templates/agents/skills`, the generator itself) advance past the recorded source head. Docs/tools/drivers commits never stale it. If stale: `node tools/generate-projections.mjs && git add projections/pi && git commit -m "Refresh projections"`._
 
 All green is the only acceptable pre-commit state. **Never commit with a failing driver.**
 

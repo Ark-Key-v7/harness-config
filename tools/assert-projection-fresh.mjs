@@ -29,14 +29,19 @@ function argValue(flag) {
   return i >= 0 ? args[i + 1] : undefined;
 }
 
-function gitHead() {
+function git(args) {
   try {
-    return execSync("git rev-parse HEAD", { cwd: ROOT, stdio: ["ignore", "pipe", "ignore"] }).toString().trim();
+    return execSync(`git ${args}`, { cwd: ROOT, stdio: ["ignore", "pipe", "ignore"] }).toString().trim();
   } catch {
     return "unknown";
   }
 }
-const EXPECTED = argValue("--expected") ?? gitHead();
+// Freshness law (v1.2 §2.4): a projection is at its SOURCE's head — the last
+// commit that touched the projection inputs (templates + the generator),
+// not the repo HEAD. Commits that don't touch inputs (docs, tools, drivers)
+// must not stale the projection; a projections-refresh commit must not stale
+// itself. Explicit --expected overrides for drivers and CI.
+const EXPECTED = argValue("--expected") ?? git("log -1 --format=%H -- templates/tmd templates/agents/profiles templates/agents/skills tools/generate-projections.mjs");
 
 const files = argValue("--file")
   ? [argValue("--file")]
