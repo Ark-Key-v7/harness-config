@@ -1,0 +1,50 @@
+# wt.toml — Worktrunk post-create hook contract
+#
+# CANON (Appendix §5, verbatim): "The post-create hook is the single seam
+# where worktree state, sandbox mounts, and per-task memory are established.
+# Its cardinal rule is fail-closed boot: the agent never starts in an
+# unverified environment."
+#
+# Canon rules (verbatim):
+#   (1) on_failure is always abort — there is no warn-and-continue mode; a
+#       worker booted unmounted resolves its contract against the wrong tree,
+#       which is worse than no worker.
+#   (2) Mount injection happens before the assertion; the assertion happens
+#       before agent boot; the order is contractual.
+#   (3) Every abort emits a SPAWN_ABORT event to the trace ledger with the
+#       failing assertion named.
+#   (4) The assertion list is append-only per project — teams may add checks
+#       (e.g., gateway reachability) but never remove the visibility check.
+#
+# Rig note (WP9): where the Worktrunk engine lacks a native inject/mount
+# facility, the equivalent steps are expressed as `run` entries invoking
+# rig tools (state-genesis.mjs, boot-assert.mjs). The CONTRACT — order,
+# fail-closed semantics, SPAWN_ABORT — is unchanged. Validated by
+# tools/lint-wt-hook.mjs.
+
+[hooks.post_create]
+# 1. Dependency restoration inside the new worktree
+run = ["bun install --frozen-lockfile"]
+
+
+# 2. STATE.md genesis — per-worktree memory from the Appendix schema
+[[hooks.post_create.inject]]
+artifact = "STATE.md"
+from_schema = ".agents/schemas/state.schema.yaml"
+to = "${WORKTREE_ROOT}/STATE.md"
+values = { task_contract = "${TASK_CONTRACT}", session_id = "${SESSION_UUID}" }
+
+
+# 3. Daytona sandbox mount injection — the worktree must be visible inside the container
+[[hooks.post_create.mount]]
+engine = "daytona"
+host_path = "${WORKTREE_ROOT}"
+container_path = "/workspace"
+mode = "rw"
+
+
+# 4. Fail-closed pre-flight assertion — runs AFTER mounts, BEFORE agent boot
+[[hooks.post_create.assert]]
+name = "worktree_visible_in_sandbox"
+exec = "test -f /workspace/${TASK_CONTRACT_PATH} && test -f /workspace/STATE.md"
+on_failure = "abort"   # abort = destroy sandbox, log to trace ledger, never boot the agent

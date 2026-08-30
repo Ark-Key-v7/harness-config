@@ -1,0 +1,75 @@
+# =============================================================================
+# state.schema.yaml — E.2 STATE.md schema (per-worktree session continuity)
+#
+# CANON (Appendix: SWE Factory Artifact Templates — "The STATE.md Artifact"):
+#   "STATE.md is the per-task durable memory of one execution thread. It is
+#    created at the root of each Worktrunk by the post-create spawn hook,
+#    mounted into the sandbox, and destroyed at teardown. It tracks the
+#    physical resolution of constraints — never conversational logs — in a
+#    strict YAML schema so that any fresh worker (or the reaper, or the
+#    watchdog) can parse it deterministically."
+#
+#   Rules (canon, verbatim):
+#   "written only at Checkpoint Heuristic events (profile §4); never used
+#    for swarm coordination (the ledger owns that); never committed to the
+#    product repository (it lives and dies with the worktree)."
+#
+# RECONCILIATION (Appendix E, verbatim ruling): E.2 is an additive superset
+# of the canon schema. Every canon-required key remains required and
+# unchanged; the chaining keys (run_id, parent_trace_id, prior_step_refs,
+# artifact_pointers) are added; the dual failure vocabulary is kept as two
+# separate keys — failure_class (canon factory verdicts) and error_class
+# (execution-error taxonomy) — a failure carries whichever applies, never a
+# remapped value.
+#
+# Schema rule: strict YAML — all keys required; unknown keys forbidden.
+# Validated by tools/lint-state.mjs.
+# =============================================================================
+
+state_version: 1                    # schema version; bump on schema change
+
+# --- Identity & lineage (E.2 chaining family) --------------------------------
+trace_id: null                      # <id> — X-LiteLLM-Trace-Id; null under subscription regime
+run_id: null                        # <ADW run id> — chaining family (G11 reconciliation)
+parent_trace_id: null               # <id|null>
+prior_step_refs: []                 # chaining family
+session_id: null                    # UUID of this execution thread
+
+# --- Contract binding ----------------------------------------------------------
+task_contract: null                 # the contract file this state serves (e.g. task-auth.md)
+contract_id: null                   # <id> — must equal the contract's manifest.contract_id
+worktrunk_path: null                # absolute path of this worktree
+branch: null                        # worktree branch name
+
+# --- Status ----------------------------------------------------------------------
+status: in_progress                 # in_progress | blocked | complete | failed
+position:
+  phase: ingestion                  # ingestion | resolution | validation
+  step: null                        # last verified step (free text)
+must_haves_status: []               # per-contract checklist state
+
+# --- Resolution record -----------------------------------------------------------
+resolved_invariants: []             # canon key: invariants proven, with proof instrument
+#  - invariant: "Session schema migrated without violating gravity.md"
+#    proof: "type-checker green, commit <sha>"
+active_blockers: []                 # canon key: open blockers with class
+#  - blocker: "Vendor webhook requires an idempotency wrapper not yet built"
+#    needs: "promises.md amendment or prerequisite task"
+artifact_pointers: []               # chaining family: produced artifacts (paths/SHAs)
+tool_trace: []                      # canon key: destructive actions & schema queries (ordered, summary form)
+#  - ts: "2026-08-04T13:22:10Z"
+#    tool: mcp-fileWrite
+#    action: "created src/server/auth/session.ts"
+next_action: null                   # canon key: resume instruction for the next executor
+
+# --- FinOps -----------------------------------------------------------------------
+finops:
+  regime: subscription              # gateway | subscription
+  tokens_consumed: 0
+  gateway_status: ok                # ok | severed
+
+# --- Dual failure vocabulary (never remap; carry whichever applies) -----------------
+failure_class: null                 # canon verdicts: type_error | test_failure | timeout |
+                                    #   budget_severance | loop_detected | manifold_conflict | scope_denial | null
+error_class: null                   # execution errors (§4.4 routing): permission | file_not_found |
+                                    #   syntax | rate_limit | timeout | edit_mismatch | null
