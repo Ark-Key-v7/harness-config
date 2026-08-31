@@ -132,6 +132,31 @@ observable condition that makes the item activatable — not a suggestion.
 - **Activation trigger:** first task needing LSP-grade navigation (Serena) or library docs (Context7) — agent-judged, surfaced via tool-intake.
 - **Integration path:** install adapter → curate servers through `lint-mcp.mjs` → project `.mcp.json`.
 
+### §D.14 AsyncReview — the Stage-0 semantic pass (third local tool)
+- **Canon:** CI/CD Integration Engine §2.3 — "The agent must trigger
+  AsyncReview, Semgrep, and Betterleaks locally"; AsyncReview "runs against
+  the active worktree to catch semantic drift and logical errors in
+  isolation." Semgrep + Betterleaks lanes are LIVE (WP11); this lane is not.
+- **Intake findings (tool-intake, 2026-08):** AsyncReview (AsyncFuncAI, MIT)
+  is an agentic RLM reviewer driven via `npx asyncreview review --url
+  <github-pr>`; its engine is the Gemini API (`GEMINI_API_KEY` required) and
+  it verifies findings in a recursive Python REPL sandbox. Two consequences:
+  (1) it is an API-billed engine — adopting it fires the §D.10 life event,
+  and recursive reviewers are exactly the cost-explosion class §6.4's
+  circuit breaker exists for, so no un-gated Gemini key; (2) its shipped
+  interface reviews GitHub PRs by URL, not a local worktree — canon's
+  Stage-0-local phrasing needs a wrapper or a ratified adaptation.
+- **Activation trigger:** §D.10 gateway adoption (first API-billed engine),
+  OR ratification of the subscription-governed alternative below.
+- **Prerequisites:** exact npx pin (`--ignore-scripts`, `package-pins.json`
+  entry); gateway budget ceiling; container confinement (§6.6 Mandate 1 —
+  the tool executes code); GITHUB_TOKEN scoping for private repos.
+- **Integration path:** intake WP → preflight gains lane 4 (`--semantic`).
+  Ratified alternative on the table: the capability is law, not the vendor —
+  the reviewer seat (pr-review skill, subscription-governed engine) can hold
+  the Stage-0 semantic seat until AsyncReview clears its gates. Record the
+  decision here when made.
+
 ---
 
 *Maintenance rule: any status flip (deferred → pilot → live) updates this

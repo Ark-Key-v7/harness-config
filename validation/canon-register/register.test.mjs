@@ -47,7 +47,7 @@ for (const s of skills) ok(`register covers skill ${s}`, register.includes(s));
 
 // --- Deferred half: every §D section is complete -----------------------------------
 const sections = register.match(/### §D\.\d+ [^\n]+/g) ?? [];
-ok("register has §D.1–§D.13", sections.length === 13, `found ${sections.length}`);
+ok("register has §D.1–§D.14", sections.length === 14, `found ${sections.length}`);
 const deferredBody = register.split("## Deferred register")[1] ?? "";
 const dBlocks = deferredBody.split(/(?=### §D\.\d+)/).filter((b) => b.startsWith("###"));
 for (const b of dBlocks) {

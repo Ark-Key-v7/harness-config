@@ -42,7 +42,8 @@ canon's own assignment — not machinery).
 | Canon element | Rig surface | Status |
 |---|---|---|
 | Stage 0 local pre-flight (Semgrep SAST floor before commit) | `bin/preflight.mjs` + `templates/semgrep/base.yml` (WP11) | LIVE |
-| Stage 0 Betterleaks secrets lane | preflight warns until adopted | PARTIAL (register §D.6) |
+| Stage 0 Betterleaks secrets lane | preflight lane 3 (dialect-probed) | LIVE (pin pending, register §D.6) |
+| Stage 0 AsyncReview semantic pass | — (intake findings recorded) | DEFERRED (register §D.14) |
 | Stage 0 Podman/Daytona sandbox confinement | harness-level brakes only: `extensions/bash-guard.ts`, `extensions/sandbox-guard.ts` | PARTIAL (register §D.2) |
 | Stage 1 deterministic gates (Fallow, ESLint, tsc, bun test; Blacksmith/Hetzner hardware) | — | DEFERRED (register §D.1) |
 | Stage 2 agent-adversarial review (PR-Agent via LiteLLM, .pr_agent.toml; open-code-review pilot; weekly CodeQL) | — | DEFERRED (register §D.1) |
