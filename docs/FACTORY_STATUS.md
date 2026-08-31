@@ -54,3 +54,21 @@ Lives in `docs/GOVERNANCE_PLANE_SPEC.md` §6 — statuses current as of this tag
 ## Regeneration
 
 After any rig change that alters the ledger above: update this file in the same commit (the `rig-change` skill's Step 6 checklist points here).
+
+## WP11 — Refinery local lane + capability register + canon map (v2.2.0)
+
+- `bin/preflight.mjs` + `templates/semgrep/base.yml`: Stage-0 local pre-flight
+  (canon §6.3) — Semgrep injection floor + contract lane before every commit;
+  Betterleaks lane warns until §D.6 adoption. `skills/pr-review/` v1.1.0 now
+  REQUIRES the preflight trail before the Ten-Marks pass (Stage-4 trail-first law).
+- `bin/check-activations.mjs` + `docs/activation-triggers.json`: deferred
+  register triggers surface automatically at onboarding (T1–T4); the agent
+  surfaces, the human ratifies — never autonomous integration.
+- `docs/CAPABILITY_REGISTER.md`: integrated inventory + formalized deferred
+  register (§D.1–§D.13). **Supersedes the deferred-tools register above**
+  (GOVERNANCE_PLANE_SPEC §6 remains the historical plan).
+- `docs/CANON_MAP.md`: canon → surface → status index. Canon is referenced,
+  never chunked into rig docs (L5).
+- `bin/onboard-project.mjs` v2: activation check after placement;
+  `--brownfield` flag; preflight reminder in the handoff print.
+- Drivers: `validation/refinery-lane/`, `validation/canon-register/`.

@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 /**
  * onboard-project.mjs — WP10 TMD onboarding: fresh-project procedure.
+ * (v2.1 paths; WP11 adds the deferred-register activation check.)
  *
  * Executes the mechanical phases of onboarding a product repository to the
  * governance plane (spec WP10):
@@ -11,7 +12,11 @@
  *     the WP3 append-system projection).
  *   Projection: the committed WP3 projection is copied VERBATIM into
  *     .pi/append-system.md (L5 — referenced, never regenerated here; drift
- *     detection stays with tools/check-projections.mjs in the rig).
+ *     detection stays with bin/check-projections.mjs in the rig).
+ *   Activation check (WP11): after placement, evaluate the deferred
+ *     register's machine-readable triggers (docs/activation-triggers.json)
+ *     and print ACTIVATION NOTICEs. Advisory only — the agent surfaces,
+ *     the human ratifies (§5.4 / Meta-Harness).
  *
  * What this tool deliberately does NOT do (human + agent work, then human
  * ratification — spec WP10 phases 2 and 4):
@@ -24,7 +29,7 @@
  * Fail-closed: never overwrites an existing file (a re-run against an
  * onboarded project aborts, protecting human-filled Zone C content).
  *
- * Usage: node bin/onboard-project.mjs --target <project-dir>
+ * Usage: node bin/onboard-project.mjs --target <project-dir> [--brownfield]
  * Exit 0 = onboarding scaffolding complete. Exit 1 = refused (with reason).
  */
 
@@ -38,16 +43,19 @@ const RIG = join(HERE, "..");
 
 function arg(flag) {
   const i = process.argv.indexOf(flag);
-  return i >= 0 ? process.argv[i + 1] : null;
+  if (i < 0) return null;
+  const next = process.argv[i + 1];
+  return next && !next.startsWith("--") ? next : null;
 }
 const TARGET = arg("--target");
+const BROWNFIELD = process.argv.includes("--brownfield");
 
 function fail(msg) {
   console.error(`ONBOARDING REFUSED: ${msg}`);
   process.exit(1);
 }
 
-if (!TARGET) fail("usage: node bin/onboard-project.mjs --target <project-dir>");
+if (!TARGET) fail("usage: node bin/onboard-project.mjs --target <project-dir> [--brownfield]");
 const ROOT = resolve(TARGET);
 if (!existsSync(ROOT)) fail(`target directory does not exist: ${ROOT}`);
 
@@ -118,6 +126,12 @@ console.log(`ONBOARDED (scaffolding): ${ROOT}`);
 console.log(`  placed: ${placed} items — AGENTS.md, .tmd/ (5), .pi/ (5), .agents/ (profiles, skills, schemas, tasks/)`);
 console.log(`  projection: append-system.md at source_head ${head}`);
 console.log(`  validation: lint-tmd (template mode) PASS, lint-mcp PASS`);
+
+// --- Activation check (WP11): surface fired deferred-register triggers ------------
+const act = run("check-activations.mjs", ["--target", ROOT, ...(BROWNFIELD ? ["--brownfield"] : [])]);
+if (act.code === 2) fail(`activation machinery broken:\n${act.out}`);
+if (act.out.trim()) console.log(`\n${act.out.trim()}`);
+
 console.log(`
 Remaining phases are human + agent work, then human ratification (spec WP10):
 
@@ -131,4 +145,6 @@ Remaining phases are human + agent work, then human ratification (spec WP10):
 
   Then, per task: draft a contract in .agents/tasks/ from the rig's
   templates/task-contract.md, validate with lint-contract.mjs --gravity,
-  and resolve scope with contract-scope.mjs before any worker boots.`);
+  and resolve scope with contract-scope.mjs before any worker boots.
+  Before every commit: node ~/.pi/agent/bin/preflight.mjs --staged
+  (Refinery Stage 0 — the local pre-flight lane, canon §6.3).`);

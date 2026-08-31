@@ -77,3 +77,30 @@ Deferred tools stay deferred until their gates fire.
   collision or a config issue; don't click past it, fix the cause.
 - You're about to bypass a check "just this once" → that's the exact moment
   the rig is earning its keep. Stop, resolve, proceed.
+
+## Before every commit (product repos)
+
+`node ~/.pi/agent/bin/preflight.mjs --staged` — Refinery Stage 0: Semgrep
+injection floor + contract lint. BLOCKED means resolve, never force.
+A Betterleaks WARN is a known, tracked gap (register §D.6) — for now.
+
+## Life events that open the register
+
+`docs/CAPABILITY_REGISTER.md` holds every deferred tool and its activation
+trigger. Most triggers fire automatically as ACTIVATION NOTICEs when you
+onboard a project. Four are life events only you can see — when one happens,
+open the register and run `/rig-change`:
+
+1. **First product repo finishes onboarding** → §D.1/§D.2 (CI gates, sandbox).
+2. **You adopt any API-billed model** (non-subscription seat) → §D.10 (gateway).
+3. **You decide to move to Hetzner** → §D.11 (perimeter) + §D.12 (durability).
+4. **A task needs LSP navigation or library docs** → §D.13 (curated MCP stack).
+
+Rule of thumb: if a NOTICE or this list points at the register, the answer
+is a rig-change WP — never an ad-hoc install.
+
+## Where does canon live?
+
+`docs/CANON_MAP.md` — the index from every canon section to its rig surface
+and its status (LIVE / PARTIAL / DEFERRED / SOP). Canon text itself is never
+copied into rig docs; the map is how you find what acts on it.

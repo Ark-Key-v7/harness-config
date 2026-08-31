@@ -1,0 +1,48 @@
+# Refinery Stage 0 — rig base SAST ruleset (the injection floor).
+# Canon: CI/CD Integration Engine §2.4/§2.5 ("Semgrep analyzes the code's
+# structure to mathematically guarantee no injection vulnerabilities or
+# forbidden import paths exist") + §6.3 local pre-flight.
+# This file is rig law. Project rules stack on top via a committed
+# .semgrep.yml in the product repo (config-as-code). ERROR blocks, WARNING
+# warns. Keep this ruleset small and certain — precision protects the gate.
+rules:
+  - id: js-eval-usage
+    pattern: eval(...)
+    message: "eval() executes dynamically constructed strings — forbidden by the Stage-0 injection floor."
+    languages: [javascript, typescript]
+    severity: ERROR
+
+  - id: js-new-function
+    pattern: new Function(...)
+    message: "new Function() is eval by another name — forbidden by the Stage-0 injection floor."
+    languages: [javascript, typescript]
+    severity: ERROR
+
+  - id: js-shell-exec-interpolation
+    patterns:
+      - pattern: exec(`...${$X}...`, ...)
+    message: "shell command built by string interpolation — command-injection vector. Use execFile/spawn with an argument array."
+    languages: [javascript, typescript]
+    severity: ERROR
+
+  - id: js-dynamic-query-interpolation
+    patterns:
+      - pattern: $Q(`...${$X}...`, ...)
+      - metavariable-regex:
+          metavariable: $Q
+          regex: (?i).*(query|execute|raw|exec_sql).*
+    message: "database query built by string interpolation — SQL-injection vector. Use parameterized queries (and note: the Convex mandate forbids raw SQL entirely)."
+    languages: [javascript, typescript]
+    severity: ERROR
+
+  - id: js-shell-exec-any
+    pattern: child_process.exec($CMD, ...)
+    message: "child_process.exec routes through a shell — prefer execFile/spawn with argument arrays. Blocking only when interpolated (see js-shell-exec-interpolation)."
+    languages: [javascript, typescript]
+    severity: WARNING
+
+  - id: react-dangerously-set-html
+    pattern: dangerouslySetInnerHTML={...}
+    message: "raw HTML injection surface — requires sanitization evidence at review (Stage-4 rubric will ask)."
+    languages: [javascript, typescript]
+    severity: WARNING

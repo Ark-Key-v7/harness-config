@@ -1,0 +1,38 @@
+{
+  "$comment": "WP11 — machine-readable activation triggers for the deferred register. docs/CAPABILITY_REGISTER.md carries the MEANING (canon source, prerequisites, integration path); this file carries only the DETECTION LOGIC, evaluated by bin/check-activations.mjs. Every id must appear in the register (driver-enforced). checks are AND-combined. types: not_harness | exists | flag | always.",
+  "triggers": [
+    {
+      "id": "T1-refinery-stage1-ci",
+      "register_anchor": "§D.1",
+      "checks": [
+        { "type": "not_harness" },
+        { "type": "exists", "path": "package.json" }
+      ],
+      "notice": "First product repo under governance: the Refinery's Stage-1 deterministic gates (ESLint/tsc/bun test in CI) and the Stage-2 PR-Agent lane are now ACTIVATABLE. Open docs/CAPABILITY_REGISTER.md §D.1 and run the rig-change skill before the first feature PR."
+    },
+    {
+      "id": "T2-brownfield-archaeology",
+      "register_anchor": "§D.4",
+      "checks": [
+        { "type": "flag", "name": "--brownfield" }
+      ],
+      "notice": "Brownfield target declared: the archaeology stack gate has fired — GitNexus license decision (or bake-off), jCodeMunch MCP, AMUX read-only swarm. Open docs/CAPABILITY_REGISTER.md §D.4 BEFORE any write-agent is unleashed (canon §7.2)."
+    },
+    {
+      "id": "T3-convex-backend",
+      "register_anchor": "§D.3",
+      "checks": [
+        { "type": "exists", "path": "convex" }
+      ],
+      "notice": "Convex backend detected: the Convex Mandate applies NOW (agent edits convex/schema.ts only; ORM ban; deployment ban — canon §6.2). Stage-3 ephemeral preview lane becomes activatable — see docs/CAPABILITY_REGISTER.md §D.3."
+    },
+    {
+      "id": "T4-lavish-phase2-review",
+      "register_anchor": "§D.5",
+      "checks": [
+        { "type": "always" }
+      ],
+      "notice": "Phase-2 topological mapping begins: the Lavish A2UI review surface is DEFERRED — conduct the manifold review via diff until activated (docs/CAPABILITY_REGISTER.md §D.5)."
+    }
+  ]
+}
