@@ -8,7 +8,7 @@
  * someone hand-edited a projection or changed a template without
  * regenerating (L4/L5 violation).
  *
- * Usage: node tools/check-projections.mjs
+ * Usage: node bin/check-projections.mjs
  */
 
 import { mkdtempSync, readFileSync, readdirSync, existsSync } from "node:fs";
@@ -43,7 +43,7 @@ for (const name of ["append-system.md", "pi-settings.json"]) {
   const b = join(tmp, "pi", name);
   if (!existsSync(b)) fail(`generator did not emit ${name}`);
   if (readFileSync(a, "utf8") !== readFileSync(b, "utf8")) {
-    fail(`${name} differs from a fresh regeneration. Do NOT hand-edit projections — change templates/ and re-run: node tools/generate-projections.mjs, then commit both.`);
+    fail(`${name} differs from a fresh regeneration. Do NOT hand-edit projections — change templates/ and re-run: node bin/generate-projections.mjs, then commit both.`);
   }
 }
 console.log("OK — committed projections match regeneration (no drift)");

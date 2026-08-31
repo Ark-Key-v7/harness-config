@@ -12,7 +12,7 @@
  * - NO XML angle brackets anywhere in frontmatter or metadata (E.6)
  * - body carries the Act → Observe → Exit procedure form
  *
- * Usage: node tools/lint-skills.mjs [DIR]
+ * Usage: node bin/lint-skills.mjs [DIR]
  * Exit 0 = valid. Exit 1 = invalid (each violation printed).
  */
 
@@ -22,7 +22,7 @@ import { fileURLToPath } from "node:url";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, "..");
-const DIR = process.argv[2] && !process.argv[2].startsWith("--") ? process.argv[2] : join(ROOT, "templates", "agents", "skills");
+const DIR = process.argv[2] && !process.argv[2].startsWith("--") ? process.argv[2] : join(ROOT, "skills");
 
 const KEBAB = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 let violations = 0;

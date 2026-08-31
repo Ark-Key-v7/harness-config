@@ -8,7 +8,7 @@
  * sub-graph / reviewer none); minimal loadout (scout & reviewer carry no
  * write/edit in tool_allowlist); Kimi-subscription mapping stated.
  *
- * Usage: node tools/lint-profiles.mjs [DIR]   (default: templates/agents/profiles)
+ * Usage: node bin/lint-profiles.mjs [DIR]   (default: templates/agents/profiles)
  * Exit 0 = valid. Exit 1 = invalid (each violation printed).
  */
 

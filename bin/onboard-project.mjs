@@ -24,7 +24,7 @@
  * Fail-closed: never overwrites an existing file (a re-run against an
  * onboarded project aborts, protecting human-filled Zone C content).
  *
- * Usage: node tools/onboard-project.mjs --target <project-dir>
+ * Usage: node bin/onboard-project.mjs --target <project-dir>
  * Exit 0 = onboarding scaffolding complete. Exit 1 = refused (with reason).
  */
 
@@ -47,7 +47,7 @@ function fail(msg) {
   process.exit(1);
 }
 
-if (!TARGET) fail("usage: node tools/onboard-project.mjs --target <project-dir>");
+if (!TARGET) fail("usage: node bin/onboard-project.mjs --target <project-dir>");
 const ROOT = resolve(TARGET);
 if (!existsSync(ROOT)) fail(`target directory does not exist: ${ROOT}`);
 
@@ -68,7 +68,7 @@ const PLACEMENTS = [
 ];
 const DIR_COPIES = [
   ["templates/agents/profiles", ".agents/profiles"],
-  ["templates/agents/skills", ".agents/skills"],
+  ["skills", ".agents/skills"],
   ["templates/agents/schemas", ".agents/schemas"],
 ];
 
@@ -101,7 +101,7 @@ mkdirSync(join(ROOT, ".agents", "tasks"), { recursive: true });
 // --- Validate what we placed (the layer must boot clean) ----------------------------
 const run = (tool, args) => {
   try {
-    const out = execFileSync(process.execPath, [join(RIG, "tools", tool), ...args], { cwd: ROOT, encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] });
+    const out = execFileSync(process.execPath, [join(RIG, "bin", tool), ...args], { cwd: ROOT, encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] });
     return { code: 0, out };
   } catch (err) {
     return { code: err.status ?? 1, out: String(err.stdout ?? "") + String(err.stderr ?? "") };

@@ -12,7 +12,7 @@
  * through untouched — genesis fills identity, never pre-fills resolution.
  *
  * Usage:
- *   node tools/state-genesis.mjs --schema .agents/schemas/state.schema.yaml \
+ *   node bin/state-genesis.mjs --schema .agents/schemas/state.schema.yaml \
  *     --contract task-auth.md --contract-id task-auth-session-crud \
  *     --worktree /abs/path --branch feat/auth --out STATE.md
  *

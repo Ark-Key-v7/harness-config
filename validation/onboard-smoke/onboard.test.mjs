@@ -44,7 +44,7 @@ function check(label, cond) {
 }
 function run(script, args, allowFail = false) {
   try {
-    const out = execFileSync(process.execPath, [join(REPO, "tools", script), ...args], { cwd: PROJ, encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] });
+    const out = execFileSync(process.execPath, [join(REPO, "bin", script), ...args], { cwd: PROJ, encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] });
     return { code: 0, out };
   } catch (err) {
     if (allowFail) return { code: err.status ?? 1, out: String(err.stdout ?? "") + String(err.stderr ?? "") };

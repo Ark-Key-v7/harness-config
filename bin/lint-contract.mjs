@@ -14,7 +14,7 @@
  * a registered node in the Sub-Graph Registry (a contract with no registered
  * sub-graph is invalid and must not spawn).
  *
- * Usage: node tools/lint-contract.mjs <contract.md> [--gravity .tmd/gravity.md]
+ * Usage: node bin/lint-contract.mjs <contract.md> [--gravity .tmd/gravity.md]
  * Exit 0 = valid. Exit 1 = invalid (each violation printed).
  */
 
@@ -29,7 +29,7 @@ let violations = 0;
 const bad = (m) => { violations++; console.error(`INVALID | ${m}`); };
 
 if (!FILE || !existsSync(FILE)) {
-  console.error("usage: node tools/lint-contract.mjs <contract.md> [--gravity .tmd/gravity.md]");
+  console.error("usage: node bin/lint-contract.mjs <contract.md> [--gravity .tmd/gravity.md]");
   process.exit(1);
 }
 const text = readFileSync(FILE, "utf8");

@@ -14,7 +14,7 @@
  * never inside .tmd/, .agents/, or .pi/ (it is per-worktree, never shared,
  * never committed to the product repository).
  *
- * Usage: node tools/lint-state.mjs <STATE.md>
+ * Usage: node bin/lint-state.mjs <STATE.md>
  * Exit 0 = valid. Exit 1 = violations (each printed).
  */
 
@@ -26,7 +26,7 @@ let violations = 0;
 const bad = (m) => { violations++; console.error(`INVALID | ${m}`); };
 
 if (!FILE || !existsSync(FILE)) {
-  console.error("usage: node tools/lint-state.mjs <STATE.md>");
+  console.error("usage: node bin/lint-state.mjs <STATE.md>");
   process.exit(1);
 }
 

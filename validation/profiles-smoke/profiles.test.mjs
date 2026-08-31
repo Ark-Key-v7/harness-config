@@ -19,8 +19,8 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO = join(HERE, "..", "..");
 
 const FIX = mkdtempSync(join(tmpdir(), "prof-fix-"));
-mkdirSync(join(FIX, "tools"), { recursive: true });
-copyFileSync(join(REPO, "tools", "lint-profiles.mjs"), join(FIX, "tools", "lint-profiles.mjs"));
+mkdirSync(join(FIX, "bin"), { recursive: true });
+copyFileSync(join(REPO, "bin", "lint-profiles.mjs"), join(FIX, "bin", "lint-profiles.mjs"));
 cpSync(join(REPO, "templates", "agents", "profiles"), join(FIX, "templates", "agents", "profiles"), { recursive: true });
 
 const PROFILES = join(FIX, "templates", "agents", "profiles");
@@ -34,7 +34,7 @@ function check(label, cond) {
 }
 function lint(allowFail = false) {
   try {
-    const out = execFileSync(process.execPath, [join(FIX, "tools", "lint-profiles.mjs"), PROFILES], { cwd: FIX, encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] });
+    const out = execFileSync(process.execPath, [join(FIX, "bin", "lint-profiles.mjs"), PROFILES], { cwd: FIX, encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] });
     return { code: 0, out };
   } catch (err) {
     if (allowFail) return { code: err.status ?? 1, out: String(err.stdout ?? "") + String(err.stderr ?? "") };

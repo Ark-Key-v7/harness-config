@@ -11,7 +11,7 @@
  *   (4) The assertion list is APPEND-ONLY per project — with --base, every
  *       assert name in the base file must still be present.
  *
- * Usage: node tools/lint-wt-hook.mjs <wt.toml> [--base <previous wt.toml>]
+ * Usage: node bin/lint-wt-hook.mjs <wt.toml> [--base <previous wt.toml>]
  * Exit 0 = contract satisfied. Exit 1 = violations (each printed).
  */
 
@@ -26,7 +26,7 @@ let violations = 0;
 const bad = (m) => { violations++; console.error(`INVALID | ${m}`); };
 
 if (!FILE || !existsSync(FILE)) {
-  console.error("usage: node tools/lint-wt-hook.mjs <wt.toml> [--base <previous>]");
+  console.error("usage: node bin/lint-wt-hook.mjs <wt.toml> [--base <previous>]");
   process.exit(1);
 }
 const text = readFileSync(FILE, "utf8");

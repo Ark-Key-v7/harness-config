@@ -11,7 +11,7 @@
  * Fails closed: unregistered sub-graph, missing registry, malformed file —
  * all exit 1. The guard reads only this resolved artifact (WP2 design).
  *
- * Usage: node tools/contract-scope.mjs --contract <task.md> --gravity <.tmd/gravity.md> --out <.pi/scope.json>
+ * Usage: node bin/contract-scope.mjs --contract <task.md> --gravity <.tmd/gravity.md> --out <.pi/scope.json>
  * Exit 0 = scope written. Exit 1 = resolution failed (nothing written).
  */
 

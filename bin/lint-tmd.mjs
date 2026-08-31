@@ -6,7 +6,7 @@
  * zone structure via WP4 three-zone contract), L4 (last_verified = SHA).
  *
  * Usage:
- *   node tools/lint-tmd.mjs [DIR] [--strict]
+ *   node bin/lint-tmd.mjs [DIR] [--strict]
  *     DIR      manifold directory (default: templates/tmd)
  *     --strict project-manifold mode: headers must be REAL (semver version,
  *              40-hex SHA last_verified) and no TEMPLATE_VALUE_REQUIRED slots

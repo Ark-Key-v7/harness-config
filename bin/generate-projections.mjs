@@ -20,7 +20,7 @@
  * variance source is the source HEAD, passed explicitly or read from git.
  *
  * Usage:
- *   node tools/generate-projections.mjs [--out DIR] [--source-head SHA]
+ *   node bin/generate-projections.mjs [--out DIR] [--source-head SHA]
  *
  * Two-part cache composition (v1.2 §2.4): projections are the STABLE part
  * only. Per-turn dynamic content (memory injection, scope state) is owned by
@@ -52,7 +52,7 @@ function gitHead() {
     // them would make every commit stale the marker (v1.2 §2.4: the marker
     // tracks the SOURCE's head). Must stay in lockstep with
     // assert-projection-fresh.mjs's expectation.
-    return execSync("git log -1 --format=%H -- templates/tmd templates/agents/profiles templates/agents/skills tools/generate-projections.mjs", { cwd: ROOT, stdio: ["ignore", "pipe", "ignore"] })
+    return execSync("git log -1 --format=%H -- templates/tmd templates/agents/profiles skills bin/generate-projections.mjs", { cwd: ROOT, stdio: ["ignore", "pipe", "ignore"] })
       .toString()
       .trim();
   } catch {
@@ -78,7 +78,7 @@ function listMd(dir) {
 
 const tmdDir = join(ROOT, "templates", "tmd");
 const profilesDir = join(ROOT, "templates", "agents", "profiles");
-const skillsDir = join(ROOT, "templates", "agents", "skills");
+const skillsDir = join(ROOT, "skills");
 const manifoldFiles = listMd(tmdDir);
 const profileFiles = listMd(profilesDir);
 
@@ -102,7 +102,7 @@ const skills = listSkills(skillsDir);
 
 // --- Emit: append-system.md (STABLE part only) --------------------------------
 const generatedBanner = (name) =>
-  `<!-- GENERATED FILE — do not hand-edit (WP3, L4). Regenerate: node tools/generate-projections.mjs -->\n` +
+  `<!-- GENERATED FILE — do not hand-edit (WP3, L4). Regenerate: node bin/generate-projections.mjs -->\n` +
   `<!-- source_head: ${SOURCE_HEAD} -->\n` +
   `<!-- projection: ${name} -->\n`;
 

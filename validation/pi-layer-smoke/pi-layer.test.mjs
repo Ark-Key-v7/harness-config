@@ -20,7 +20,7 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO = join(HERE, "..", "..");
 
 const FIX = mkdtempSync(join(tmpdir(), "pilayer-fix-"));
-copyFileSync(join(REPO, "tools", "lint-mcp.mjs"), join(FIX, "lint-mcp.mjs"));
+copyFileSync(join(REPO, "bin", "lint-mcp.mjs"), join(FIX, "lint-mcp.mjs"));
 
 let failures = 0;
 let checks = 0;

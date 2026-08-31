@@ -22,7 +22,7 @@ const REPO = join(HERE, "..", "..");
 
 const FIX = mkdtempSync(join(tmpdir(), "statehook-fix-"));
 for (const t of ["lint-state.mjs", "lint-wt-hook.mjs", "state-genesis.mjs"]) {
-  copyFileSync(join(REPO, "tools", t), join(FIX, t));
+  copyFileSync(join(REPO, "bin", t), join(FIX, t));
 }
 const SCHEMA = join(REPO, "templates", "agents", "schemas", "state.schema.yaml");
 const WT = join(REPO, "templates", "wt.toml");

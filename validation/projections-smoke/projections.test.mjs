@@ -17,13 +17,13 @@ import { fileURLToPath } from "node:url";
 import { execFileSync } from "node:child_process";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
-const REPO_TOOLS = join(HERE, "..", "..", "tools");
+const REPO_TOOLS = join(HERE, "..", "..", "bin");
 
 // --- Fixture: a mini harness-config repo in tmp -------------------------------
 const FIX = mkdtempSync(join(tmpdir(), "proj-fix-"));
-mkdirSync(join(FIX, "tools"), { recursive: true });
+mkdirSync(join(FIX, "bin"), { recursive: true });
 for (const s of ["generate-projections.mjs", "check-projections.mjs", "assert-projection-fresh.mjs"]) {
-  copyFileSync(join(REPO_TOOLS, s), join(FIX, "tools", s));
+  copyFileSync(join(REPO_TOOLS, s), join(FIX, "bin", s));
 }
 
 let failures = 0;
@@ -35,7 +35,7 @@ function check(label, cond) {
 }
 function run(script, args = [], allowFail = false) {
   try {
-    const out = execFileSync(process.execPath, [join(FIX, "tools", script), ...args], {
+    const out = execFileSync(process.execPath, [join(FIX, "bin", script), ...args], {
       cwd: FIX, encoding: "utf8", stdio: ["ignore", "pipe", "pipe"],
     });
     return { code: 0, out };

@@ -8,7 +8,7 @@
  * HEAD blocks the spawn.
  *
  * Usage:
- *   node tools/assert-projection-fresh.mjs [--expected SHA] [--file PATH]
+ *   node bin/assert-projection-fresh.mjs [--expected SHA] [--file PATH]
  *
  * Defaults: --expected = `git rev-parse HEAD` at repo root; checks
  * projections/pi/append-system.md and projections/pi/pi-settings.json.
@@ -41,7 +41,7 @@ function git(args) {
 // not the repo HEAD. Commits that don't touch inputs (docs, tools, drivers)
 // must not stale the projection; a projections-refresh commit must not stale
 // itself. Explicit --expected overrides for drivers and CI.
-const EXPECTED = argValue("--expected") ?? git("log -1 --format=%H -- templates/tmd templates/agents/profiles templates/agents/skills tools/generate-projections.mjs");
+const EXPECTED = argValue("--expected") ?? git("log -1 --format=%H -- templates/tmd templates/agents/profiles skills bin/generate-projections.mjs");
 
 const files = argValue("--file")
   ? [argValue("--file")]

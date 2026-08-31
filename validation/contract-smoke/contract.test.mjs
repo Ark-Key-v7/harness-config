@@ -22,8 +22,8 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO = join(HERE, "..", "..");
 
 const FIX = mkdtempSync(join(tmpdir(), "contract-fix-"));
-mkdirSync(join(FIX, "tools"), { recursive: true });
-for (const t of ["lint-contract.mjs", "contract-scope.mjs"]) copyFileSync(join(REPO, "tools", t), join(FIX, "tools", t));
+mkdirSync(join(FIX, "bin"), { recursive: true });
+for (const t of ["lint-contract.mjs", "contract-scope.mjs"]) copyFileSync(join(REPO, "bin", t), join(FIX, "bin", t));
 const TEMPLATE = join(REPO, "templates", "task-contract.md");
 
 // Shim for the WP2 guard import
@@ -45,7 +45,7 @@ function check(label, cond) {
 }
 function run(script, args, allowFail = false) {
   try {
-    const out = execFileSync(process.execPath, [join(FIX, "tools", script), ...args], { cwd: FIX, encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] });
+    const out = execFileSync(process.execPath, [join(FIX, "bin", script), ...args], { cwd: FIX, encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] });
     return { code: 0, out };
   } catch (err) {
     if (allowFail) return { code: err.status ?? 1, out: String(err.stdout ?? "") + String(err.stderr ?? "") };

@@ -12,7 +12,7 @@
  *   not declare roots/sampling/logging (MCP 2026-07-28 deprecations).
  * - Empty is valid: { "mcpServers": {} } passes.
  *
- * Usage: node tools/lint-mcp.mjs <path-to-.mcp.json> [--allow-http]
+ * Usage: node bin/lint-mcp.mjs <path-to-.mcp.json> [--allow-http]
  * Exit 0 = curated. Exit 1 = violations (each printed).
  */
 
@@ -26,7 +26,7 @@ let violations = 0;
 const bad = (m) => { violations++; console.error(`INVALID | ${m}`); };
 
 if (!FILE || !existsSync(FILE)) {
-  console.error("usage: node tools/lint-mcp.mjs <.mcp.json> [--allow-http]");
+  console.error("usage: node bin/lint-mcp.mjs <.mcp.json> [--allow-http]");
   process.exit(1);
 }
 
