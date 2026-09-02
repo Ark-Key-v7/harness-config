@@ -1,0 +1,76 @@
+--- dist/index.js.bak	2026-09-02 21:34:13.354223379 +0200
++++ dist/index.js	2026-09-02 21:35:06.962065574 +0200
+@@ -1792,6 +1792,11 @@
+       input: { hint: "on|off|toggle" }
+     },
+     {
++      name: "seat",
++      description: "Switch active pi seat (scout/planner/worker/reviewer/off)",
++      input: { hint: "scout|planner|worker|reviewer|off" }
++    },
++    {
+       name: "export",
+       description: "Export session to an HTML file in the session cwd"
+     },
+@@ -2429,6 +2434,61 @@
+           }
+         });
+         return { stopReason: "end_turn" };
++      }
++      if (cmd === "seat") {
++        const validSeats = ["scout", "planner", "worker", "reviewer"];
++        const arg = (args[0] ?? "").toLowerCase().trim();
++        if (arg && arg !== "off" && !validSeats.includes(arg)) {
++          await this.conn.sessionUpdate({
++            sessionId: session.sessionId,
++            update: {
++              sessionUpdate: "agent_message_chunk",
++              content: {
++                type: "text",
++                text: `Unknown seat "${arg}". Usage: /seat ${validSeats.join("|")}|off`
++              }
++            }
++          });
++          return { stopReason: "end_turn" };
++        }
++        const statePath = join(homedir(), ".pi", "agent", "seat-state.json");
++        const profilesDir = process.env.RIG_PROFILES_DIR ? process.env.RIG_PROFILES_DIR : join(homedir(), ".pi", "agent", "templates", "agents", "profiles");
++        let seatState = {};
++        try {
++          seatState = JSON.parse(readFileSync(statePath, "utf8"));
++        } catch {
++        }
++        let text = "";
++        if (!arg || arg === "off") {
++          delete seatState[session.cwd];
++          text = `Seat cleared for ${session.cwd}.`;
++        } else {
++          const profileFile = join(profilesDir, `${arg}.md`);
++          try {
++            readFileSync(profileFile, "utf8");
++            seatState[session.cwd] = arg;
++            text = `Seat set to ${arg} for ${session.cwd}.`;
++          } catch {
++            text = `Profile for seat "${arg}" not found at ${profileFile}. State unchanged. Pull the rig clone (git -C ~/.pi/agent pull --ff-only).`;
++          }
++        }
++        try {
++          mkdirSync(dirname(statePath), { recursive: true });
++          writeFileSync(statePath, JSON.stringify(seatState, null, 2) + "\n", "utf8");
++          if (!text.includes("not found")) {
++            text += " The new seat will take effect on the next agent session.";
++          }
++        } catch (e) {
++          text += ` Failed to write seat state: ${String(e?.message ?? e)}`;
++        }
++        await this.conn.sessionUpdate({
++          sessionId: session.sessionId,
++          update: {
++            sessionUpdate: "agent_message_chunk",
++            content: { type: "text", text }
++          }
++        });
++        return { stopReason: "end_turn" };
+       }
+     }
+     const result = await session.prompt(message, images);
