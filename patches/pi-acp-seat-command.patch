@@ -1,44 +1,71 @@
---- dist/index.js.bak	2026-09-02 21:34:13.354223379 +0200
-+++ dist/index.js	2026-09-02 21:35:06.962065574 +0200
+--- dist/index.js.bak
++++ dist/index.js
 @@ -1792,6 +1792,11 @@
        input: { hint: "on|off|toggle" }
      },
      {
 +      name: "seat",
-+      description: "Switch active pi seat (scout/planner/worker/reviewer/off)",
-+      input: { hint: "scout|planner|worker|reviewer|off" }
++      description: "Switch active pi seat (scout/planner/worker/reviewer/off) or inspect: list / show <seat>",
++      input: { hint: "scout|planner|worker|reviewer|off|list|show <seat>" }
 +    },
 +    {
        name: "export",
        description: "Export session to an HTML file in the session cwd"
      },
-@@ -2429,6 +2434,61 @@
-           }
+@@ -2430,6 +2435,82 @@
          });
          return { stopReason: "end_turn" };
-+      }
+       }
 +      if (cmd === "seat") {
 +        const validSeats = ["scout", "planner", "worker", "reviewer"];
 +        const arg = (args[0] ?? "").toLowerCase().trim();
-+        if (arg && arg !== "off" && !validSeats.includes(arg)) {
-+          await this.conn.sessionUpdate({
-+            sessionId: session.sessionId,
-+            update: {
-+              sessionUpdate: "agent_message_chunk",
-+              content: {
-+                type: "text",
-+                text: `Unknown seat "${arg}". Usage: /seat ${validSeats.join("|")}|off`
-+              }
-+            }
-+          });
-+          return { stopReason: "end_turn" };
-+        }
 +        const statePath = join(homedir(), ".pi", "agent", "seat-state.json");
 +        const profilesDir = process.env.RIG_PROFILES_DIR ? process.env.RIG_PROFILES_DIR : join(homedir(), ".pi", "agent", "templates", "agents", "profiles");
++        const sendSeatText = (text) => this.conn.sessionUpdate({
++          sessionId: session.sessionId,
++          update: {
++            sessionUpdate: "agent_message_chunk",
++            content: { type: "text", text }
++          }
++        }).then(() => ({ stopReason: "end_turn" }));
 +        let seatState = {};
 +        try {
 +          seatState = JSON.parse(readFileSync(statePath, "utf8"));
 +        } catch {
++        }
++        const seatSummary = (seat) => {
++          try {
++            const content = readFileSync(join(profilesDir, `${seat}.md`), "utf8");
++            const m = content.match(/^#\s*PROFILE:\s*\S+\s*\((.+)\)\s*$/m);
++            return m ? m[1] : "(no `# PROFILE:` summary heading found)";
++          } catch {
++            return "(profile MISSING — pull the rig clone)";
++          }
++        };
++        if (arg === "list") {
++          const activeSeat = validSeats.includes(seatState[session.cwd]) ? seatState[session.cwd] : null;
++          const lines = validSeats.map((s) => `${s === activeSeat ? "●" : "○"} ${s} — ${seatSummary(s)}`);
++          return sendSeatText(`Seats (● = active):\n${lines.join("\n")}\n\nSwitch: /seat <name> · Peek full profile: /seat show <name> · Clear: /seat off`);
++        }
++        if (arg === "show") {
++          const target = (args[1] ?? "").toLowerCase().trim();
++          if (!validSeats.includes(target)) {
++            return sendSeatText(`Usage: /seat show <${validSeats.join("|")}>. State unchanged.`);
++          }
++          const profileFile = join(profilesDir, `${target}.md`);
++          let content;
++          try {
++            content = readFileSync(profileFile, "utf8");
++          } catch {
++            return sendSeatText(`Profile for seat "${target}" not found at ${profileFile} — pull the rig clone (git -C ~/.pi/agent pull --ff-only).`);
++          }
++          if (Buffer.byteLength(content) > 16384) {
++            content = Buffer.from(content).subarray(0, 16384).toString("utf8") + "\n\n[profile truncated — exceeded 16KB display cap]";
++          }
++          return sendSeatText(`Profile: ${target} (${profileFile})\n\n${content}`);
++        }
++        if (arg && arg !== "off" && !validSeats.includes(arg)) {
++          return sendSeatText(`Unknown seat "${arg}". Usage: /seat ${validSeats.join("|")}|off|list|show <seat>`);
 +        }
 +        let text = "";
 +        if (!arg || arg === "off") {
@@ -63,14 +90,8 @@
 +        } catch (e) {
 +          text += ` Failed to write seat state: ${String(e?.message ?? e)}`;
 +        }
-+        await this.conn.sessionUpdate({
-+          sessionId: session.sessionId,
-+          update: {
-+            sessionUpdate: "agent_message_chunk",
-+            content: { type: "text", text }
-+          }
-+        });
-+        return { stopReason: "end_turn" };
-       }
++        return sendSeatText(text);
++      }
      }
      const result = await session.prompt(message, images);
+     const stopReason = result === "error" ? session.wasCancelRequested() ? "cancelled" : "end_turn" : result;
