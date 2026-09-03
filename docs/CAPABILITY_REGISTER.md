@@ -27,6 +27,7 @@ skill, a driver proves it, the chain lands it.
 | File-change tracking | Records actuator writes per session | `extensions/file-changes.ts` | outer `validation/` |
 | Memory toggle | Operator-gated memory.md injection (8KB cap) | `extensions/memory-toggle.ts` | `validation/` |
 | Seat switch | `/seat scout\|planner\|worker\|reviewer\|off` — profile injection, human-only (Meta-Harness), 16KB cap | `extensions/seat-switch.ts` | `validation/` |
+| pi-acp /seat bridge | `/seat` in Zed: pi-acp filters extension slash commands, so a native adapter patch carries the seat state the extension reads (idempotent apply, fail-closed on drift) | `patches/pi-acp-seat-command.patch` + `patches/apply-pi-acp-seat-patch.sh` | `validation/pi-acp-patch-smoke/` |
 | Sovereign profiles | scout / planner / worker / reviewer seat law | `templates/agents/profiles/` | `validation/profiles/` |
 | MCP curation gate | Exact pins, stdio-default, deprecated-feature rejection | `bin/lint-mcp.mjs` | `validation/pi-layer/` |
 | Project onboarding | Phase-1 scaffold + self-lint + activation notices | `bin/onboard-project.mjs` + `skills/project-onboard/` | `validation/onboard/` |

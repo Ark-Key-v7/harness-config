@@ -42,7 +42,7 @@ _This document is regenerated against the finished rig at each tagged release. I
 
 ## Deferred-tools register
 
-Lives in `docs/GOVERNANCE_PLANE_SPEC.md` §6 — statuses current as of this tag. Notable: Zed+pi-acp and AionUI are operator-UI **PILOTs** (AionUI gated on the inheritance test); `pi-mcp-adapter` is pinned but **pending install** (activates with the curated MCP stack); BetterDB/Headroom/Ponytail await their gates.
+Lives in `docs/GOVERNANCE_PLANE_SPEC.md` §6 — statuses current as of this tag. Notable: Zed+pi-acp operator UI **validated** (extension commands don't cross ACP; `/seat` bridged via `patches/pi-acp-seat-command.patch` with idempotent apply script + smoke driver); AionUI remains a **PILOT** (gated on the inheritance test); `pi-mcp-adapter` is pinned but **pending install** (activates with the curated MCP stack); BetterDB/Headroom/Ponytail await their gates.
 
 ## Known open decisions (spec §9)
 
