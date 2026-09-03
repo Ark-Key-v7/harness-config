@@ -3,12 +3,13 @@
  * Exit 0 = all pass.
  */
 
-import { copyFileSync, mkdirSync, writeFileSync } from "node:fs";
+import { copyFileSync, mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { join, dirname } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
-const EXTENSION_PATH = join(HERE, "..", "..", "sources", "harness-config", "extensions", "ask-user.ts");
+const EXTENSION_PATH = join(HERE, "ask-user.ts");
 
 // Shim pi package + typebox (minimal Type subset used by the schema).
 const shimDir = join(HERE, "node_modules", "@earendil-works", "pi-coding-agent");
@@ -84,6 +85,52 @@ const exec = tools["ask_user"].execute;
   const ctx = { hasUI: true, ui: { select: async () => { throw new Error("boom"); }, input: async () => { throw new Error("boom"); } } };
   const r = await exec("t6", { question: "Q" }, undefined, undefined, ctx);
   check(r.content[0].text.includes("ask_user failed"), "UI error returns graceful content");
+}
+
+// 7. ACP frontend (session file listed in the pi-acp session map) → prose degrade, dialogs never invoked
+{
+  const tmpHome = mkdtempSync(join(tmpdir(), "ask-user-acp-"));
+  const acpDir = join(tmpHome, ".pi", "pi-acp");
+  mkdirSync(acpDir, { recursive: true });
+  const sessFile = "/fake/sessions/acp-session.jsonl";
+  writeFileSync(join(acpDir, "session-map.json"), JSON.stringify({ version: 1, sessions: { acp1: { sessionId: "acp1", cwd: "/fake", sessionFile: sessFile } } }));
+  const prevHome = process.env.HOME;
+  process.env.HOME = tmpHome;
+  let dialogCalls = 0;
+  try {
+    const ctx = {
+      hasUI: true,
+      sessionManager: { getSessionFile: () => sessFile },
+      ui: { select: async () => { dialogCalls++; return "oops"; }, input: async () => { dialogCalls++; return "oops"; } },
+    };
+    const r = await exec("t7", { question: "ACP question?", options: ["a", "b"] }, undefined, undefined, ctx);
+    check(r.details?.reason === "acp_frontend", "ACP session degrades with reason=acp_frontend", JSON.stringify(r.details));
+    check(dialogCalls === 0, "ACP session never invokes select/input dialogs");
+    check(r.content[0].text.includes("plain chat text") && r.content[0].text.includes("non-ratification"), "ACP degrade carries plain-text + non-ratification guidance");
+  } finally {
+    process.env.HOME = prevHome;
+  }
+}
+
+// 8. Session file NOT in the pi-acp map → normal dialog path (no false positive)
+{
+  const tmpHome = mkdtempSync(join(tmpdir(), "ask-user-tui-"));
+  const acpDir = join(tmpHome, ".pi", "pi-acp");
+  mkdirSync(acpDir, { recursive: true });
+  writeFileSync(join(acpDir, "session-map.json"), JSON.stringify({ version: 1, sessions: { acp1: { sessionId: "acp1", cwd: "/fake", sessionFile: "/fake/sessions/other.jsonl" } } }));
+  const prevHome = process.env.HOME;
+  process.env.HOME = tmpHome;
+  try {
+    const ctx = {
+      hasUI: true,
+      sessionManager: { getSessionFile: () => "/fake/sessions/tui-session.jsonl" },
+      ui: { select: async () => "chosen", input: async () => "chosen" },
+    };
+    const r = await exec("t8", { question: "Q", options: ["a", "b"] }, undefined, undefined, ctx);
+    check(r.content[0].text === "OPERATOR ANSWER: chosen", "non-ACP session still uses dialogs", JSON.stringify(r.content));
+  } finally {
+    process.env.HOME = prevHome;
+  }
 }
 
 console.log("—".repeat(60));

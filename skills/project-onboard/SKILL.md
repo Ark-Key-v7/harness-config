@@ -48,6 +48,10 @@ invoke this skill.
   Zone C), glossary terms, and design.md's state (inert or filled).
 - Present every proposed fill to the operator BEFORE writing it. Zone C is
   law — the human authors it, the agent drafts.
+- ACP frontend rule: when the frontend is ACP (Zed), never invoke the
+  interactive input UI (pi-acp cancels it) — request approval as plain chat
+  text and proceed only on an explicit typed affirmative; dismissal,
+  timeout, or ambiguity are non-ratification.
 
 ##### Step 4: OBSERVE (validation)
 - Execute: `node ~/.pi/agent/bin/lint-tmd.mjs .tmd --agents AGENTS.md`

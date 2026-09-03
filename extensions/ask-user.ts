@@ -15,10 +15,23 @@
  * Degradation: this is a workflow primitive, NOT a guard — in non-UI modes
  * (print/json, rpc without dialogs) it does not block; it returns guidance
  * telling the model to ask its question in prose and stop the turn.
+ *
+ * ACP frontend rule (Zed): pi-acp runs pi in rpc mode where ctx.hasUI is
+ * true, but the adapter HARD-CANCELS input/editor dialogs ("not supported in
+ * ACP yet") and renders select as a bare permission prompt. So when the
+ * frontend is ACP (Zed), never invoke the interactive input UI — the tool
+ * returns guidance to ask the question as plain chat text instead; approval
+ * semantics live with the caller (proceed only on an explicit typed
+ * affirmative; dismissal, timeout, or ambiguity are non-ratification).
+ * Detection: this session's file listed in ~/.pi/pi-acp/session-map.json
+ * (pi-acp deletes entries on session close, so the map is current).
  */
 
 import { type ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import { Type, type Static } from "typebox";
+import { readFileSync } from "node:fs";
+import { homedir } from "node:os";
+import { join } from "node:path";
 
 const askUserSchema = Type.Object({
   question: Type.String({
@@ -39,6 +52,26 @@ const askUserSchema = Type.Object({
 });
 
 type AskUserInput = Static<typeof askUserSchema>;
+
+/**
+ * True when this session is driven by pi-acp (Zed's ACP adapter): the adapter
+ * hard-cancels input/editor dialogs, so the interactive UI must never be
+ * invoked there. Detection is session-map membership — deterministic,
+ * per-session, and cleaned up by the adapter on session close. An unreadable
+ * map means "not known to be ACP": dialogs are safe to try.
+ */
+function isAcpSession(ctx: { sessionManager?: { getSessionFile?: () => string | undefined } }): boolean {
+  try {
+    const file = ctx.sessionManager?.getSessionFile?.();
+    if (!file) return false;
+    const map = JSON.parse(
+      readFileSync(join(homedir(), ".pi", "pi-acp", "session-map.json"), "utf8"),
+    ) as { sessions?: Record<string, { sessionFile?: string }> };
+    return Object.values(map.sessions ?? {}).some((s) => s?.sessionFile === file);
+  } catch {
+    return false;
+  }
+}
 
 export default function (pi: ExtensionAPI) {
   pi.registerTool({
@@ -65,6 +98,21 @@ export default function (pi: ExtensionAPI) {
             },
           ],
           details: { asked: false, reason: "no_ui" },
+        };
+      }
+
+      // ACP frontend (Zed): pi-acp cancels input dialogs outright — never
+      // invoke the interactive input UI. Degrade to plain chat text; the
+      // model poses the question in prose and ends its turn.
+      if (isAcpSession(ctx)) {
+        return {
+          content: [
+            {
+              type: "text",
+              text: "ACP FRONTEND (Zed) DETECTED — the interactive input UI is not supported here (pi-acp cancels it). Ask this question as plain chat text, end your turn, and wait for the operator's typed reply. For approvals: proceed only on an explicit typed affirmative; treat dismissal, timeout, or ambiguity as non-ratification. Do not call ask_user again for this question.",
+            },
+          ],
+          details: { asked: false, reason: "acp_frontend" },
         };
       }
 

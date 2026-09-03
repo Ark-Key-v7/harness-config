@@ -12,6 +12,10 @@ metadata:
 Canon: §5.4 Meta-Harness Restriction — rig changes are human-ratified. This
 skill prepares everything and the OPERATOR turns the key at step 5. Never
 skip the confirmation.
+ACP frontend rule: when the frontend is ACP (Zed), never invoke the
+interactive input UI (pi-acp cancels it outright) — pose every question as
+plain chat text and proceed only on an explicit typed affirmative; treat
+dismissal, timeout, or ambiguity as non-ratification.
 
 #### 1. Trigger Context & Topological Binding
 You are operating in the harness-config SOURCE repo (~/factory-rig/sources/harness-config).
@@ -57,6 +61,9 @@ read, write/edit (target files only), bash (git + node), ls, find.
 
 ##### Step 5: OBSERVE (human ratification — §5.4)
 - Ask the operator explicitly: "Commit, push, and sync? (yes/no)"
+- ACP frontend (Zed): ask as plain chat text — never the interactive input
+  UI. Proceed ONLY on an explicit typed "yes"; dismissal, timeout, or
+  ambiguity count as no.
 - If no → leave the working tree staged, report state, EXIT.
 - If yes → proceed.
 
@@ -74,4 +81,6 @@ read, write/edit (target files only), bash (git + node), ls, find.
 - NEVER run `git add -A` or `git add .` — stage exact paths only.
 - NEVER commit with a failing driver (exit 1 anywhere = halt).
 - NEVER skip the §5.4 confirmation, even if the operator said "go ahead" earlier in the session — confirm per change-set.
+- NEVER treat an ACP dismissal, timeout, or ambiguous reply as ratification —
+  only an explicit typed affirmative ratifies.
 - NEVER modify files under ~/.pi/agent directly; the active clone is read-only and receives changes only via pull.
