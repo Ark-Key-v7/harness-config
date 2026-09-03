@@ -2,8 +2,9 @@
  * seat-switch.test.mjs — deterministic driver for WP8 seat-switch extension.
  *
  * Validates: /seat command lifecycle (status → set → inject → reject → off),
- * fail-closed behavior on unknown seats and missing profiles, pull-model
- * freshness, and the injection cap.
+ * read-only inspection (/seat list, /seat show), fail-closed behavior on
+ * unknown seats and missing profiles, pull-model freshness, and the
+ * injection cap.
  *
  * Run from the repo:  node validation/seat-switch-smoke/seat-switch.test.mjs
  * Exit 0 = ALL PASS. Exit 1 = at least one check failed.
@@ -24,9 +25,9 @@ process.env.HOME = HOME;
 // Fake rig profiles dir (stands in for ~/.pi/agent/templates/agents/profiles)
 const PROFILES = join(FIX, "profiles");
 mkdirSync(PROFILES, { recursive: true });
-writeFileSync(join(PROFILES, "scout.md"), "# Scout profile\nwrite: none\n");
-writeFileSync(join(PROFILES, "planner.md"), "# Planner profile\nwrite: specs-only\n");
-writeFileSync(join(PROFILES, "worker.md"), "# Worker profile\nwrite: sub-graph\n");
+writeFileSync(join(PROFILES, "scout.md"), "# PROFILE: Scout (read-only exploration seat)\nwrite: none\n");
+writeFileSync(join(PROFILES, "planner.md"), "# PROFILE: Planner (spec-authoring seat)\nwrite: specs-only\n");
+writeFileSync(join(PROFILES, "worker.md"), "# PROFILE: Worker (execution seat)\nwrite: sub-graph\n");
 // reviewer.md deliberately MISSING — tests the missing-profile path
 process.env.RIG_PROFILES_DIR = PROFILES;
 
@@ -74,11 +75,11 @@ check("state persisted keyed by cwd", st[CWD] === "scout");
 // 4. Injection carries the profile verbatim with seat header
 const injected = start();
 check("injection wraps systemPrompt", typeof injected?.systemPrompt === "string" && injected.systemPrompt.startsWith("BASE"));
-check("injection contains seat + profile verbatim", injected.systemPrompt.includes("Active seat: scout") && injected.systemPrompt.includes("# Scout profile"));
+check("injection contains seat + profile verbatim", injected.systemPrompt.includes("Active seat: scout") && injected.systemPrompt.includes("# PROFILE: Scout"));
 
 // 5. Pull model: edit profile → next turn sees fresh content
-writeFileSync(join(PROFILES, "scout.md"), "# Scout profile v2\nwrite: none\n");
-check("pull model: edited profile injected fresh", start().systemPrompt.includes("v2"));
+writeFileSync(join(PROFILES, "scout.md"), "# PROFILE: Scout (read-only exploration seat)\nwrite: none\nrevision: v2\n");
+check("pull model: edited profile injected fresh", start().systemPrompt.includes("revision: v2"));
 
 // 6. Unknown seat rejected, state unchanged
 await commands.seat.handler("captain", ctx);
@@ -92,18 +93,38 @@ check("missing profile fails closed (error, state unchanged)",
 
 // 8. Switch seats → worker
 await commands.seat.handler("worker", ctx);
-check("switch to worker injects worker profile", start().systemPrompt.includes("# Worker profile"));
+check("switch to worker injects worker profile", start().systemPrompt.includes("# PROFILE: Worker"));
 
 // 9. /seat status shows active seat
 await commands.seat.handler("", ctx);
 check("status shows active seat + profile size", notices.at(-1).m.includes("Active seat: worker"));
 
-// 10. /seat off → cleared, no injection
+// 10. /seat list — summaries pulled live from profile headings, active marked
+await commands.seat.handler("list", ctx);
+const listed = notices.at(-1);
+check("/seat list marks the active seat", listed.m.includes("● worker"));
+check("/seat list leaves inactive seats unmarked", listed.m.includes("○ scout"));
+check("/seat list pulls purposes from profile headings", listed.m.includes("execution seat") && listed.m.includes("read-only exploration seat"));
+check("/seat list flags missing profiles", listed.m.includes("MISSING"));
+check("/seat list is read-only (state unchanged)", JSON.parse(readFileSync(join(HOME, ".pi", "agent", "seat-state.json"), "utf8"))[CWD] === "worker");
+
+// 11. /seat show <seat> — full profile on display, read-only
+await commands.seat.handler("show scout", ctx);
+check("/seat show scout returns profile content", notices.at(-1).m.includes("# PROFILE: Scout") && notices.at(-1).m.includes("write: none"));
+check("/seat show does not switch seats", JSON.parse(readFileSync(join(HOME, ".pi", "agent", "seat-state.json"), "utf8"))[CWD] === "worker");
+await commands.seat.handler("show reviewer", ctx);
+check("/seat show with missing profile fails closed (error)", notices.at(-1).level === "error");
+await commands.seat.handler("show", ctx);
+check("/seat show without target warns with usage", notices.at(-1).level === "warning" && notices.at(-1).m.includes("Usage"));
+
+// 12. /seat off → cleared, no injection
 await commands.seat.handler("off", ctx);
 check("/seat off clears state", JSON.parse(readFileSync(join(HOME, ".pi", "agent", "seat-state.json"), "utf8"))[CWD] === undefined);
 check("/seat off stops injection", start() === undefined);
+await commands.seat.handler("list", ctx);
+check("/seat list with no active seat marks none", !/^●/m.test(notices.at(-1).m));
 
-// 11. Cap: oversized profile truncated with marker
+// 13. Cap: oversized profile truncated with marker
 writeFileSync(join(PROFILES, "planner.md"), "# Planner\n" + "x".repeat(20000));
 await commands.seat.handler("planner", ctx);
 const big = start().systemPrompt;

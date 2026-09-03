@@ -5,7 +5,9 @@
  * One Pi session serves four seats — scout, planner, worker, reviewer —
  * and the OPERATOR picks the active seat with /seat <role>. The active
  * profile is injected at each agent start, fresh from disk (pull model,
- * §2.4 — no frozen copies).
+ * §2.4 — no frozen copies). /seat list and /seat show <role> are
+ * read-only inspection: they display profile content (live from disk)
+ * without touching seat state.
  *
  * Rules honored:
  * - Meta-Harness (§5.4): only the human switches seats. No tool is
@@ -77,6 +79,39 @@ function profileFile(seat: Seat): string {
   return join(profilesDir(), `${seat}.md`);
 }
 
+/**
+ * One-line purpose of a seat, read live from the profile's
+ * `# PROFILE: <Seat> (<purpose>)` heading. Profiles are the single
+ * source (L5) — the extension never hardcodes seat descriptions.
+ */
+function seatSummary(seat: Seat): string {
+  try {
+    const file = profileFile(seat);
+    if (!existsSync(file)) return "(profile MISSING — pull the rig clone)";
+    const content = readFileSync(file, "utf8");
+    const m = content.match(/^#\s*PROFILE:\s*\S+\s*\((.+)\)\s*$/m);
+    return m ? m[1] : "(no `# PROFILE:` summary heading found)";
+  } catch {
+    return "(profile unreadable)";
+  }
+}
+
+/** Read a profile for display, applying the same cap as injection. */
+function readProfileForDisplay(seat: Seat): string | null {
+  try {
+    const file = profileFile(seat);
+    if (!existsSync(file)) return null;
+    let content = readFileSync(file, "utf8");
+    if (Buffer.byteLength(content) > MAX_PROFILE_BYTES) {
+      const buf = Buffer.from(content);
+      content = buf.subarray(0, MAX_PROFILE_BYTES).toString("utf8") + "\n\n[profile truncated — exceeded 16KB display cap]";
+    }
+    return content;
+  } catch {
+    return null;
+  }
+}
+
 export default function (pi: ExtensionAPI) {
   // Pull model: inject the active seat's profile fresh at each agent start.
   pi.on("before_agent_start", (event, ctx) => {
@@ -104,9 +139,9 @@ export default function (pi: ExtensionAPI) {
     return { systemPrompt: `${event.systemPrompt}\n\n${block}` };
   });
 
-  // /seat <role> | /seat off | /seat — human-operated switch.
+  // /seat <role> | /seat off | /seat list | /seat show <role> | /seat — human-operated switch.
   pi.registerCommand("seat", {
-    description: "Switch the active seat: /seat scout|planner|worker|reviewer | /seat off | /seat (status)",
+    description: "Switch the active seat: /seat scout|planner|worker|reviewer | /seat off | /seat list (what each seat does) | /seat show <role> (full profile) | /seat (status)",
     handler: async (args, ctx) => {
       const arg = args.trim().toLowerCase();
       const cwd = ctx.cwd;
@@ -132,8 +167,33 @@ export default function (pi: ExtensionAPI) {
         return;
       }
 
+      if (arg === "list") {
+        const active = activeSeat(cwd);
+        const lines = SEATS.map((s) => `${s === active ? "●" : "○"} ${s} — ${seatSummary(s)}`);
+        ctx.ui.notify(
+          `Seats (● = active):\n${lines.join("\n")}\n\nSwitch: /seat <name> · Peek full profile: /seat show <name> · Clear: /seat off`,
+          "info",
+        );
+        return;
+      }
+
+      if (arg === "show" || arg.startsWith("show ")) {
+        const target = arg.slice(4).trim();
+        if (!(SEATS as readonly string[]).includes(target)) {
+          ctx.ui.notify(`Usage: /seat show <${SEATS.join("|")}>. State unchanged.`, "warning");
+          return;
+        }
+        const content = readProfileForDisplay(target as Seat);
+        if (content === null) {
+          ctx.ui.notify(`Profile for seat "${target}" not found at ${profileFile(target as Seat)} — pull the rig clone.`, "error");
+          return;
+        }
+        ctx.ui.notify(`Profile: ${target} (${profileFile(target as Seat)})\n\n${content}`, "info");
+        return;
+      }
+
       if (!(SEATS as readonly string[]).includes(arg)) {
-        ctx.ui.notify(`Unknown seat "${arg}". Seats are: ${SEATS.join(", ")} (or /seat off). State unchanged.`, "warning");
+        ctx.ui.notify(`Unknown seat "${arg}". Seats are: ${SEATS.join(", ")} (or /seat list, /seat show <role>, /seat off). State unchanged.`, "warning");
         return;
       }
 
