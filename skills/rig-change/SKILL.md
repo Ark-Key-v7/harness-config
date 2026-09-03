@@ -61,6 +61,20 @@ read, write/edit (target files only), bash (git + node), ls, find.
   run `git diff --cached` and read the full staged diff before answering.
   The staged-file table is a summary, not evidence — ratification without
   the read is not ratification.
+- Optional advisory step (diff echo): if the operator pastes the
+  `git diff --cached` output back into the thread, verify it against the
+  ratification table and report discrepancies across exactly five checks,
+  in this order:
+  1. File list matches the table exactly — any extra file, especially
+     under `extensions/`, `templates/`, or `bin/`, is a red flag.
+  2. Scope matches the brief — large unrequested deletions or rewrites
+     are a stop.
+  3. No secrets — keys, tokens, passwords, `.env` content in added lines.
+  4. No law edits outside the brief — governance files changing beyond
+     what the table declared.
+  5. Driver scratch stays untracked — no `??` fixtures staged.
+  The report is advisory only: the typed yes remains the operator's sole
+  act of ratification, and an agent never ratifies its own work.
 - Propose a commit message naming the work package or artifact.
 
 ##### Step 5: OBSERVE (human ratification — §5.4)
