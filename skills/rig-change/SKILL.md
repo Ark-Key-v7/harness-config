@@ -57,25 +57,34 @@ read, write/edit (target files only), bash (git + node), ls, find.
 
 ##### Step 4: ACT (stage and propose)
 - `git status --short` and `git diff --stat`; show the operator.
+- The handoff BEGINS with the ratification read: instruct the operator to
+  run `git diff --cached` and read the full staged diff before answering.
+  The staged-file table is a summary, not evidence — ratification without
+  the read is not ratification.
 - Propose a commit message naming the work package or artifact.
 
 ##### Step 5: OBSERVE (human ratification — §5.4)
-- Ask the operator explicitly: "Commit, push, and sync? (yes/no)"
+- Ask the operator explicitly: "Commit? (yes/no)" — the typed yes authorizes
+  the commit only; push and clone-sync are always operator-run (the operator
+  holds the SSH key).
 - ACP frontend (Zed): ask as plain chat text — never the interactive input
   UI. Proceed ONLY on an explicit typed "yes"; dismissal, timeout, or
   ambiguity count as no.
 - If no → leave the working tree staged, report state, EXIT.
 - If yes → proceed.
 
-##### Step 6: ACT (commit, push, sync)
+##### Step 6: ACT (commit, then hand the keys back)
 - `git add <exact paths>` (never `git add -A` — driver scratch must never be swept in)
 - `git commit -m "<agreed message>"`
-- `git push`
-- `git -C ~/.pi/agent pull --ff-only`
+- Hand the operator the push + sync commands; NEVER run them yourself:
+  `git push` and `git -C ~/.pi/agent pull --ff-only` are operator-run
+  (the operator holds the SSH key).
 
 ##### Step 7: EXIT PROTOCOL
-- The chain is complete ONLY when the pull output shows a fast-forward update.
-- Report: files placed, driver results, commit SHA, sync status. Then stop.
+- The chain is complete ONLY when the operator reports the pull output shows
+  a fast-forward update (the agent never runs the push or the sync).
+- Report: files placed, driver results, commit SHA, the exact operator
+  commands for push + sync. Then stop.
 
 #### 4. Local Negative Constraints (Anti-Patterns)
 - NEVER run `git add -A` or `git add .` — stage exact paths only.
@@ -83,4 +92,6 @@ read, write/edit (target files only), bash (git + node), ls, find.
 - NEVER skip the §5.4 confirmation, even if the operator said "go ahead" earlier in the session — confirm per change-set.
 - NEVER treat an ACP dismissal, timeout, or ambiguous reply as ratification —
   only an explicit typed affirmative ratifies.
+- NEVER run `git push` or `git -C ~/.pi/agent pull` — push and clone-sync are
+  always operator-run; the operator holds the SSH key.
 - NEVER modify files under ~/.pi/agent directly; the active clone is read-only and receives changes only via pull.
