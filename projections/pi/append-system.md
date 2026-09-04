@@ -1,5 +1,5 @@
 <!-- GENERATED FILE — do not hand-edit (WP3, L4). Regenerate: node bin/generate-projections.mjs -->
-<!-- source_head: 55bc50a3d3be27d3d014d2317e5a73c46df44d8d -->
+<!-- source_head: 8ca3081fc5743d62859e10b7a1bcd2b22b19d32e -->
 <!-- projection: pi/append-system.md -->
 
 # Factory projection — Pi append-system (stable part)
@@ -33,7 +33,7 @@ When a task matches a trigger, invoke the named skill — procedure follows, nev
 |---|---|
 | pr-review | review this PR · verify this contract · stage 2 review · adversarial review |
 | project-onboard | start a new project · onboard this project · set up the manifold · new repo setup |
-| rig-change | new rig files · place these files · update the rig · commit and sync harness-config · I downloaded the new version |
+| rig-change | new rig files · place these files · update the rig · commit and sync harness-config · I downloaded the new version · canon updated · new handbook version |
 | template-skill | author a new skill · create a skill |
 | tool-intake | install a tool · adopt this skill · a register trigger fired · add an MCP server · tool intake |
 

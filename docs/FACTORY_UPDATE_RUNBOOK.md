@@ -32,6 +32,7 @@ The `rig-change` skill operationalizes this inside a Pi session. This runbook is
 | Pin (`package-pins.json`) | pi-layer driver; pin advances are ratified individually | FACTORY_STATUS.md |
 | Deferred-register status | — | spec §6 row + FACTORY_STATUS.md |
 | This runbook / docs | review only | — |
+| Canon revision (new handbook version) | canon-register driver; classification per "Canon revision" below | register + CANON_MAP + FACTORY_STATUS, same commit |
 
 ## Full local validation suite
 
@@ -55,6 +56,26 @@ All green is the only acceptable pre-commit state. **Never commit with a failing
 - Downloads crossing Windows→WSL: verify with `ls -la` of the target folder. Watch for lost leading dots (`.mcp.json`, `.gitignore`), `(1)` filename collisions (identify skills by their `name:` field), and `*:Zone.Identifier` stowaways (git-ignored, but check anyway).
 - Driver scratch must never be committed — `validation/.gitignore` covers it; `git status --short` before staging.
 - Repo layout: rig source lives only in `sources/harness-config/`; outer `~/factory-rig/{tools,validation,tmp}` is the WP0 machine-local floor — never commit from there.
+
+## Canon revision (updated handbook lands)
+
+Trigger phrase: **"canon updated"** / **"new handbook version"** — routes to the `rig-change` skill, which executes this section.
+
+Canon handbooks live OUTSIDE the repo at `~/factory-rig/sources/_canon-handbooks/` (out of agent context; L5 no-chunking). The previous version MUST survive under its own dated filename — it is the diff surface. Never overwrite in place.
+
+1. **Diff old vs new** (works outside any repo):
+   ```bash
+   cd ~/factory-rig/sources/_canon-handbooks
+   git diff --no-index "<old-version>.md" "<new-version>.md"
+   ```
+   Whole-document reformatting produces noise; the canon's stable §-numbering permits section-by-section comparison. Ignore pure wording churn.
+2. **Classify each delta** against rig surfaces:
+   - New canon law → new DEFERRED register entry (canon source, activation trigger, prerequisites, integration path) in `docs/CAPABILITY_REGISTER.md`. New canon NEVER auto-implements (§5.4 Meta-Harness).
+   - Changed law → amend the affected register entry / CANON_MAP row; audit integrated surfaces (extensions, templates, linters) for contradiction with the new law — contradictions become work packages.
+   - Already-covered law → confirm against `docs/CANON_MAP.md`; no-op.
+3. **Same-commit bookkeeping** (driver-enforced): register, CANON_MAP, `docs/activation-triggers.json` (only if a new trigger is filesystem-detectable), and FACTORY_STATUS land in ONE commit. `validation/canon-register/` fails on partial updates.
+4. **Land via the standard chain** above: drivers green → stage exact paths → §5.4 ratification → commit → push → pull.
+5. **Retire the superseded canon file** only after the diff has been fully classified and the commit lands; keep it until then.
 
 ## Rollback
 

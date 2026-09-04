@@ -3,8 +3,8 @@ name: rig-change
 description: Execute the governed rig-change workflow when the operator has new or updated Factory Rig files (extensions, tools, drivers, templates, skills, projections). Use when the operator says they have new rig files, downloaded files to place, or asks to commit and sync harness-config.
 metadata:
   author: Agentic SWE Factory
-  version: 1.0.0
-  trigger_phrases: ["new rig files", "place these files", "update the rig", "commit and sync harness-config", "I downloaded the new version"]
+  version: 1.1.0
+  trigger_phrases: ["new rig files", "place these files", "update the rig", "commit and sync harness-config", "I downloaded the new version", "canon updated", "new handbook version"]
 ---
 
 ### SKILL: rig-change — governed rig modification workflow
@@ -29,6 +29,7 @@ read, write/edit (target files only), bash (git + node), ls, find.
 #### 3. The Procedural Loop (Act → Observe → Exit)
 
 ##### Step 1: ACT (intake)
+- CANON REVISION ROUTE: if the trigger is "canon updated" / "new handbook version", this is a canon revision, not a file placement — execute the "Canon revision" section of `docs/FACTORY_UPDATE_RUNBOOK.md` (diff old vs new handbook at `~/factory-rig/sources/_canon-handbooks/`, classify deltas, same-commit register + CANON_MAP + FACTORY_STATUS bookkeeping), then rejoin this skill at Step 3 for validation, staging, and ratification.
 - List candidate files: `ls -t /mnt/c/Users/*/Downloads/ | head -30`
 - Ask the operator WHICH files are part of this change (never assume).
 - Read each file enough to classify it per the placement table:
