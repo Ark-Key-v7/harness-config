@@ -1,0 +1,52 @@
+--- dist/index.js.bak
++++ dist/index.js
+@@ -2036,7 +2036,7 @@
+           const pi = await session.proc.getCommands();
+           const { commands } = toAvailableCommandsFromPiGetCommands(pi, {
+             enableSkillCommands,
+-            includeExtensionCommands: false
++            includeExtensionCommands: true
+           });
+           await this.conn.sessionUpdate({
+             sessionId: session.sessionId,
+@@ -2430,6 +2430,31 @@
+         });
+         return { stopReason: "end_turn" };
+       }
++      // Generic command bridge (rig patch): slash input that is neither an
++      // ACP builtin (handled above) nor a .pi/prompts file command is
++      // forwarded verbatim to pi's own command handler — pi dispatches
++      // extension-registered commands (/seat, /memory, ...) exactly as the
++      // TUI does. Extension command turns emit no agent_settled, so resolve
++      // end_turn immediately; handler output streams via extension_ui_request
++      // notify events, which handlePiEvent already renders.
++      if (!session.fileCommands.some((c) => c.name === cmd)) {
++        if (!session.bridgedCommands) {
++          session.bridgedCommands = new Set();
++          try {
++            const data = await session.proc.getCommands();
++            const list = Array.isArray(data?.commands) ? data.commands : Array.isArray(data?.data?.commands) ? data.data.commands : [];
++            for (const c of list) {
++              if (typeof c?.name === "string" && c?.source === "extension") session.bridgedCommands.add(c.name);
++            }
++          } catch {
++          }
++        }
++        if (session.bridgedCommands.has(cmd)) {
++          await session.proc.prompt(message, images).catch(() => {
++          });
++          return { stopReason: "end_turn" };
++        }
++      }
+     }
+     const result = await session.prompt(message, images);
+     const stopReason = result === "error" ? session.wasCancelRequested() ? "cancelled" : "end_turn" : result;
+@@ -2583,7 +2608,7 @@
+           const pi = await proc.getCommands();
+           const { commands } = toAvailableCommandsFromPiGetCommands(pi, {
+             enableSkillCommands,
+-            includeExtensionCommands: false
++            includeExtensionCommands: true
+           });
+           await this.conn.sessionUpdate({
+             sessionId: session.sessionId,

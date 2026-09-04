@@ -27,7 +27,7 @@ skill, a driver proves it, the chain lands it.
 | File-change tracking | Records actuator writes per session | `extensions/file-changes.ts` | outer `validation/` |
 | Memory toggle | Operator-gated memory.md injection (8KB cap) | `extensions/memory-toggle.ts` | `validation/` |
 | Seat switch | `/seat scout\|planner\|worker\|reviewer\|off` — profile injection, human-only (Meta-Harness), 16KB cap | `extensions/seat-switch.ts` | `validation/` |
-| pi-acp /seat bridge | `/seat` in Zed: pi-acp filters extension slash commands, so a native adapter patch carries the seat state the extension reads — switch/off plus read-only `list` / `show <seat>` inspection (idempotent apply, fail-closed on drift) | `patches/pi-acp-seat-command.patch` + `patches/apply-pi-acp-seat-patch.sh` | `validation/pi-acp-patch-smoke/` |
+| pi-acp command bridge | Slash commands in Zed: pi-acp filters extension-registered commands from ACP, so a native adapter patch (a) advertises pi's full command registry as `available_commands` and (b) dispatches unrecognized `/command args` to pi's own command handler, as the TUI does — generic successor to the retired per-command /seat patch (idempotent apply, legacy-backup migration, fail-closed on drift) | `patches/pi-acp-command-bridge.patch` + `patches/apply-pi-acp-command-bridge.sh` | `validation/pi-acp-patch-smoke/` |
 | Sovereign profiles | scout / planner / worker / reviewer seat law | `templates/agents/profiles/` | `validation/profiles/` |
 | MCP curation gate | Exact pins, stdio-default, deprecated-feature rejection | `bin/lint-mcp.mjs` | `validation/pi-layer/` |
 | Project onboarding | Phase-1 scaffold + self-lint + activation notices | `bin/onboard-project.mjs` + `skills/project-onboard/` | `validation/onboard/` |
