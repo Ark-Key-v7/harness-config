@@ -93,6 +93,35 @@ canon's own assignment — not machinery).
 | §7.1 Phase 3 System Evolution (update the manifold to forbid the bug's anti-pattern) | `skills/rig-change/` amendment loop | LIVE |
 | §7.2 Brownfield archaeology (GitNexus AST maps; jCodeMunch extraction; AMUX read-only swarm; artifact hierarchy) | artifact hierarchy LIVE (templates); the swarm stack DEFERRED | PARTIAL (register §D.4) |
 
+## 6. Harness Handbook v1.2 (Parts II–V — harness-native law)
+
+v1.2 has its own section numbering; this section indexes it. v1.2-only laws
+that are already honored in implementation are cited here so future canon
+revisions stay traceable.
+
+| Canon element (v1.2) | Rig surface | Status |
+|---|---|---|
+| §2.2 binding table — fail-closed guards, mode-aware (headless-deterministic) enforcement | `extensions/bash-guard.ts`, `extensions/sandbox-guard.ts`; footguns recorded in `pi/extensions/API-VERIFIED-0.84.3.md` | LIVE |
+| §2.4 projection model + input-head freshness law | `bin/generate-projections.mjs` + `bin/assert-projection-fresh.mjs` | LIVE |
+| §2.4 two-part cache-aware composition (stable/dynamic split, `cache_control` ephemeral) | projections implement the split; request structuring rides the gateway | PARTIAL (register §D.10) |
+| §2.5 ACC ladder / SCRUB (interactive sessions only) | operator practice; `extensions/memory-toggle.ts` caps | SOP |
+| §3.4 The 12 Operator Levers (TAC) | operator discipline; lever surfaces live in `templates/agents/profiles/` | SOP |
+| §3.5 Seven-Level Prompt Ladder (spec → template → workflow) | promotion via tool-intake / rig-change | SOP + DEFERRED (register §D.18) |
+| §3.7 KPIs and proof of value | requires the trace ledger | DEFERRED (register §D.15) |
+| §3.8 Severity taxonomy + failure classes | `templates/agents/schemas/state.schema.yaml` failure_class enums; `bin/lint-state.mjs` | PARTIAL (vocabulary LIVE; routing SOP) |
+| §3.10 State-aware rollback (snapshot → restore-to-green) | `extensions/file-changes.ts` is the substrate; the automated path is not built | DEFERRED (register §D.16) |
+| §4.1 PETER trigger discipline (surface selection per task class) | mode-aware extensions; `extensions/seat-switch.ts` | SOP |
+| §4.2 Meta-prompts, ADWs, HOP | — | DEFERRED (register §D.18) |
+| §4.3 Pi-native sub-agent topology (conditional, validation-gated) | — | DEFERRED, specified-but-not-ratified (register §D.17) |
+| §4.4 Doom-loop fingerprinting, reminder caps, output loop detector | — | DEFERRED (register §D.16) |
+| §4.4 Collision guards (cross-worker read/write pre-ship warning) | named in register §D.1 includes | DEFERRED (register §D.1) |
+| §4.5 Role Roster | `templates/agents/profiles/` (scout/planner/worker/reviewer) + `/seat` | LIVE |
+| §5.6 Maturity model (in-loop → out-of-loop → ZTE); §5.9 practitioner ladders, pilot exit criteria | `docs/OPERATOR_GUIDE.md` | SOP |
+| §5.7 Observability — trace ledger, event taxonomy | — | DEFERRED (register §D.15) |
+| §5.8 Consolidated Ruling Registry | canon-resident; rig-side amendments recorded in FACTORY_STATUS open decisions | SOP (ruling: the registry is not duplicated into rig docs — L5) |
+| Appendix A (Claude Code shim) / Appendix B (Codex, reserved) | out of scope — single Pi seat; adoption enters via tool-intake + a ruling-registry amendment | SOP (ruling) |
+| Appendix C (Kimi Code seat) | provider bridge pinned (`package-pins.json`), `docs/provider-setup.md`; the rig's live regime | LIVE |
+
 ---
 
 *Update rule: when a canon revision lands or a register item changes status,

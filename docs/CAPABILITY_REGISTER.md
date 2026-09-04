@@ -51,7 +51,7 @@ observable condition that makes the item activatable — not a suggestion.
 
 ### §D.1 Refinery pipeline machinery (Stages 1–3 core, merge queue, CD handoff)
 - **Canon:** CI/CD Integration Engine §2.3–§2.8; §7.1 Phase 3.
-- **Includes:** Stage-1 CI gates (Fallow, ESLint, tsc, bun test); merge queue (batch-then-bisect, pairwise-conflict serialization); Worktrunk adoption (wt.toml leaves the inert register); PR-Agent Stage-2 container; CodeQL weekly lane; Stage-4 SLA/auto-merge mechanics; Vercel/Coolify CD routing.
+- **Includes:** Stage-1 CI gates (Fallow, ESLint, tsc, bun test); merge queue (batch-then-bisect, pairwise-conflict serialization); Worktrunk adoption (wt.toml leaves the inert register); **cross-worker collision guards (v1.2 §4.4 — pre-ship warning when a worker writes a file another in-flight worker has read; implementation site: the Worktrunk hook layer or a rig service watching worktree state)**; PR-Agent Stage-2 container; CodeQL weekly lane; Stage-4 SLA/auto-merge mechanics; Vercel/Coolify CD routing.
 - **Activation trigger:** the FIRST product repository completes onboarding (auto-detected: `check-activations` T1). PR-Agent specifically also requires §D.10 (gateway) — on the subscription regime it has no API lane until then.
 - **Prerequisites:** product repo on the SCM hub; Stage-0 lane green locally; runner hardware decision (Blacksmith.sh Phase 1 vs Hetzner+Coolify Phase 2).
 - **Integration path:** rig-change WP → GitHub Actions workflow templates added to `templates/` (projected into products at onboard) → dogfood on the product repo.
@@ -113,7 +113,7 @@ observable condition that makes the item activatable — not a suggestion.
 - **Canon:** §6.4 (retries vs fallbacks, circuit breakers, X-LiteLLM-Trace-Id chargeback; one gateway owns the API-billed lane).
 - **Activation trigger:** adoption of the FIRST API-billed engine (any non-subscription model seat). Not auto-detectable — a life event (see OPERATOR_GUIDE).
 - **Prerequisites:** Docker + Coolify host (local Phase 1 or Hetzner Phase 2); API keys; budget ceilings per seat.
-- **Integration path:** STATE.md `finops.regime` flips per contract; PR-Agent (§D.1) unblocks.
+- **Integration path:** STATE.md `finops.regime` flips per contract; PR-Agent (§D.1) unblocks. Rides along: two-part cache-aware prompt composition (v1.2 §2.4 — stable/dynamic split with `cache_control: ephemeral` on the stable block; projections already implement the split, so gateway adoption only adds the request structuring).
 
 ### §D.11 Hetzner production perimeter
 - **Canon:** §6.1 (Tailscale mesh, UFW 80/443 only, CrowdSec at Traefik, Let's Encrypt).
@@ -157,6 +157,32 @@ observable condition that makes the item activatable — not a suggestion.
   the reviewer seat (pr-review skill, subscription-governed engine) can hold
   the Stage-0 semantic seat until AsyncReview clears its gates. Record the
   decision here when made.
+
+### §D.15 Trace ledger — the observability spine
+- **Canon:** v1.2 §5.7 (observability), §1.3 (MANIFOLD_CONFLICT events), §3.7 (KPI calibration source), §4.4 (failure lineage); v1.0 §4.3 (execution ledger, SQLite WAL).
+- **Status note:** this entry owns the ledger. §D.7 and §D.12 reference it as a prerequisite; until it exists, Conflict-Halt events and KPI calibration have no durable sink, and §D.12's trigger cannot fire.
+- **Activation trigger:** the first MANIFOLD_CONFLICT or budget_severance event needs a durable sink, OR §D.7/§D.10 telemetry activates — whichever first (human-judged at the event).
+- **Prerequisites:** event-taxonomy schema decision; `extensions/file-changes.ts` (integrated) is the bootstrap substrate for write-side records.
+- **Integration path:** schema into `templates/agents/schemas/`; a ledger-writer extension (`tool_result`/`pi.appendEntry` surface); driver under `validation/`. Landing this flips §D.12's activation trigger live.
+
+### §D.16 In-harness loop health (doom-loop fingerprinting, state-aware rollback, reminder caps)
+- **Canon:** v1.2 §4.4 (MD5 fingerprint of consecutive actions, 3-in-20 window; output loop detector; reminder caps MAX_TODO_NUDGES=2 / MAX_NUDGE_ATTEMPTS=3), §3.10 (snapshot at tool_call preflight for mutating tools; restore-to-last-green on escalation), §1.5 (doom loops are detectable, not mysterious).
+- **Status note:** no gateway, Worktrunk, or ledger hard dependency — implementable on the subscription regime today; escalation events degrade to STATE.md `failure_class` until §D.15 lands.
+- **Activation trigger:** the first unattended (daemon-driven, non-TUI) worker session, OR a doom loop observed in a session/file-changes record — agent-judged, surfaced via tool-intake.
+- **Prerequisites:** `extensions/file-changes.ts` (integrated — the snapshot/undo substrate).
+- **Integration path:** one extension (`loop-guard`) on the `tool_call` surface + restore path reusing file-changes undo; driver under `validation/` proving fingerprint-fire and restore-to-green.
+
+### §D.17 Pi-native sub-agent topology (validation-gated)
+- **Canon:** v1.2 §4.3 — specified-but-not-ratified until the build-and-validate gate passes: spawn an orchestrator and two workers on one repository, separate branches, each under contract and sandbox; require clean payload return, correct trace lineage, zero cross-worker write collisions.
+- **Activation trigger:** a task class demands delegation beyond `/seat` switching (single-rig parallel throughput) — human-judged; entangled with the AMUX↔Pi adapter open decision (FACTORY_STATUS §9).
+- **Prerequisites:** §D.15 (trace lineage); per-worker sandbox scopes (integrated: sandbox-guard + contract-scope).
+- **Integration path:** run the canon validation gate as its own WP; until it passes, no mechanism may presume the topology (canon's own conditional).
+
+### §D.18 Trigger-plane prompt templates (meta-prompts, ADWs, HOP)
+- **Canon:** v1.2 §4.2 (meta-prompts, ADWs, the HOP — the dispatch decision is never automated), §3.5 (the promotion path: spec → template → workflow, climb on evidence), §1.6 (specs are durable assets).
+- **Activation trigger:** a spec prompt has executed 3+ times unchanged on real tasks (promotion evidence per §3.5) — operator-judged.
+- **Prerequisites:** none structural; `templates/pi/` currently holds only `settings.json` — this entry is its prompt-template tenant.
+- **Integration path:** promote via tool-intake into `templates/pi/` prompt templates or a `skills/` folder; the HOP stays human (§5.4).
 
 ---
 

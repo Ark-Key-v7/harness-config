@@ -72,3 +72,21 @@ After any rig change that alters the ledger above: update this file in the same 
 - `bin/onboard-project.mjs` v2: activation check after placement;
   `--brownfield` flag; preflight reminder in the handoff print.
 - Drivers: `validation/refinery-lane/`, `validation/canon-register/`.
+
+## WP12 — Canon coverage gap closure (register §D.15–§D.18 + CANON_MAP v1.2 index)
+
+- Review of both handbooks (SDLC v2.0 canon + Harness Handbook v1.2) against
+  the rig found three gap classes; all closed as registry/map work, no new
+  builds:
+  - **New deferred entries:** §D.15 trace ledger (observability spine — owns
+    what §D.7/§D.12 presupposed), §D.16 in-harness loop health (doom-loop
+    fingerprinting, state-aware rollback, reminder caps), §D.17 Pi-native
+    sub-agent topology (validation-gated per v1.2 §4.3), §D.18 trigger-plane
+    prompt templates (meta-prompts/ADWs/HOP).
+  - **Named in place:** cross-worker collision guards inside §D.1 includes;
+    two-part cache-aware composition rides §D.10.
+  - **CANON_MAP §6:** v1.2 Parts II–V indexed (SOP rows for Operator Levers,
+    Prompt Ladder, PETER, maturity model; rulings: Consolidated Ruling
+    Registry stays canon-resident, Appendix A/B harnesses out of scope).
+- Driver: `validation/canon-register/` section-count check relaxed to
+  ≥14 (entries no longer require driver edits).

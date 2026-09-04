@@ -14,8 +14,8 @@ Two source documents govern this build. Where they conflict, the newer one wins.
 
 | Source | File | Role |
 |---|---|---|
-| **Harness Handbook v1.2** (2026-08-12) | `1.2 Coding Agent Harness Handbook — v1.2.md` | Primary. Pi.dev harness binding, extension API, system-prompt planes, config-as-code, role roster, skills architecture, schemas (Appendix E) |
-| **TCE Handbook v2.0** | `1.0 TCE_ Agentic SWE Handbook.md` | Foundational. Topological Constraint Engineering canon, factory rig topology, memory/tooling seats, CI/CD refinery |
+| **Harness Handbook v1.2** (2026-08-12) | `../../_canon-handbooks/1.2 Coding Agent Harness Handbook — v1.2.md` (outside repo — canon is referenced, never carried in-repo as context) | Primary. Pi.dev harness binding, extension API, system-prompt planes, config-as-code, role roster, skills architecture, schemas (Appendix E) |
+| **TCE Handbook v2.0** | `../../_canon-handbooks/1.0 TCE_ Agentic SWE Handbook.md` (outside repo) | Foundational. Topological Constraint Engineering canon, factory rig topology, memory/tooling seats, CI/CD refinery |
 
 **Known reconciliations (decided by v1.2, recorded here so they are never re-litigated):**
 
