@@ -1,5 +1,5 @@
 <!-- GENERATED FILE — do not hand-edit (WP3, L4). Regenerate: node bin/generate-projections.mjs -->
-<!-- source_head: 3cdf48b290d4e65a31dd2452f40c3563a3b09177 -->
+<!-- source_head: a5949910f639169460474bb3a2f64f8275e715a0 -->
 <!-- projection: pi/append-system.md -->
 
 # Factory projection — Pi append-system (stable part)
