@@ -32,6 +32,12 @@ A "task" is one unit of work with a finish line — e.g. "auth session CRUD".
 The contract is its written definition of done. You don't hand-write these
 from scratch; in practice:
 
+Start with `spec-intake` ("new work: <idea>") → it interviews you and drafts
+intent + PRD. Then `slice-plan` ("slice the PRD") → plan + drafted contracts,
+validated. Then scope + seat as before.
+
+### Fallback: the manual commands
+
 1. In Pi (in the project): "draft a task contract for <thing>" — the agent
    copies the template, fills the YAML, you review.
 2. `node ~/.pi/agent/bin/lint-contract.mjs .agents/tasks/task-<slug>.md --gravity .tmd/gravity.md` — valid?
@@ -53,9 +59,28 @@ edit a profile, next turn sees it.
 
 ## Skills available globally (post-v2.1)
 
-`rig-change` · `pr-review` · `tool-intake` · `template-skill` · `project-onboard`
+`rig-change` · `pr-review` · `tool-intake` · `template-skill` · `project-onboard` · `spec-intake` · `slice-plan`
 They live at repo-root `skills/` — discovered by Pi everywhere, seeded into
 projects at `.agents/skills/` by onboarding.
+
+## Autonomy (the dial)
+
+Each governed project carries a committed `.agents/autonomy.json` with a
+dial position 0–3: **0** — you merge everything · **1** — the agent may
+stage, you merge · **2** — auto-merge only when every gate is green, zero
+holdout failures, and the watchdog is silent for the ratified window ·
+**3** — auto-merge on green structural gates (mutation lane + merge queue
+required).
+
+- **Elevation is doctor-gated, never self-declared.** In the project:
+  `node ~/.pi/agent/bin/doctor.mjs --require 2` — exit 1 means the project
+  does not qualify; the FAIL rows name the exact blocking deficiencies.
+  Set the dial no higher than the doctor's verdict, and record who ratified
+  it in the file.
+- **Demotion is instant** — lower the dial any time, no gate, no ceremony.
+- **Headless rules:** unattended workers never compact their context —
+  approaching the ceiling they escalate. Every escalation carries a
+  proposed answer with rationale; an escalation without one is a defect.
 
 ## Rig changes
 

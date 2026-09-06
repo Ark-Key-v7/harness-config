@@ -103,3 +103,21 @@ After any rig change that alters the ledger above: update this file in the same 
   (0–3) · Doctor · Floor/ratchet · Queue Operations Law (§4.7) · Gate
   Integrity Law (§5.10) · needs_human (+proposed-answer law) ·
   Intent/PRD/Plan chain · Watchdog D1–D6.
+
+## WP-A — Phase-0 spec chain & holdouts (landed 2026-09, commit a594991)
+- Landed: `templates/specs/` ×3, `bin/lint-spec.mjs` (header/orphan/
+  back-reference law + size-cap WARN), contract `trace:`/`holdout:` law in
+  `bin/lint-contract.mjs`, holdout read-deny in `bin/contract-scope.mjs`
+  (fail-closed, reviewer-exempt), skills `spec-intake` + `slice-plan`,
+  onboard scaffolding. Driver: `validation/spec-smoke/` + contract/onboard
+  extensions.
+- Deviation on record: seat state read from `~/.pi/agent/seat-state.json`
+  (the real mechanism), not the spec's `.pi/seat`.
+
+## WP-B — Doctor, dial, review strengthening (landed 2026-09)
+- Landed: `bin/doctor.mjs` (deterministic checklist, max_level, `--require N`
+  elevation gate), pr-review Step 0 (base-branch rulebook reading) +
+  raw-output-wins verdict law, OPERATOR_GUIDE spec-intake/slice-plan loop +
+  Autonomy section, FRESH_PROJECT_SOP interim queue discipline (§4.7 SOP).
+- Known cost: the doctor's suite check re-runs the rig driver spine per
+  invocation — doctor-smoke adds ~2.5 min to the full suite loop.

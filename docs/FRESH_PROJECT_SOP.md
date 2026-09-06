@@ -6,7 +6,7 @@ _Prerequisite: the rig is installed and current (`git -C ~/.pi/agent pull --ff-o
 
 ```bash
 cd /path/to/new-project
-node ~/.pi/agent/tools/onboard-project.mjs --target .
+node ~/.pi/agent/bin/onboard-project.mjs --target .
 ```
 
 The tool places: root `AGENTS.md`, `.tmd/` (five manifold files), `.agents/` (profiles, skills, schemas, `tasks/`), `.pi/` (settings, `.mcp.json`, `.gitignore`, README, `append-system.md` projection). It self-validates (lint-tmd template mode, lint-mcp) and **refuses to overwrite** anything already present. It does not commit.
@@ -35,7 +35,7 @@ diff .pi/append-system.md ~/.pi/agent/projections/pi/append-system.md && echo CL
 
 1. Review the **full diff** of everything onboarding placed and you filled.
 2. Set `last_verified` in all five `.tmd/` headers to the current HEAD SHA: `git rev-parse HEAD`.
-3. Validate strict: `node ~/.pi/agent/tools/lint-tmd.mjs .tmd --strict --agents AGENTS.md`
+3. Validate strict: `node ~/.pi/agent/bin/lint-tmd.mjs .tmd --strict --agents AGENTS.md`
 4. Commit. **The Meta-Harness Restriction applies from this commit** — manifold changes from now on go through the Amendment Protocol (GitOps, header advance).
 
 ## Per-task loop (steady state)
@@ -43,10 +43,10 @@ diff .pi/append-system.md ~/.pi/agent/projections/pi/append-system.md && echo CL
 ```bash
 # 1. Draft a contract
 cp ~/.pi/agent/templates/task-contract.md .agents/tasks/task-<slug>.md   # fill Zone C
-node ~/.pi/agent/tools/lint-contract.mjs .agents/tasks/task-<slug>.md --gravity .tmd/gravity.md
+node ~/.pi/agent/bin/lint-contract.mjs .agents/tasks/task-<slug>.md --gravity .tmd/gravity.md
 
 # 2. Resolve the scope the sandbox guard will enforce
-node ~/.pi/agent/tools/contract-scope.mjs --contract .agents/tasks/task-<slug>.md \
+node ~/.pi/agent/bin/contract-scope.mjs --contract .agents/tasks/task-<slug>.md \
   --gravity .tmd/gravity.md --out .pi/scope.json
 
 # 3. Work — pick the seat
@@ -54,7 +54,7 @@ node ~/.pi/agent/tools/contract-scope.mjs --contract .agents/tasks/task-<slug>.m
 #    The guard now blocks out-of-scope writes automatically.
 
 # 4. Worktree execution (if used): STATE.md genesis per task
-node ~/.pi/agent/tools/state-genesis.mjs --schema .agents/schemas/state.schema.yaml \
+node ~/.pi/agent/bin/state-genesis.mjs --schema .agents/schemas/state.schema.yaml \
   --contract task-<slug>.md --contract-id <id> --worktree /abs/path --branch <branch> --out STATE.md
 
 # 5. Review: /seat reviewer → invoke the pr-review skill → E.4 EvaluationResult
@@ -65,3 +65,17 @@ node ~/.pi/agent/tools/state-genesis.mjs --schema .agents/schemas/state.schema.y
 - `contract-scope` fails → the sub-graph is not registered; fix gravity.md, never bypass.
 - The guard blocks a write you believe is in scope → the scope file is stale or the Registry is wrong; resolve, don't force.
 - Any manifold ambiguity → Conflict Halt: stop, resolve by human PR advancing `last_verified`.
+
+## Interim queue discipline (Harness v1.3 §4.7 — SOP until §D.19 machinery lands)
+
+- **One task at a time per repository.** Default concurrency is 1 — it is
+  the collision-avoidance mechanism, not a preference.
+- **A failing gate outranks all new work.** Fix → validate → build → triage,
+  in that order. Do not build atop a red gate.
+- **≤2 fix attempts per failing gate.** The third failure is an escalation,
+  not a retry: stop, and escalate with a *proposed answer and rationale* —
+  an escalation without a proposal transfers the thinking back to you.
+- **Slices stay within the size caps** (≤500 production lines, ≤12 files,
+  ≤1500 total). Oversized work is decomposed in the plan, never mid-execution.
+- Headless operation: an unattended worker approaching the context ceiling
+  escalates — it never compacts.

@@ -49,11 +49,12 @@ skill, a driver proves it, the chain lands it.
 | Mutation lane (§5.10.4) | Deliberate defects spanning every gate rung must be caught | `validation/mutations/` | self (runbook suite loop) |
 | Skills (Phase 0) | `spec-intake` (intent→PRD interview) · `slice-plan` (plan→slices→contracts) | repo-root `skills/` | `validation/skills/` |
 
-*Status note (canon revision 2026-09):* the seven rows above are
-**specified-not-yet-landed**; each lands via its own rig-change WP in the
-order given by FACTORY_STATUS (WP-A → WP-B → WP-C). They are recorded here
-now per the canon-revision classification; the register entries §D.19–§D.22
-below carry the deferral semantics.
+*Status note (canon revision 2026-09, updated at WP-B landing):* the seven
+rows above were recorded specified-not-yet-landed at the canon revision.
+Landed since: spec chain linter + templates (WP-A), skills `spec-intake`/
+`slice-plan` (WP-A), doctor + autonomy.json schema (WP-B). Still pending:
+floor ratchet, guard, tripwire, mutation lane (WP-C). The register entries
+§D.19–§D.22 below carry the remaining deferral semantics.
 
 ---
 
