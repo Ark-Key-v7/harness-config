@@ -34,6 +34,8 @@ When a task matches a trigger, invoke the named skill — procedure follows, nev
 | pr-review | review this PR · verify this contract · stage 2 review · adversarial review |
 | project-onboard | start a new project · onboard this project · set up the manifold · new repo setup |
 | rig-change | new rig files · place these files · update the rig · commit and sync harness-config · I downloaded the new version · canon updated · new handbook version |
+| slice-plan | plan this · slice this · slice the PRD · draft contracts · draft a task contract |
+| spec-intake | new work · I have an idea · start a feature · draft an intent · write a PRD · new intent |
 | template-skill | author a new skill · create a skill |
 | tool-intake | install a tool · adopt this skill · a register trigger fired · add an MCP server · tool intake |
 

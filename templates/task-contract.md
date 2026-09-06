@@ -32,7 +32,10 @@ full application state — they are what makes the loop self-validating.
 **Format law.** Hybrid Markdown + Conditional YAML: Markdown headers anchor
 attention; flat YAML for structured config (nesting depth ≤3). Prose obeys
 IDK discipline: Location → Action → Detail; types and signatures as the
-densest keywords; the WHAT stated, the HOW left to the engine.
+densest keywords; the WHAT stated, the HOW left to the engine. The manifest's
+trace field binds this contract to the Phase-0 chain; a contract without a
+resolvable trace is invalid (TCE v2.1 §2.A). Its holdout pointer names
+acceptance truths the worker never sees (Harness E.7).
 
 **Sizing (L8 / §1.4).** If the task's required context exceeds the sizing
 budget (default 100K tokens — a decomposition trigger, not an attention
@@ -65,6 +68,7 @@ manifest:
   regime: subscription                          # gateway | subscription
   model_class: TEMPLATE_VALUE_REQUIRED          # frontier_reasoner | executor | fast_router
   sizing_budget_tokens: TEMPLATE_VALUE_REQUIRED # §1.4 ceiling 1 (default 100000)
+  trace: TEMPLATE_VALUE_REQUIRED            # specs/plans/<slug>.md#S<n> — chain back-reference (TCE v2.1 §2.A)
 inherit:                                        # named manifold slices, NEVER restated
   rules: [TEMPLATE_VALUE_REQUIRED]              # e.g. ["NO_UPSTREAM_LEAKS @ domain-layer"]
   gravity: [TEMPLATE_VALUE_REQUIRED]            # e.g. ["auth sub-graph boundary"]
@@ -78,6 +82,7 @@ must_haves:
       then: [TEMPLATE_VALUE_REQUIRED]
   artifacts:
     - "TEMPLATE_VALUE_REQUIRED — e.g. src/server/auth/session.ts exists and passes the type-checker"
+holdout: .agents/tasks/<contract_id>.holdout.md   # E.7 builder-blind acceptance; read-denied to worker seat
 validation_commands: [TEMPLATE_VALUE_REQUIRED]  # must represent full application state
 iteration_budget: TEMPLATE_VALUE_REQUIRED       # int
 timeout_seconds: TEMPLATE_VALUE_REQUIRED        # int

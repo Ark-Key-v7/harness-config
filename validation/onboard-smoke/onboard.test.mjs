@@ -69,6 +69,10 @@ const missing = expected.filter((f) => !existsSync(join(PROJ, f)));
 check(`all ${expected.length} layer files placed (dotfiles included)`, missing.length === 0);
 if (missing.length > 0) console.log(`    missing: ${missing.join(", ")}`);
 check(".agents/tasks/ created (contract home)", existsSync(join(PROJ, ".agents", "tasks")));
+// WP-A: Phase-0 chain scaffold (TCE v2.1 §2.A)
+for (const d of ["specs/intent", "specs/prd", "specs/plans"]) {
+  check(`specs scaffold: ${d}/ exists`, existsSync(join(PROJ, d)));
+}
 
 // 3. Projection copied verbatim with its source_head marker (L5 — referenced, not regenerated)
 const proj = readFileSync(join(PROJ, ".pi", "append-system.md"), "utf8");
@@ -108,6 +112,18 @@ const filledGravity = gravity.replace(
 );
 check("driver located the Registry Zone C slot", filledGravity !== gravity);
 writeFileSync(join(PROJ, ".tmd", "gravity.md"), filledGravity);
+// WP-A: the plan slice this contract traces back to (TCE v2.1 §2.A chain)
+writeFileSync(join(PROJ, "specs", "plans", "auth.md"), `# PLAN — auth
+derived_from: specs/prd/auth.md
+last_reconciled: 2026-09-01
+
+## Slices
+### S1: session
+- crosses layers: domain
+- touches: src/lib/domain/auth
+- produces: session endpoints
+- contract: task-auth
+`);
 const CONTRACT = join(PROJ, ".agents", "tasks", "task-auth.md");
 writeFileSync(CONTRACT, `# Task Contract: auth session
 \`\`\`yaml
@@ -119,6 +135,7 @@ manifest:
   regime: subscription
   model_class: executor
   sizing_budget_tokens: 100000
+  trace: specs/plans/auth.md#S1
 inherit:
   rules: ["NO_UPSTREAM_LEAKS"]
   gravity: ["auth may not import from web-ui"]
@@ -132,6 +149,7 @@ must_haves:
       then: ["the request is rejected"]
   artifacts:
     - "src/lib/domain/auth/session.ts exists and passes tsc --noEmit"
+holdout: .agents/tasks/task-auth-session.holdout.md
 validation_commands: ["npm test -- auth"]
 iteration_budget: 5
 timeout_seconds: 1800
@@ -143,6 +161,9 @@ check("filled contract valid against the onboarded manifold's Registry",
 
 const scope = run("contract-scope.mjs", ["--contract", CONTRACT, "--gravity", join(PROJ, ".tmd", "gravity.md"), "--out", join(PROJ, ".pi", "scope.json")]);
 check("contract-scope resolves inside the onboarded project", scope.code === 0 && existsSync(join(PROJ, ".pi", "scope.json")));
+const scopeJson = JSON.parse(readFileSync(join(PROJ, ".pi", "scope.json"), "utf8"));
+check("holdout read-deny emitted with no active seat (E.7 fail-closed)",
+  Array.isArray(scopeJson.read_deny) && scopeJson.read_deny.includes(".agents/tasks/task-auth-session.holdout.md"));
 
 // 7. WP2 guard enforces the resolved scope in the fixture (spec acceptance)
 const { default: factory } = await import(EXT_LOCAL);

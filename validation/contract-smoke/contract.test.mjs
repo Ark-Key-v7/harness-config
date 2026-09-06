@@ -16,7 +16,7 @@ import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, copyFileSync, exis
 import { tmpdir } from "node:os";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import { execFileSync } from "node:child_process";
+import { spawnSync } from "node:child_process";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO = join(HERE, "..", "..");
@@ -44,13 +44,12 @@ function check(label, cond) {
   else { failures++; console.log(`FAIL  | ${label}`); }
 }
 function run(script, args, allowFail = false) {
-  try {
-    const out = execFileSync(process.execPath, [join(FIX, "bin", script), ...args], { cwd: FIX, encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] });
-    return { code: 0, out };
-  } catch (err) {
-    if (allowFail) return { code: err.status ?? 1, out: String(err.stdout ?? "") + String(err.stderr ?? "") };
-    throw err;
-  }
+  // spawnSync: WARN lines (e.g. holdout-not-authored-yet) live on stderr —
+  // capture both streams on success and failure alike.
+  const r = spawnSync(process.execPath, [join(FIX, "bin", script), ...args], { cwd: FIX, encoding: "utf8" });
+  const res = { code: r.status ?? 1, out: String(r.stdout ?? "") + String(r.stderr ?? "") };
+  if (res.code !== 0 && !allowFail) throw new Error(`${script} failed unexpectedly:\n${res.out}`);
+  return res;
 }
 
 // --- Fixture gravity with a Registry -----------------------------------------
@@ -67,6 +66,22 @@ subgraphs:
 \`\`\`
 `);
 
+// --- Fixture Phase-0 chain (TCE v2.1 §2.A): plan + slice the contract traces to
+mkdirSync(join(FIX, "specs", "plans"), { recursive: true });
+writeFileSync(join(FIX, "specs", "plans", "auth.md"), `# PLAN — auth
+derived_from: specs/prd/auth.md
+last_reconciled: 2026-09-01
+
+## Slices
+### S1: session crud
+- crosses layers: domain
+- touches: src/lib/domain/auth
+- produces: session CRUD endpoints
+- contract: task-auth-session-crud
+`);
+mkdirSync(join(FIX, ".agents", "tasks"), { recursive: true });
+writeFileSync(join(FIX, ".agents", "tasks", "task-auth-session-crud.holdout.md"), `holdout_for: task-auth-session-crud\nscenarios: []\nverification: raw\n`);
+
 // --- A filled contract (the template's micro-example, completed) -------------
 const CONTRACT = join(FIX, "task-auth-session-crud.md");
 writeFileSync(CONTRACT, `# Task Contract: auth session CRUD
@@ -79,6 +94,7 @@ manifest:
   regime: subscription
   model_class: executor
   sizing_budget_tokens: 100000
+  trace: specs/plans/auth.md#S1
 inherit:
   rules: ["NO_UPSTREAM_LEAKS", "NO_HAPPY_PATH_ASSUMPTIONS"]
   gravity: ["auth may not import from web-ui"]
@@ -92,6 +108,7 @@ must_haves:
       then: ["the request is rejected with an authentication failure"]
   artifacts:
     - "src/lib/domain/auth/session.ts exists and passes tsc --noEmit"
+holdout: .agents/tasks/task-auth-session-crud.holdout.md
 validation_commands: ["npm test -- auth", "npm run typecheck"]
 iteration_budget: 5
 timeout_seconds: 1800
@@ -121,6 +138,23 @@ writeFileSync(join(FIX, "bad3.md"), readFileSync(CONTRACT, "utf8").replace("sub_
 const bad3 = run("lint-contract.mjs", [join(FIX, "bad3.md"), "--gravity", GRAVITY], true);
 check("unregistered sub_graph caught (must not spawn)", bad3.code === 1 && bad3.out.includes("not registered"));
 
+// 5b. Phase-0 chain law (TCE v2.1 §2.A): missing trace caught
+writeFileSync(join(FIX, "bad4.md"), readFileSync(CONTRACT, "utf8").replace(/^\s*trace:.*$/m, ""));
+const bad4 = run("lint-contract.mjs", [join(FIX, "bad4.md")], true);
+check("missing trace caught", bad4.code === 1 && bad4.out.includes("trace"));
+
+// 5c. Unresolvable trace caught (slice heading absent from the plan)
+writeFileSync(join(FIX, "bad5.md"), readFileSync(CONTRACT, "utf8").replace("trace: specs/plans/auth.md#S1", "trace: specs/plans/auth.md#S9"));
+const bad5 = run("lint-contract.mjs", [join(FIX, "bad5.md")], true);
+check("unresolvable trace caught", bad5.code === 1 && /### S9/.test(bad5.out));
+
+// 5d. Missing holdout file is WARN-pass, never a failure (E.7: authored at review time)
+writeFileSync(join(FIX, "warn1.md"), readFileSync(CONTRACT, "utf8")
+  .replace(/contract_id: task-auth-session-crud/, "contract_id: task-auth-noholdout")
+  .replace(/holdout: \S+/, "holdout: .agents/tasks/task-auth-noholdout.holdout.md"));
+const warn1 = run("lint-contract.mjs", [join(FIX, "warn1.md"), "--gravity", GRAVITY], true);
+check("missing holdout file warns but passes", warn1.code === 0 && warn1.out.includes("WARN") && warn1.out.includes("holdout"));
+
 // 6. contract-scope resolves to scope.json
 const SCOPE = join(FIX, "proj", ".pi", "scope.json");
 const scopeRun = run("contract-scope.mjs", ["--contract", CONTRACT, "--gravity", GRAVITY, "--out", SCOPE]);
@@ -130,6 +164,29 @@ check("scope carries contract id + registry scopes",
   scope.contract === "task-auth-session-crud" &&
   scope.write.includes("src/lib/domain/auth/**") &&
   scope.read.includes("src/lib/domain/shared/**"));
+
+// 6b. Holdout read-deny (E.7): seat-aware, fail-closed
+//     Project root for seat keying = parent of the --out .pi/ dir (FIX/proj).
+const SEAT_STATE = join(process.env.HOME, ".pi", "agent", "seat-state.json");
+mkdirSync(dirname(SEAT_STATE), { recursive: true });
+const PROJKEY = join(FIX, "proj");
+
+writeFileSync(SEAT_STATE, JSON.stringify({ [PROJKEY]: "worker" }));
+run("contract-scope.mjs", ["--contract", CONTRACT, "--gravity", GRAVITY, "--out", SCOPE]);
+const scopeWorker = JSON.parse(readFileSync(SCOPE, "utf8"));
+check("worker seat → holdout read_deny present",
+  Array.isArray(scopeWorker.read_deny) && scopeWorker.read_deny.includes(".agents/tasks/task-auth-session-crud.holdout.md"));
+
+writeFileSync(SEAT_STATE, JSON.stringify({ [PROJKEY]: "reviewer" }));
+run("contract-scope.mjs", ["--contract", CONTRACT, "--gravity", GRAVITY, "--out", SCOPE]);
+const scopeReviewer = JSON.parse(readFileSync(SCOPE, "utf8"));
+check("reviewer seat → no read_deny (verification runs raw)", !("read_deny" in scopeReviewer));
+
+writeFileSync(SEAT_STATE, JSON.stringify({}));
+run("contract-scope.mjs", ["--contract", CONTRACT, "--gravity", GRAVITY, "--out", SCOPE]);
+const scopeNone = JSON.parse(readFileSync(SCOPE, "utf8"));
+check("no seat → read_deny present (fail-closed)",
+  Array.isArray(scopeNone.read_deny) && scopeNone.read_deny.length === 1);
 
 // 7. END-TO-END: resolved scope drives the WP2 guard
 const { default: factory } = await import(EXT_LOCAL);

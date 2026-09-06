@@ -86,6 +86,9 @@ for (const [, dst] of PLACEMENTS) if (existsSync(join(ROOT, dst))) collisions.pu
 for (const [, dst] of DIR_COPIES) {
   if (existsSync(join(ROOT, dst)) && readdirSync(join(ROOT, dst)).length > 0) collisions.push(`${dst}/ (non-empty)`);
 }
+for (const d of ["specs/intent", "specs/prd", "specs/plans"]) {
+  if (existsSync(join(ROOT, d)) && readdirSync(join(ROOT, d)).filter((f) => f !== ".gitkeep").length > 0) collisions.push(`${d}/ (non-empty)`);
+}
 if (collisions.length > 0) {
   fail(`target already carries governance files — refusing to overwrite human-filled content:\n  ${collisions.join("\n  ")}\nIf this is a re-onboard, remove the stale layer by hand (human decision, never scripted).`);
 }
@@ -106,6 +109,16 @@ for (const [src, dst] of DIR_COPIES) {
 }
 mkdirSync(join(ROOT, ".agents", "tasks"), { recursive: true });
 
+// --- Phase-0 chain scaffold (TCE v2.1 §2.A) -----------------------------------------
+// specs/ lives at project root, outside .tmd/ — work artifacts, not law.
+// The three templates stay in the rig (referenced, never duplicated); the
+// scaffold creates the empty chain segments only.
+for (const d of ["specs/intent", "specs/prd", "specs/plans"]) {
+  mkdirSync(join(ROOT, d), { recursive: true });
+  const keep = join(ROOT, d, ".gitkeep");
+  if (!existsSync(keep)) copyFileSync(join(RIG, "templates", "specs", ".gitkeep"), keep);
+}
+
 // --- Validate what we placed (the layer must boot clean) ----------------------------
 const run = (tool, args) => {
   try {
@@ -124,6 +137,7 @@ const head = readFileSync(join(ROOT, ".pi", "append-system.md"), "utf8").match(/
 
 console.log(`ONBOARDED (scaffolding): ${ROOT}`);
 console.log(`  placed: ${placed} items — AGENTS.md, .tmd/ (5), .pi/ (5), .agents/ (profiles, skills, schemas, tasks/)`);
+console.log(`  specs/: Phase-0 chain scaffolded (intent/ prd/ plans/ — TCE v2.1 §2.A); contracts now carry a trace: back-reference and a holdout: pointer (.agents/tasks/<contract_id>.holdout.md — authored at review time, builder-blind, read-denied to the worker seat)`);
 console.log(`  projection: append-system.md at source_head ${head}`);
 console.log(`  validation: lint-tmd (template mode) PASS, lint-mcp PASS`);
 
@@ -143,8 +157,10 @@ Remaining phases are human + agent work, then human ratification (spec WP10):
     the current HEAD SHA on all five .tmd/ files, then commit.
     The Meta-Harness Restriction applies from that commit.
 
-  Then, per task: draft a contract in .agents/tasks/ from the rig's
-  templates/task-contract.md, validate with lint-contract.mjs --gravity,
-  and resolve scope with contract-scope.mjs before any worker boots.
+  Then, per task: the chain is intent → PRD → plan → contract (skills
+  spec-intake and slice-plan walk it with you). Draft contracts in
+  .agents/tasks/ from the rig's templates/task-contract.md, validate with
+  lint-contract.mjs --gravity (trace: must resolve to a plan slice), and
+  resolve scope with contract-scope.mjs before any worker boots.
   Before every commit: node ~/.pi/agent/bin/preflight.mjs --staged
   (Refinery Stage 0 — the local pre-flight lane, canon §6.3).`);
