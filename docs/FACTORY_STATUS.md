@@ -90,3 +90,16 @@ After any rig change that alters the ledger above: update this file in the same 
     Registry stays canon-resident, Appendix A/B harnesses out of scope).
 - Driver: `validation/canon-register/` section-count check relaxed to
   ≥14 (entries no longer require driver edits).
+
+## Canon revision 2026-09 — TCE v2.1 + Harness v1.3 integrated
+- New canon law: Phase 0 spec chain (TCE §2.A); Queue Operations §4.7; Gate
+  Integrity §5.10; autonomy dial §5.6 (0–3, doctor-gated); E.1 holdouts.
+- Work packages: WP-A spec chain & holdouts → WP-B doctor/dial + pr-review
+  strengthening → WP-C gate integrity machinery (guard/ratchet/tripwire/
+  mutations) → §D.19 queue machinery (trigger: first dial-2 request).
+- Open decision: ZTE-class dial (>3) deferred headroom, register §D.19.
+- Open decision: §D.21 eval substrate depends on §D.15 ledger.
+- Canonical terminology (auditor map): Slice · Holdout truths · Autonomy dial
+  (0–3) · Doctor · Floor/ratchet · Queue Operations Law (§4.7) · Gate
+  Integrity Law (§5.10) · needs_human (+proposed-answer law) ·
+  Intent/PRD/Plan chain · Watchdog D1–D6.

@@ -37,11 +37,14 @@ read, write/edit (target files only), bash (git + node), ls, find.
 | Artifact | Destination |
 |---|---|
 | extension (`*.ts` with `export default function (pi:`) | `extensions/` |
-| repo tooling (`*.mjs` scripts) | `tools/` |
+| repo tooling (`*.mjs` scripts) | `bin/` |
 | driver (`*.test.mjs`) | `validation/<name>-smoke/` |
 | manifold template | `templates/tmd/` |
 | profile | `templates/agents/profiles/` |
-| skill folder | `templates/agents/skills/<kebab-name>/` |
+| skill folder | `skills/<kebab-name>/` |
+| manifold template (`templates/specs/`) | `templates/` |
+| `specs/**` artifacts | PROJECT files — never placed in the rig repo |
+| `.agents/autonomy.json` / `.agents/floor.json` | PROJECT config — never placed by rig-change |
 | spec / docs | `docs/` |
 
 ##### Step 2: ACT (place)
@@ -53,8 +56,8 @@ read, write/edit (target files only), bash (git + node), ls, find.
   - exit 0 → proceed.
   - exit 1 → STOP. Report the failing checks verbatim. Do not commit. Do not
     "fix" silently — report and wait for instruction.
-- Run applicable linters: `node tools/lint-tmd.mjs`, `node tools/lint-profiles.mjs`, `node tools/lint-skills.mjs`.
-- If templates/ or tools/ changed: `node tools/generate-projections.mjs && node tools/check-projections.mjs` (drift must be clean).
+- Run applicable linters: `node bin/lint-tmd.mjs`, `node bin/lint-profiles.mjs`, `node bin/lint-skills.mjs`.
+- If templates/ or bin/ changed: `node bin/generate-projections.mjs && node bin/check-projections.mjs` (drift must be clean).
 
 ##### Step 4: ACT (stage and propose)
 - `git status --short` and `git diff --stat`; show the operator.

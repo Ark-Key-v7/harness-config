@@ -22,7 +22,7 @@ The `rig-change` skill operationalizes this inside a Pi session. This runbook is
 | Change | Validation gate before commit | Also update |
 |---|---|---|
 | Extension (`extensions/*.ts`) | its smoke driver in `validation/` | — |
-| Tool (`tools/*.mjs`) | every driver that calls it (regression) | — |
+| Tool (`bin/*.mjs`) | every driver that calls it (regression) | — |
 | TMD template (`templates/tmd/*`) | `lint-tmd` (template mode) + `tmd` driver + **regenerate projections** + `check-projections` clean | projection bump commit |
 | Profile (`templates/agents/profiles/*`) | `lint-profiles` + profiles driver + regenerate projections | — |
 | Skill (`templates/agents/skills/*`) | `lint-skills` + skills driver + regenerate projections (routing table changes) | — |
@@ -39,15 +39,15 @@ The `rig-change` skill operationalizes this inside a Pi session. This runbook is
 ```bash
 cd ~/factory-rig/sources/harness-config
 for f in validation/*/*.test.mjs; do node "$f" || break; done
-node tools/check-projections.mjs        # drift: committed projections == regenerated
-node tools/assert-projection-fresh.mjs  # freshness: recorded head == last input-touching commit
-node tools/lint-tmd.mjs templates/tmd --agents templates/AGENTS.md
-node tools/lint-profiles.mjs
-node tools/lint-skills.mjs
-node tools/lint-mcp.mjs templates/pi/.mcp.json
+node bin/check-projections.mjs        # drift: committed projections == regenerated
+node bin/assert-projection-fresh.mjs  # freshness: recorded head == last input-touching commit
+node bin/lint-tmd.mjs templates/tmd --agents templates/AGENTS.md
+node bin/lint-profiles.mjs
+node bin/lint-skills.mjs
+node bin/lint-mcp.mjs templates/pi/.mcp.json
 ```
 
-_Freshness semantics: a projection stales only when its **inputs** (`templates/tmd`, `templates/agents/profiles`, `templates/agents/skills`, the generator itself) advance past the recorded source head. Docs/tools/drivers commits never stale it. If stale: `node tools/generate-projections.mjs && git add projections/pi && git commit -m "Refresh projections"`._
+_Freshness semantics: a projection stales only when its **inputs** (`templates/tmd`, `templates/agents/profiles`, `templates/agents/skills`, the generator itself) advance past the recorded source head. Docs/tools/drivers commits never stale it. If stale: `node bin/generate-projections.mjs && git add projections/pi && git commit -m "Refresh projections"`._
 
 All green is the only acceptable pre-commit state. **Never commit with a failing driver.**
 

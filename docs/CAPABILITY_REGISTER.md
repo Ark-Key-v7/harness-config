@@ -41,6 +41,19 @@ skill, a driver proves it, the chain lands it.
 | Skills (global, post-v2.1) | rig-change · pr-review · tool-intake · template-skill · project-onboard | repo-root `skills/` | `validation/skills/` |
 | Supply-chain floor (canon §6.6 M2/M3) | --ignore-scripts, exact pins, frozen lockfiles | `package-pins.json` + runbook gates | `validation/pi-layer/` |
 | Outer machine floor | semgrep, pr-agent tool installs + smoke fixtures (machine-local, not the repo) | `~/factory-rig/tools/` | outer `validation/` |
+| Spec chain linter (Phase 0) | Schema + back-reference/orphan check + provenance headers for specs/intent, prd, plans | `bin/lint-spec.mjs` + `templates/specs/` | `validation/spec-smoke/` |
+| Doctor (autonomy evidence gate) | Deterministic checklist; `max_level()` from FAIL rows; blocks dial elevation | `bin/doctor.mjs` + `.agents/autonomy.json` schema | `validation/doctor-smoke/` |
+| Floor ratchet | Monotonic gate thresholds, `_MAX` ceilings, slack reporting | `bin/floor-ratchet.mjs` + project `.agents/floor.json` | `validation/floor-smoke/` |
+| Guard (Gate Integrity §5.10.1) | Protected-list write boundary, fail-closed, list in code | `extensions/guard.ts` + `bin/guard.mjs` (CI) | `validation/guard-smoke/` |
+| Tripwire (holdout leak) | Provenance-based detection: holdout-shaped content in worker artifacts | `bin/tripwire.mjs` | `validation/tripwire-smoke/` |
+| Mutation lane (§5.10.4) | Deliberate defects spanning every gate rung must be caught | `validation/mutations/` | self (runbook suite loop) |
+| Skills (Phase 0) | `spec-intake` (intent→PRD interview) · `slice-plan` (plan→slices→contracts) | repo-root `skills/` | `validation/skills/` |
+
+*Status note (canon revision 2026-09):* the seven rows above are
+**specified-not-yet-landed**; each lands via its own rig-change WP in the
+order given by FACTORY_STATUS (WP-A → WP-B → WP-C). They are recorded here
+now per the canon-revision classification; the register entries §D.19–§D.22
+below carry the deferral semantics.
 
 ---
 
@@ -183,6 +196,55 @@ observable condition that makes the item activatable — not a suggestion.
 - **Activation trigger:** a spec prompt has executed 3+ times unchanged on real tasks (promotion evidence per §3.5) — operator-judged.
 - **Prerequisites:** none structural; `templates/pi/` currently holds only `settings.json` — this entry is its prompt-template tenant.
 - **Integration path:** promote via tool-intake into `templates/pi/` prompt templates or a `skills/` folder; the HOP stays human (§5.4).
+
+### §D.19 Queue Operations machinery (watchdog, scheduling, escalation routing)
+- **Canon:** Harness v1.3 §4.7 (dispatch priority, size caps, fix attempts ≤2,
+  escalation state machine, watchdog D1–D6); §5.6 dial interlock (no dial ≥2
+  without watchdog); ZTE-class dial headroom (>3) recorded here as deferred.
+- **Activation trigger:** the FIRST dial-2 elevation request on any governed
+  project (doctor blocks the request until this entry is live).
+- **Prerequisites:** §D.16 (in-harness loop-guard — per-session instance);
+  STATE.md failure_class sinks (integrated) until §D.15 ledger.
+- **Integration path:** `bin/watchdog.mjs` (pure assess function over STATE.md
+  + file-change records) + escalation writer (needs_human.md + STATE.md
+  record) + validation driver; queue config in committed `.agents/queue.json`.
+
+### §D.20 Production loop closure (Stage 6)
+- **Canon:** Harness v1.3 §5.8 ruling 4 — deterministic bands monitor; breach
+  emits draft specs/intent/ artifact (TCE v2.1 Phase 0).
+- **Activation trigger:** first deployed product with observability (life
+  event, like §D.10 — not auto-detectable).
+- **Prerequisites:** deployed product; monitor threshold config (committed);
+  Phase-0 chain live (§D.22).
+- **Integration path:** monitor config template + breach→intent draft writer;
+  incident records (manual loop) are the interim posture.
+
+### §D.21 Continuous agent-config evals
+- **Canon:** Harness v1.3 §5.8 ruling 5 — profiles/prompts/skills eval'd in CI
+  like code; holdout scenarios are the fixture substrate.
+- **Activation trigger:** §D.15 ledger live AND holdout suites exist on a
+  governed project. Trigger T5 (filesystem-detectable: `.agents/tasks/*.holdout.md`
+  present) is **deferred** — `bin/check-activations.mjs` has no glob check
+  type; T5 lands with the machinery WP that adds it (WP-A/WP-C), not with a
+  docs commit.
+- **Prerequisites:** §D.15; §D.22 (holdout machinery).
+- **Integration path:** eval runner in validation/; scores to ledger; ratchet
+  via §5.10.2 floor semantics.
+
+### §D.22 Phase-0 spec chain machinery
+- **Canon:** TCE v2.1 §2.A (intent→PRD→plan→slice→contract; orphan lint;
+  provenance headers); Harness v1.3 E.1 holdout extension.
+- **Includes:** `templates/specs/` scaffold; `bin/lint-spec.mjs`; contract
+  `trace:` field enforcement in `bin/lint-contract.mjs`; holdout read-deny in
+  `bin/contract-scope.mjs`; skills `spec-intake` + `slice-plan`;
+  `bin/onboard-project.mjs` scaffolding + final doctor run.
+- **Activation trigger:** NONE — ratified for immediate build (WP-A). This
+  entry exists for bookkeeping completeness and closes on landing; it is the
+  canon-revision classification record for TCE v2.1.
+- **Integration path:** WP-A per FACTORY_STATUS — templates/specs →
+  lint-spec → contract `trace:` → holdout template + contract-scope
+  read-deny → skills spec-intake/slice-plan → onboard scaffolding. Driver:
+  validation/spec-smoke + contract driver extension.
 
 ---
 

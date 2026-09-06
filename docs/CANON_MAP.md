@@ -21,14 +21,14 @@ canon's own assignment — not machinery).
 
 ---
 
-## 1. The Constraint-Driven Lifecycle (Four-Phase Methodology + §2.5 Constraint as Code)
+## 1. The Constraint-Driven Lifecycle (Five-Phase Methodology + §2.5 Constraint as Code)
 
 | Canon element | Rig surface | Status |
 |---|---|---|
 | Phase 1 Cognitive Alignment (high-bandwidth questioning) | `skills/project-onboard/` + `bin/onboard-project.mjs` (Zone C interview; drafts require operator approval) | LIVE |
 | Phase 2 Topological Mapping (gravity.md, Sub-Graph Registry) | `templates/tmd/gravity.md` three-zone template; `bin/contract-scope.mjs`; `bin/lint-contract.mjs --gravity` | LIVE |
 | Phase 2 A2UI review surface (Lavish, lavish-axi) | — | DEFERRED (register §D.5) |
-| Phase 3 Contract Drafting & Vertical Slicing | `templates/agents/tasks/task-contract.md` (E.1); slicing discipline in `docs/FRESH_PROJECT_SOP.md` | LIVE / SOP |
+| Phase 3 Contract Drafting & Vertical Slicing | `templates/task-contract.md` (E.1); slicing discipline in `docs/FRESH_PROJECT_SOP.md` | LIVE / SOP |
 | Phase 4 Gray Box Protocol (human designs interface, agent fills internals) | `templates/agents/profiles/` (worker/planner split) | LIVE (process) |
 | rules.md §1 Anti-Slop Protocol (worker law) | `templates/tmd/rules.md` §1 — verbatim | LIVE |
 | rules.md §2 pointer → Part V rubric | `templates/tmd/rules.md` §2 — pointer only | LIVE |
@@ -36,6 +36,8 @@ canon's own assignment — not machinery).
 | §2.5 LanceDB semantic dedup (TMD_DEDUP_THRESHOLD 0.95, halt + Deduplication PR) | — | DEFERRED (register §D.7) |
 | §2.5 commit-triggered re-indexing (QMD / code-graph / LanceDB cadences) | pattern prototyped by `bin/generate-projections.mjs` + `bin/assert-projection-fresh.mjs` (input-head lockstep) | DEFERRED (register §D.7) |
 | §2.5 BetterDB session cache exemption | — | DEFERRED (register §D.8) |
+| Phase 0 Intent & Specification (TCE v2.1 §2.A) | `templates/specs/`, `bin/lint-spec.mjs`, skills `spec-intake`/`slice-plan`, contract `trace:` field | DEFERRED→building (register §D.22, WP-A) |
+| Provenance headers (`derived_from`/`last_reconciled`) | `templates/tmd/*` Zone C convention + lint-tmd optional-field check | PARTIAL (WP-A) |
 
 ## 2. The CI/CD Integration Engine (The Refinery)
 
@@ -93,9 +95,9 @@ canon's own assignment — not machinery).
 | §7.1 Phase 3 System Evolution (update the manifold to forbid the bug's anti-pattern) | `skills/rig-change/` amendment loop | LIVE |
 | §7.2 Brownfield archaeology (GitNexus AST maps; jCodeMunch extraction; AMUX read-only swarm; artifact hierarchy) | artifact hierarchy LIVE (templates); the swarm stack DEFERRED | PARTIAL (register §D.4) |
 
-## 6. Harness Handbook v1.2 (Parts II–V — harness-native law)
+## 6. Harness Handbook v1.2–v1.3 (Parts II–V — harness-native law)
 
-v1.2 has its own section numbering; this section indexes it. v1.2-only laws
+v1.2/v1.3 have their own section numbering; this section indexes them. v1.2-only laws
 that are already honored in implementation are cited here so future canon
 revisions stay traceable.
 
@@ -121,6 +123,18 @@ revisions stay traceable.
 | §5.8 Consolidated Ruling Registry | canon-resident; rig-side amendments recorded in FACTORY_STATUS open decisions | SOP (ruling: the registry is not duplicated into rig docs — L5) |
 | Appendix A (Claude Code shim) / Appendix B (Codex, reserved) | out of scope — single Pi seat; adoption enters via tool-intake + a ruling-registry amendment | SOP (ruling) |
 | Appendix C (Kimi Code seat) | provider bridge pinned (`package-pins.json`), `docs/provider-setup.md`; the rig's live regime | LIVE |
+| §4.7 Queue Operations Law (priority, caps, ≤2 attempts, escalation, watchdog D1–D6) | SOP now (FRESH_PROJECT_SOP/OPERATOR_GUIDE); machinery register §D.19 | SOP + DEFERRED |
+| §5.10.1 protected list in code, fail-closed | `extensions/guard.ts` + `bin/guard.mjs` (WP-C) | DEFERRED (WP-C) |
+| §5.10.2 floor ratchet | `bin/floor-ratchet.mjs` + `.agents/floor.json` (WP-C) | DEFERRED (WP-C) |
+| §5.10.3 raw output wins / loud skips | pr-review skill law (WP-B); gate.py-class precedence | LIVE (process) after WP-B |
+| §5.10.4 mutation testing of the gate | `validation/mutations/` (WP-C) | DEFERRED (WP-C) |
+| §5.6 autonomy dial (0–3, doctor-gated) | `bin/doctor.mjs` + `.agents/autonomy.json` (WP-B) | DEFERRED (WP-B) |
+| E.1 holdout truths (builder-blind, read-denied) | contract template + contract-scope read-deny + `bin/tripwire.mjs` (WP-A/WP-C) | DEFERRED (WP-A) |
+| §5.8 ruling: headless compaction ban | OPERATOR_GUIDE SOP; escalation routing §4.7 | SOP |
+| §5.8 ruling: headless ask-user → needs_human + proposed answer | `extensions/ask-user.ts` posture doc; machinery §D.19 | SOP + DEFERRED |
+| §5.8 ruling: base-branch rulebook reading | `skills/pr-review/` step (WP-B) | LIVE after WP-B |
+| §5.8 ruling: Stage-6 loop closure | — | DEFERRED (register §D.20) |
+| §5.8 ruling: agent-config evals | — | DEFERRED (register §D.21) |
 
 ---
 
