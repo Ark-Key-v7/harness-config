@@ -60,7 +60,7 @@ for (const k of topKeys) {
 if (!/^status:\s*(in_progress|blocked|complete|failed)\s*(#.*)?$/m.test(text)) {
   bad("status must be in_progress|blocked|complete|failed");
 }
-const FAILURE = "type_error|test_failure|timeout|budget_severance|loop_detected|manifold_conflict|scope_denial";
+const FAILURE = "type_error|test_failure|timeout|budget_severance|loop_detected|manifold_conflict|scope_denial|needs_human|holdout_leak";
 if (!new RegExp(`^failure_class:\\s*(null|${FAILURE})\\s*(#.*)?$`, "m").test(text)) {
   bad(`failure_class must be null or a canon verdict (${FAILURE.replaceAll("|", ", ")}) — never a remapped error_class`);
 }

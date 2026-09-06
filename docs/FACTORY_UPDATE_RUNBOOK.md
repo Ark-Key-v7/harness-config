@@ -31,6 +31,10 @@ The `rig-change` skill operationalizes this inside a Pi session. This runbook is
 | Onboarding tool | onboard driver (14 checks) | — |
 | Pin (`package-pins.json`) | pi-layer driver; pin advances are ratified individually | FACTORY_STATUS.md |
 | Deferred-register status | — | spec §6 row + FACTORY_STATUS.md |
+| Guard extension (`extensions/guard.ts`) | guard-smoke driver + mutation lane | — |
+| Gate scripts (`bin/guard\|floor-ratchet\|tripwire\|doctor\|lint-spec.mjs`) | own driver + every driver that calls them | — |
+| `templates/specs/*` | spec-smoke driver + regenerate projections | — |
+| Mutation lane (`validation/mutations/*`) | mutations runner green (runs in the suite loop) | — |
 | This runbook / docs | review only | — |
 | Canon revision (new handbook version) | canon-register driver; classification per "Canon revision" below | register + CANON_MAP + FACTORY_STATUS, same commit |
 

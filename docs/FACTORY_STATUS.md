@@ -121,3 +121,16 @@ After any rig change that alters the ledger above: update this file in the same 
   Autonomy section, FRESH_PROJECT_SOP interim queue discipline (§4.7 SOP).
 - Known cost: the doctor's suite check re-runs the rig driver spine per
   invocation — doctor-smoke adds ~2.5 min to the full suite loop.
+
+## WP-C — Gate integrity machinery (landed 2026-09)
+- Landed: `bin/guard-list.mjs` (protected list, single source) +
+  `extensions/guard.ts` (fail-closed write boundary) + `bin/guard.mjs` (CI
+  twin, exit 2 violation / exit 1 undeterminable); `bin/floor-ratchet.mjs`
+  (monotonic floors, `_MAX` ceilings, ratified lowering, slack report);
+  `bin/tripwire.mjs` (provenance-based holdout-leak detection → STATE.md
+  `failure_class: holdout_leak`); `validation/mutations/` lane (6 rungs,
+  coverage law enforced, sensitivity proven live at build time);
+  `state.schema.yaml` vocabulary += `needs_human`, `holdout_leak`.
+- Drivers: guard-smoke (14), floor-smoke (9), tripwire-smoke (5),
+  state-hook (19, +2 v1.3 fixtures), mutations (6 rungs).
+- Register §D.22 CLOSED (Phase-0 machinery landed across WP-A–C).

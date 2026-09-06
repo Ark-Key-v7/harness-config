@@ -70,6 +70,7 @@ finops:
 
 # --- Dual failure vocabulary (never remap; carry whichever applies) -----------------
 failure_class: null                 # canon verdicts: type_error | test_failure | timeout |
-                                    #   budget_severance | loop_detected | manifold_conflict | scope_denial | null
+                                    #   budget_severance | loop_detected | manifold_conflict | scope_denial |
+                                    #   needs_human (v1.3 §4.7 escalation) | holdout_leak (v1.3 E.7/§5.10) | null
 error_class: null                   # execution errors (§4.4 routing): permission | file_not_found |
                                     #   syntax | rate_limit | timeout | edit_mismatch | null

@@ -44,17 +44,19 @@ skill, a driver proves it, the chain lands it.
 | Spec chain linter (Phase 0) | Schema + back-reference/orphan check + provenance headers for specs/intent, prd, plans | `bin/lint-spec.mjs` + `templates/specs/` | `validation/spec-smoke/` |
 | Doctor (autonomy evidence gate) | Deterministic checklist; `max_level()` from FAIL rows; blocks dial elevation | `bin/doctor.mjs` + `.agents/autonomy.json` schema | `validation/doctor-smoke/` |
 | Floor ratchet | Monotonic gate thresholds, `_MAX` ceilings, slack reporting | `bin/floor-ratchet.mjs` + project `.agents/floor.json` | `validation/floor-smoke/` |
-| Guard (Gate Integrity §5.10.1) | Protected-list write boundary, fail-closed, list in code | `extensions/guard.ts` + `bin/guard.mjs` (CI) | `validation/guard-smoke/` |
+| Guard (Gate Integrity §5.10.1) | Protected-list write boundary, fail-closed, list in code | `extensions/guard.ts` + `bin/guard.mjs` (CI) + `bin/guard-list.mjs` (the list — single source) | `validation/guard-smoke/` |
 | Tripwire (holdout leak) | Provenance-based detection: holdout-shaped content in worker artifacts | `bin/tripwire.mjs` | `validation/tripwire-smoke/` |
 | Mutation lane (§5.10.4) | Deliberate defects spanning every gate rung must be caught | `validation/mutations/` | self (runbook suite loop) |
 | Skills (Phase 0) | `spec-intake` (intent→PRD interview) · `slice-plan` (plan→slices→contracts) | repo-root `skills/` | `validation/skills/` |
 
-*Status note (canon revision 2026-09, updated at WP-B landing):* the seven
+*Status note (canon revision 2026-09, updated at WP-C landing):* the seven
 rows above were recorded specified-not-yet-landed at the canon revision.
 Landed since: spec chain linter + templates (WP-A), skills `spec-intake`/
-`slice-plan` (WP-A), doctor + autonomy.json schema (WP-B). Still pending:
-floor ratchet, guard, tripwire, mutation lane (WP-C). The register entries
-§D.19–§D.22 below carry the remaining deferral semantics.
+`slice-plan` (WP-A), doctor + autonomy.json schema (WP-B), pr-review
+strengthening (WP-B), guard + guard-list + CI twin (WP-C), floor ratchet
+(WP-C), tripwire (WP-C), mutation lane (WP-C), state vocabulary
+`needs_human`/`holdout_leak` (WP-C). Remaining deferrals: §D.19 queue
+machinery (trigger: first dial-2 request), §D.20/§D.21 (life events).
 
 ---
 
@@ -232,7 +234,7 @@ observable condition that makes the item activatable — not a suggestion.
 - **Integration path:** eval runner in validation/; scores to ledger; ratchet
   via §5.10.2 floor semantics.
 
-### §D.22 Phase-0 spec chain machinery
+### §D.22 Phase-0 spec chain machinery — CLOSED (WP-A–C landed 2026-09)
 - **Canon:** TCE v2.1 §2.A (intent→PRD→plan→slice→contract; orphan lint;
   provenance headers); Harness v1.3 E.1 holdout extension.
 - **Includes:** `templates/specs/` scaffold; `bin/lint-spec.mjs`; contract

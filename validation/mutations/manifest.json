@@ -1,0 +1,11 @@
+{
+  "$law": "Harness v1.3 §5.10.4 — the gate is tested with deliberate defects spanning EVERY rung. A mutation set concentrated on one rung is itself invalid.",
+  "rungs": [
+    { "rung": "lint-tmd",       "defect": "manifold file with precedence rank swapped (rules.md claims precedence 2)" },
+    { "rung": "lint-contract",  "defect": "filled contract with no trace: field (Phase-0 chain severed)" },
+    { "rung": "lint-spec",      "defect": "PRD whose derived_from names a nonexistent intent (orphan)" },
+    { "rung": "scope-denial",   "defect": "worker writes outside its contract's resolved write scope" },
+    { "rung": "holdout-leak",   "defect": "worker-authored file echoing the holdout's then-clause" },
+    { "rung": "guard",          "defect": "diff touching .tmd/rules.md reaches the CI twin" }
+  ]
+}

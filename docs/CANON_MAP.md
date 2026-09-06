@@ -36,7 +36,7 @@ canon's own assignment — not machinery).
 | §2.5 LanceDB semantic dedup (TMD_DEDUP_THRESHOLD 0.95, halt + Deduplication PR) | — | DEFERRED (register §D.7) |
 | §2.5 commit-triggered re-indexing (QMD / code-graph / LanceDB cadences) | pattern prototyped by `bin/generate-projections.mjs` + `bin/assert-projection-fresh.mjs` (input-head lockstep) | DEFERRED (register §D.7) |
 | §2.5 BetterDB session cache exemption | — | DEFERRED (register §D.8) |
-| Phase 0 Intent & Specification (TCE v2.1 §2.A) | `templates/specs/`, `bin/lint-spec.mjs`, skills `spec-intake`/`slice-plan`, contract `trace:` field | LIVE (WP-A) — §D.22 closes after WP-C |
+| Phase 0 Intent & Specification (TCE v2.1 §2.A) | `templates/specs/`, `bin/lint-spec.mjs`, skills `spec-intake`/`slice-plan`, contract `trace:` field | LIVE (WP-A–C; §D.22 closed) |
 | Provenance headers (`derived_from`/`last_reconciled`) | `templates/tmd/*` Zone C convention + lint-tmd optional-field check | PARTIAL (WP-A) |
 
 ## 2. The CI/CD Integration Engine (The Refinery)
@@ -124,12 +124,12 @@ revisions stay traceable.
 | Appendix A (Claude Code shim) / Appendix B (Codex, reserved) | out of scope — single Pi seat; adoption enters via tool-intake + a ruling-registry amendment | SOP (ruling) |
 | Appendix C (Kimi Code seat) | provider bridge pinned (`package-pins.json`), `docs/provider-setup.md`; the rig's live regime | LIVE |
 | §4.7 Queue Operations Law (priority, caps, ≤2 attempts, escalation, watchdog D1–D6) | SOP now (FRESH_PROJECT_SOP/OPERATOR_GUIDE); machinery register §D.19 | SOP + DEFERRED |
-| §5.10.1 protected list in code, fail-closed | `extensions/guard.ts` + `bin/guard.mjs` (WP-C) | DEFERRED (WP-C) |
-| §5.10.2 floor ratchet | `bin/floor-ratchet.mjs` + `.agents/floor.json` (WP-C) | DEFERRED (WP-C) |
+| §5.10.1 protected list in code, fail-closed | `extensions/guard.ts` + `bin/guard.mjs` + `bin/guard-list.mjs` (WP-C) | LIVE |
+| §5.10.2 floor ratchet | `bin/floor-ratchet.mjs` + `.agents/floor.json` (WP-C) | LIVE |
 | §5.10.3 raw output wins / loud skips | pr-review skill law (WP-B); gate.py-class precedence | LIVE (process) |
-| §5.10.4 mutation testing of the gate | `validation/mutations/` (WP-C) | DEFERRED (WP-C) |
+| §5.10.4 mutation testing of the gate | `validation/mutations/` (WP-C) | LIVE |
 | §5.6 autonomy dial (0–3, doctor-gated) | `bin/doctor.mjs` + `.agents/autonomy.json` (WP-B) | LIVE (elevation gate; dial ≥2 interlock awaits §D.19 machinery) |
-| E.1 holdout truths (builder-blind, read-denied) | contract template + contract-scope read-deny + `bin/tripwire.mjs` (WP-A/WP-C) | PARTIAL (WP-A: pointer + read-deny live; leak tripwire WP-C) |
+| E.1 holdout truths (builder-blind, read-denied) | contract template + contract-scope read-deny + `bin/tripwire.mjs` (WP-A/WP-C) | LIVE |
 | §5.8 ruling: headless compaction ban | OPERATOR_GUIDE SOP; escalation routing §4.7 | SOP |
 | §5.8 ruling: headless ask-user → needs_human + proposed answer | `extensions/ask-user.ts` posture doc; machinery §D.19 | SOP + DEFERRED |
 | §5.8 ruling: base-branch rulebook reading | `skills/pr-review/` Step 0 (WP-B) | LIVE |

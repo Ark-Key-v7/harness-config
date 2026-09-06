@@ -81,6 +81,13 @@ check("remapped vocabulary rejected (permission is an error_class, not a failure
 const okError = run("lint-state.mjs", [tamper("t5.md", (t) => t.replace("error_class: null", "error_class: file_not_found"))]);
 check("legitimate error_class accepted (dual vocabulary kept separate)", okError.code === 0);
 
+// --- v1.3 failure vocabulary (§4.7 escalation, E.7/§5.10 holdout leak) ---------------
+const okNeedsHuman = run("lint-state.mjs", [tamper("t7.md", (t) => t.replace("failure_class: null", "failure_class: needs_human"))]);
+check("failure_class: needs_human accepted (v1.3 §4.7 escalation verdict)", okNeedsHuman.code === 0);
+
+const okHoldoutLeak = run("lint-state.mjs", [tamper("t8.md", (t) => t.replace("failure_class: null", "failure_class: holdout_leak"))]);
+check("failure_class: holdout_leak accepted (v1.3 E.7/§5.10 tripwire verdict)", okHoldoutLeak.code === 0);
+
 const silentFail = run("lint-state.mjs", [tamper("t6.md", (t) => t.replace("status: in_progress", "status: failed"))], true);
 check("status=failed with both vocabularies null rejected", silentFail.code === 1 && silentFail.out.includes("whichever vocabulary applies"));
 
