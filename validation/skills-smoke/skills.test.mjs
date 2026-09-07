@@ -4,12 +4,14 @@
  * Validates: shipped skill library passes lint-skills; non-kebab folder,
  * name/folder mismatch, missing trigger_phrases, oversized description,
  * angle brackets in frontmatter, and missing Act/Observe/Exit are caught.
+ * v2.0.0 (WP-D-1): missing metadata.class, missing "When NOT to Use",
+ * and empty folders inside a skill dir are caught.
  *
  * Run from the repo:  node validation/skills-smoke/skills.test.mjs
  * Exit 0 = ALL PASS. Exit 1 = at least one check failed.
  */
 
-import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, copyFileSync, cpSync, renameSync } from "node:fs";
+import { mkdtempSync, mkdirSync, rmSync, writeFileSync, readFileSync, copyFileSync, cpSync, renameSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -45,7 +47,7 @@ function lint(allowFail = false) {
 const rigChange = join(SKILLS, "rig-change", "SKILL.md");
 const rigOrig = readFileSync(rigChange, "utf8");
 
-check("shipped skill library VALID (template + 3 skills)", lint().code === 0);
+check("shipped skill library VALID (7 skills, format v2.0.0)", lint().code === 0);
 
 // non-kebab folder
 renameSync(join(SKILLS, "pr-review"), join(SKILLS, "PR_Review"));
@@ -82,6 +84,24 @@ writeFileSync(rigChange, rigOrig.replaceAll("OBSERVE", "LOOK"));
 const loopRun = lint(true);
 check("missing OBSERVE (Act/Observe/Exit form) caught", loopRun.code === 1 && loopRun.out.includes("OBSERVE"));
 writeFileSync(rigChange, rigOrig);
+
+// v2.0.0 (WP-D-1): missing metadata.class
+writeFileSync(rigChange, rigOrig.replace(/^\s+class: procedural$/m, ""));
+const classRun = lint(true);
+check("missing metadata.class caught (format v2.0.0)", classRun.code === 1 && classRun.out.includes("metadata.class"));
+writeFileSync(rigChange, rigOrig);
+
+// v2.0.0 (WP-D-1): missing When NOT to Use
+writeFileSync(rigChange, rigOrig.replace("#### When NOT to Use", "#### Exclusions"));
+const wnuRun = lint(true);
+check("missing When NOT to Use caught (format v2.0.0)", wnuRun.code === 1 && wnuRun.out.includes("When NOT to Use"));
+writeFileSync(rigChange, rigOrig);
+
+// v2.0.0 (WP-D-1): empty folder inside a skill dir
+mkdirSync(join(SKILLS, "rig-change", "scratch"));
+const emptyRun = lint(true);
+check("empty folder inside skill dir caught (format v2.0.0)", emptyRun.code === 1 && emptyRun.out.includes("empty folder"));
+rmSync(join(SKILLS, "rig-change", "scratch"), { recursive: true });
 
 check("library VALID again after restores", lint().code === 0);
 

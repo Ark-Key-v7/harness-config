@@ -13,7 +13,7 @@ _This document is regenerated against the finished rig at each tagged release. I
 | WP3 | Projection generator + drift check + freshness assert (`generate/check/assert-projections`) | projection | 21-check driver | ✅ |
 | WP4 | TMD manifold templates (rules/gravity/promises/glossary/design, three-zone, canon-verbatim) + AGENTS.md router | templates | `lint-tmd` + 10-check driver | ✅ |
 | WP5 | Roster profiles: scout / planner / worker / reviewer (E.5) | templates | `lint-profiles` + 7-check driver | ✅ |
-| WP6 | Skills: `rig-change`, `pr-review`, `tool-intake`, `template-skill` (E.6) | procedures | `lint-skills` + 8-check driver | ✅ |
+| WP6 | Skills: `rig-change`, `pr-review`, `tool-intake`, `template-skill` (E.6) | procedures | `lint-skills` + 11-check driver | ✅ |
 | WP7 | Task Contract template (E.1) + `lint-contract` + `contract-scope` resolver | templates | 9-check driver incl. WP2 end-to-end | ✅ |
 | WP8 | Project `.pi/` layer + `lint-mcp` curation gate + `seat-switch` extension + `pi-mcp-adapter` 2.31.0 pin | templates + enforcement | 15 + 14-check drivers | ✅ |
 | WP9 | STATE.md schema (E.2) + genesis + `lint-state` + `wt.toml` hook contract + `lint-wt-hook` | templates | 17-check driver | ✅ |
@@ -134,3 +134,17 @@ After any rig change that alters the ledger above: update this file in the same 
 - Drivers: guard-smoke (14), floor-smoke (9), tripwire-smoke (5),
   state-hook (19, +2 v1.3 fixtures), mutations (6 rungs).
 - Register §D.22 CLOSED (Phase-0 machinery landed across WP-A–C).
+
+## WP-D-1 — Skill format evolution (format v2.0.0)
+- `skills/template-skill/` v2.0.0: two-class protocol (procedural |
+  discipline, section 0), required "When NOT to Use" (4A), discipline-class
+  skeleton (4B), folder anatomy (4C), IMPORT MODE for foreign SKILL.md (§5).
+  v1 text preserved verbatim; additions marked [v2].
+- `bin/lint-skills.mjs` v2 checks: metadata.class required (procedural |
+  discipline); "When NOT to Use" section required in every skill; empty
+  folders inside a skill dir fail.
+- Migration (additive, D-1.3): all 7 skills carry metadata.class:
+  procedural; existing skills gained a "When NOT to Use" section and a
+  minor version bump. No v1 text deleted.
+- Driver: `validation/skills-smoke/` extended to 11 checks (3 new
+  negative fixtures).

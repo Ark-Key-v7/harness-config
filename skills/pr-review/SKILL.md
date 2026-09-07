@@ -3,7 +3,8 @@ name: pr-review
 description: Execute the agent-adversarial PR review procedure (Principal Review Rubric / Stage gates) against a completed Task Contract. Use when reviewing a PR, verifying a worker's output, or when a contract reaches Stage 2/Stage 4. Requires the Stage-0 preflight trail before the rubric pass.
 metadata:
   author: Agentic SWE Factory
-  version: 1.2.0
+  version: 1.3.0
+  class: procedural
   trigger_phrases: ["review this PR", "verify this contract", "stage 2 review", "adversarial review"]
 ---
 
@@ -27,6 +28,14 @@ The Refinery and this skill are ONE review process at different levels:
 Progressively load and obey, in precedence order: `/.tmd/rules.md`,
 `/.tmd/gravity.md` (the declared sub-graph), `/.tmd/promises.md`,
 `/.tmd/glossary.md`. On any cross-file conflict: Conflict Halt.
+
+#### When NOT to Use
+- No completed Task Contract or diff exists — there is nothing to verify
+  against; authoring work is a builder lane, not a review lane.
+- The request asks the agent to fix or extend the diff under review — a
+  reviewer that edits is a worker with stale context.
+- Fresh context is unavailable (same session that wrote the code) — the
+  review must run from a fresh seat.
 
 #### 2. Required Tooling
 read, grep, find, ls; bash ONLY for the preflight trail and the contract's

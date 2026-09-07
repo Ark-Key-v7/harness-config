@@ -3,7 +3,8 @@ name: spec-intake
 description: Author Phase-0 spec chain artifacts (intent, PRD) through a structured interview when the operator has new work. Use when the operator says "new work", "I have an idea", "start a feature", "draft an intent", "write a PRD".
 metadata:
   author: Agentic SWE Factory
-  version: 1.0.0
+  version: 1.1.0
+  class: procedural
   trigger_phrases: ["new work", "I have an idea", "start a feature", "draft an intent", "write a PRD", "new intent"]
 ---
 
@@ -18,6 +19,14 @@ only on explicit typed answers.
 You are in a governed project (has .tmd/). If specs/ does not exist,
 scaffold it: specs/intent/, specs/prd/, specs/plans/ (copy templates from
 ~/.pi/agent/templates/specs/).
+
+#### When NOT to Use
+- The work already has an approved PRD — the chain moves forward to
+  slice-plan, not back to intake.
+- The operator wants a bug triaged or a small fix landed — that is not
+  Phase-0 spec work.
+- The operator only wants the manifold updated — Zone C edits are a separate
+  ratified step, never bundled into intake.
 
 #### 2. The Procedural Loop
 Step 1 ACT: ask for a one-paragraph problem statement and the slug.

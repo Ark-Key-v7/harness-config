@@ -3,7 +3,8 @@ name: rig-change
 description: Execute the governed rig-change workflow when the operator has new or updated Factory Rig files (extensions, tools, drivers, templates, skills, projections). Use when the operator says they have new rig files, downloaded files to place, or asks to commit and sync harness-config.
 metadata:
   author: Agentic SWE Factory
-  version: 1.1.0
+  version: 1.2.0
+  class: procedural
   trigger_phrases: ["new rig files", "place these files", "update the rig", "commit and sync harness-config", "I downloaded the new version", "canon updated", "new handbook version"]
 ---
 
@@ -22,6 +23,12 @@ You are operating in the harness-config SOURCE repo (~/factory-rig/sources/harne
 Rig law applies: L6 Config-as-Code (every change committed), L12 supply-chain
 policy, and the sync chain — source repo → push → pull into the read-only
 active clone at ~/.pi/agent. The chain is not done until the pull succeeds.
+
+#### When NOT to Use
+- The request touches a product repository's own files (specs, contracts,
+  source) — that is governed-project work, not a rig change.
+- The operator asks the agent to push or sync — those are operator-run by law.
+- No file or spec accompanies the request — there is nothing to classify.
 
 #### 2. Required Tooling
 read, write/edit (target files only), bash (git + node), ls, find.

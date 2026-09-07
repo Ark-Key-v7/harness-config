@@ -3,7 +3,8 @@ name: tool-intake
 description: Execute the standard tool intake procedure (spec §7) when a deferred-tools register trigger fires or the operator wants to adopt a new tool or external skill. Use when adding any tool, MCP server, or third-party skill to the rig.
 metadata:
   author: Agentic SWE Factory
-  version: 1.0.0
+  version: 1.1.0
+  class: procedural
   trigger_phrases: ["install a tool", "adopt this skill", "a register trigger fired", "add an MCP server", "tool intake"]
 ---
 
@@ -19,6 +20,13 @@ exact pins, --ignore-scripts, no curl|sh, never `npm audit fix --force`
 Read `docs/GOVERNANCE_PLANE_SPEC.md` §6 register. Confirm the tool's trigger
 has fired. If the tool is NOT in the register: STOP — adding a register entry
 is a §5.4 human PR decision; present the case and wait.
+
+#### When NOT to Use
+- No register trigger has fired and no ratified register entry exists —
+  installing anyway violates the register → intake → manifest chain.
+- The request is to use an already-installed tool — usage is not intake.
+- The request is a skill-format or rig-file change with no new external
+  capability — that lands via rig-change, not tool-intake.
 
 #### 2. Required Tooling
 read, write, bash (npm/git/node), ls. Sandbox-guard scope must permit

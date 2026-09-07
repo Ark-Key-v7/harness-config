@@ -37,8 +37,8 @@ skill, a driver proves it, the chain lands it.
 | Projection engine | Templates → harness projections, input-head freshness law | `bin/generate-projections.mjs`, `bin/assert-projection-fresh.mjs`, `bin/check-projections.mjs` | `validation/projections/` |
 | Manifold linter | Header law (last_verified = SHA), Zone discipline, template/strict modes | `bin/lint-tmd.mjs` | `validation/tmd/` |
 | Profile linter | Sovereign profile format law (incl. substitution_bounds) | `bin/lint-profiles.mjs` | `validation/profiles/` |
-| Skill linter | SKILL.md format gate (E.6 frontmatter, trigger phrases) | `bin/lint-skills.mjs` | `validation/skills/` |
-| Skills (global, post-v2.1) | rig-change · pr-review · tool-intake · template-skill · project-onboard | repo-root `skills/` | `validation/skills/` |
+| Skill linter | SKILL.md format gate (E.6 frontmatter + format v2.0.0: metadata.class, When NOT to Use, no empty folders) | `bin/lint-skills.mjs` | `validation/skills/` |
+| Skills (global, post-v2.1; format v2.0.0) | rig-change · pr-review · tool-intake · template-skill · project-onboard · spec-intake · slice-plan (all procedural; template-skill v2.0.0 is the two-class wireframe) | repo-root `skills/` | `validation/skills/` |
 | Supply-chain floor (canon §6.6 M2/M3) | --ignore-scripts, exact pins, frozen lockfiles | `package-pins.json` + runbook gates | `validation/pi-layer/` |
 | Outer machine floor | semgrep, pr-agent tool installs + smoke fixtures (machine-local, not the repo) | `~/factory-rig/tools/` | outer `validation/` |
 | Spec chain linter (Phase 0) | Schema + back-reference/orphan check + provenance headers for specs/intent, prd, plans | `bin/lint-spec.mjs` + `templates/specs/` | `validation/spec-smoke/` |

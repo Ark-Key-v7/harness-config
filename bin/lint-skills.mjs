@@ -11,6 +11,8 @@
  *   deliberate choice; both accepted, presence/absence is checked for type)
  * - NO XML angle brackets anywhere in frontmatter or metadata (E.6)
  * - body carries the Act → Observe → Exit procedure form
+ * - v2.0.0: metadata.class required (procedural | discipline); body carries
+ *   a "When NOT to Use" section; empty folders inside a skill dir fail
  *
  * Usage: node bin/lint-skills.mjs [DIR]
  * Exit 0 = valid. Exit 1 = invalid (each violation printed).
@@ -29,6 +31,18 @@ let violations = 0;
 function violation(skill, msg) {
   violations++;
   console.error(`INVALID | ${skill}: ${msg}`);
+}
+
+/** First empty directory under root (depth-first), or null. */
+function findEmptyDir(root) {
+  for (const entry of readdirSync(root, { withFileTypes: true })) {
+    if (!entry.isDirectory()) continue;
+    const p = join(root, entry.name);
+    if (readdirSync(p).length === 0) return p;
+    const nested = findEmptyDir(p);
+    if (nested) return nested;
+  }
+  return null;
 }
 
 if (!existsSync(DIR)) {
@@ -63,6 +77,12 @@ for (const folder of folders) {
   else if (desc.length > 1024) violation(folder, `description ${desc.length} chars > 1024 cap`);
 
   if (!/metadata:[\s\S]*?trigger_phrases:\s*\[/.test(front)) violation(folder, "metadata.trigger_phrases missing (E.6)");
+
+  // format v2.0.0 (WP-D-1): metadata.class is required and must name a class.
+  const cls = front.match(/^\s+class:\s*(\S+)/m)?.[1];
+  if (!cls) violation(folder, "metadata.class missing (format v2.0.0 requires procedural | discipline)");
+  else if (cls !== "procedural" && cls !== "discipline") violation(folder, `metadata.class "${cls}" must be procedural | discipline`);
+
   if (/^disable-model-invocation:/m.test(front) && !/^disable-model-invocation:\s*(true|false)$/m.test(front)) {
     violation(folder, "disable-model-invocation must be boolean");
   }
@@ -73,6 +93,14 @@ for (const folder of folders) {
     // steps, not as prose mentions ("Act → Observe → Exit" in a heading).
     if (!new RegExp(`\\b${marker}\\b`).test(body)) violation(folder, `body missing ${marker} — Act → Observe → Exit form required`);
   }
+
+  // format v2.0.0 (WP-D-1): every skill states explicit non-activation
+  // conditions — the brake against over-triggering.
+  if (!/when not to use/i.test(body)) violation(folder, "body missing a \"When NOT to Use\" section (format v2.0.0 requires it)");
+
+  // format v2.0.0 (WP-D-1): an empty folder inside a skill dir is noise.
+  const empty = findEmptyDir(join(DIR, folder));
+  if (empty) violation(folder, `empty folder is noise (lint fails on it): ${empty}`);
 }
 
 if (violations > 0) {

@@ -3,7 +3,8 @@ name: project-onboard
 description: Onboard a fresh product repository to the governance plane. Use when the operator says they want to start a new project, onboard a repo, or set up the TMD manifold in a directory. Surfaces deferred-register activation notices after scaffolding.
 metadata:
   author: Agentic SWE Factory
-  version: 1.1.0
+  version: 1.2.0
+  class: procedural
   trigger_phrases: ["start a new project", "onboard this project", "set up the manifold", "new repo setup"]
 disable-model-invocation: true
 ---
@@ -17,6 +18,14 @@ The rig clone must be current before anything else: ask the operator to run
 modifies the harness). Manifold reads are explicit: after placement, read
 each `.tmd/` file before proposing any Zone C fill.
 Brownfield targets: the operator says so, and passes `--brownfield`.
+
+#### When NOT to Use
+- The target directory already carries a governance layer — re-onboarding
+  over existing files is a refusal, not a repair.
+- The operator wants manifold law amended on an already-onboarded project —
+  that is a rig-change-class decision, not onboarding.
+- The request is to add a single file or tool to an existing governed
+  project — use the project's own procedures, not full onboarding.
 
 #### 2. Required Tooling
 bash, read, write. A seat whose actuation boundary lacks these MUST NOT

@@ -3,7 +3,8 @@ name: slice-plan
 description: Decompose an approved PRD into a plan of size-capped vertical slices and draft their task contracts. Use when the operator says "plan this", "slice this PRD", "draft contracts", or after spec-intake completes.
 metadata:
   author: Agentic SWE Factory
-  version: 1.0.0
+  version: 1.1.0
+  class: procedural
   trigger_phrases: ["plan this", "slice this", "slice the PRD", "draft contracts", "draft a task contract"]
 ---
 
@@ -17,6 +18,13 @@ Harness §4.7). Decomposition happens here, while it is cheap.
 Governed project with an approved specs/prd/<slug>.md. Read it, the
 manifold (.tmd/gravity.md Registry especially — slices must name a
 registered sub_graph), and existing specs/plans/ to avoid slug collisions.
+
+#### When NOT to Use
+- No approved PRD exists — planning before spec-intake completes inverts
+  the chain (intent → PRD → plan → slice → contract).
+- The operator wants implementation — slicing is decomposition, not building.
+- The request is a single trivial change that needs no contract — the
+  contract machinery is overhead below the size floor.
 
 #### 2. The Procedural Loop
 Step 1 ACT: propose the slice decomposition — each slice: name, layers
