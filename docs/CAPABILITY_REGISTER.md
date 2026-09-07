@@ -38,7 +38,7 @@ skill, a driver proves it, the chain lands it.
 | Manifold linter | Header law (last_verified = SHA), Zone discipline, template/strict modes | `bin/lint-tmd.mjs` | `validation/tmd/` |
 | Profile linter | Sovereign profile format law (incl. substitution_bounds) | `bin/lint-profiles.mjs` | `validation/profiles/` |
 | Skill linter | SKILL.md format gate (E.6 frontmatter + format v2.0.0: metadata.class, When NOT to Use, no empty folders) | `bin/lint-skills.mjs` | `validation/skills/` |
-| Skills (global, post-v2.1; format v2.0.0) | rig-change · pr-review · tool-intake · template-skill · project-onboard · spec-intake · slice-plan (all procedural; template-skill v2.0.0 is the two-class wireframe) | repo-root `skills/` | `validation/skills/` |
+| Skills (global, post-v2.1; format v2.0.0) | rig-change · pr-review · tool-intake · template-skill · project-onboard · spec-intake · slice-plan (procedural) · test-driven-development · verification-before-completion · systematic-debugging · brainstorming (discipline class, WP-D2 ports; template-skill v2.0.0 is the two-class wireframe) | repo-root `skills/` | `validation/skills/` |
 | Supply-chain floor (canon §6.6 M2/M3) | --ignore-scripts, exact pins, frozen lockfiles | `package-pins.json` + runbook gates | `validation/pi-layer/` |
 | Outer machine floor | semgrep, pr-agent tool installs + smoke fixtures (machine-local, not the repo) | `~/factory-rig/tools/` | outer `validation/` |
 | Spec chain linter (Phase 0) | Schema + back-reference/orphan check + provenance headers for specs/intent, prd, plans | `bin/lint-spec.mjs` + `templates/specs/` | `validation/spec-smoke/` |
@@ -233,6 +233,19 @@ observable condition that makes the item activatable — not a suggestion.
 - **Prerequisites:** §D.15; §D.22 (holdout machinery).
 - **Integration path:** eval runner in validation/; scores to ledger; ratchet
   via §5.10.2 floor semantics.
+
+### §D.28 Brainstorming visual companion (shelved at WP-D-2 adoption)
+- **Canon:** WP-D-2 adoption record — the brainstorming skill was ported
+  from obra/superpowers (local clone, SHA b36e082) with its Visual
+  Companion section EXCLUDED: the companion is a browser-server tool that
+  needs its own tooling decision (server process, security boundary, ACP
+  interplay, token cost) before it may enter the rig.
+- **Activation trigger:** operator ratifies a visual-companion tooling WP.
+- **Prerequisites:** tooling decision + smoke driver + L12 pin review of
+  the companion server.
+- **Integration path:** re-adopt `visual-companion.md` from the local
+  superpowers clone into `skills/brainstorming/` via template-skill
+  IMPORT MODE (transformation-spec method, WP-D build spec).
 
 ### §D.22 Phase-0 spec chain machinery — CLOSED (WP-A–C landed 2026-09)
 - **Canon:** TCE v2.1 §2.A (intent→PRD→plan→slice→contract; orphan lint;

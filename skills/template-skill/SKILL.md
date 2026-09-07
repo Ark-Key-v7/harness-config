@@ -11,7 +11,7 @@ disable-model-invocation: true
 
 ### SKILL: template-skill (wireframe — Sovereign Skill Protocol)
 
-#### 0. [v2] The Two Classes (choose BEFORE writing)
+#### 0. The Two Classes (choose BEFORE writing)
 
 Every rig skill is exactly one class:
 
@@ -37,7 +37,7 @@ repository:
 - Read any further manifold files the procedure touches — manifold reads are
   EXPLICIT, never assumed.
 
-[v2 addition:] Procedural skills keep this section as-is. Discipline skills
+Procedural skills keep this section as-is. Discipline skills
 replace it with **Overview** (one paragraph: the technique and why it
 matters, including its canon binding by pointer).
 
@@ -70,13 +70,13 @@ While executing this specific skill, you are mathematically forbidden from:
 - [Constraint 1]
 - [Constraint 2]
 
-#### 4A. [v2] Required section in BOTH classes: When NOT to Use
+#### 4A. Required section in BOTH classes: When NOT to Use
 Immediately after the class skeleton's opening section, every skill states
 explicit exclusions — symptoms, task types, or conditions where the skill
 must NOT activate. Over-triggering is a routing defect; this section is the
 brake. lint-skills fails on its absence.
 
-#### 4B. [v2] Discipline-class skeleton (replaces sections 1–4 for that class)
+#### 4B. Discipline-class skeleton (replaces sections 1–4 for that class)
 1. **Overview** — one paragraph: the technique, why it matters, canon
    binding by pointer.
 2. **When to Use / When NOT to Use** — both lists required.
@@ -88,7 +88,7 @@ brake. lint-skills fails on its absence.
    pre-rebutting each.
 6. **Local Negative Constraints** — same law as section 4.
 
-#### 4C. [v2] Folder anatomy
+#### 4C. Folder anatomy
 skills/<name>/
 ├── SKILL.md        # required — the only required file
 ├── scripts/        # optional — executable helpers (pinned, --ignore-scripts)
@@ -96,7 +96,7 @@ skills/<name>/
 └── assets/         # optional — static resources
 Omit empty folders — an empty folder is noise (lint fails on it).
 
-#### 5. [v2] IMPORT MODE — conforming a foreign SKILL.md
+#### 5. IMPORT MODE — conforming a foreign SKILL.md
 Protocol, in order, no shortcuts:
 1. READ the foreign skill end to end — every file in its folder
    (SKILL.md, scripts, references). No porting from summaries. Foreign
@@ -126,5 +126,5 @@ description trigger-precise (≤1024 chars); metadata.trigger_phrases; Pi
 invocation mapping — `invocation: user` (canon) = `disable-model-invocation:
 true` (Pi). Delete `disable-model-invocation` only for skills the model may
 route to itself. No XML angle brackets anywhere in frontmatter or metadata.
-[v2 addition:] metadata.class (procedural | discipline) is required from
+metadata.class (procedural | discipline) is required from
 format v2.0.0; lint-skills fails on its absence.

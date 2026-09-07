@@ -13,6 +13,10 @@
  * - body carries the Act → Observe → Exit procedure form
  * - v2.0.0: metadata.class required (procedural | discipline); body carries
  *   a "When NOT to Use" section; empty folders inside a skill dir fail
+ * - v2.0.0 amendment (WP-D-2): the Act → Observe → Exit body form is
+ *   required for procedural skills only — the discipline-class skeleton
+ *   (template-skill §4B) replaces sections 1–4, so discipline skills
+ *   legitimately carry no ACT/OBSERVE/EXIT steps
  *
  * Usage: node bin/lint-skills.mjs [DIR]
  * Exit 0 = valid. Exit 1 = invalid (each violation printed).
@@ -88,10 +92,12 @@ for (const folder of folders) {
   }
 
   const body = text.slice(fm[0].length);
-  for (const marker of ["ACT", "OBSERVE", "EXIT"]) {
-    // Case-sensitive, word-boundary: the step verbs must exist as protocol
-    // steps, not as prose mentions ("Act → Observe → Exit" in a heading).
-    if (!new RegExp(`\\b${marker}\\b`).test(body)) violation(folder, `body missing ${marker} — Act → Observe → Exit form required`);
+  if (cls === "procedural") {
+    for (const marker of ["ACT", "OBSERVE", "EXIT"]) {
+      // Case-sensitive, word-boundary: the step verbs must exist as protocol
+      // steps, not as prose mentions ("Act → Observe → Exit" in a heading).
+      if (!new RegExp(`\\b${marker}\\b`).test(body)) violation(folder, `body missing ${marker} — Act → Observe → Exit form required`);
+    }
   }
 
   // format v2.0.0 (WP-D-1): every skill states explicit non-activation

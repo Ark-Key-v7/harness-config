@@ -1,5 +1,5 @@
 <!-- GENERATED FILE — do not hand-edit (WP3, L4). Regenerate: node bin/generate-projections.mjs -->
-<!-- source_head: 2822e5dacfec8b942edfbd3c6ecfa65687c66b28 -->
+<!-- source_head: 5a0da76e2811a7694d340029a66bf4a1e6557389 -->
 <!-- projection: pi/append-system.md -->
 
 # Factory projection — Pi append-system (stable part)
@@ -31,13 +31,17 @@ When a task matches a trigger, invoke the named skill — procedure follows, nev
 
 | Skill | Trigger phrases |
 |---|---|
+| brainstorming | let's brainstorm · think through this · scope this |
 | pr-review | review this PR · verify this contract · stage 2 review · adversarial review |
 | project-onboard | start a new project · onboard this project · set up the manifold · new repo setup |
 | rig-change | new rig files · place these files · update the rig · commit and sync harness-config · I downloaded the new version · canon updated · new handbook version |
 | slice-plan | plan this · slice this · slice the PRD · draft contracts · draft a task contract |
 | spec-intake | new work · I have an idea · start a feature · draft an intent · write a PRD · new intent |
+| systematic-debugging | debug this · find the root cause · systematic debugging |
 | template-skill | author a new skill · create a skill · new skill · import this skill · port this skill · skill template · update the skill format |
+| test-driven-development | tdd · write the test first · test driven |
 | tool-intake | install a tool · adopt this skill · a register trigger fired · add an MCP server · tool intake |
+| verification-before-completion | verify before done · evidence before claims |
 
 ## Composition boundary (v1.2 §2.4)
 

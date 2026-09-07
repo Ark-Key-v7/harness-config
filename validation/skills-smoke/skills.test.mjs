@@ -47,7 +47,7 @@ function lint(allowFail = false) {
 const rigChange = join(SKILLS, "rig-change", "SKILL.md");
 const rigOrig = readFileSync(rigChange, "utf8");
 
-check("shipped skill library VALID (7 skills, format v2.0.0)", lint().code === 0);
+check("shipped skill library VALID (11 skills, format v2.0.0)", lint().code === 0);
 
 // non-kebab folder
 renameSync(join(SKILLS, "pr-review"), join(SKILLS, "PR_Review"));

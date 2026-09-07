@@ -148,3 +148,21 @@ After any rig change that alters the ledger above: update this file in the same 
   minor version bump. No v1 text deleted.
 - Driver: `validation/skills-smoke/` extended to 11 checks (3 new
   negative fixtures).
+
+## WP-D-2 — Superpowers adoptions (transformation-spec method)
+- Ported from local clone of obra/superpowers (MIT), source SHA
+  b36e0829c6d0140e93cfef2ca599b1b07d4a7797; byte-copy + enumerated edits
+  only — truncation structurally impossible (acceptance = source diff).
+- Four discipline-class skills landed: `test-driven-development`,
+  `verification-before-completion`, `systematic-debugging` (+
+  references/ ×3, scripts/find-polluter.sh — L12: local read-only helper),
+  `brainstorming`.
+- Recorded substitutions: terminal routing writing-plans → spec-intake
+  (+dot-graph node, Documentation bullet); §4.7 Queue Operations
+  harmonization replaced the 3-fix retry semantics in systematic-debugging
+  (dangling 3+ references re-pointed); brainstorming Visual Companion
+  section excluded → register §D.28 shelf.
+- `bin/lint-skills.mjs` amendment: Act → Observe → Exit body form is
+  procedural-only (discipline skeleton §4B replaces sections 1–4).
+- Driver: skills-smoke 11 checks green; register + CANON bookkeeping in
+  the same commit.
