@@ -98,6 +98,7 @@ Omit empty folders — an empty folder is noise (lint fails on it).
 
 #### 5. IMPORT MODE — conforming a foreign SKILL.md
 Protocol, in order, no shortcuts:
+When authoring or editing any agent-consumed document, consult `references/writing-for-agents.md` (context pointers, leading words, completion criteria, pruning) and `references/skill-mechanics.md` (frontmatter and invocation mechanics). These complement the superpowers writing-skills patterns: writing-skills governs the authoring workflow; writing-for-agents governs the writing itself.
 1. READ the foreign skill end to end — every file in its folder
    (SKILL.md, scripts, references). No porting from summaries. Foreign
    skills are ported by TRANSFORMATION: copy the source file, then apply an

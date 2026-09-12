@@ -44,7 +44,30 @@ Step 3 OBSERVE: operator approves or amends (typed). Loop until approved.
 Step 4 ACT: interview for requirements — for each: the requirement as a
 verifiable statement, and where it compiles (rules / glossary / promises /
 slice). Draft specs/prd/<slug>.md.
+
+### PRD guards (from cole plan-create-prd)
+
+1. **Intent-framed, never solution-prescriptive.** Don't name the solution in the problem statement. Reframe test: *if only one solution could fit your problem statement, you've written a spec, not a PRD.* A good problem leaves room for more than one answer. (❌ "Add a reply button to every message." ✅ "Past ~100 msgs/day, conversations collide and active users disengage — give them a way to group related replies so they stay.")
+2. **A PRD never decides engineering.** Library & version, data-model relationships, security boundaries, testing architecture, error handling, project structure — these are slice-plan/spec decisions. Skipped engineering decisions don't vanish; they become vulnerabilities. Hand them downstream deliberately.
+
+**Anti-fluff rule (from cole plan-create-prd):** never invent plausible requirements. Unknown → write **"TBD — needs validation"**. If the operator declines the interview ("just write it"), honour it, but name what you would have to guess, offer the two or three highest-leverage questions instead of all of them, and ship everything still unanswered as "TBD — needs validation", never as an invented requirement.
+
+### Hypothesis block (required — from cole plan-create-prd)
+
+Every PRD carries a falsifiable hypothesis. The WRONG condition is the most-skipped line and the one that makes it falsifiable — no hypothesis ships without it:
+
+We believe [change] will cause [these users] to [do Y], resulting in [outcome].
+We'll know we're RIGHT if [leading signal] within [timeframe].
+We'll know we're WRONG if [counter-signal / a guardrail moves].
+
+### Test-seam thinking (from matt to-spec)
+
+When framing acceptance criteria, sketch the seams at which the feature will be tested. Prefer existing seams to new ones; use the highest seam possible; the fewer seams across the codebase the better — the ideal number is one. And keep the PRD free of specific file paths and code snippets — they go stale immediately. Exception: a snippet that encodes a *decision* more precisely than prose can (state machine, schema, type shape) may be inlined within the relevant decision, trimmed to the decision-rich parts.
 Step 5 OBSERVE: operator approves or amends. Loop until approved.
+### Door check (from cole plan-create-prd)
+
+Classify the decision: **two-way door** (reversible) → proceed to slicing; **one-way door** (expensive to undo) → spike first. Optional pressure-test — Cagan's four risks: **Value** (do they want it more than how they cope today?) · **Usability** (can they use it?) · **Feasibility** (can we build it?) · **Viability** (does it work for the business?). Most teams over-invest feasibility and under-invest value.
+
 Step 6 EXIT: run node ~/.pi/agent/bin/lint-spec.mjs specs/ — must exit 0.
 Report both artifacts and the next step: "slice-plan to decompose into
 slices and contracts." Never commit — the operator commits.

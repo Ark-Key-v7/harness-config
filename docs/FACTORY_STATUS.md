@@ -204,3 +204,37 @@ After any rig change that alters the ledger above: update this file in the same 
 - Drivers: skills-smoke 11, guard-smoke 14, profiles-smoke 7,
   canon-register 138 all green; projections regenerated (16 skills),
   drift clean.
+
+## WP-D-4 — cole/matt salvage + shelf finalization (transformation-spec method)
+- Sources: coleam00/skills @ bb9f4d0 (newer than reference fb2e876 —
+  verified zero diff on every file named by the spec, so the drift clause
+  does not fire) and mattpocock/skills @ 3cca18b (exact reference SHA).
+- Adopted (byte-copy + enumerated edits): `rules-drift-check` (from cole
+  rules-check-drift; E1–E4 + IMPORT MODE conformance E5–E8, including the
+  /piv-review-changes → pr-review-pass pointer strip per IMPORT MODE step
+  3) and `to-questionnaire` (matt; E1 + conformance). pr-review gained the
+  optional rules-drift step (E5 wire-in).
+- Harvests: spec-intake += PRD guards, anti-fluff rule, hypothesis block
+  (cole plan-create-prd), test-seam thinking (matt to-spec), door check;
+  slice-plan += ticket export step; systematic-debugging += feedback-loop
+  phase, ranked falsifiable hypotheses, DEBUG-tagging + scripts/
+  hitl-loop.template.sh (byte-identical); interview-me += rounds mode +
+  facts rule (matt grilling); context-budget += references/
+  scoped-priming.md (Atlassian MCP Step 0 deliberately excluded); 
+  template-skill += references/writing-for-agents.md + skill-mechanics.md
+  (byte-identical) + author-mode wire-in.
+- SPEC-VS-SOURCE MISMATCH REPORTED (wording level, no STOP condition — the
+  matt clone is at the exact reference SHA): WP-D-4 spec §4.4 Edits 1–3 are
+  quoted as "verbatim from source" but are a condensed edit of
+  diagnosing-bugs @ 3cca18b (e.g. source "This is the skill." vs spec
+  "This is the heart of debugging."). Acceptance (§6) is exactness to the
+  SPEC's quoted text, so the spec text was inserted as written; the delta
+  is recorded here and in the commit message.
+- Register: skills row += 2 LIVE (rules-drift-check, to-questionnaire);
+  final disposition shelf landed as §D.30 (§D.28/§D.29 retained: driver
+  requires canon/trigger/path bullets per entry — the shelf carries them:
+  trigger NONE, adopt-on-trigger rows self-trigger); standing rule added.
+  **WP-D is CLOSED** — all seats single-occupied (L5), all provenance
+  recorded.
+- Drivers: skills-smoke, guard-smoke, profiles-smoke, canon-register,
+  projections — green at commit time.

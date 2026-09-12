@@ -38,7 +38,7 @@ skill, a driver proves it, the chain lands it.
 | Manifold linter | Header law (last_verified = SHA), Zone discipline, template/strict modes | `bin/lint-tmd.mjs` | `validation/tmd/` |
 | Profile linter | Sovereign profile format law (incl. substitution_bounds) | `bin/lint-profiles.mjs` | `validation/profiles/` |
 | Skill linter | SKILL.md format gate (E.6 frontmatter + format v2.0.0: metadata.class, When NOT to Use, no empty folders) | `bin/lint-skills.mjs` | `validation/skills/` |
-| Skills (global, post-v2.1; format v2.0.0) | rig-change · pr-review · tool-intake · template-skill · project-onboard · spec-intake · slice-plan · webperf-audit (procedural) · test-driven-development · verification-before-completion · systematic-debugging · brainstorming (discipline class, WP-D2 ports) · ui-engineering · performance-optimization · interview-me · context-budget (discipline class, WP-D-3 agent-skills ports; template-skill v2.0.0 is the two-class wireframe) | repo-root `skills/` | `validation/skills/` |
+| Skills (global, post-v2.1; format v2.0.0) | rig-change · pr-review · tool-intake · template-skill · project-onboard · spec-intake · slice-plan · webperf-audit · rules-drift-check · to-questionnaire (procedural) · test-driven-development · verification-before-completion · systematic-debugging · brainstorming (discipline class, WP-D2 ports) · ui-engineering · performance-optimization · interview-me · context-budget (discipline class, WP-D-3 agent-skills ports; template-skill v2.0.0 is the two-class wireframe; WP-D-4 ports: rules-drift-check, to-questionnaire) | repo-root `skills/` | `validation/skills/` |
 | Supply-chain floor (canon §6.6 M2/M3) | --ignore-scripts, exact pins, frozen lockfiles | `package-pins.json` + runbook gates | `validation/pi-layer/` |
 | Outer machine floor | semgrep, pr-agent tool installs + smoke fixtures (machine-local, not the repo) | `~/factory-rig/tools/` | outer `validation/` |
 | Spec chain linter (Phase 0) | Schema + back-reference/orphan check + provenance headers for specs/intent, prd, plans | `bin/lint-spec.mjs` + `templates/specs/` | `validation/spec-smoke/` |
@@ -233,6 +233,43 @@ observable condition that makes the item activatable — not a suggestion.
 - **Prerequisites:** §D.15; §D.22 (holdout machinery).
 - **Integration path:** eval runner in validation/; scores to ledger; ratchet
   via §5.10.2 floor semantics.
+
+### §D.30 Final skill shelf (WP-D-4 final disposition)
+
+Disposition of every remaining candidate across the four source repos
+(superpowers WP-D-2, agent-skills WP-D-3, cole/matt WP-D-4). Verdicts are
+final (L5 — nothing here is re-evaluated; new candidates route through the
+standing rule below).
+
+- **Canon:** WP-D-4 build spec §5 — the four-repo adoption program's
+  disposition table; closes WP-D.
+- **Activation trigger:** NONE for this entry (disposition record). The
+  `adopt-on-trigger` rows carry their own trigger: a slice's must_haves
+  first demanding the domain.
+- **Prerequisites:** template-skill v2.0.0 (IMPORT MODE + bake-off
+  protocol) — the import protocol is the gate, no re-audit needed.
+- **Integration path:** n/a — this entry is the record; candidate imports
+  land via rig-change, one skill per commit.
+
+| Item | Verdict | Reason |
+|---|---|---|
+| superpowers dispatching-parallel-agents, subagent-driven-development | SHELVED | orchestration concern; revisit with Archon (§D.23) evaluation |
+| superpowers using-git-worktrees | SHELVED | worktrunk (§D.1) holds the workspace seat, installed-inert |
+| superpowers finishing-a-development-branch | SHELVED | pr-review + ship flow covers it |
+| superpowers using-superpowers, .pi/extensions/superpowers.ts | REJECTED | bootstrap injector duplicates seat law (WP-D-2 ruling) |
+| agent-skills spec-driven-development, test-driven-development, debugging-and-error-recovery, constraint-driven-development, planning-and-task-breakdown, idea-refine | HARVESTED/REJECTED | per WP-D-3 §3 bake-off verdicts (recorded in §D.29) |
+| agent-skills commands/*.toml (/spec /plan /build /test /review /ship) | REJECTED | harness slash-command layer; the rig's stage pipeline already binds these |
+| agent-skills agents/code-reviewer, security-auditor, test-engineer | SHELVED | persona shells; their review criteria live in the skills already adopted |
+| agent-skills remaining skills (api-and-interface-design, browser-testing-with-devtools, ci-cd-and-automation, code-review-and-quality, code-simplification, deprecation-and-migration, documentation-and-adrs, doubt-driven-development, git-workflow-and-versioning, incremental-implementation, observability-and-instrumentation, security-and-hardening, shipping-and-launch, source-driven-development, using-agent-skills) | SHELVED adopt-on-trigger | when a slice's must_haves first demand the domain, run template-skill Import Mode on that skill from `_intake/agent-skills/` (already cloned, SHA-pinned). No re-audit needed; the import protocol is the gate |
+| cole rules-check-drift, plan-create-prd, plan-create-stories, prime-* | RESOLVED | adopted/harvested in WP-D-4 (§3–§4 of the WP-D-4 spec) |
+| cole piv-* family (14 skills), plan-architecture, rules-create-global, hooks-create, worktree-create | REJECTED | Claude-Code-specific pipeline (PIV loop, hooks, worktrees); superseded by the rig's own stage pipeline and worktrunk |
+| cole build-dark-factory, system-evolution-review, system-execution-report, opportunity-scan, second-brain-audit, setup-ai-tutor, ablate-ai-layer, agent-browser, ast-grep | SHELVED adopt-on-trigger | dark-factory only via Archon evaluation §D.23; ast-grep via semgrep seat bake-off if ever needed |
+| matt grilling, grill-me, grill-with-docs, to-spec, diagnosing-bugs, to-questionnaire, writing-for-agents | RESOLVED | adopted/harvested in WP-D-4 (§3–§4 of the WP-D-4 spec) |
+| matt tdd, code-review, implement, prototype, triage, to-tickets, handoff, wayfinder, teach, codebase-design, domain-modeling, improve-codebase-architecture, research, wizard, ask-matt, setup-matt-pocock-skills, misc/*, in-progress/* | SHELVED adopt-on-trigger | same import-mode gate; in-progress/* additionally flagged: unfinished upstream, import only after re-checking upstream status |
+
+**Standing rule:** any future skill candidate from any source goes through
+template-skill Import Mode with a bake-off against the seat incumbent. The
+shelf is a disposition record, not a to-do list.
 
 ### §D.28 Brainstorming visual companion (shelved at WP-D-2 adoption)
 - **Canon:** WP-D-2 adoption record — the brainstorming skill was ported

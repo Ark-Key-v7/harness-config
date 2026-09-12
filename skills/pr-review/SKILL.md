@@ -83,6 +83,10 @@ When receiving review feedback: read fully without reacting; restate each requir
   - Any gap → success=false, feedback names the gap and the law.
 - Emit the A2A completion payload (E.3) and terminate.
 
+### Optional step: rules drift
+
+If the change touched file layout, conventions, or invariants, run `rules-drift-check` (reference it — L5) against the PR's diff range and attach its advisory report to the review output.
+
 #### 4. Local Negative Constraints
 - NEVER fix the diff — a reviewer that edits is a worker with stale context.
 - NEVER pass a contract on partially evidenced must_haves.

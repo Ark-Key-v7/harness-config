@@ -6,7 +6,7 @@ metadata:
   version: 1.0.0
   class: discipline
   trigger_phrases: ["debug this", "find the root cause", "systematic debugging"]
-  harvests: [agent-skills debugging-and-error-recovery §Stop-the-Line, §non-reproducible tree, §untrusted-error-output]
+  harvests: [agent-skills debugging-and-error-recovery §Stop-the-Line, §non-reproducible tree, §untrusted-error-output, + mattpocock diagnosing-bugs §feedback-loop, §ranked-hypotheses, §DEBUG-tagging, scripts/hitl-loop.template.sh]
 ---
 
 # Systematic Debugging
@@ -80,6 +80,31 @@ You MUST complete each phase before proceeding to the next.
    - They often contain the exact solution
    - Read stack traces completely
    - Note line numbers, file paths, error codes
+
+### Build a feedback loop first
+
+**This is the heart of debugging.** If you have a **tight** pass/fail signal for the bug (one that goes red on _this_ bug), you will find the cause; bisection, hypothesis-testing, and instrumentation all just consume it. If you don't have one, no amount of staring at code will save you. Spend disproportionate effort here.
+
+Ways to construct one, in roughly this order:
+
+1. **Failing test** at whatever seam reaches the bug: unit, integration, e2e.
+2. **Curl / HTTP script** against a running dev server.
+3. **CLI invocation** with a fixture input, diffing stdout against a known-good snapshot.
+4. **Headless browser script** (Playwright / Puppeteer) that drives the UI and asserts on DOM/console/network.
+5. **Replay a captured trace.** Save a real network request / payload / event log to disk; replay it through the code path in isolation.
+6. **Throwaway harness.** Spin up a minimal subset of the system (one service, mocked deps) that exercises the bug code path with a single function call.
+7. **Property / fuzz loop.** If the bug is "sometimes wrong output", run 1000 random inputs and look for the failure mode.
+8. **Bisection harness.** If the bug appeared between two known states, automate "boot at state X, check, repeat" so you can `git bisect run` it.
+9. **Differential loop.** Run the same input through old-version vs new-version (or two configs) and diff outputs.
+10. **HITL bash script.** Last resort. If a human must click, drive _them_ with `scripts/hitl-loop.template.sh` in this skill directory so the loop is still structured. Captured output feeds back to you.
+
+Then **tighten the loop**: faster (cache setup, narrow scope), sharper signal (assert on the specific symptom, not "didn't crash"), more deterministic (pin time, seed RNG, isolate filesystem, freeze network). A 2-second deterministic loop is a debugging superpower; a 30-second flaky one is barely better than none.
+
+For non-deterministic bugs the goal is a **higher reproduction rate**: loop the trigger 100×, parallelise, add stress, narrow timing windows. A 50%-flake bug is debuggable; 1% is not.
+
+The loop is done when you can name **one command**, already run at least once, that is **red-capable** (drives the actual bug path and asserts the user's exact symptom), **deterministic** (or pinned high-rate), **fast** (seconds), and **agent-runnable**. If you catch yourself reading code to build a theory before this command exists, stop — jumping straight to a hypothesis is the exact failure this phase prevents.
+
+When you genuinely cannot build a loop: stop and say so explicitly, list what you tried, and ask for access to the environment, a redacted captured artifact (HAR, log dump, recording with timestamps), or permission to add temporary instrumentation. Do not hypothesise without a loop. When showing commands, outputs, or captured artifacts: **redact every secret** — write `<REDACTED>`; quote only the lines that carry the signal.
 
 2. **Reproduce Consistently**
    - Can you trigger it reliably?
@@ -191,6 +216,12 @@ Cannot reproduce on demand:
 ### Phase 3: Hypothesis and Testing
 
 **Scientific method:**
+
+### Ranked falsifiable hypotheses
+
+Generate **3–5 ranked hypotheses** before testing any of them. Single-hypothesis generation anchors on the first plausible idea. Each hypothesis must be **falsifiable** — state the prediction it makes: "If <X> is the cause, then <changing Y> will make the bug disappear / <changing Z> will make it worse." If you cannot state the prediction, the hypothesis is a vibe: discard or sharpen it. Show the ranked list to the operator before testing — domain knowledge often re-ranks instantly — but don't block on it; proceed with your ranking if the operator is unavailable. Each probe must map to a specific prediction. **Change one variable at a time.** Prefer debugger/REPL inspection, then targeted logs at the boundaries that distinguish hypotheses. Never "log everything and grep".
+
+**Tag every debug log** with a unique prefix, e.g. `[DEBUG-a4f2]`. Cleanup at the end becomes a single grep. Untagged logs survive; tagged logs die. Before declaring done: original repro no longer reproduces, regression test passes (or absence of a correct seam is documented as an architecture finding), all `[DEBUG-...]` instrumentation removed, throwaway prototypes deleted, and the hypothesis that turned out correct is stated in the commit message so the next debugger learns.
 
 1. **Form Single Hypothesis**
    - State clearly: "I think X is the root cause because Y"

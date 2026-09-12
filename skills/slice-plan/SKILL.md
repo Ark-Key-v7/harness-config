@@ -34,6 +34,10 @@ exceeds the caps, decompose it further BEFORE presenting.
 ### Task quality gate
 
 Before emitting the slice plan, validate every task against `references/task-quality.md` in this skill directory: sizing (L or larger → break down), no placeholders, each task carries acceptance criteria + verification + a Consumes/Produces interface note where tasks interact. If a plan file with unchecked tasks already exists for different work, stop and ask — never overwrite it. Execution of the plan follows the stop-and-ask posture in the same reference.
+
+### Optional step: ticket export (from cole plan-create-stories)
+
+Only when the operator asks for tracker tickets. Print the proposed ticket list (titles + slice grouping) and confirm before creating anything — creating real tickets is not reversible in one click. Then create via `gh issue create --title "..." --body "..."`, with acceptance criteria as a markdown checklist in the body and a `slice-N` label per slice (`gh label create` if missing). Report a table: ticket → slice → created issue URL. Every ticket must trace back to a slice and carry verifiable acceptance criteria; if a slice is too vague to decompose, stop and flag it — that is a spec gap, not a ticket-writing problem. If the operator names a different tracker, stop and confirm the platform rather than guessing.
 Step 2 OBSERVE: operator approves or reorders (typed). Loop until approved.
 Step 3 ACT: write specs/plans/<slug>.md from the template.
 Step 4 ACT: for each slice, draft .agents/tasks/task-<slug>-s<n>.md from

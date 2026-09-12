@@ -6,11 +6,12 @@ metadata:
   version: 1.0.0
   class: discipline
   trigger_phrases: ["interview me", "grill me", "are we sure?", "stress-test my thinking", "underspecified ask"]
+  harvests: [mattpocock grilling §rounds-mode, §facts-rule]
 disable-model-invocation: true
 provenance:
   source: addyosmani/agent-skills skills/interview-me
   imported: 2026-09-12
-  edits: [E1 frontmatter, E2 output path, E3 headless ruling, E4 downstream names, E5 metadata.class+trigger_phrases per IMPORT MODE step 4]
+  edits: [E1 frontmatter, E2 output path, E3 headless ruling, E4 downstream names, E5 metadata.class+trigger_phrases per IMPORT MODE step 4, E6 rounds mode + facts rule (matt grilling harvest, provenance harvests key)]
 ---
 
 # Interview Me
@@ -85,6 +86,12 @@ Wait for the user to react before asking the next question.
 - It surfaces *your* assumptions, which is what the interview is meant to expose
 
 The risk here is a polite user agreeing with your guess to be agreeable. Mitigate by being visibly willing to be wrong, and occasionally guess in a direction you expect the user to push back on.
+
+### Alternate mode: rounds (from matt grilling — use only on explicit operator request)
+
+If the operator asks to be "grilled in rounds" or to "see the whole frontier": map the decision space as a **design tree** — every decision branches into the decisions that hang off it. The **frontier** is every decision whose prerequisites are already settled. Ask the whole frontier in one round: number each question and attach your recommended answer, then wait. Each answer reshapes the tree; recompute the frontier and ask the next round. A question whose answer depends on a question still open in this round belongs to a later round. The 95% stop and explicit-yes gate still apply.
+
+**Facts are your job, never the operator's** (applies in both modes): when a question needs a fact from the environment — filesystem, tools, docs — look it up yourself; never ask the operator for anything you could find.
 
 ### Step 3: Listen for "want vs. should want"
 
