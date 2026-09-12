@@ -15,6 +15,10 @@ first two links. The agent drafts; the human approves — Zone C law is
 human-authored. ACP frontend (Zed): questions as plain chat text; proceed
 only on explicit typed answers.
 
+### Step 0: Intent clarity gate
+
+Before any intake work, assess: is the ask missing who it's for, why now, what success looks like, or the binding constraint? If yes, and the session is interactive, run the `interview-me` skill first (reference it; do not restate it — L5). Its confirmed statement of intent becomes this skill's input. Headless: terminate `needs_human` with the missing elements listed.
+
 #### 1. Trigger Context
 You are in a governed project (has .tmd/). If specs/ does not exist,
 scaffold it: specs/intent/, specs/prd/, specs/plans/ (copy templates from
@@ -32,6 +36,10 @@ scaffold it: specs/intent/, specs/prd/, specs/plans/ (copy templates from
 Step 1 ACT: ask for a one-paragraph problem statement and the slug.
 Step 2 ACT: draft specs/intent/<slug>.md from the template — problem,
 observable success criteria, out-of-scope. Present it.
+
+### Optional step: divergent refinement (idea-refine harvest)
+
+Run only when the operator asks to "refine", "ideate", or "stress-test" the idea before committing. Generate 5–8 variations of the concept using these lenses: **inversion** (what if we did the opposite), **constraint removal** (what if budget/time/tech weren't factors), **audience shift** (what if this were for a different user), **combination** (what if merged with an adjacent idea), **simplification** (the 10x simpler version), **10x scale** (what this looks like at massive scale), **expert lens** (what domain experts find obvious that outsiders don't). Stress-test the resonating directions against user value, feasibility, and differentiation. Surface hidden assumptions explicitly: what we're betting is true, what could kill the idea, what we're choosing to ignore. The output must include a **"Not Doing (and Why)" list** — focus is about saying no to good ideas; that list is the most valuable part. Do not generate 20+ shallow variations; do not yes-machine weak ideas — push back with specificity. Converge back into the intake flow once the operator picks a direction.
 Step 3 OBSERVE: operator approves or amends (typed). Loop until approved.
 Step 4 ACT: interview for requirements — for each: the requirement as a
 verifiable statement, and where it compiles (rules / glossary / promises /

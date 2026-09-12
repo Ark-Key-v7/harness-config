@@ -1,5 +1,5 @@
 <!-- GENERATED FILE — do not hand-edit (WP3, L4). Regenerate: node bin/generate-projections.mjs -->
-<!-- source_head: 5a0da76e2811a7694d340029a66bf4a1e6557389 -->
+<!-- source_head: 31966c7dd2dd5ac36dc6dddfb0f76afa9cdb6da5 -->
 <!-- projection: pi/append-system.md -->
 
 # Factory projection — Pi append-system (stable part)
@@ -32,6 +32,9 @@ When a task matches a trigger, invoke the named skill — procedure follows, nev
 | Skill | Trigger phrases |
 |---|---|
 | brainstorming | let's brainstorm · think through this · scope this |
+| context-budget | new session · output quality degraded · trim context · switching tasks · context setup |
+| interview-me | interview me · grill me · are we sure? · stress-test my thinking · underspecified ask |
+| performance-optimization | optimize performance · slow page · Core Web Vitals · N+1 query · performance regression · profiling bottleneck |
 | pr-review | review this PR · verify this contract · stage 2 review · adversarial review |
 | project-onboard | start a new project · onboard this project · set up the manifold · new repo setup |
 | rig-change | new rig files · place these files · update the rig · commit and sync harness-config · I downloaded the new version · canon updated · new handbook version |
@@ -41,7 +44,9 @@ When a task matches a trigger, invoke the named skill — procedure follows, nev
 | template-skill | author a new skill · create a skill · new skill · import this skill · port this skill · skill template · update the skill format |
 | test-driven-development | tdd · write the test first · test driven |
 | tool-intake | install a tool · adopt this skill · a register trigger fired · add an MCP server · tool intake |
+| ui-engineering | build a component · new page · accessible UI · responsive layout · fix the UI · looks AI-generated |
 | verification-before-completion | verify before done · evidence before claims |
+| webperf-audit | performance audit · audit CWV · Core Web Vitals analysis · webperf audit · audit this page's performance |
 
 ## Composition boundary (v1.2 §2.4)
 

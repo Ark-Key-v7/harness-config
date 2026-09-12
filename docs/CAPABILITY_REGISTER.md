@@ -30,7 +30,7 @@ skill, a driver proves it, the chain lands it.
 | pi-acp command bridge | Slash commands in Zed: pi-acp filters extension-registered commands from ACP, so a native adapter patch (a) advertises pi's full command registry as `available_commands` and (b) dispatches unrecognized `/command args` to pi's own command handler, as the TUI does — generic successor to the retired per-command /seat patch (idempotent apply, legacy-backup migration, fail-closed on drift) | `patches/pi-acp-command-bridge.patch` + `patches/apply-pi-acp-command-bridge.sh` | `validation/pi-acp-patch-smoke/` |
 | Sovereign profiles | scout / planner / worker / reviewer seat law | `templates/agents/profiles/` | `validation/profiles/` |
 | MCP curation gate | Exact pins, stdio-default, deprecated-feature rejection | `bin/lint-mcp.mjs` | `validation/pi-layer/` |
-| Project onboarding | Phase-1 scaffold + self-lint + activation notices | `bin/onboard-project.mjs` + `skills/project-onboard/` | `validation/onboard/` |
+| Project onboarding | Phase-1 scaffold + self-lint + activation notices + CONSTRAINTS.md quality-bar seeding (WP-D-3) | `bin/onboard-project.mjs` + `skills/project-onboard/` + `templates/CONSTRAINTS.md` | `validation/onboard/` |
 | Refinery Stage 0 (local pre-flight) | Semgrep injection floor + contract lane before commit (WP11) | `bin/preflight.mjs` + `templates/semgrep/base.yml` | `validation/refinery-lane/` |
 | Activation detector | Surfaces fired deferred-register triggers (WP11) | `bin/check-activations.mjs` + `docs/activation-triggers.json` | `validation/refinery-lane/` |
 | State spine (E.2) | STATE.md schema, genesis, dual failure vocabulary, wt.toml hook contract | `templates/agents/schemas/state.schema.yaml`, `bin/state-genesis.mjs`, `bin/lint-state.mjs`, `bin/lint-wt-hook.mjs` | `validation/state-hook/` |
@@ -38,7 +38,7 @@ skill, a driver proves it, the chain lands it.
 | Manifold linter | Header law (last_verified = SHA), Zone discipline, template/strict modes | `bin/lint-tmd.mjs` | `validation/tmd/` |
 | Profile linter | Sovereign profile format law (incl. substitution_bounds) | `bin/lint-profiles.mjs` | `validation/profiles/` |
 | Skill linter | SKILL.md format gate (E.6 frontmatter + format v2.0.0: metadata.class, When NOT to Use, no empty folders) | `bin/lint-skills.mjs` | `validation/skills/` |
-| Skills (global, post-v2.1; format v2.0.0) | rig-change · pr-review · tool-intake · template-skill · project-onboard · spec-intake · slice-plan (procedural) · test-driven-development · verification-before-completion · systematic-debugging · brainstorming (discipline class, WP-D2 ports; template-skill v2.0.0 is the two-class wireframe) | repo-root `skills/` | `validation/skills/` |
+| Skills (global, post-v2.1; format v2.0.0) | rig-change · pr-review · tool-intake · template-skill · project-onboard · spec-intake · slice-plan · webperf-audit (procedural) · test-driven-development · verification-before-completion · systematic-debugging · brainstorming (discipline class, WP-D2 ports) · ui-engineering · performance-optimization · interview-me · context-budget (discipline class, WP-D-3 agent-skills ports; template-skill v2.0.0 is the two-class wireframe) | repo-root `skills/` | `validation/skills/` |
 | Supply-chain floor (canon §6.6 M2/M3) | --ignore-scripts, exact pins, frozen lockfiles | `package-pins.json` + runbook gates | `validation/pi-layer/` |
 | Outer machine floor | semgrep, pr-agent tool installs + smoke fixtures (machine-local, not the repo) | `~/factory-rig/tools/` | outer `validation/` |
 | Spec chain linter (Phase 0) | Schema + back-reference/orphan check + provenance headers for specs/intent, prd, plans | `bin/lint-spec.mjs` + `templates/specs/` | `validation/spec-smoke/` |
@@ -246,6 +246,44 @@ observable condition that makes the item activatable — not a suggestion.
 - **Integration path:** re-adopt `visual-companion.md` from the local
   superpowers clone into `skills/brainstorming/` via template-skill
   IMPORT MODE (transformation-spec method, WP-D build spec).
+
+### §D.29 Agent-skills candidate shelf (WP-D-3 disposition record)
+- **Canon:** WP-D-3 bake-off verdicts — recorded so no item is re-evaluated
+  later (L5). Source: addyosmani/agent-skills @ 48cb116 (intake clone pinned
+  to the spec's reference SHA; HEAD drift on context-engineering reported at
+  landing).
+- **ADOPTED (verbatim + enumerated edits):** `frontend-ui-engineering` →
+  `skills/ui-engineering/` (renamed per §2 naming note); `performance-optimization`
+  → `skills/performance-optimization/`; `interview-me` → `skills/interview-me/`;
+  `context-engineering` → `skills/context-budget/` (renamed: states what it
+  governs, avoids TCE "context" collision); `agents/web-performance-auditor.md`
+  → `skills/webperf-audit/` (agent→skill port, framing only).
+- **HARVESTED (not adopted standalone):**
+  - `idea-refine` → spec-intake divergent-refinement step + Step 0 intent
+    clarity gate (§6.2).
+  - `debugging-and-error-recovery` → systematic-debugging: Stop-the-Line Rule,
+    non-reproducible decision tree, untrusted-error-output section (§6.3).
+  - `planning-and-task-breakdown` + superpowers `writing-plans`/`executing-plans`
+    → slice-plan `references/task-quality.md` + task quality gate (§6.4).
+  - superpowers `requesting-code-review`/`receiving-code-review` → pr-review
+    dispatch + reception rules (§6.5).
+  - `constraint-driven-development` → guard-the-bar five diff checks in
+    `bin/guard.mjs` (§6.1), `templates/CONSTRAINTS.md` (§5.1), worker seat
+    floor rules (§6.6).
+- **BAKE-OFF LOSERS (rig keeps the seat it already holds):**
+  - `test-driven-development` (agent-skills, 398 lines) — superpowers TDD port
+    (WP-D-2) wins; no harvest (stack discovery already covered by
+    project-onboard Step 0).
+  - `spec-driven-development` — spec-intake + slice-plan hold the seat;
+    capability-map harvest designated for WP-E.
+- **Remaining source material (commands/*.toml, other agents, unused skills):**
+  stays in `_intake/agent-skills/` only; disposition recorded here so it is
+  never re-audited from scratch.
+- **Activation trigger:** NONE — this entry is the disposition record (WP-D-3
+  §8: no new triggers; adopted skills fire on their description triggers,
+  discipline skills fire seat-bound). Closes on WP-D-4 shelf finalization.
+- **Integration path:** n/a — this entry is the disposition record; WP-D-4
+  handles cole/matt salvage and shelf finalization.
 
 ### §D.22 Phase-0 spec chain machinery — CLOSED (WP-A–C landed 2026-09)
 - **Canon:** TCE v2.1 §2.A (intent→PRD→plan→slice→contract; orphan lint;

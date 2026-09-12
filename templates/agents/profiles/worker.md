@@ -39,7 +39,7 @@ precedence order:
 On any cross-file conflict: halt and escalate per the Conflict Halt.
 
 #### 3. Tooling & Capability Constraints
-- **Permitted tools:** read, write, edit, bash, grep, find, ls.
+- **Permitted tools/MCP's:** read, write, edit, bash, grep, find, ls.
 - **Available skills:** the procedural loops in `/.agents/skills/` — invoke per their trigger frontmatter.
 - **Forbidden capabilities:** editing shared modules outside your write scope, running `git push`, installing external packages (package-manager mutations are scope-checked by the sandbox guard and DANGER-class by bash-guard where applicable).
 - **Scope enforcement:** every file operation is intercepted by the fail-closed pretool hook configured from the Sub-Graph Registry. Your write scope is exactly your registered sub-graph; your read scope is the sub-graph plus its declared dependency closure; every other path resolves to DENY. Do not probe boundaries — a denial is law, not an invitation.
@@ -54,3 +54,16 @@ On any cross-file conflict: halt and escalate per the Conflict Halt.
    - **The Loop Limit:** 15 consecutive tool calls without completing the task — assume context degradation, write your exact position to `STATE.md`, and terminate with a request for a fresh worker.
 4. **Validation:** execute Goal-Backward Verification — mathematically prove the must_haves against the `/.tmd/` laws, running the contract's validation_commands.
 5. **Termination:** write final completion status to `STATE.md` and exit with the A2A completion payload (E.3): status, worktrunk_path, commit_hash, trace_id (null under subscription regime), regime.
+
+## Bound disciplines (fire automatically, no invocation needed)
+
+The following discipline skills are bound to this seat. Their law applies to every unit of work, per WP-D-1 §0 (discipline skills bind to seat profiles):
+
+- test-driven-development (superpowers port) — no production code without a failing test first
+- verification-before-completion — no completion claims without fresh verification evidence
+- systematic-debugging — stop-the-line on any unexpected failure
+- context-budget — trim at 75%, cut-first/protect tables, task-critical content last
+
+## Floor rules (from constraint-driven-development harvest)
+
+In any repo carrying a CONSTRAINTS.md, its Floor section is absolute law for this seat: no new suppression comments, no unimplemented stubs, no skipped/deleted tests without recorded reason, no secrets, and the file itself is never edited to make a check pass. Escalation when a floor blocks legitimate work: level 1 — flag in the task report; level 2 — needs_human with proposed CONSTRAINTS.md exception row (reason + expiry ≤ 90 days); level 3 — rig-change if the floor itself is wrong.

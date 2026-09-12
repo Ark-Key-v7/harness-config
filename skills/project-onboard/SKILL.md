@@ -76,6 +76,10 @@ invoke this skill.
   `node ~/.pi/agent/bin/preflight.mjs --staged` runs before every commit
   (Refinery Stage 0, canon §6.3).
 
+##### Final step: seed the quality bar
+
+Copy `templates/CONSTRAINTS.md` from the rig into the product repo root as `CONSTRAINTS.md`, filling `[Project Name]` and the seed date. Record the repo's measured current values where they are worse than the template floors (ratchet starts where the repo actually is — record where you are, then refuse to get worse). If the repo is greenfield, the template defaults stand as-is.
+
 #### 4. Local Negative Constraints (Anti-Patterns)
 While executing this specific skill, you are mathematically forbidden from:
 - Committing anything to the product repository (Phase 4 is human ratification).

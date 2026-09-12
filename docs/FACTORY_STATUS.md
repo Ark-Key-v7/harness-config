@@ -166,3 +166,41 @@ After any rig change that alters the ledger above: update this file in the same 
   procedural-only (discipline skeleton §4B replaces sections 1–4).
 - Driver: skills-smoke 11 checks green; register + CANON bookkeeping in
   the same commit.
+
+## WP-D-3 — Agent-skills adoptions + harvest patches (transformation-spec method)
+- Source: addyosmani/agent-skills, intake clone pinned to the spec's
+  reference SHA 48cb116 (HEAD drift on context-engineering — new
+  "Restartable Session Boundaries" section — reported; pinning is the
+  spec-sanctioned route; shared checklists verified zero-diff and copied
+  from the repo-root references/ layout).
+- Adopted (byte-copy + enumerated edits, acceptance = source diff):
+  `ui-engineering` (renamed from frontend-ui-engineering) + references/
+  accessibility-checklist; `performance-optimization` + references/
+  performance-checklist; `interview-me`; `context-budget` (renamed from
+  context-engineering); `webperf-audit` (agent→skill port of
+  agents/web-performance-auditor.md, framing only, body verbatim).
+- IMPORT MODE conformance recorded per skill (metadata.class +
+  trigger_phrases; When NOT to Use added where the source lacked it):
+  WP-D-1 format v2.0.0 is the declared dependency and lint gate.
+- Harvests: idea-refine → spec-intake (Step 0 gate + divergent step);
+  debugging-and-error-recovery → systematic-debugging (Stop-the-Line,
+  non-reproducible tree, untrusted error output — frontmatter harvests
+  record); planning/writing/executing-plans → slice-plan references/
+  task-quality.md + task quality gate; requesting/receiving-code-review →
+  pr-review dispatch + reception rules; constraint-driven-development →
+  guard-the-bar five diff checks in bin/guard.mjs (WP-C name delta:
+  gate-guard.mjs → guard.mjs), templates/CONSTRAINTS.md + project-onboard
+  seed step, worker seat floor rules.
+- guard.mjs bar checks: threshold-moved honors recorded ratification
+  (ratified_lower / dated exception row) so the guard never contradicts
+  §5.10.2; exception-appeared resolves rows against the ## Exceptions
+  SECTION of the post-image file (Bars/Change-Log rows are not
+  exceptions). Smoke-verified in a scratch repo: all five rules FAIL and
+  waiver paths CLEAN.
+- Register: skills row += 5 LIVE (webperf-audit procedural, four
+  discipline); project-onboard row records CONSTRAINTS.md seeding;
+  candidate shelf landed as NEW §D.29 (§D.28 is the brainstorming visual
+  companion shelf — numbering delta noted) with §3 bake-off verdicts.
+- Drivers: skills-smoke 11, guard-smoke 14, profiles-smoke 7,
+  canon-register 138 all green; projections regenerated (16 skills),
+  drift clean.

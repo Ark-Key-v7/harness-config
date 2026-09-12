@@ -43,6 +43,10 @@ validation_commands, executed verbatim. No write/edit — verdicts only.
 
 #### 3. The Procedural Loop (Act → Observe → Exit)
 
+### Dispatch rule (from superpowers/requesting-code-review)
+
+Review is mandatory after each task in multi-task work, after completing a major feature, and before merge to main. The reviewer (subagent or second pass) receives precisely crafted context — the diff between BASE_SHA and HEAD_SHA, a one-paragraph description, and the requirements it should meet — never the working session's history. Act on findings: fix Critical immediately, fix Important before proceeding, note Minor for later, and push back when the reviewer is wrong — with technical reasoning.
+
 ##### Step 0: ACT (base-branch rulebook reading)
 - Read the TARGET branch's manifold (`.tmd/` at the merge-base), never the
   PR branch's — a PR may not smuggle its own standard (v1.3 §5.8 ruling).
@@ -63,6 +67,10 @@ validation_commands, executed verbatim. No write/edit — verdicts only.
 ##### Step 3: ACT (rubric pass)
 - Evaluate the diff against the Principal Review Rubric / Ten Diagnostic Marks (handbook Part V — read it; do not paraphrase from memory).
 - Precision over recall: false positives burn the human gate. Every finding cites file:line and the law violated.
+
+### Reception rule (from superpowers/receiving-code-review)
+
+When receiving review feedback: read fully without reacting; restate each requirement in your own words (ask if any item is unclear — never implement a partial understanding of a numbered list); verify against codebase reality before implementing; evaluate whether the suggestion is technically sound for THIS codebase; respond with a technical acknowledgment or reasoned pushback; implement one item at a time and test each. Forbidden responses: performative agreement ("you're absolutely right", "great point"), gratitude expressions, "let me implement that now" before verification. When feedback IS correct: state the fix ("Fixed. [what changed]") and let the code show it. YAGNI check: if a reviewer suggests "implementing properly" something unused, grep for actual usage and propose removal instead. If you pushed back and were wrong: state the correction factually, fix, move on — no apology tour.
 
 ##### Step 4: EXIT PROTOCOL
 - Raw output wins (v1.3 §5.10.3): where your judgment disagrees with a
