@@ -6,8 +6,20 @@ metadata:
   version: 2.0.0
   class: procedural
   trigger_phrases: ["author a new skill", "create a skill", "new skill", "import this skill", "port this skill", "skill template", "update the skill format"]
+  v2.1: mode router + bake-off protocol (WP-D-5)
 disable-model-invocation: true
 ---
+
+## §0A. Two Modes
+
+This skill has exactly two modes. Decide the mode first, say which one you are in.
+
+| Mode | When | Path |
+|---|---|---|
+| **Author Mode** | Creating a skill from scratch — no external source | Sections 1–4 below (the original wireframe), plus §4A–§4C [v2] |
+| **Import Mode** | Porting an existing skill from any external source | §5 Import Mode [v2] — copy + enumerated edits, never paraphrase |
+
+Author Mode is the default only when no source material exists. If the operator names or links an external skill, you are in Import Mode — do not "re-author" it; that is paraphrase under another name.
 
 ### SKILL: template-skill (wireframe — Sovereign Skill Protocol)
 
@@ -97,6 +109,23 @@ skills/<name>/
 Omit empty folders — an empty folder is noise (lint fails on it).
 
 #### 5. IMPORT MODE — conforming a foreign SKILL.md
+
+### §5.0 Bake-off Protocol (mandatory before any import)
+
+**One skill per seat (L5).** Before importing, name the seat the candidate would occupy (the trigger condition: "this skill runs when …"). Then:
+
+1. **Check the seat.** Look up CAPABILITY_REGISTER.md and the skills/ tree. Is the seat occupied?
+2. **Seat empty** → proceed with Import Mode steps 1–9.
+3. **Seat occupied** → STOP. Run the bake-off:
+   - Read **both** skills in full — the candidate and the incumbent. No skimming; truncated reads invalidate the verdict.
+   - Write a verdict in the rig-change report with exactly one of three outcomes:
+     - **ADOPT NEWCOMER** — incumbent is retired to §D.28 with the reason recorded.
+     - **KEEP INCUMBENT** — candidate rejected; unique blocks may still be harvested (below).
+     - **KEEP ONE + HARVEST** — incumbent keeps the seat; the loser's unique, superior blocks are inserted verbatim with provenance noted in frontmatter (`harvests: [...]`).
+   - Record the verdict and a one-line reason in §D.28 so it is never re-litigated.
+4. **Harvests are verbatim.** A harvested block is copied from the source and inserted at a named location — never summarized. Summarizing a harvest is truncation.
+5. **Unclear seat boundary** (the two skills overlap partially but serve different stages) → escalate `needs_human` with both SKILL.md paths and your proposed boundary. Do not improvise the boundary.
+
 Protocol, in order, no shortcuts:
 When authoring or editing any agent-consumed document, consult `references/writing-for-agents.md` (context pointers, leading words, completion criteria, pruning) and `references/skill-mechanics.md` (frontmatter and invocation mechanics). These complement the superpowers writing-skills patterns: writing-skills governs the authoring workflow; writing-for-agents governs the writing itself.
 1. READ the foreign skill end to end — every file in its folder

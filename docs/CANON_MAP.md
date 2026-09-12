@@ -39,6 +39,27 @@ canon's own assignment — not machinery).
 | Phase 0 Intent & Specification (TCE v2.1 §2.A) | `templates/specs/`, `bin/lint-spec.mjs`, skills `spec-intake`/`slice-plan`, contract `trace:` field | LIVE (WP-A–C; §D.22 closed) |
 | Provenance headers (`derived_from`/`last_reconciled`) | `templates/tmd/*` Zone C convention + lint-tmd optional-field check | PARTIAL (WP-A) |
 
+## SDLC Stage Map (canonical aliases)
+
+The rig's pipeline is isomorphic to the two industry SDLC framings. The rig's
+stage names are canonical; the others are aliases for communication only —
+documents, skills, and gates always use the rig names.
+
+| Rig stage (canonical) | Anthropic SDLC | agent-skills SDLC | Seat / skill bound | Gate artifact |
+|---|---|---|---|---|
+| specs/intent.md | Plan (intent half) | DEFINE /spec | interview-me → spec-intake | intent.md |
+| PRD | Plan | DEFINE /spec | spec-intake | prd.md + falsifiable hypothesis |
+| plan.md | Plan → Design | PLAN /plan | slice-plan (capability map) | plan.md |
+| slice + Task Contract | Design → Build | BUILD /build | worker seat (TDD, verification, systematic-debugging bound) | contract + code |
+| Validate / QA gate | Test | VERIFY /test | gate drivers (check:fast/task/full) + E.7 holdout; reviewer seat judges | green driver output |
+| pr-review | Test → Deploy (review half) | REVIEW /review | pr-review (+ rules-drift-check) | review report |
+| PR merge + release | Deploy | SHIP /ship | operator-gated merge | merged PR |
+| Incident record + floor ratchet | Maintain | (no equivalent) | doctor seat | incident record, floor.json |
+
+**Two observations, recorded as canon:**
+1. **"Design" is not a separate rig stage** — it is distributed: architecture decisions live in plan.md (slice-plan) and the Test Contract's seam choices. A standalone Design stage would duplicate the plan seat (L5).
+2. **"Maintain" is the rig's incident-record + floor-ratchet loop** — the closest agent-skills equivalent (shipping-and-launch, deprecation-and-migration) remains shelved adopt-on-trigger. No new stage is added; if recurring maintenance work ever outgrows incident records, that is a rig-change proposal, not an ad-hoc skill.
+
 ## 2. The CI/CD Integration Engine (The Refinery)
 
 | Canon element | Rig surface | Status |

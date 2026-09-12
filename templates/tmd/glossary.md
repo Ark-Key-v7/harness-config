@@ -64,6 +64,14 @@ substitution is a trace-ledger calibration event, not a legislative event.
   checks at Stage 0 and Stage 2; the adversarial reviewer rejects any PR
   introducing a forbidden variant in code, config, or committed documentation.
 
+### A.6 SDLC Stage Map (canon alias law)
+
+- **Term:** `SDLC Stage Map` — the canonical alias table in CANON_MAP.md
+  mapping rig stages to the Anthropic and agent-skills SDLC framings. Rig
+  names are canonical; aliases are for communication only. Documents,
+  skills, and gates always use the rig stage names; the alias table is the
+  only permitted crosswalk.
+
 ## ZONE B — THE STRUCTURE (fixed skeleton)
 
 Canonical section order: Zone A law (fixed, incl. factory-reserved entities) →
