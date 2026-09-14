@@ -13,6 +13,11 @@ You have three recurring situations. Everything else is detail:
 | New task | "new task: <what>" | Contract drafted → validated → scope resolved → you pick a seat → work happens inside guardrails |
 | Rig change | "I have new rig files" | `rig-change` skill: place → drivers → your confirmation → commit → push → pull |
 
+Host-harness note: rig skills live in `~/.pi/agent/skills/` (Pi's native scan
+path). Any other host that scans `~/.agents/skills/` (e.g. ZCode) discovers
+them via the machine-level symlinks — bootstrap step 2b in
+`docs/PORTABILITY.md`, never per-project work.
+
 ## New project (once per repository)
 
 1. `cd` into the project and open Pi.

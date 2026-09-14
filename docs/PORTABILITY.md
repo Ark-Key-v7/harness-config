@@ -31,6 +31,17 @@ mkdir -p ~/factory-rig/sources
 git clone git@github.com:Ark-Key-v7/harness-config.git ~/factory-rig/sources/harness-config
 git clone ~/factory-rig/sources/harness-config ~/.pi/agent   # or clone from GitHub directly
 
+# 2b. Cross-harness skill discovery (once per machine, idempotent)
+#     Link every rig skill into the shared scan path (~/.agents/skills/) so
+#     non-Pi hosts that read it (ZCode) discover them natively; Pi reads
+#     ~/.pi/agent/skills directly and is unaffected. Links ride the pull
+#     chain (git -C ~/.pi/agent pull updates contents). Re-run only after a
+#     pull that ADDS a new skill — ln -sfn overwrites cleanly.
+#     Caveat: non-Pi hosts may ignore `disable-model-invocation` frontmatter;
+#     treat an auto-triggered rig skill there as a proposal, not authority.
+mkdir -p ~/.agents/skills
+for s in ~/.pi/agent/skills/*; do ln -sfn "$s" ~/.agents/skills/"$(basename "$s")"; done
+
 # 3. Prove the rig
 cd ~/factory-rig/sources/harness-config
 for d in validation/*/; do node "$d"*.test.mjs || break; done   # all suites green
