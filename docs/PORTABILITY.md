@@ -17,6 +17,9 @@ _What survives a machine change, what must be rebuilt, and in what order. The ri
 | Factory floor (worktrunk, qmd, lancedb, semgrep, betterleaks, fallow, pr_agent) | `~/factory-rig/tools/` etc. | install per `package-pins.json` — versions and sha256/integrity hashes are recorded there; verify before use |
 | Rig state files | `~/.pi/agent/*-state.json`, logs | regenerate on use (memory toggles, seat state are per-machine by design) |
 | Deferred tools | — | NOT installed at onboarding; each activates when its register gate fires (spec §6) |
+| Canon handbooks (1.0 / 1.2) | `~/factory-rig/sources/_canon-handbooks/` | copy from the old machine or private storage — currently NOT under git (open rig-change decision: give the canon its own remote) |
+| Outer floor proofs | `~/factory-rig/validation/*-smoke/` | machine-local fixtures; rebuild on demand, never shipped |
+| Intake clones | `~/factory-rig/sources/_intake/`, `~/factory-rig/sources/amux` | re-clone as needed; amux is deferred (§D.4) |
 
 ## Onboarding sequence (fresh machine)
 
@@ -42,6 +45,16 @@ git clone ~/factory-rig/sources/harness-config ~/.pi/agent   # or clone from Git
 mkdir -p ~/.agents/skills
 for s in ~/.pi/agent/skills/*; do ln -sfn "$s" ~/.agents/skills/"$(basename "$s")"; done
 
+# 2c. Factory tree (the harness-config clone is only PART of ~/factory-rig/)
+#     ~/factory-rig/
+#       sources/harness-config     ← step 2 (the rig itself)
+#       sources/_canon-handbooks/  ← canon law, machine-local files — see table above
+#       sources/_intake/           ← skill-port intake clones, re-clone as needed
+#       sources/amux               ← optional: github.com/mixpeek/amux (deferred §D.4)
+#       tools/<tool>/<version>/    ← step 4 installs land here (semgrep, pr-agent, aionui)
+#       validation/                ← outer machine-floor smoke fixtures (machine-local proofs)
+#       tmp/
+
 # 3. Prove the rig
 cd ~/factory-rig/sources/harness-config
 for d in validation/*/; do node "$d"*.test.mjs || break; done   # all suites green
@@ -58,6 +71,7 @@ cd ~/.pi/agent && git pull --ff-only   # already current = chain works
 - Windows + WSL2 Ubuntu 24.04 is the reference platform. The rig itself is Linux-portable; Windows-specific notes are limited to the download-boundary hazards (dotfiles, `(1)` collisions, Zone.Identifier).
 - Kimi OAuth subscription regime is assumed. The gateway regime is deferred; activating it is a register-gated change, not a portability concern.
 - No deferred tool is required for the plane to function — the rig boots and governs without them.
+- ZCode as a mirrored host is PENDING: it arrives with the ZCode projection-target WP (surface map → canon amendment → rig WP). Bootstrap today installs Pi as the only host.
 
 ## Project repos
 
