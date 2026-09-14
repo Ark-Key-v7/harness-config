@@ -3,7 +3,7 @@ name: rig-change
 description: Execute the governed rig-change workflow when the operator has new or updated Factory Rig files (extensions, tools, drivers, templates, skills, projections). Use when the operator says they have new rig files, downloaded files to place, or asks to commit and sync harness-config.
 metadata:
   author: Agentic SWE Factory
-  version: 1.2.0
+  version: 1.3.0
   class: procedural
   trigger_phrases: ["new rig files", "place these files", "update the rig", "commit and sync harness-config", "I downloaded the new version", "canon updated", "new handbook version"]
 ---
@@ -35,11 +35,13 @@ read, write/edit (target files only), bash (git + node), ls, find.
 
 #### 3. The Procedural Loop (Act → Observe → Exit)
 
-##### Step 1: ACT (intake)
-- CANON REVISION ROUTE: if the trigger is "canon updated" / "new handbook version", this is a canon revision, not a file placement — execute the "Canon revision" section of `docs/FACTORY_UPDATE_RUNBOOK.md` (diff old vs new handbook at `~/factory-rig/sources/_canon-handbooks/`, classify deltas, same-commit register + CANON_MAP + FACTORY_STATUS bookkeeping), then rejoin this skill at Step 3 for validation, staging, and ratification.
-- List candidate files: `ls -t /mnt/c/Users/*/Downloads/ | head -30`
-- Ask the operator WHICH files are part of this change (never assume).
-- Read each file enough to classify it per the placement table:
+##### Step 1: ACT (intake) — classify the trigger BEFORE any file hunting
+1. **Evidence first, always:** run `git status --short` (and a recent `git log --oneline -3`) in the source repo. Uncommitted or untracked changes there are the PRIMARY signal — an in-flight rig change already present in the working tree. Present that output as the candidate change-set.
+2. **Trigger table** — ask the operator to confirm which trigger applies (never assume; but LEAD WITH the evidence, do not ignore it):
+   - **T1 — Working-tree change:** `git status` shows modified/untracked files in the rig repo. The change-set IS that output; classify each path per the placement table below. Downloads are never consulted.
+   - **T2 — File placement:** operator says they have new/downloaded files to place. ONLY now list candidates: `ls -t /mnt/c/Users/*/Downloads/ | head -30`, ask WHICH files are part of the change, then classify.
+   - **T3 — Canon revision:** trigger is "canon updated" / "new handbook version" — execute the "Canon revision" section of `docs/FACTORY_UPDATE_RUNBOOK.md` (diff old vs new handbook at `~/factory-rig/sources/_canon-handbooks/`, classify deltas, same-commit register + CANON_MAP + FACTORY_STATUS bookkeeping), then rejoin this skill at Step 3 for validation, staging, and ratification.
+3. **Classify** each file (T1/T2) by reading enough of it, per the placement table:
 
 | Artifact | Destination |
 |---|---|
@@ -55,8 +57,8 @@ read, write/edit (target files only), bash (git + node), ls, find.
 | spec / docs | `docs/` |
 
 ##### Step 2: ACT (place)
-- Copy each file to its destination. Show the operator the full placement
-  list before proceeding.
+- For T2: copy each file to its destination. For T1: files are already in the tree — the placement list is the path classification from Step 1.
+- Show the operator the full placement list before proceeding.
 
 ##### Step 3: OBSERVE (validate — deterministic, exit-code routed)
 - Run the matching driver for every changed artifact: `node validation/<name>-smoke/<name>.test.mjs`
@@ -117,6 +119,7 @@ read, write/edit (target files only), bash (git + node), ls, find.
 - NEVER skip the §5.4 confirmation, even if the operator said "go ahead" earlier in the session — confirm per change-set.
 - NEVER treat an ACP dismissal, timeout, or ambiguous reply as ratification —
   only an explicit typed affirmative ratifies.
+- NEVER consult Downloads or hunt for files elsewhere before reading `git status` in the source repo — the working tree is the primary change signal; Downloads is only a T2 fallback.
 - NEVER run `git push` or `git -C ~/.pi/agent pull` — push and clone-sync are
   always operator-run; the operator holds the SSH key.
 - NEVER modify files under ~/.pi/agent directly; the active clone is read-only and receives changes only via pull.
