@@ -105,13 +105,14 @@ Deferred tools stay deferred until their gates fire.
 | Stage | Artifact | Produced by | Invoked how |
 |---|---|---|---|
 | DEFINE intent | `specs/intent/<slug>.md` | you + interview-me | "new work: <idea>" — the interview extracts intent; one screen, no solution detail |
-| DEFINE spec | `specs/prd/<slug>.md` | spec-intake skill | continues from intent; hypothesis, metrics, non-goals, Zone-C compile tables |
+| DEFINE spec | `specs/prd/<slug>.md` (+ `specs/changes/<slug>/delta.md` for brownfield) | spec-intake skill | continues from intent; hypothesis, metrics, non-goals, Zone-C compile tables; Step 4b drafts the delta (spec-intake v2.1.0) |
 | PLAN | `specs/plans/<slug>.md` + slices | slice-plan skill | "slice the PRD" — slices ≤500 prod lines / ≤12 files, task-quality gate |
 | CONTRACT | `.agents/tasks/task-<slug>.md` | planner seat (or manual template + lint-contract) | "draft a task contract for <slice>"; lint + contract-scope arm the sandbox |
 | BUILD | the diff | worker seat | `/seat worker` — bound disciplines fire automatically (TDD, verification-before-completion, systematic-debugging, context-budget, + domain disciplines: api-and-interface-design, security-and-hardening, observability-and-instrumentation, documentation-and-adrs per the slice) |
 | VERIFY | gate output | gate drivers | the contract's validation_commands + `check:fast/task/full`; E.7 holdout where present |
 | REVIEW | verdict artifact (E.4) | reviewer seat | `/seat reviewer` → "run pr-review" — fresh context, evidenced verdicts |
 | SHIP | merged PR + deploy verification | ship-gate skill + you | "ship it" — Stage 0 preflight → PR → human gate (24h SLA) → merge → post-merge checks; rig changes take rig-change instead |
+| ARCHIVE | merged `specs/domains/<domain>/spec.md` + dated archive | archive-change.mjs | after merge: `node ~/.pi/agent/bin/archive-change.mjs --change specs/changes/<slug>` — living truth updates, change becomes history |
 | MAINTAIN | incident record + floor ratchet | you + skills | incidents ratchet the floor (`bin/floor-ratchet.mjs`); breaches draft new intent artifacts |
 
 Two deliberate non-skills: there is no /build skill (building is the worker

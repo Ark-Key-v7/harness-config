@@ -13,7 +13,7 @@
  * Exit 0 = ALL PASS. Exit 1 = at least one check failed.
  */
 
-import { mkdtempSync, mkdirSync, writeFileSync, existsSync } from "node:fs";
+import { mkdtempSync, mkdirSync, writeFileSync, existsSync, readFileSync, readdirSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -178,6 +178,120 @@ last_reconciled: 2026-09-01
   const res = { code: r.status ?? 1, out: String(r.stdout ?? "") + String(r.stderr ?? "") };
   check("templates/specs lint clean (template mode)", res.code === 0);
   if (res.code !== 0) console.log(res.out);
+}
+
+// --- WP-E §5.2: the archive merge (change semantics) ------------------------------
+{
+  const MERGER = join(REPO, "bin", "archive-change.mjs");
+  const root = mkdtempSync(join(tmpdir(), "spec-wpe-"));
+  const merge = (change, extra = []) =>
+    spawnSync(process.execPath, [MERGER, "--change", `specs/changes/${change}`, "--root", root, ...extra], { encoding: "utf8" });
+
+  const delta = (slug, body) => {
+    mkdirSync(join(root, "specs", "changes", slug), { recursive: true });
+    writeFileSync(join(root, "specs", "changes", slug, "delta.md"), `---
+change: ${slug}
+derived_from: specs/prd/${slug}.md
+last_reconciled: 2026-09-16
+domains_touched: [billing]
+---
+
+# Delta: ${slug}
+
+${body}
+`);
+  };
+
+  // (1) all three section types → exact merged content
+  delta("add-billing", `## ADDED Requirements
+
+### REQ-billing-001: charge card
+The system charges the card exactly once per order.
+
+#### Scenario: charge
+- **GIVEN** a paid-ready order
+- **WHEN** the order is placed
+- **THEN** exactly one charge exists
+
+## MODIFIED Requirements
+
+## REMOVED Requirements`);
+  let r = merge("add-billing");
+  check("merger: all-ADDED creates domain spec", r.status === 0);
+  const specPath = join(root, "specs", "domains", "billing", "spec.md");
+  let specText = existsSync(specPath) ? readFileSync(specPath, "utf8") : "";
+  check("merger: ADDED requirement + provenance stamped", specText.includes("### REQ-billing-001: charge card") && /provenance: specs\/changes\/archive\/\d{4}-\d{2}-\d{2}-add-billing/.test(specText));
+  check("merger: change archived (dated folder)", existsSync(join(root, "specs", "changes", "archive")) && !existsSync(join(root, "specs", "changes", "add-billing")));
+  const archiveDir = readdirSync(join(root, "specs", "changes", "archive"))[0];
+  check("merger: archive folder named <date>-<slug>", /-add-billing$/.test(archiveDir));
+
+  delta("mod-billing", `## ADDED Requirements
+
+### REQ-billing-002: refund
+The system refunds fully on request.
+
+#### Scenario: refund
+- **GIVEN** a paid order
+- **WHEN** a refund is requested
+- **THEN** the charge is fully refunded
+
+## MODIFIED Requirements
+
+### REQ-billing-001: charge card
+The system charges the card exactly once per order, idempotent by key.
+
+#### Scenario: idempotent
+- **GIVEN** a paid-ready order
+- **WHEN** the order is placed twice with one key
+- **THEN** exactly one charge exists
+
+## REMOVED Requirements`);
+  r = merge("mod-billing");
+  specText = readFileSync(specPath, "utf8");
+  check("merger: MODIFIED replaces block in full", r.status === 0 && specText.includes("idempotent by key"));
+  check("merger: second ADDED appends next-free ID", specText.includes("REQ-billing-002"));
+
+  // (2) MODIFIED against a missing ID → non-zero, ID named
+  delta("bad-mod", `## ADDED Requirements
+
+## MODIFIED Requirements
+
+### REQ-billing-099: ghost
+No such requirement.
+
+#### Scenario: ghost
+- **GIVEN** nothing
+- **WHEN** nothing
+- **THEN** nothing
+
+## REMOVED Requirements`);
+  r = merge("bad-mod");
+  check("merger: MODIFIED against missing ID rejected, ID named", r.status === 1 && String(r.stderr).includes("REQ-billing-099"));
+
+  delta("touch", `## ADDED Requirements
+
+### REQ-billing-003: audit log
+Every charge writes an audit entry.
+
+#### Scenario: audit
+- **GIVEN** a charge
+- **WHEN** it completes
+- **THEN** an audit entry exists
+
+## MODIFIED Requirements
+
+## REMOVED Requirements`);
+
+  // (4) dry-run writes nothing
+  r = merge("touch", ["--dry-run"]);
+  check("merger: dry-run leaves change in place", r.status === 0 && existsSync(join(root, "specs", "changes", "touch")));
+
+  // (3) hand-edited domain spec → manifest-guard halt
+  writeFileSync(specPath, specText.replace("idempotent by key", "hand-edited text"));
+  writeFileSync(specPath, readFileSync(specPath, "utf8").replace("idempotent by key", "hand-edited text"));
+  r = merge("touch");
+  check("merger: hand-edited domain spec halts on manifest guard", r.status === 1 && String(r.stderr).includes("drift"));
+
 }
 
 console.log("—".repeat(80));

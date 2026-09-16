@@ -28,6 +28,7 @@
  */
 
 import { existsSync, readFileSync } from "node:fs";
+import { join } from "node:path";
 
 const args = process.argv.slice(2).filter((a) => !a.startsWith("--"));
 const gIdx = process.argv.indexOf("--gravity");
@@ -108,6 +109,23 @@ if (traceRaw && !traceRaw.includes("TEMPLATE_VALUE_REQUIRED")) {
 // holdout: sits at YAML top level, after the must_haves block (E.1 skeleton
 // layout) — required somewhere in the contract, validated here.
 const contractId = text.match(/contract_id:\s*(\S+)/)?.[1];
+
+// --- WP-E §6.3: optional requirements: list (delta semantics) -----------------------
+// requirements: [REQ-<domain>-<nnn>, ...] — when present, every ID must exist
+// in the change's delta.md (ADDED or MODIFIED; the slice lands it or changes
+// it). The change slug is recovered from the trace's plan slug.
+const reqList = text.match(/^\s*requirements:\s*\[([^\]]*)\]/m)?.[1];
+if (reqList) {
+  const ids = reqList.split(",").map((x) => x.trim()).filter(Boolean);
+  const slug = traceRaw?.split("#")[0]?.replace(/^specs\/plans\//, "").replace(/\.md$/, "");
+  const deltaPath = slug ? join("specs", "changes", slug, "delta.md") : null;
+  for (const id of ids) {
+    if (!/^REQ-[a-z0-9-]+-\d+$/.test(id)) { bad(`requirements entry "${id}" is not a well-formed REQ-<domain>-<nnn> ID`); continue; }
+    if (!deltaPath || !existsSync(deltaPath)) { bad(`requirements list present but ${deltaPath ?? "the change's delta.md"} does not exist`); continue; }
+    const delta = readFileSync(deltaPath, "utf8");
+    if (!delta.includes(`### ${id}:`)) bad(`requirements entry ${id} not found in ${deltaPath} — a slice lands only requirements its change's delta carries`);
+  }
+}
 const holdoutRaw = text.match(/^\s*holdout:\s*(\S+)/m)?.[1];
 if (!holdoutRaw) bad("missing holdout: pointer (E.7 builder-blind acceptance — a contract without it cannot complete)");
 if (holdoutRaw && !holdoutRaw.includes("<")) {

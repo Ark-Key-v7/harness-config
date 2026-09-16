@@ -258,6 +258,23 @@ After any rig change that alters the ledger above: update this file in the same 
   and repo stop drifting.
 
 
+## WP-E — Change semantics: living domain specs, deltas, archive merge (landed 2026-09)
+- Landed (OpenSpec model adopted rig-native; CLI REJECTED — §D.30 shelf
+  row): templates/specs/{domain-spec,delta}.md; bin/archive-change.mjs —
+  deterministic merger with fail-closed preflight (scenario law, MODIFIED/
+  REMOVED existence, ADDED next-free, domains_touched consistency,
+  contract-verification gate) and a manifest guard that halts on hand-edited
+  living specs; lint-spec delta/domain lint + orphan advisory; lint-contract
+  optional requirements: [REQ-...] list validated against the delta;
+  spec-intake v2.1.0 (Step 4b delta decision + baselining rule); slice-plan
+  v2.1.0 (slices decompose delta requirements); onboard scaffolds
+  specs/domains/ + specs/changes/archive/ (empty — brownfield-first, no
+  backfill); CANON_MAP + register + OPERATOR_GUIDE ARCHIVE row.
+- Interface note: the contract-verification gate reads a verified.md marker
+  (the reviewer seat's E.4 PASS verdict) in the change folder when task
+  contracts exist for the slug — the WP named "STATE/verdict trail" without
+  a concrete artifact; verified.md is that artifact. Recorded for canon.
+
 ## WP-C2 — Canon alignment: fifteen laws, zones, nine-layer stack, Canon Compiler (landed 2026-09)
 - Landed: rules.md fifteen-law Anti-Slop Protocol (L11–L15 verbatim; §1 law
   text adopted as canon, §0.7.1 inventory names recorded as aliases in the

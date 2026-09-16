@@ -33,7 +33,7 @@
  * Exit 0 = onboarding scaffolding complete. Exit 1 = refused (with reason).
  */
 
-import { existsSync, mkdirSync, copyFileSync, cpSync, readdirSync, readFileSync } from "node:fs";
+import { existsSync, mkdirSync, copyFileSync, cpSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join, dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { execFileSync } from "node:child_process";
@@ -118,6 +118,27 @@ for (const d of ["specs/intent", "specs/prd", "specs/plans"]) {
   const keep = join(ROOT, d, ".gitkeep");
   if (!existsSync(keep)) copyFileSync(join(RIG, "templates", "specs", ".gitkeep"), keep);
 }
+
+// --- WP-E §6.4: change-semantics scaffold ---------------------------------------------
+// specs/domains/ and specs/changes/archive/ start EMPTY — living truth grows
+// from the first archived change (brownfield-first: never backfill domain
+// specs at onboarding; the first touch baselines the domain).
+mkdirSync(join(ROOT, "specs", "domains"), { recursive: true });
+mkdirSync(join(ROOT, "specs", "changes", "archive"), { recursive: true });
+writeFileSync(join(ROOT, "specs", "changes", "README.md"), `# specs/changes/ — the change lifecycle (WP-E)
+
+A change package is a folder \`specs/changes/<slug>/\` holding \`delta.md\`
+(ADDED/MODIFIED/REMOVED requirements against the living domain specs).
+Lifecycle: spec-intake Step 4b drafts the delta → slices land it (contracts
+carry \`requirements: [REQ-...]\`) → after the reviewer's PASS, the merge
+closes the loop:
+
+    node ~/.pi/agent/bin/archive-change.mjs --change specs/changes/<slug>
+
+The merger updates \`specs/domains/<domain>/spec.md\` (the living truth —
+never hand-edited; the manifest guard halts on drift) and moves the change
+to \`archive/<yyyy-mm-dd>-<slug>/\` (immutable history).
+`);
 
 // --- Validate what we placed (the layer must boot clean) ----------------------------
 const run = (tool, args) => {

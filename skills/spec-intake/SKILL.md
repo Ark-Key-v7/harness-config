@@ -3,7 +3,7 @@ name: spec-intake
 description: Author Phase-0 spec chain artifacts (intent, PRD) through a structured interview when the operator has new work. Use when the operator says "new work", "I have an idea", "start a feature", "draft an intent", "write a PRD".
 metadata:
   author: Agentic SWE Factory
-  version: 2.0.0
+  version: 2.1.0
   class: procedural
   trigger_phrases: ["new work", "I have an idea", "start a feature", "draft an intent", "write a PRD", "new intent"]
 ---
@@ -34,13 +34,15 @@ You are in a governed project (has .tmd/). If specs/ does not exist, scaffold it
 
 **Step 4 ACT (optional) — divergent refinement.** Run only when the operator asks to "refine", "ideate", or "stress-test" the idea before committing. Generate 5–8 variations of the concept using these lenses: **inversion** (what if we did the opposite), **constraint removal** (what if budget/time/tech weren't factors), **audience shift** (what if this were for a different user), **combination** (what if merged with an adjacent idea), **simplification** (the 10x simpler version), **10x scale** (what this looks like at massive scale), **expert lens** (what domain experts find obvious that outsiders don't). Stress-test the resonating directions against user value, feasibility, and differentiation. Surface hidden assumptions explicitly: what we're betting is true, what could kill the idea, what we're choosing to ignore. The output must include a **"Not Doing (and Why)" list** — focus is about saying no to good ideas; that list is the most valuable part. Do not generate 20+ shallow variations; do not yes-machine weak ideas — push back with specificity. Converge back into the intake flow once the operator picks a direction, and fold the outcome into the approved intent before proceeding.
 
+**Step 4b ACT — delta decision.** Ask: does this PRD create a new capability or modify existing behavior? New → draft `specs/changes/<slug>/delta.md` from the delta template, all-ADDED. Modify → read the affected `specs/domains/*/spec.md` files FIRST (they are the current truth; the PRD's Evidence section cites them), then draft MODIFIED/REMOVED entries against named requirement IDs. If the behavior being modified has no living spec (pre-WP-E work), the delta is all-ADDED with a note `baselining: true` — the first archive baselines that domain.
+
 **Step 5 ACT — PRD interview and draft.** For each PRD section, interview then draft: problem statement (evidence-grounded); evidence (or "Assumption — validate via [method]"); thesis; the falsifiable hypothesis — co-write it, and never ship one without the WRONG condition; target user / JTBD / non-users; requirements as verifiable statements, each with its compile target (rules / glossary / promises / slice) and its test seam (§4); MVP scope; outcome-shaped success metrics; non-goals; Zone C additions (glossary, invariants, promises); open questions as named checkboxes. Apply the PRD guards and the anti-fluff rule (§4).
 
 **Step 6 OBSERVE — PRD approval.** Present the draft. Operator approves or amends (typed). Loop until approved.
 
 **Step 7 ACT — door check.** Classify the decision: **two-way door** (reversible) → proceed to slicing; **one-way door** (expensive to undo) → spike first. Optional pressure-test — Cagan's four risks: **Value** (do they want it more than how they cope today?) · **Usability** (can they use it?) · **Feasibility** (can we build it?) · **Viability** (does it work for the business?). Most teams over-invest feasibility and under-invest value.
 
-**Step 8 EXIT.** Run `node ~/.pi/agent/bin/lint-spec.mjs specs/` — must exit 0. Report both artifacts and the next step: "slice-plan to decompose into slices and contracts." Never commit — the operator commits.
+**Step 8 EXIT.** Run `node ~/.pi/agent/bin/lint-spec.mjs specs/` — must exit 0, with `specs/changes/<slug>/delta.md` drafted and delta-lint green. Report the artifacts (intent, PRD, delta) and the next step: "slice-plan to decompose into slices and contracts." Never commit — the operator commits.
 
 #### 3. Local Negative Constraints
 

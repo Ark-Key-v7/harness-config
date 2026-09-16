@@ -66,6 +66,7 @@ CodeRabbit never a second AI voice.
 | spec §0.6.1 Canon Compiler | bin/canon-compile.mjs + fixtures | LIVE (WP-C2) |
 | spec §0.7 Law Economy (15-law budget, placement ladder) | rules.md Zone B statement + lint-tmd | LIVE (WP-C2) |
 | spec §0.3 three-zone model (A fixed / B bindings / C PRD-compiled) | templates/tmd/* retitled + lint-tmd heading + provenance checks | LIVE (WP-C2) |
+| Phase-0 chain + change semantics (living domain specs, deltas, archive merge — OpenSpec model adopted rig-native) | templates/specs/{domain-spec,delta}.md, bin/archive-change.mjs, lint-spec delta/domain lint, spec-intake/slice-plan v2.1.0 | LIVE (WP-E) |
 
 ## SDLC Stage Map (canonical aliases)
 

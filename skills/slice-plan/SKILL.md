@@ -3,7 +3,7 @@ name: slice-plan
 description: Decompose an approved PRD into a plan of size-capped vertical slices and draft their task contracts. Use when the operator says "plan this", "slice this PRD", "draft contracts", or after spec-intake completes.
 metadata:
   author: Agentic SWE Factory
-  version: 2.0.0
+  version: 2.1.0
   class: procedural
   trigger_phrases: ["plan this", "slice this", "slice the PRD", "draft contracts", "draft a task contract"]
 ---
@@ -24,7 +24,7 @@ Governed project with an approved specs/prd/<slug>.md. Read it, the manifold (.t
 
 #### 2. The Procedural Loop
 
-**Step 1 ACT — propose the decomposition.** Each slice: name, layers crossed, directories touched, visible testable output, dependencies, estimated size. Record the architecture decisions and global constraints for the plan header. If any slice exceeds the caps, decompose it further BEFORE presenting. Then run the task-quality gate: validate every slice against `references/task-quality.md` in this skill directory — sizing (L or larger → break down), no placeholders, acceptance criteria + verification + a Consumes/Produces interface note where slices interact. If a plan file with unchecked work already exists for different work, stop and ask — never overwrite it.
+**Step 1 ACT — propose the decomposition.** Slices decompose the change's delta requirements, not just the PRD prose — every slice names the requirement IDs (REQ-<domain>-<nnn>) it lands, and each E.1 contract carries them in its optional `requirements: [REQ-...]` manifest list (lint-contract validates it against the delta). Each slice: name, layers crossed, directories touched, visible testable output, dependencies, estimated size. Record the architecture decisions and global constraints for the plan header. If any slice exceeds the caps, decompose it further BEFORE presenting. Then run the task-quality gate: validate every slice against `references/task-quality.md` in this skill directory — sizing (L or larger → break down), no placeholders, acceptance criteria + verification + a Consumes/Produces interface note where slices interact. If a plan file with unchecked work already exists for different work, stop and ask — never overwrite it.
 
 **Step 2 OBSERVE — plan approval.** Operator approves or reorders (typed). Loop until approved.
 

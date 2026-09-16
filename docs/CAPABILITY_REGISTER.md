@@ -49,6 +49,7 @@ skill, a driver proves it, the chain lands it.
 | Mutation lane (§5.10.4) | Deliberate defects spanning every gate rung must be caught | `validation/mutations/` | self (runbook suite loop) |
 | Deterministic proof floor (L0) | Scoped rg verifies index/edit claims before action or merge | package-pins.json + floor install | outer validation/ |
 | Canon Compiler (document gate) | templates parse/render/reference checks, stale-term rejection | bin/canon-compile.mjs | validation/canon-compile/ |
+| Change semantics (living specs + delta merge) | specs/domains + specs/changes + archive machinery | templates/specs/{domain-spec,delta}.md + bin/archive-change.mjs | validation/spec-smoke/ |
 | Skills (Phase 0) | `spec-intake` v2.0.0 (intent→PRD interview) · `slice-plan` v2.0.0 (plan→slices→contracts) — both rebuilt WP-T; `templates/specs/` ×3 enriched same WP; canon handbook Appendix 2.A reconciliation PENDING (operator action) | repo-root `skills/` | `validation/skills/` |
 
 *Status note (canon revision 2026-09, updated at WP-C landing):* the seven
@@ -277,6 +278,7 @@ standing rule below).
 | matt grilling, grill-me, grill-with-docs, to-spec, diagnosing-bugs, to-questionnaire, writing-for-agents | RESOLVED | adopted/harvested in WP-D-4 (§3–§4 of the WP-D-4 spec) |
 | matt tdd, code-review, implement, prototype, triage, to-tickets, handoff, wayfinder, teach, codebase-design, domain-modeling, improve-codebase-architecture, research, wizard, ask-matt, setup-matt-pocock-skills, misc/*, in-progress/* | SHELVED adopt-on-trigger | same import-mode gate; in-progress/* additionally flagged: unfinished upstream, import only after re-checking upstream status |
 
+| OpenSpec CLI (@fission-ai/openspec): openspec init, /opsx:* commands, profiles, custom schemas | REJECTED | harness glue / second invocation plane (agent-skills commands ruling); its change semantics (living specs, deltas, archive merge) adopted rig-native in WP-E. The CLI is never installed — the merger is bin/archive-change.mjs |
 **Standing rule:** any future skill candidate from any source goes through
 template-skill Import Mode with a bake-off against the seat incumbent. The
 shelf is a disposition record, not a to-do list.

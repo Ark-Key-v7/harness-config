@@ -161,6 +161,87 @@ if (existsSync(TASKS)) {
   }
 }
 
+// --- 5. WP-E delta lint: changes/<slug>/delta.md -------------------------------------
+function parseReqBlocks(text) {
+  const out = [];
+  const re = /^### (REQ-[a-z0-9-]+-\d+):(.+)$/gm;
+  let m;
+  while ((m = re.exec(text)) !== null) {
+    const lineEnd = text.indexOf("\n", m.index);
+    const next = text.slice(lineEnd + 1).search(/^### |^## /m);
+    const end = next < 0 ? text.length : lineEnd + 1 + next;
+    out.push({ id: m[1], body: text.slice(m.index, end) });
+  }
+  return out;
+}
+function deltaSection(text, kind) {
+  const m = text.match(new RegExp(`^## ${kind} Requirements\\s*$`, "m"));
+  if (!m) return "";
+  const rest = text.slice(m.index + m[0].length);
+  const next = rest.search(/^## /m);
+  return (next < 0 ? rest : rest.slice(0, next)).trim();
+}
+{
+  const changesDir = join(DIR, "changes");
+  if (existsSync(changesDir)) {
+    for (const slug of readdirSync(changesDir, { withFileTypes: true }).filter((e) => e.isDirectory() && e.name !== "archive").map((e) => e.name)) {
+      const dp = join(changesDir, slug, "delta.md");
+      if (!existsSync(dp)) continue;
+      const text = readFileSync(dp, "utf8");
+      for (const h of ["change:", "derived_from:", "last_reconciled:"]) {
+        if (!new RegExp(`^${h}`, "m").test(text)) failAt(`changes/${slug}/delta.md`, 1, `missing provenance header ${h} (WP-C2 rules)`);
+      }
+      const domainsTouched = (text.match(/^domains_touched:\s*\[([^\]]*)\]/m)?.[1] ?? "").split(",").map((x) => x.trim()).filter(Boolean);
+      const added = parseReqBlocks(deltaSection(text, "ADDED"));
+      const modified = parseReqBlocks(deltaSection(text, "MODIFIED"));
+      const removed = parseReqBlocks(deltaSection(text, "REMOVED"));
+      for (const r of [...added, ...modified, ...removed]) {
+        if (!/#### Scenario:/.test(r.body)) failAt(`changes/${slug}/delta.md`, 1, `${r.id}: requirement without a Scenario — untestable (E.1 Gherkin-truth rule)`);
+      }
+      const refDomains = new Set([...added, ...modified, ...removed].map((r) => r.id.match(/^REQ-([a-z0-9-]+)-\d+$/)?.[1]).filter(Boolean));
+      for (const d of refDomains) if (!domainsTouched.includes(d)) failAt(`changes/${slug}/delta.md`, 1, `requirement in domain "${d}" but domains_touched does not list it`);
+      for (const d of domainsTouched) if (!refDomains.has(d)) failAt(`changes/${slug}/delta.md`, 1, `domains_touched lists "${d}" but no requirement references it`);
+      for (const d of refDomains) {
+        const specPath = join(DIR, "domains", d, "spec.md");
+        const ids = existsSync(specPath) ? new Set(parseReqBlocks(readFileSync(specPath, "utf8")).map((r) => r.id)) : new Set();
+        for (const r of modified) if (r.id.startsWith(`REQ-${d}-`) && !ids.has(r.id)) failAt(`changes/${slug}/delta.md`, 1, `MODIFIED ${r.id} does not exist in specs/domains/${d}/spec.md`);
+        for (const r of removed) if (r.id.startsWith(`REQ-${d}-`) && !ids.has(r.id)) failAt(`changes/${slug}/delta.md`, 1, `REMOVED ${r.id} does not exist in the living spec`);
+        for (const r of added) if (r.id.startsWith(`REQ-${d}-`) && ids.has(r.id)) failAt(`changes/${slug}/delta.md`, 1, `ADDED ${r.id} already exists in specs/domains/${d}/spec.md`);
+      }
+      // Orphan advisory: unarchived change with no contract in flight and a landed plan
+      if (existsSync(TASKS)) {
+        const inFlight = readdirSync(TASKS).some((f) => f.startsWith(`task-${slug}-`) && f.endsWith(".md"));
+        const planLanded = existsSync(join(DIR, "plans", `${slug}.md`));
+        if (!inFlight && planLanded) warnAt(`changes/${slug}/delta.md`, 1, "unarchived change with a landed plan and no contract in flight — abandoned work; archive or close it");
+      }
+    }
+  }
+}
+
+// --- 6. WP-E domain-spec lint: specs/domains/<d>/spec.md ------------------------------
+{
+  const domainsDir = join(DIR, "domains");
+  if (existsSync(domainsDir)) {
+    for (const d of readdirSync(domainsDir, { withFileTypes: true }).filter((e) => e.isDirectory()).map((e) => e.name)) {
+      const sp = join(domainsDir, d, "spec.md");
+      if (!existsSync(sp)) continue;
+      const text = readFileSync(sp, "utf8");
+      for (const h of ["spec_domain:", "derived_from:", "last_reconciled:"]) {
+        if (!new RegExp(`^${h}`, "m").test(text)) failAt(`domains/${d}/spec.md`, 1, `missing header ${h} (living-truth provenance)`);
+      }
+      if (!/^status: living$/m.test(text)) failAt(`domains/${d}/spec.md`, 1, 'domain spec must carry "status: living"');
+      for (const r of parseReqBlocks(text)) {
+        if (!/^provenance:\s*specs\/changes\/archive\//m.test(r.body)) {
+          failAt(`domains/${d}/spec.md`, 1, `${r.id}: missing provenance line to an archived change`);
+        } else {
+          const arch = r.body.match(/^provenance:\s*(\S+)/m)?.[1];
+          if (!existsSync(join(PROJ, arch))) failAt(`domains/${d}/spec.md`, 1, `${r.id}: provenance "${arch}" does not resolve to an archive folder`);
+        }
+      }
+    }
+  }
+}
+
 // --- 4. Size-cap advisory ------------------------------------------------------------
 for (const s of slices) {
   if (!s.touches || PLACEHOLDER.test(s.touches)) continue;
