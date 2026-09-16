@@ -47,7 +47,7 @@ skill, a driver proves it, the chain lands it.
 | Guard (Gate Integrity §5.10.1) | Protected-list write boundary, fail-closed, list in code | `extensions/guard.ts` + `bin/guard.mjs` (CI) + `bin/guard-list.mjs` (the list — single source) | `validation/guard-smoke/` |
 | Tripwire (holdout leak) | Provenance-based detection: holdout-shaped content in worker artifacts | `bin/tripwire.mjs` | `validation/tripwire-smoke/` |
 | Mutation lane (§5.10.4) | Deliberate defects spanning every gate rung must be caught | `validation/mutations/` | self (runbook suite loop) |
-| Skills (Phase 0) | `spec-intake` (intent→PRD interview) · `slice-plan` (plan→slices→contracts) | repo-root `skills/` | `validation/skills/` |
+| Skills (Phase 0) | `spec-intake` v2.0.0 (intent→PRD interview) · `slice-plan` v2.0.0 (plan→slices→contracts) — both rebuilt WP-T; `templates/specs/` ×3 enriched same WP; canon handbook Appendix 2.A reconciliation PENDING (operator action) | repo-root `skills/` | `validation/skills/` |
 
 *Status note (canon revision 2026-09, updated at WP-C landing):* the seven
 rows above were recorded specified-not-yet-landed at the canon revision.

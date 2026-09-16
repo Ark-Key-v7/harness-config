@@ -88,7 +88,9 @@ for (const a of artifacts) {
   }
   if (a.kind === "intent") {
     const p = field(a.text, "parent");
-    if (!p || p.value !== "none") failAt(a.file, p?.line ?? 1, "intents are chain heads and must carry `parent: none`");
+    // WP-T: the enriched intent template annotates the field (`parent: none  # …`)
+    // — compare the value with any trailing comment stripped.
+    if (!p || p.value.split("#")[0].trim() !== "none") failAt(a.file, p?.line ?? 1, "intents are chain heads and must carry `parent: none`");
   }
 }
 

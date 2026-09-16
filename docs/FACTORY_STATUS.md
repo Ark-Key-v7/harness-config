@@ -238,3 +238,21 @@ After any rig change that alters the ledger above: update this file in the same 
   recorded.
 - Drivers: skills-smoke, guard-smoke, profiles-smoke, canon-register,
   projections — green at commit time.
+
+## WP-T — Template completion pack + spec-intake/slice-plan v2.0.0 (landed 2026-09)
+- Landed: `templates/specs/{intent,prd,plan}.md` full enrichment (all
+  canon slots preserved: derived_from/last_reconciled/parent headers,
+  compiles-to mechanics, Zone C targets, slice caps; intent still one
+  screen); skills `spec-intake` + `slice-plan` rebuilt to v2.0.0 — the
+  v1.1.0 loop-integrity defect (free-floating prose between steps) is
+  closed; harvested blocks preserved verbatim (PRD guards, anti-fluff,
+  divergent-refinement lenses, test-seam, door check, ticket export).
+- lint-spec.mjs verified against scratch drafts of all three enriched
+  templates. One extension was required (recorded per WP-T §5.4): the
+  enriched intent annotates `parent: none` with a trailing comment, so
+  the header law now compares the value with the comment stripped —
+  section names themselves are not hard-coded, so no accepted-section
+  list change was needed.
+- PENDING canon reconciliation (operator action, outside this rig-change):
+  replace handbook Appendix 2.A templates with the repo's three, so canon
+  and repo stop drifting.
