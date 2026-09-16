@@ -79,6 +79,10 @@ function profileFile(seat: Seat): string {
   return join(profilesDir(), `${seat}.md`);
 }
 
+function rosterLawsFile(): string {
+  return join(profilesDir(), "roster-laws.md");
+}
+
 /**
  * One-line purpose of a seat, read live from the profile's
  * `# PROFILE: <Seat> (<purpose>)` heading. Profiles are the single
@@ -120,13 +124,17 @@ export default function (pi: ExtensionAPI) {
 
     let content = "";
     try {
+      // WP-D-6 §6.3: one concatenated injection, roster laws first — the
+      // 16KB cap applies to the concatenation (roster-laws.md + profile).
+      const parts: string[] = [];
+      const laws = rosterLawsFile();
+      if (existsSync(laws)) parts.push(readFileSync(laws, "utf8"));
       const file = profileFile(seat);
-      if (existsSync(file)) {
-        content = readFileSync(file, "utf8");
-        if (Buffer.byteLength(content) > MAX_PROFILE_BYTES) {
-          const buf = Buffer.from(content);
-          content = buf.subarray(0, MAX_PROFILE_BYTES).toString("utf8") + "\n\n[profile truncated — exceeded 16KB injection cap]";
-        }
+      if (existsSync(file)) parts.push(readFileSync(file, "utf8"));
+      content = parts.join("\n\n---\n\n");
+      if (content && Buffer.byteLength(content) > MAX_PROFILE_BYTES) {
+        const buf = Buffer.from(content);
+        content = buf.subarray(0, MAX_PROFILE_BYTES).toString("utf8") + "\n\n[profile truncated — exceeded 16KB injection cap]";
       }
     } catch {
       content = "";

@@ -1,0 +1,24 @@
+# E.5 profile actuation_boundary — protocols extension (WP-D-6 §4.2 schema patch)
+# No dedicated profile schema file existed before WP-D-6; this block is the
+# schema law that bin/lint-profiles.mjs enforces fail-closed on every profile.
+actuation_boundary:
+  tool_allowlist: [...]        # existing — unchanged
+  command_allowlist: [...]     # existing — unchanged
+  protocols:                   # NEW — deny-default; anything not listed is DENY
+    mcp_servers: []            # curated MCP server names only (lint-mcp.mjs pins); empty = none
+    a2a:                       # agent-to-agent completion payloads (E.3)
+      emit: true               # all seats emit the completion payload on termination
+      invoke_peers: false      # no seat spawns or dispatches peer agents (§D.17 until validated)
+    ag_ui: false               # AG-UI/A2UI surfaces — deferred with §D.5 (Lavish); false until activated
+    skill_scripts: []          # skill-bundled scripts/ this seat may execute (via bash, in-scope only)
+    integrated_apis: []        # named external APIs (e.g. SCM hub); secrets never in context (L15)
+
+# Rules of the block (schema law):
+# 1. Deny-default. An absent or empty list means NONE. A seat may only actuate
+#    a protocol explicitly listed in its own profile.
+# 2. L12 pins. Every mcp_servers entry must resolve to a curated, version-pinned
+#    entry passing bin/lint-mcp.mjs; an unpinned server is a lint failure.
+# 3. Contract-granted, profile-bounded. A Task Contract may narrow a seat's
+#    protocol list for one task; it may never widen it.
+# 4. Secrets. integrated_apis credentials resolve at the wire (environment/
+#    secret store), never in prompts or context — L15 and security-and-hardening agree.

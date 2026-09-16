@@ -58,6 +58,16 @@ for (const [file, law] of Object.entries(ROSTER_LAW)) {
   }
   if (!text.includes("kimi-subscription regime")) violation(file, "Kimi-subscription model-class mapping not stated (WP5 acceptance)");
   if (!text.includes("Conflict Halt")) violation(file, "profile must bind the Conflict Halt (no agent-side resolution)");
+
+  // WP-D-6 §4.4: actuation_boundary.protocols block — fail-closed
+  const PROTOCOL_KEYS = ["mcp_servers:", "a2a:", "ag_ui:", "skill_scripts:", "integrated_apis:"];
+  const prot = text.match(/protocols:\n((?:[ \t]+.*\n?)+)/);
+  if (!text.includes("  protocols:")) {
+    violation(file, "actuation_boundary missing protocols: block (WP-D-6 §4.4 — deny-default hole)");
+  } else {
+    for (const k of PROTOCOL_KEYS) if (!prot || !prot[1].includes(k)) violation(file, `protocols block missing key ${k} (exactly mcp_servers, a2a, ag_ui, skill_scripts, integrated_apis)`);
+    if (!prot || !/invoke_peers:\s*false/.test(prot[1])) violation(file, "a2a.invoke_peers must be false in stock profiles (§D.17-gated peer dispatch)");
+  }
 }
 
 if (violations > 0) {

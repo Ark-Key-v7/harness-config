@@ -38,7 +38,7 @@ skill, a driver proves it, the chain lands it.
 | Manifold linter | Header law (last_verified = SHA), Zone discipline, template/strict modes | `bin/lint-tmd.mjs` | `validation/tmd/` |
 | Profile linter | Sovereign profile format law (incl. substitution_bounds) | `bin/lint-profiles.mjs` | `validation/profiles/` |
 | Skill linter | SKILL.md format gate (E.6 frontmatter + format v2.0.0: metadata.class, When NOT to Use, no empty folders) | `bin/lint-skills.mjs` | `validation/skills/` |
-| Skills (global, post-v2.1; format v2.0.0) | rig-change · pr-review · tool-intake · template-skill · project-onboard · spec-intake · slice-plan · webperf-audit · rules-drift-check · to-questionnaire (procedural) · test-driven-development · verification-before-completion · systematic-debugging · brainstorming (discipline class, WP-D2 ports) · ui-engineering · performance-optimization · interview-me · context-budget (discipline class, WP-D-3 agent-skills ports; template-skill v2.0.0 is the two-class wireframe; WP-D-4 ports: rules-drift-check, to-questionnaire) | repo-root `skills/` | `validation/skills/` |
+| Skills (global, post-v2.1; format v2.0.0) | rig-change · pr-review · tool-intake · template-skill · project-onboard · spec-intake · slice-plan · ship-gate (rig-native, WP-D-6 §7) · webperf-audit · rules-drift-check · to-questionnaire (procedural) · test-driven-development · verification-before-completion · systematic-debugging · brainstorming (discipline class, WP-D2 ports) · ui-engineering · performance-optimization · interview-me · context-budget (discipline class, WP-D-3 agent-skills ports; template-skill v2.0.0 is the two-class wireframe; WP-D-4 ports: rules-drift-check, to-questionnaire) · api-and-interface-design · security-and-hardening · observability-and-instrumentation · documentation-and-adrs (discipline class, WP-D-6 §3 promotions) · browser-testing-with-devtools (procedural, WP-D-6 §3.5 — actuation gated at §D.24) | repo-root `skills/` | `validation/skills/` |
 | Supply-chain floor (canon §6.6 M2/M3) | --ignore-scripts, exact pins, frozen lockfiles | `package-pins.json` + runbook gates | `validation/pi-layer/` |
 | Outer machine floor | semgrep, pr-agent tool installs + smoke fixtures (machine-local, not the repo) | `~/factory-rig/tools/` | outer `validation/` |
 | Spec chain linter (Phase 0) | Schema + back-reference/orphan check + provenance headers for specs/intent, prd, plans | `bin/lint-spec.mjs` + `templates/specs/` | `validation/spec-smoke/` |
@@ -229,7 +229,9 @@ observable condition that makes the item activatable — not a suggestion.
   governed project. Trigger T5 (filesystem-detectable: `.agents/tasks/*.holdout.md`
   present) is **deferred** — `bin/check-activations.mjs` has no glob check
   type; T5 lands with the machinery WP that adds it (WP-A/WP-C), not with a
-  docs commit.
+  docs commit. NOTE (WP-D-6 §8.4): trigger id T5 is now taken by the
+  skill-shelf reminder; when this machinery WP lands its glob check, that
+  trigger must take id T6.
 - **Prerequisites:** §D.15; §D.22 (holdout machinery).
 - **Integration path:** eval runner in validation/; scores to ledger; ratchet
   via §5.10.2 floor semantics.
@@ -260,7 +262,9 @@ standing rule below).
 | agent-skills spec-driven-development, test-driven-development, debugging-and-error-recovery, constraint-driven-development, planning-and-task-breakdown, idea-refine | HARVESTED/REJECTED | per WP-D-3 §3 bake-off verdicts (recorded in §D.29) |
 | agent-skills commands/*.toml (/spec /plan /build /test /review /ship) | REJECTED | harness slash-command layer; the rig's stage pipeline already binds these |
 | agent-skills agents/code-reviewer, security-auditor, test-engineer | SHELVED | persona shells; their review criteria live in the skills already adopted |
-| agent-skills remaining skills (api-and-interface-design, browser-testing-with-devtools, ci-cd-and-automation, code-review-and-quality, code-simplification, deprecation-and-migration, documentation-and-adrs, doubt-driven-development, git-workflow-and-versioning, incremental-implementation, observability-and-instrumentation, security-and-hardening, shipping-and-launch, source-driven-development, using-agent-skills) | SHELVED adopt-on-trigger | when a slice's must_haves first demand the domain, run template-skill Import Mode on that skill from `_intake/agent-skills/` (already cloned, SHA-pinned). No re-audit needed; the import protocol is the gate |
+| agent-skills api-and-interface-design, security-and-hardening, observability-and-instrumentation, documentation-and-adrs, browser-testing-with-devtools | ADOPTED | WP-D-6 §3 — verbatim + enumerated edits; chrome-devtools MCP gated at §D.24 |
+| agent-skills ci-cd-and-automation, shipping-and-launch | HARVESTED | bake-off losers to the rig-native ship-gate skill (WP-D-6 §7); verbatim harvests with provenance |
+| agent-skills remaining skills (code-review-and-quality, code-simplification, deprecation-and-migration, doubt-driven-development, git-workflow-and-versioning, incremental-implementation, source-driven-development, using-agent-skills) | SHELVED adopt-on-trigger | unchanged — Import Mode from `_intake/agent-skills/`; using-agent-skills' Core Operating Behaviors already harvested as roster law (WP-D-6 §6) |
 | cole rules-check-drift, plan-create-prd, plan-create-stories, prime-* | RESOLVED | adopted/harvested in WP-D-4 (§3–§4 of the WP-D-4 spec) |
 | cole piv-* family (14 skills), plan-architecture, rules-create-global, hooks-create, worktree-create | REJECTED | Claude-Code-specific pipeline (PIV loop, hooks, worktrees); superseded by the rig's own stage pipeline and worktrunk |
 | cole build-dark-factory, system-evolution-review, system-execution-report, opportunity-scan, second-brain-audit, setup-ai-tutor, ablate-ai-layer, agent-browser, ast-grep | SHELVED adopt-on-trigger | dark-factory only via Archon evaluation §D.23; ast-grep via semgrep seat bake-off if ever needed |
@@ -272,6 +276,7 @@ template-skill Import Mode with a bake-off against the seat incumbent. The
 shelf is a disposition record, not a to-do list.
 
 ### §D.28 Brainstorming visual companion (shelved at WP-D-2 adoption)
+- **Sources location:** all shelved source material lives as SHA-pinned clones under `~/factory-rig/sources/_intake/<repo>/` (agent-skills @ 48cb1168, superpowers @ b36e082, cole @ fb2e876, matt @ 3cca18b). The register is the disposition record (git); `_intake/` is the physical shelf (machine state); adoption is Import Mode from the pinned clone, never a fresh fetch.
 - **Canon:** WP-D-2 adoption record — the brainstorming skill was ported
   from obra/superpowers (local clone, SHA b36e082) with its Visual
   Companion section EXCLUDED: the companion is a browser-server tool that
@@ -298,6 +303,7 @@ shelf is a disposition record, not a to-do list.
 - **HARVESTED (not adopted standalone):**
   - `idea-refine` → spec-intake divergent-refinement step + Step 0 intent
     clarity gate (§6.2).
+  - using-agent-skills → roster-laws.md six Core Operating Behaviors (WP-D-6 §6); the skill itself stays REJECTED (second invocation plane).
   - `debugging-and-error-recovery` → systematic-debugging: Stop-the-Line Rule,
     non-reproducible decision tree, untrusted-error-output section (§6.3).
   - `planning-and-task-breakdown` + superpowers `writing-plans`/`executing-plans`
@@ -343,3 +349,16 @@ shelf is a disposition record, not a to-do list.
 register AND docs/CANON_MAP.md in the same commit. Trigger IDs referenced by
 docs/activation-triggers.json are driver-checked — a register entry without
 its trigger line fails validation/canon-register.*
+
+### §D.24 Chrome DevTools MCP (browser-testing-with-devtools actuation)
+- **Canon:** WP-D-6 §3.5 — the skill is adopted law today; its power source is not.
+- **Activation trigger:** the first governed project with a browser-facing
+  slice (web UI in the stack) — agent-judged, surfaced via tool-intake.
+- **Prerequisites:** curation through `bin/lint-mcp.mjs` (exact pin,
+  `--ignore-scripts`, stdio-default); the skill's profile-isolation rules
+  (`--isolated` default; never the operator's daily Chrome profile) are the
+  adoption contract, verbatim.
+- **Integration path:** tool-intake WP → `.mcp.json` entry per project →
+  worker seat `protocols.mcp_servers` gains `chrome-devtools` via roster PR
+  (§5.4). Skill scripts and JS-execution stay read-only per the skill's own
+  security boundaries.

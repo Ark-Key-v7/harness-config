@@ -256,3 +256,24 @@ After any rig change that alters the ledger above: update this file in the same 
 - PENDING canon reconciliation (operator action, outside this rig-change):
   replace handbook Appendix 2.A templates with the repo's three, so canon
   and repo stop drifting.
+
+
+## WP-D-6 — Profiles, protocols, and promoted adoptions (landed 2026-09)
+- Landed: five agent-skills promotions (api-and-interface-design,
+  security-and-hardening, observability-and-instrumentation,
+  documentation-and-adrs, browser-testing-with-devtools — verbatim + E1–E4;
+  chrome-devtools actuation gated at §D.24); rig-native `ship-gate` skill
+  (ci-cd/shipping harvests, verbatim, provenance in-file); profile
+  `actuation_boundary.protocols` block in all four seats (deny-default) +
+  lint-profiles §4.4 check; roster discipline bindings (scout/planner/
+  reviewer); roster-laws.md (six Core Operating Behaviors, verbatim harvest)
+  injected by seat-switch ahead of the profile (16KB concat cap asserted);
+  §D.24/§D.28/§D.29/§D.30 register updates; T5-skill-shelf trigger;
+  OPERATOR_GUIDE stage map; validation/wpd6-smoke driver.
+- DEVIATION on record (format-law vs verbatim): the WP's E1 frontmatter blocks
+  lack `trigger_phrases`/`author`, and api/security/observability bodies lack
+  a "When NOT to Use" section — lint-skills format v2.0.0 (WP's own
+  acceptance #3) requires both. Minimal additions applied (frontmatter fields;
+  one "When NOT to Use" line each; a Procedural-form mapping section in
+  browser-testing-with-devtools) and verified: every diff hunk vs the pinned
+  source maps to an enumerated edit or one of these recorded additions.

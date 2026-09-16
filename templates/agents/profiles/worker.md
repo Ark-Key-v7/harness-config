@@ -1,7 +1,8 @@
 # PROFILE: Worker (execution seat)
 
-**Roster laws (fixed, all profiles):** minimal loadout. Fresh context per role
-instance — handoff by file artifact, never session inheritance. Roster
+**Roster laws (fixed, all profiles):** `templates/agents/profiles/roster-laws.md`
+is injected alongside this profile by seat-switch — loadout, context, protocol
+boundary, and the six Core Operating Behaviors are law for this seat. Roster
 changes are governance: human PR only (§5.4).
 
 ```yaml
@@ -14,6 +15,12 @@ compute_physics:
 actuation_boundary:
   tool_allowlist: [read, write, edit, bash, grep, find, ls]
   command_allowlist: ["build/test/lint commands declared in the root AGENTS.md router"]   # everything else escalates via bash-guard
+  protocols:
+    mcp_servers: []              # per-contract narrowing of the curated stack (§D.13: Serena/Context7 on activation; §D.24: chrome-devtools on activation); empty until then
+    a2a: { emit: true, invoke_peers: false }
+    ag_ui: false
+    skill_scripts: ["scripts/ inside the invoked skill's own folder only — e.g. systematic-debugging/scripts/hitl-loop.sh; arbitrary scripts forbidden"]
+    integrated_apis: []          # per-contract grant only; credentials at the wire, never in context
 tmd_read_path: [.tmd/rules.md, .tmd/gravity.md, .tmd/promises.md, .tmd/glossary.md, ".tmd/design.md (UI tasks only)"]
 write_scope: sub-graph              # exactly the active contract's sub_graph — enforced fail-closed by sandbox-guard
 read_scope: sub_graph+closure

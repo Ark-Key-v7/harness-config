@@ -1,5 +1,5 @@
 <!-- GENERATED FILE — do not hand-edit (WP3, L4). Regenerate: node bin/generate-projections.mjs -->
-<!-- source_head: 5db19c5a1017b27f349fb39e7fc85054a76529fb -->
+<!-- source_head: 017c954222648e423d8fa3db94b7820b47e0b21f -->
 <!-- projection: pi/append-system.md -->
 
 # Factory projection — Pi append-system (stable part)
@@ -22,6 +22,7 @@ pointed-to files when a task touches their domain.
 
 - templates/agents/profiles/planner.md
 - templates/agents/profiles/reviewer.md
+- templates/agents/profiles/roster-laws.md
 - templates/agents/profiles/scout.md
 - templates/agents/profiles/worker.md
 
@@ -31,14 +32,20 @@ When a task matches a trigger, invoke the named skill — procedure follows, nev
 
 | Skill | Trigger phrases |
 |---|---|
+| api-and-interface-design | design the API · new endpoint · event schema · public interface · API contract |
 | brainstorming | let's brainstorm · think through this · scope this |
+| browser-testing-with-devtools | test in the browser · verify the UI · browser check · console errors · devtools |
 | context-budget | new session · output quality degraded · trim context · switching tasks · context setup |
+| documentation-and-adrs | write an ADR · document this decision · changelog · API docs · README |
 | interview-me | interview me · grill me · are we sure? · stress-test my thinking · underspecified ask |
+| observability-and-instrumentation | instrument this · add telemetry · structured logs · metrics · alerts |
 | performance-optimization | optimize performance · slow page · Core Web Vitals · N+1 query · performance regression · profiling bottleneck |
 | pr-review | review this PR · verify this contract · stage 2 review · adversarial review |
 | project-onboard | start a new project · onboard this project · set up the manifold · new repo setup |
 | rig-change | new rig files · place these files · update the rig · commit and sync harness-config · I downloaded the new version · canon updated · new handbook version |
 | rules-drift-check | check rules drift · rules file stale · AGENTS.md drift · fold into review pass |
+| security-and-hardening | security review · hardening · STRIDE · secrets hygiene · input handling |
+| ship-gate | ship it · open a PR · merge this · release · ready to ship |
 | slice-plan | plan this · slice this · slice the PRD · draft contracts · draft a task contract |
 | spec-intake | new work · I have an idea · start a feature · draft an intent · write a PRD · new intent |
 | systematic-debugging | debug this · find the root cause · systematic debugging |

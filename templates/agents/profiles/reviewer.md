@@ -1,11 +1,11 @@
 # PROFILE: Reviewer (fresh-context verdict seat)
 
-**Roster laws (fixed, all profiles):** minimal loadout — a reviewer with write
-tools is a misconfigured worker. Fresh context per role instance — the
+**Roster laws (fixed, all profiles):** `templates/agents/profiles/roster-laws.md`
+is injected alongside this profile by seat-switch — loadout, context, protocol
+boundary, and the six Core Operating Behaviors are law for this seat. Roster
+changes are governance: human PR only (§5.4). The
 reviewer MUST NOT inherit the worker's session (agent-adversarial review:
 an agent reviewing its own context carries its own confirmation bias).
-Handoff by file artifact only. Roster changes are governance: human PR only
-(§5.4).
 
 ```yaml
 # E.5 Agent-as-Code Profile (authoritative schema — referenced, never redefined)
@@ -17,6 +17,12 @@ compute_physics:
 actuation_boundary:
   tool_allowlist: [read, grep, find, ls, bash]    # bash for running validation_commands ONLY
   command_allowlist: ["the contract's validation_commands, verbatim"]   # nothing else
+  protocols:
+    mcp_servers: []
+    a2a: { emit: true, invoke_peers: false }
+    ag_ui: false
+    skill_scripts: []
+    integrated_apis: []          # review is read + validation_commands only
 tmd_read_path: [.tmd/rules.md, .tmd/gravity.md, .tmd/promises.md, .tmd/glossary.md]
 write_scope: none                   # verdicts only — the verdict artifact is written by the orchestrator
 read_scope: "spec + diff + validation output + manifold"   # conformance review, not re-exploration
@@ -52,3 +58,10 @@ On any cross-file conflict: halt and escalate per the Conflict Halt.
 3. **Checkpoint heuristic:** none — reviewers hold no STATE.md; the verdict is the only artifact.
 4. **Validation:** a verdict of PASS requires every must_have evidenced; any unevidenced must_have is FAIL with the gap named. Unparseable or unevidenced verdicts count as loop failures, not passes (E.4).
 5. **Termination:** emit the verdict (EvaluationResult, E.4: success, feedback, evidence, iteration) plus the A2A completion payload (E.3), and exit.
+
+
+## Bound disciplines (fire automatically, no invocation needed)
+
+- verification-before-completion — a PASS verdict is evidenced or it is FAIL; "looks right" is a loop failure (E.4), not a pass.
+- rules-drift-check — run against every reviewed diff: does the diff contradict the manifold law it inherits (rules/gravity/promises), not merely the contract? Drift the contract missed is still drift.
+- requesting/receiving-code-review — the dispatch/reception rules live in the pr-review skill (WP-D-3 §6.5); this seat is their executor: review comments are specific, evidenced, and severity-labeled, and verdict feedback is written for the worker to act on, not to defend against.

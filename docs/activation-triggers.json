@@ -33,6 +33,14 @@
         { "type": "always" }
       ],
       "notice": "Phase-2 topological mapping begins: the Lavish A2UI review surface is DEFERRED — conduct the manifold review via diff until activated (docs/CAPABILITY_REGISTER.md §D.5)."
+    },
+    {
+      "id": "T5-skill-shelf",
+      "register_anchor": "§D.30",
+      "checks": [
+        { "type": "not_harness" }
+      ],
+      "notice": "Skill shelf reminder: if this project's slices demand a domain the rig lacks (migrations, git-workflow conventions, doubt-driven review), the §D.30 shelf holds SHA-pinned candidates under ~/factory-rig/sources/_intake/. Adoption is template-skill Import Mode + rig-change — never a fresh fetch, never an ad-hoc install."
     }
   ]
 }

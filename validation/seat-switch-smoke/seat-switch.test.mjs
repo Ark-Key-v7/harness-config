@@ -130,6 +130,22 @@ await commands.seat.handler("planner", ctx);
 const big = start().systemPrompt;
 check("oversized profile truncated with marker", big.includes("[profile truncated") && big.length < 20000);
 
+// 14. WP-D-6 §6.3: roster-laws.md injected before the profile (one concatenation)
+writeFileSync(join(PROFILES, "roster-laws.md"), "# ROSTER LAWS — fixed, all profiles\nlaw: minimal loadout\n");
+await commands.seat.handler("scout", ctx);
+const lawsInjected = start().systemPrompt;
+check("roster-laws injected ahead of profile (WP-D-6 §6.3)",
+  lawsInjected.includes("# ROSTER LAWS") && lawsInjected.indexOf("# ROSTER LAWS") < lawsInjected.indexOf("# PROFILE: Scout"));
+
+// 15. WP-D-6 §6.3 build-time assertion: roster-laws + each shipped profile < 16KB
+import { statSync } from "node:fs";
+const SHIPPED = join(REPO, "templates", "agents", "profiles");
+const lawsBytes = statSync(join(SHIPPED, "roster-laws.md")).size;
+for (const seat of ["scout", "planner", "worker", "reviewer"]) {
+  const total = lawsBytes + statSync(join(SHIPPED, `${seat}.md`)).size;
+  check(`16KB cap: roster-laws + ${seat}.md = ${total} bytes < 16384`, total < 16384);
+}
+
 console.log("—".repeat(80));
 if (failures > 0) {
   console.log(`FAILED — ${failures} of ${checks} checks failed`);

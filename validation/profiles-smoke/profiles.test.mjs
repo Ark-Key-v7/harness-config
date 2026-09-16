@@ -77,6 +77,18 @@ const kimiRun = lint(true);
 check("missing Kimi-subscription mapping caught", kimiRun.code === 1 && kimiRun.out.includes("Kimi-subscription"));
 writeFileSync(scoutPath, scoutOrig);
 
+// WP-D-6 §4.4: fixture profile lacking the protocols block must fail
+writeFileSync(scoutPath, scoutOrig.replace(/^  protocols:\n(?:[ \t]+.*\n)+/m, ""));
+const protRun = lint(true);
+check("missing protocols block caught (WP-D-6 §4.4)", protRun.code === 1 && protRun.out.includes("protocols"));
+writeFileSync(scoutPath, scoutOrig);
+
+// WP-D-6 §4.4: invoke_peers true in a stock profile must fail
+writeFileSync(scoutPath, scoutOrig.replace("invoke_peers: false", "invoke_peers: true"));
+const peersRun = lint(true);
+check("invoke_peers: true caught (§D.17-gated)", peersRun.code === 1 && peersRun.out.includes("invoke_peers"));
+writeFileSync(scoutPath, scoutOrig);
+
 check("roster VALID again after restores", lint().code === 0);
 
 console.log("—".repeat(80));
