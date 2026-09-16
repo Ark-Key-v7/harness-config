@@ -60,7 +60,7 @@ On any cross-file conflict: halt and escalate per the Conflict Halt.
    - You encounter a fatal error requiring handoff to a human or another agent.
    - **The Loop Limit:** 15 consecutive tool calls without completing the task — assume context degradation, write your exact position to `STATE.md`, and terminate with a request for a fresh worker.
 4. **Validation:** execute Goal-Backward Verification — mathematically prove the must_haves against the `/.tmd/` laws, running the contract's validation_commands.
-5. **Termination:** write final completion status to `STATE.md` and exit with the A2A completion payload (E.3): status, worktrunk_path, commit_hash, trace_id (null under subscription regime), regime.
+5. **Termination:** write final completion status to `STATE.md` and exit with the A2A completion payload (E.3): status, worktrunk_path, commit_hash, trace_id (null under subscription regime), regime. — conforming to .agents/schemas/a2a-completion.schema.json
 
 ## Bound disciplines (fire automatically, no invocation needed)
 

@@ -116,5 +116,13 @@
   "acceptance": {
     "status": "installed_validated",
     "validated_at_utc": "2026-08-26T11:00:49Z"
+  },
+  "ripgrep": {
+    "package": "ripgrep",
+    "version": "14.1.0",
+    "seat": "L0 deterministic proof floor",
+    "status": "installed_validated",
+    "note": "L0 floor tool (canon v2.0: ripgrep proves, Serena writes, the index navigates — never substituted). Pinned WP-C2 §8.5.",
+    "recorded_by": "WP-C2"
   }
 }

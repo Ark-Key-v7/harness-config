@@ -70,6 +70,22 @@ if (!/test\s+-f\s+\/workspace\/\$\{TASK_CONTRACT_PATH\}\s*&&\s*test\s+-f\s+\/wor
   bad("the visibility assertion must test BOTH the task contract and STATE.md inside the mount");
 }
 
+// --- WP-C2 §5: declared variable inventory + task_contract_path -------------------------
+// Every ${...} in the file must resolve against the declared inventory comment.
+{
+  const declared = new Set(
+    [...text.matchAll(/^#\s*\$\{([A-Z_]+)\}/gm)].map((m) => m[1]),
+  );
+  if (declared.size === 0) bad("no declared variable inventory comment — every ${...} must resolve against the inventory (Canon Compiler §0.6.1 check 4)");
+  const used = [...text.matchAll(/\$\{([A-Z_]+)\}/g)].map((m) => m[1]);
+  for (const v of new Set(used)) {
+    if (!declared.has(v)) bad("variable ${" + v + "} is used but not declared in the inventory comment");
+  }
+}
+if (!/values\s*=\s*\{[^}]*task_contract_path\s*=/.test(text)) {
+  bad('values must use task_contract_path = "${TASK_CONTRACT_PATH}" (canon Appendix §5 — one variable, one name, everywhere)');
+}
+
 // --- Rule (4): append-only vs base -----------------------------------------------------------
 if (BASE) {
   if (!existsSync(BASE)) bad(`base file not found: ${BASE}`);

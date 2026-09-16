@@ -124,6 +124,12 @@ check("removing a base assertion rejected (append-only)", dropped.code === 1 && 
 const kept = run("lint-wt-hook.mjs", [join(FIX, "base.toml"), "--base", WT]);
 check("adding an assertion accepted (append-only growth)", kept.code === 0);
 
+// WP-C2 §5.4: variable inventory + task_contract_path, both directions
+const undeclared = run("lint-wt-hook.mjs", [wtMut("w4.toml", (t) => t.replace("${SESSION_UUID}", "${MYSTERY_VAR}"))], true);
+check("undeclared ${...} variable rejected (WP-C2 inventory)", undeclared.code === 1 && undeclared.out.includes("not declared"));
+const oldKey = run("lint-wt-hook.mjs", [wtMut("w5.toml", (t) => t.replace('task_contract_path = "${TASK_CONTRACT_PATH}"', 'task_contract = "${TASK_CONTRACT}"'))], true);
+check("values using legacy task_contract key rejected (WP-C2)", oldKey.code === 1 && oldKey.out.includes("task_contract_path"));
+
 // Genesis fail-closed: missing inputs
 const noArgs = run("state-genesis.mjs", ["--schema", SCHEMA], true);
 check("genesis with missing inputs fails closed", noArgs.code === 1);

@@ -64,11 +64,36 @@ function lintManifoldFile(path, name) {
   for (const zone of ["ZONE A", "ZONE B", "ZONE C"]) {
     if (!text.includes(zone)) violation(name, `missing ${zone} — three-zone contract broken (WP4)`);
   }
-  if (!/#{2,3}\s+.*enforcement/i.test(text)) {
-    violation(name, "missing Enforcement section (TMD §0.6 — every law names its wall)");
-  }
+  // WP-C2 §3.3: new zone titles — protects against partial application of the
+  // v2.0 zone model (A fixed / B project bindings / C PRD-compiled).
+  if (!text.includes("## ZONE B — PROJECT BINDINGS")) violation(name, "Zone B must be titled PROJECT BINDINGS (WP-C2 §3.3)");
+  if (!text.includes("## ZONE C — PRD-COMPILED ENTRIES")) violation(name, "Zone C must be titled PRD-COMPILED ENTRIES (WP-C2 §3.3)");
   if (STRICT && text.includes("TEMPLATE_VALUE_REQUIRED")) {
     violation(name, "unfilled TEMPLATE_VALUE_REQUIRED slots remain — a strict manifold is law, not a template");
+  }
+
+  // WP-C2 §3.3: Zone C provenance — every YAML entry (dashed list item,
+  // commented or live) under the Zone C heading carries derived_from: and
+  // last_reconciled:. Commented micro-examples count (templates); a live
+  // project entry without both is invalid law — fail-closed.
+  const zc = text.split(/^## ZONE C[^\n]*$/m)[1];
+  if (zc) {
+    const section = zc.split(/^## /m)[0];
+    const lines = section.split("\n");
+    let entryStart = -1;
+    const checkEntry = (from, to) => {
+      const chunk = lines.slice(from, to).join("\n");
+      if (!/^\s*#?\s*derived_from:/m.test(chunk)) violation(name, `Zone C entry (line ${from + 1}) missing derived_from: — an entry without provenance is invalid law (WP-C2 §3.3)`);
+      if (!/^\s*#?\s*last_reconciled:/m.test(chunk)) violation(name, `Zone C entry (line ${from + 1}) missing last_reconciled: — an entry without provenance is invalid law (WP-C2 §3.3)`);
+    };
+    for (let i = 0; i < lines.length; i++) {
+      const m = lines[i].match(/^\s*#?\s*-\s+\w+:/);
+      if (m) { if (entryStart >= 0) checkEntry(entryStart, i); entryStart = i; }
+    }
+    if (entryStart >= 0) checkEntry(entryStart, lines.length);
+  }
+  if (!/#{2,3}\s+.*enforcement/i.test(text)) {
+    violation(name, "missing Enforcement section (TMD §0.6 — every law names its wall)");
   }
 }
 

@@ -48,6 +48,7 @@ Payload (E.3): status (SUCCESS|FAIL), worktrunk_path, commit_hash, trace_id
 error_class (execution errors) as applicable, run_id, parent_trace_id,
 artifact_pointers. An invalid payload is not a completion signal — the
 orchestrator treats it as a crashed worker.
+Schema of record: .agents/schemas/a2a-completion.schema.json (canon Appendix §4) — a payload failing validation is not a completion signal; the orchestrator treats it as a crashed worker.
 
 ## ZONE B — THE STRUCTURE (fixed skeleton)
 

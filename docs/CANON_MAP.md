@@ -21,6 +21,31 @@ canon's own assignment — not machinery).
 
 ---
 
+## 0. The Nine-Layer Operational Stack (canon: "the operational stack flows through nine layers")
+
+Layers are seats, not procurement categories. Flow rule (canon): code/docs
+enter L3 as committed truth → L4 recalls → L2 maps → L1 edits → L0 proves →
+L6 compresses → L7 gates → L8 validates on schedule → L5 publishes.
+
+| Layer | Seat | Component(s) | Rig surface | Status |
+|---|---|---|---|---|
+| L0 Proof | deterministic proof floor | ripgrep (`rg`) | floor tool — `package-pins.json` + PORTABILITY floor list (WP-C2 §8.5) | LIVE |
+| L1 Hands | symbolic editing | Serena (memory disabled) | register §D.13 (curated MCP stack) | DEFERRED (§D.13) |
+| L2 Map | code navigation / blast radius | codebase-memory-mcp primary (LadybugDB is its embedded graph store); Graft standby | register §D.25 (WP-C2 §8.1) | DEFERRED (§D.25) |
+| L3 Truth | committed memory / docs substrate | OpenWiki + OpenKB | register §D.25 | DEFERRED (§D.25) |
+| L4 Retrieval | private/public recall | QMD private; Context7 public | Context7: register §D.13; QMD: register §D.25 | DEFERRED (§D.13/§D.25) |
+| L5 Publish | human/outside-agent publication | Docs7 XOR Docusaurus (one publisher per docs property) | register §D.25 | DEFERRED (§D.25) |
+| L6 Compress | token-economy adjunct | Headroom (MCP-server mode only); Tokenjuice (terminal-output pilot) | register §D.8 | DEFERRED (§D.8) |
+| L7 Gate | PR quality/security gate | DeepSource analyzers (primary), open-code-review (required AI voice), PR-Agent (of record), Betterleaks (VALID blocks), VulnHuntr (scoped), CodeRabbit (WATCH — per-repo conditional successor on same-10-PR evidence) | Betterleaks: §D.6/preflight lane 3 LIVE; PR-Agent: §D.1; rest: register §D.26 (WP-C2 §8.2) | PARTIAL / DEFERRED |
+| L8 Dynamic | scheduled dynamic proof | Strix, Buttercup, OSS-CRS | Strix: §D.9; Buttercup/OSS-CRS: register §D.27 (WP-C2 §8.3) | DEFERRED |
+
+Standing rulings absorbed by this map (canon §4 rulings 4, 7, 8, 9, 11, 12):
+PR-Agent of record (not Qodo); codebase-memory-mcp graph of record, Graft
+standby, GitNexus out on license, CodeGraph out; OpenWiki+OpenKB substrate
+(Mintlify removed as mandate); DeepSource primary / Semgrep fallback-only;
+ripgrep = proof, Serena = writes, index = navigation — never substituted;
+CodeRabbit never a second AI voice.
+
 ## 1. The Constraint-Driven Lifecycle (Five-Phase Methodology + §2.5 Constraint as Code)
 
 | Canon element | Rig surface | Status |
@@ -37,7 +62,10 @@ canon's own assignment — not machinery).
 | §2.5 commit-triggered re-indexing (QMD / code-graph / LanceDB cadences) | pattern prototyped by `bin/generate-projections.mjs` + `bin/assert-projection-fresh.mjs` (input-head lockstep) | DEFERRED (register §D.7) |
 | §2.5 BetterDB session cache exemption | — | DEFERRED (register §D.8) |
 | Phase 0 Intent & Specification (TCE v2.1 §2.A) | `templates/specs/`, `bin/lint-spec.mjs`, skills `spec-intake`/`slice-plan`, contract `trace:` field | LIVE (WP-A–C; §D.22 closed) |
-| Provenance headers (`derived_from`/`last_reconciled`) | `templates/tmd/*` Zone C convention + lint-tmd optional-field check | PARTIAL (WP-A) |
+| Provenance headers (`derived_from`/`last_reconciled`) | `templates/tmd/*` Zone C mandatory keys + lint-tmd fail-closed check | LIVE (WP-C2) |
+| spec §0.6.1 Canon Compiler | bin/canon-compile.mjs + fixtures | LIVE (WP-C2) |
+| spec §0.7 Law Economy (15-law budget, placement ladder) | rules.md Zone B statement + lint-tmd | LIVE (WP-C2) |
+| spec §0.3 three-zone model (A fixed / B bindings / C PRD-compiled) | templates/tmd/* retitled + lint-tmd heading + provenance checks | LIVE (WP-C2) |
 
 ## SDLC Stage Map (canonical aliases)
 
@@ -156,6 +184,7 @@ revisions stay traceable.
 | §5.8 ruling: base-branch rulebook reading | `skills/pr-review/` Step 0 (WP-B) | LIVE |
 | §5.8 ruling: Stage-6 loop closure | — | DEFERRED (register §D.20) |
 | §5.8 ruling: agent-config evals | — | DEFERRED (register §D.21) |
+| Appendix §4 A2A Completion Payload Schema | templates/agents/schemas/a2a-completion.schema.json (verbatim) + contract Exit Protocol pointer | LIVE (WP-C2) |
 
 ---
 

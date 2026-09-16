@@ -42,7 +42,7 @@ routes to the human gate — never silently unenforced.
 
 ### A.2 Stack Manifest law (fixed)
 
-The Stack Manifest (Zone C, §C.1) is the SINGLE declaration point for this
+The Stack Manifest (Zone B, §B.1) is the SINGLE declaration point for this
 project's stack. Every other manifold file references these slots; no other
 file may name a vendor as law. Rotating the stack (Svelte ↔ Astro, Convex ↔
 Supabase ↔ Neon, Tailwind ↔ any utility system) is a manifest edit via
@@ -50,7 +50,7 @@ manifold PR, never a manifold rewrite.
 
 ### A.3 Topological boundary law (fixed)
 
-Prose persuades humans; the fenced import_rules pattern (Zone C, §C.2) feeds
+Prose persuades humans; the fenced import_rules pattern (Zone B, §B.2) feeds
 the wall. Both are law; they must agree.
 
 - **Domain layer:** Pure language logic ONLY. FORBIDDEN: framework imports, persistence clients, transport objects.
@@ -68,7 +68,7 @@ transitively depend on itself.
 
 ### A.5 Sub-Graph Registry law (fixed)
 
-The Registry (Zone C, §C.3) is the legislative anchor for Topological Context
+The Registry (Zone B, §B.3) is the legislative anchor for Topological Context
 Isolation. Every Task Contract declares exactly one sub-graph as its
 write_scope; its read_scope is the sub-graph plus the declared dependency
 closure. The pretool-hook (WP2 sandbox guard) denies every file operation
@@ -80,27 +80,38 @@ Rules:
 2. Read/write scopes not listed here do not exist. Unknown paths resolve to DENY.
 3. Cross-sub-graph edits are forbidden; shared-module changes require their own contract against the owning sub-graph — never piggybacked on a feature contract.
 
-### A.6 Enforcement (instrument classes; concrete bindings in Zone C §C.1 gates)
+### A.6 Enforcement (instrument classes; concrete bindings in Zone B §B.1 gates)
 
 - Import rules: ast-audit + linter import patterns (generated from §C.2 YAML) at Stage 0 and Stage 1; type-checker resolves any residual cross-boundary type reference.
 - Sub-Graph Registry: pretool-hook enforcing §C.3 scopes (fail-closed).
 - State ownership: linter rules banning client-storage access outside declared scopes; human-gate review for reactivity violations.
 
-## ZONE B — THE STRUCTURE (fixed skeleton)
+### A.7 Long-lived process law (fixed)
 
-Canonical section order: Zone A law (fixed) → Zone C slots in this order:
-§C.1 Stack Manifest (stack, layers, gates) → §C.2 import_rules YAML →
-§C.3 Sub-Graph Registry YAML. A correct Stack Manifest fills EVERY slot or
-marks it `none`; a layer without paths is invalid. A correct import_rules
-block names concrete module patterns, not intentions. A correct Registry
-entry has: name, paths, owning_role, write_scope, read_scope (= write_scope +
-dependency closure), dependency_edges. The gates block binds every
-instrument class named in Zone A.6 (and the other files' enforcement maps) to
-a concrete, pinned tool.
+Every long-lived process (server, daemon, consumer) is declared in the §B.4
+Long-Lived Process Registry with a named brake (the condition or bound that
+stops it: shutdown signal, max messages, lease expiry). An undeclared
+long-lived process violates rules.md Law 13 (NO UNBOUNDED LOOPS). Everything
+not declared here terminates by count.
 
-## ZONE C — FILLABLE SLOTS (project-specific)
+## ZONE B — PROJECT BINDINGS (human-authored at onboarding)
 
-### §C.1 Stack Manifest
+This file's project bindings — Stack Manifest entries, sub-graph registrations, import rules, long-lived-process declarations, gate parameters — are authored by the
+human at onboarding (project-onboard interview) and bind only what they
+explicitly declare. Zone labels never replace `applies_to:`; they state who
+may author the entry and how it enters the manifold.
+
+Canonical slot order: §B.1 Stack Manifest (stack, layers, gates) → §B.2
+import_rules YAML → §B.3 Sub-Graph Registry YAML → §B.4 Long-Lived Process
+Registry. A correct Stack Manifest fills EVERY slot or marks it `none`; a
+layer without paths is invalid. A correct import_rules block names concrete
+module patterns, not intentions. A correct Registry entry has: name, paths,
+owning_role, write_scope, read_scope (= write_scope + dependency closure),
+dependency_edges. The gates block binds every instrument class named in Zone
+A.6 (and the other files' enforcement maps) to a concrete, pinned tool.
+
+
+### §B.1 Stack Manifest
 <!-- TEMPLATE_VALUE_REQUIRED — the only place vendors are named as law.
      Micro-example of a completed manifest (SvelteKit + Convex OSS + Bun):
 ```yaml
@@ -136,7 +147,7 @@ gates:
 -->
 TEMPLATE_VALUE_REQUIRED
 
-### §C.2 import_rules
+### §B.2 import_rules
 <!-- TEMPLATE_VALUE_REQUIRED — machine-readable form of Zone A.3.
      Micro-example (same project):
 ```yaml
@@ -152,7 +163,7 @@ import_rules:
 -->
 TEMPLATE_VALUE_REQUIRED
 
-### §C.3 Sub-Graph Registry
+### §B.3 Sub-Graph Registry
 <!-- TEMPLATE_VALUE_REQUIRED — one entry per isolatable scope.
      Schema per entry:
 ```yaml
@@ -177,9 +188,34 @@ subgraphs:
 -->
 TEMPLATE_VALUE_REQUIRED
 
----
+### §B.4 Long-Lived Process Registry
+<!-- TEMPLATE_VALUE_REQUIRED — every long-lived process with a named brake
+     (rules.md Law 13; Zone A.7). Micro-example:
+```yaml
+# long_lived_processes:
+#   - name: webhook-consumer
+#     entry: src/jobs/consumer.ts
+#     brake: "SIGTERM handler → drain ≤ 30s → exit"   # the named brake
+#   - name: dev-server
+#     entry: scripts/dev.ts
+#     brake: "process lifetime = operator session"
+```
+-->
+TEMPLATE_VALUE_REQUIRED
 
-**Manifold Amendment Protocol.** Every change to any manifold file follows
+## ZONE C — PRD-COMPILED ENTRIES (provenance mandatory)
+
+Every Zone C entry carries `derived_from:` (source artifact or external canon)
+and `last_reconciled:` (date/SHA). An entry without both is invalid law. When
+an upstream source changes, grepping `derived_from` enumerates every downstream
+entry needing reconciliation; reconciliation is a governed change event
+(manifold PR), never a silent edit.
+
+Gravity carries no Zone C entries — it is authored, not compiled. A PRD may
+*motivate* a binding, but the binding itself lands in Zone B via onboarding or
+a manifold PR.
+
+ Protocol.** Every change to any manifold file follows
 GitOps law: PR only, never direct edits on main; the empirical reason
 documented in the PR body; manifold_version bumped; last_verified advanced on
 merge; the retrieval index over .tmd/ refreshed by the merge hook. A manifold

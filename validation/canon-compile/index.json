@@ -1,0 +1,397 @@
+{
+  "generated_by": "bin/canon-compile.mjs (WP-C2 §9 check 8)",
+  "anchors": {
+    "templates/tmd/design.md#zone-a-the-law-fixed-invariant-never-edit-per-project": {
+      "file": "templates/tmd/design.md",
+      "line": 20
+    },
+    "templates/tmd/design.md#a1-constitutional-layer-tmd-specification-v21-0": {
+      "file": "templates/tmd/design.md",
+      "line": 22
+    },
+    "templates/tmd/design.md#a2-framework-styling-law-fixed": {
+      "file": "templates/tmd/design.md",
+      "line": 50
+    },
+    "templates/tmd/design.md#a3-color-token-law-fixed": {
+      "file": "templates/tmd/design.md",
+      "line": 56
+    },
+    "templates/tmd/design.md#a4-type-scale-law-fixed": {
+      "file": "templates/tmd/design.md",
+      "line": 73
+    },
+    "templates/tmd/design.md#a5-composition-law-fixed": {
+      "file": "templates/tmd/design.md",
+      "line": 88
+    },
+    "templates/tmd/design.md#a6-interaction-state-law-fixed": {
+      "file": "templates/tmd/design.md",
+      "line": 94
+    },
+    "templates/tmd/design.md#a7-spacing-radius-breakpoint-law-fixed": {
+      "file": "templates/tmd/design.md",
+      "line": 101
+    },
+    "templates/tmd/design.md#a8-forbidden-list-extended-fixed": {
+      "file": "templates/tmd/design.md",
+      "line": 107
+    },
+    "templates/tmd/design.md#a9-enforcement-instrument-classes": {
+      "file": "templates/tmd/design.md",
+      "line": 116
+    },
+    "templates/tmd/design.md#zone-b-project-bindings-human-authored-at-onboarding": {
+      "file": "templates/tmd/design.md",
+      "line": 122
+    },
+    "templates/tmd/design.md#b1-tokens-declared-libraries": {
+      "file": "templates/tmd/design.md",
+      "line": 133
+    },
+    "templates/tmd/design.md#b2-component-primitive-inventory": {
+      "file": "templates/tmd/design.md",
+      "line": 146
+    },
+    "templates/tmd/design.md#b3-layout-law": {
+      "file": "templates/tmd/design.md",
+      "line": 157
+    },
+    "templates/tmd/design.md#zone-c-prd-compiled-entries-provenance-mandatory": {
+      "file": "templates/tmd/design.md",
+      "line": 166
+    },
+    "templates/tmd/design.md#c1-prd-approved-design-decisions": {
+      "file": "templates/tmd/design.md",
+      "line": 174
+    },
+    "templates/tmd/glossary.md#zone-a-the-law-fixed-invariant-never-edit-per-project": {
+      "file": "templates/tmd/glossary.md",
+      "line": 13
+    },
+    "templates/tmd/glossary.md#a1-constitutional-layer-tmd-specification-v21-0": {
+      "file": "templates/tmd/glossary.md",
+      "line": 15
+    },
+    "templates/tmd/glossary.md#a2-ubiquitous-language-law-fixed": {
+      "file": "templates/tmd/glossary.md",
+      "line": 39
+    },
+    "templates/tmd/glossary.md#a3-system-identifier-law-fixed": {
+      "file": "templates/tmd/glossary.md",
+      "line": 48
+    },
+    "templates/tmd/glossary.md#a4-factory-reserved-entities-fixed-part-of-the-operating-system": {
+      "file": "templates/tmd/glossary.md",
+      "line": 55
+    },
+    "templates/tmd/glossary.md#entity-taskcontract": {
+      "file": "templates/tmd/glossary.md",
+      "line": 57
+    },
+    "templates/tmd/glossary.md#a5-enforcement-instrument-classes": {
+      "file": "templates/tmd/glossary.md",
+      "line": 61
+    },
+    "templates/tmd/glossary.md#a6-sdlc-stage-map-canon-alias-law": {
+      "file": "templates/tmd/glossary.md",
+      "line": 67
+    },
+    "templates/tmd/glossary.md#zone-b-project-bindings-human-authored-at-onboarding": {
+      "file": "templates/tmd/glossary.md",
+      "line": 75
+    },
+    "templates/tmd/glossary.md#c1-domain-entities": {
+      "file": "templates/tmd/glossary.md",
+      "line": 86
+    },
+    "templates/tmd/glossary.md#entity-subscriber": {
+      "file": "templates/tmd/glossary.md",
+      "line": 89
+    },
+    "templates/tmd/glossary.md#b1-system-identifiers": {
+      "file": "templates/tmd/glossary.md",
+      "line": 96
+    },
+    "templates/tmd/glossary.md#zone-c-prd-compiled-entries-provenance-mandatory": {
+      "file": "templates/tmd/glossary.md",
+      "line": 107
+    },
+    "templates/tmd/gravity.md#zone-a-the-law-fixed-invariant-never-edit-per-project": {
+      "file": "templates/tmd/gravity.md",
+      "line": 14
+    },
+    "templates/tmd/gravity.md#a1-constitutional-layer-tmd-specification-v21-0": {
+      "file": "templates/tmd/gravity.md",
+      "line": 16
+    },
+    "templates/tmd/gravity.md#a2-stack-manifest-law-fixed": {
+      "file": "templates/tmd/gravity.md",
+      "line": 43
+    },
+    "templates/tmd/gravity.md#a3-topological-boundary-law-fixed": {
+      "file": "templates/tmd/gravity.md",
+      "line": 51
+    },
+    "templates/tmd/gravity.md#a4-state-ownership-law-fixed": {
+      "file": "templates/tmd/gravity.md",
+      "line": 63
+    },
+    "templates/tmd/gravity.md#a5-sub-graph-registry-law-fixed": {
+      "file": "templates/tmd/gravity.md",
+      "line": 69
+    },
+    "templates/tmd/gravity.md#a6-enforcement-instrument-classes-concrete-bindings-in-zone-b-b1-gates": {
+      "file": "templates/tmd/gravity.md",
+      "line": 83
+    },
+    "templates/tmd/gravity.md#a7-long-lived-process-law-fixed": {
+      "file": "templates/tmd/gravity.md",
+      "line": 89
+    },
+    "templates/tmd/gravity.md#zone-b-project-bindings-human-authored-at-onboarding": {
+      "file": "templates/tmd/gravity.md",
+      "line": 97
+    },
+    "templates/tmd/gravity.md#b1-stack-manifest": {
+      "file": "templates/tmd/gravity.md",
+      "line": 114
+    },
+    "templates/tmd/gravity.md#b2-import_rules": {
+      "file": "templates/tmd/gravity.md",
+      "line": 150
+    },
+    "templates/tmd/gravity.md#b3-sub-graph-registry": {
+      "file": "templates/tmd/gravity.md",
+      "line": 166
+    },
+    "templates/tmd/gravity.md#b4-long-lived-process-registry": {
+      "file": "templates/tmd/gravity.md",
+      "line": 191
+    },
+    "templates/tmd/gravity.md#zone-c-prd-compiled-entries-provenance-mandatory": {
+      "file": "templates/tmd/gravity.md",
+      "line": 206
+    },
+    "templates/tmd/promises.md#zone-a-the-law-fixed-invariant-never-edit-per-project": {
+      "file": "templates/tmd/promises.md",
+      "line": 13
+    },
+    "templates/tmd/promises.md#a1-constitutional-layer-tmd-specification-v21-0": {
+      "file": "templates/tmd/promises.md",
+      "line": 15
+    },
+    "templates/tmd/promises.md#a2-async-network-budget-law-fixed-form-values-are-zone-c-slots": {
+      "file": "templates/tmd/promises.md",
+      "line": 39
+    },
+    "templates/tmd/promises.md#a3-external-secrets-law-fixed": {
+      "file": "templates/tmd/promises.md",
+      "line": 45
+    },
+    "templates/tmd/promises.md#a4-mutation-integrity-law-fixed": {
+      "file": "templates/tmd/promises.md",
+      "line": 50
+    },
+    "templates/tmd/promises.md#a5-test-determinism-law-fixed": {
+      "file": "templates/tmd/promises.md",
+      "line": 56
+    },
+    "templates/tmd/promises.md#a6-hard-gateway-cap-fixed-form-value-is-a-zone-c-slot": {
+      "file": "templates/tmd/promises.md",
+      "line": 63
+    },
+    "templates/tmd/promises.md#a7-enforcement-instrument-classes": {
+      "file": "templates/tmd/promises.md",
+      "line": 70
+    },
+    "templates/tmd/promises.md#zone-b-project-bindings-human-authored-at-onboarding": {
+      "file": "templates/tmd/promises.md",
+      "line": 78
+    },
+    "templates/tmd/promises.md#b1-budget-values": {
+      "file": "templates/tmd/promises.md",
+      "line": 92
+    },
+    "templates/tmd/promises.md#b2-vendor-constraints-limits": {
+      "file": "templates/tmd/promises.md",
+      "line": 103
+    },
+    "templates/tmd/promises.md#zone-c-prd-compiled-entries-provenance-mandatory": {
+      "file": "templates/tmd/promises.md",
+      "line": 118
+    },
+    "templates/tmd/promises.md#c2-out-of-scope-compiled-from-the-prd": {
+      "file": "templates/tmd/promises.md",
+      "line": 126
+    },
+    "templates/tmd/promises.md#c1-project-specific-temporal-law-prd-compiled-optional": {
+      "file": "templates/tmd/promises.md",
+      "line": 137
+    },
+    "templates/tmd/rules.md#zone-a-the-law-fixed-invariant-never-edit-per-project": {
+      "file": "templates/tmd/rules.md",
+      "line": 12
+    },
+    "templates/tmd/rules.md#a1-constitutional-layer-tmd-specification-v21-0": {
+      "file": "templates/tmd/rules.md",
+      "line": 14
+    },
+    "templates/tmd/rules.md#a2-the-fifteen-global-negative-constraints-canon-fixed": {
+      "file": "templates/tmd/rules.md",
+      "line": 57
+    },
+    "templates/tmd/rules.md#a3-stage-4-review-marks-human-gate-reference": {
+      "file": "templates/tmd/rules.md",
+      "line": 79
+    },
+    "templates/tmd/rules.md#a4-enforcement-instrument-classes-concrete-bindings-live-in-gravitymds-gates": {
+      "file": "templates/tmd/rules.md",
+      "line": 87
+    },
+    "templates/tmd/rules.md#zone-b-project-bindings-human-authored-at-onboarding": {
+      "file": "templates/tmd/rules.md",
+      "line": 99
+    },
+    "templates/tmd/rules.md#b1-scoped-laws": {
+      "file": "templates/tmd/rules.md",
+      "line": 114
+    },
+    "templates/tmd/rules.md#zone-c-prd-compiled-entries-provenance-mandatory": {
+      "file": "templates/tmd/rules.md",
+      "line": 130
+    },
+    "templates/tmd/rules.md#c1-prd-compiled-negative-constraints": {
+      "file": "templates/tmd/rules.md",
+      "line": 138
+    },
+    "templates/specs/intent.md#problem": {
+      "file": "templates/specs/intent.md",
+      "line": 7
+    },
+    "templates/specs/intent.md#proposed-outcome": {
+      "file": "templates/specs/intent.md",
+      "line": 13
+    },
+    "templates/specs/intent.md#affected-users-and-systems": {
+      "file": "templates/specs/intent.md",
+      "line": 17
+    },
+    "templates/specs/intent.md#constraints": {
+      "file": "templates/specs/intent.md",
+      "line": 21
+    },
+    "templates/specs/intent.md#success-criteria": {
+      "file": "templates/specs/intent.md",
+      "line": 26
+    },
+    "templates/specs/intent.md#out-of-scope": {
+      "file": "templates/specs/intent.md",
+      "line": 30
+    },
+    "templates/specs/intent.md#open-questions": {
+      "file": "templates/specs/intent.md",
+      "line": 33
+    },
+    "templates/specs/plan.md#architecture-decisions": {
+      "file": "templates/specs/plan.md",
+      "line": 6
+    },
+    "templates/specs/plan.md#global-constraints": {
+      "file": "templates/specs/plan.md",
+      "line": 11
+    },
+    "templates/specs/plan.md#slices-ordered-each-500-prod-lines-12-files-1500-total-harness-47": {
+      "file": "templates/specs/plan.md",
+      "line": 16
+    },
+    "templates/specs/plan.md#s1-slice-name": {
+      "file": "templates/specs/plan.md",
+      "line": 18
+    },
+    "templates/specs/plan.md#s2": {
+      "file": "templates/specs/plan.md",
+      "line": 25
+    },
+    "templates/specs/plan.md#checkpoints": {
+      "file": "templates/specs/plan.md",
+      "line": 33
+    },
+    "templates/specs/plan.md#risks-and-mitigations": {
+      "file": "templates/specs/plan.md",
+      "line": 36
+    },
+    "templates/specs/plan.md#open-questions": {
+      "file": "templates/specs/plan.md",
+      "line": 40
+    },
+    "templates/specs/prd.md#1-problem-statement": {
+      "file": "templates/specs/prd.md",
+      "line": 6
+    },
+    "templates/specs/prd.md#2-evidence": {
+      "file": "templates/specs/prd.md",
+      "line": 10
+    },
+    "templates/specs/prd.md#3-thesis-why-build-this-why-now": {
+      "file": "templates/specs/prd.md",
+      "line": 14
+    },
+    "templates/specs/prd.md#4-hypothesis-falsifiable-the-wrong-condition-is-mandatory": {
+      "file": "templates/specs/prd.md",
+      "line": 18
+    },
+    "templates/specs/prd.md#5-target-user-jtbd": {
+      "file": "templates/specs/prd.md",
+      "line": 23
+    },
+    "templates/specs/prd.md#6-requirements-testable-truths": {
+      "file": "templates/specs/prd.md",
+      "line": 28
+    },
+    "templates/specs/prd.md#7-mvp-scope": {
+      "file": "templates/specs/prd.md",
+      "line": 40
+    },
+    "templates/specs/prd.md#8-success-metrics-outcome-shaped-not-engagement": {
+      "file": "templates/specs/prd.md",
+      "line": 44
+    },
+    "templates/specs/prd.md#9-non-goals": {
+      "file": "templates/specs/prd.md",
+      "line": 48
+    },
+    "templates/specs/prd.md#10-glossary-additions": {
+      "file": "templates/specs/prd.md",
+      "line": 52
+    },
+    "templates/specs/prd.md#11-invariants": {
+      "file": "templates/specs/prd.md",
+      "line": 55
+    },
+    "templates/specs/prd.md#12-promises": {
+      "file": "templates/specs/prd.md",
+      "line": 60
+    },
+    "templates/specs/prd.md#13-open-questions": {
+      "file": "templates/specs/prd.md",
+      "line": 63
+    },
+    "templates/task-contract.md#zone-a-the-law-fixed-invariant-never-edit-per-contract": {
+      "file": "templates/task-contract.md",
+      "line": 3
+    },
+    "templates/task-contract.md#zone-b-the-structure-fixed-skeleton": {
+      "file": "templates/task-contract.md",
+      "line": 53
+    },
+    "templates/task-contract.md#zone-c-fillable-slots": {
+      "file": "templates/task-contract.md",
+      "line": 61
+    },
+    "templates/task-contract.md#micro-example-completed-manifest-core-auth-slice": {
+      "file": "templates/task-contract.md",
+      "line": 93
+    }
+  }
+}

@@ -47,6 +47,8 @@ skill, a driver proves it, the chain lands it.
 | Guard (Gate Integrity §5.10.1) | Protected-list write boundary, fail-closed, list in code | `extensions/guard.ts` + `bin/guard.mjs` (CI) + `bin/guard-list.mjs` (the list — single source) | `validation/guard-smoke/` |
 | Tripwire (holdout leak) | Provenance-based detection: holdout-shaped content in worker artifacts | `bin/tripwire.mjs` | `validation/tripwire-smoke/` |
 | Mutation lane (§5.10.4) | Deliberate defects spanning every gate rung must be caught | `validation/mutations/` | self (runbook suite loop) |
+| Deterministic proof floor (L0) | Scoped rg verifies index/edit claims before action or merge | package-pins.json + floor install | outer validation/ |
+| Canon Compiler (document gate) | templates parse/render/reference checks, stale-term rejection | bin/canon-compile.mjs | validation/canon-compile/ |
 | Skills (Phase 0) | `spec-intake` v2.0.0 (intent→PRD interview) · `slice-plan` v2.0.0 (plan→slices→contracts) — both rebuilt WP-T; `templates/specs/` ×3 enriched same WP; canon handbook Appendix 2.A reconciliation PENDING (operator action) | repo-root `skills/` | `validation/skills/` |
 
 *Status note (canon revision 2026-09, updated at WP-C landing):* the seven
@@ -87,7 +89,7 @@ observable condition that makes the item activatable — not a suggestion.
 ### §D.4 Brownfield archaeology stack
 - **Canon:** §7.2 (GitNexus AST maps, jCodeMunch MCP extraction, AMUX read-only swarm, artifact hierarchy).
 - **Activation trigger:** operator declares a brownfield target (`--brownfield` at onboarding; auto-detected: T2).
-- **Prerequisites:** GitNexus PolyForm Noncommercial license decision (or bake-off vs CodeGraph / codebase-memory-mcp — open decision, FACTORY_STATUS); AMUX↔Pi adapter boundary (open decision).
+- **Prerequisites:** GitNexus PolyForm Noncommercial license decision (graph seat CLOSED by canon ruling 7: codebase-memory-mcp is the engine of record, register §D.25; GitNexus out on license, CodeGraph out — this entry's archaeology scope is now jCodeMunch MCP + AMUX swarm only); AMUX↔Pi adapter boundary (open decision).
 - **Integration path:** tool-intake WP per tool; swarm SOP into FRESH_PROJECT_SOP.
 
 ### §D.5 Lavish A2UI review surface
@@ -119,6 +121,8 @@ observable condition that makes the item activatable — not a suggestion.
 - **Prerequisites:** per-tool intake (Headroom: MCP-server mode only, compression exclusions preconfigured; Ponytail: vendored as Sovereign Skill Protocol folders; Tokenjuice: pilot with fixture-regressed rules; Caveman stays WATCH).
 - **Integration path:** tool-intake WP per tool; never wrap/proxy modes (chargeback-chain law).
 
+Nine-layer update (WP-C2): this entry IS layer L6 — Headroom MCP-server mode only, Tokenjuice terminal-output pilot. Ponytail stays in this entry as vendored skill folders. Caveman stays WATCH (canon ruling 5: unverifiable products do not enter the stack).
+
 ### §D.9 Stage-3.5 pilots (Strix agentic pentest; Claw Patrol egress firewall)
 - **Canon:** §2.6.5 — both pilot-gated by canon itself (scheduled-only pentest; mechanical allow/deny only, llm_approver forbidden).
 - **Activation trigger:** §D.3 live (Strix needs the ephemeral preview) and first high-privilege agent seat (Claw Patrol).
@@ -148,6 +152,8 @@ observable condition that makes the item activatable — not a suggestion.
 - **Status note:** `pi-mcp-adapter` is PINNED, pending install; Serena/Context7 activate on first need.
 - **Activation trigger:** first task needing LSP-grade navigation (Serena) or library docs (Context7) — agent-judged, surfaced via tool-intake.
 - **Integration path:** install adapter → curate servers through `lint-mcp.mjs` → project `.mcp.json`.
+
+Context7 is L4-public in the nine-layer stack; QMD (L4-private) lives in §D.25 — jurisdictions never merge.
 
 ### §D.14 AsyncReview — the Stage-0 semantic pass (third local tool)
 - **Canon:** CI/CD Integration Engine §2.3 — "The agent must trigger
@@ -350,6 +356,18 @@ register AND docs/CANON_MAP.md in the same commit. Trigger IDs referenced by
 docs/activation-triggers.json are driver-checked — a register entry without
 its trigger line fails validation/canon-register.*
 
+### §D.23 Archon orchestration evaluation
+- **Canon:** referenced by §D.30 (dispatching/subagent orchestration shelf
+  rows) and CANON_MAP L-seat notes — the deferred seat for evaluating Archon
+  (or an equivalent orchestration substrate) before any dispatch-style
+  orchestration skill may leave the shelf.
+- **Activation trigger:** a governed project's slices demand parallel
+  sub-agent dispatch — human-judged, surfaced via tool-intake.
+- **Prerequisites:** §D.17 (Pi-native sub-agent topology) validation first —
+  native topology may hold the seat without Archon.
+- **Integration path:** tool-intake WP → bake-off vs the native topology →
+  adopt or record the loser verdict in §D.30.
+
 ### §D.24 Chrome DevTools MCP (browser-testing-with-devtools actuation)
 - **Canon:** WP-D-6 §3.5 — the skill is adopted law today; its power source is not.
 - **Activation trigger:** the first governed project with a browser-facing
@@ -362,3 +380,61 @@ its trigger line fails validation/canon-register.*
   worker seat `protocols.mcp_servers` gains `chrome-devtools` via roster PR
   (§5.4). Skill scripts and JS-execution stay read-only per the skill's own
   security boundaries.
+
+### §D.25 Truth, Retrieval & Publish stack (codebase-memory-mcp, OpenWiki+OpenKB, QMD, Docs7 XOR Docusaurus)
+- **Canon:** nine-layer stack L2/L3/L4/L5; Standing Rulings 7–8.
+- **Includes:** codebase-memory-mcp as graph engine of record (MIT,
+  no-self-write binding; LadybugDB rides inside it as the embedded graph
+  store — not a separate adoption); Graft standby only; OpenWiki + OpenKB
+  documentation substrate; QMD private retrieval (Context7 stays §D.13);
+  Docs7 XOR Docusaurus publisher (one publisher per docs property).
+- **Activation trigger:** first governed product repo completes onboarding
+  AND a slice's must_haves require blast-radius navigation or committed
+  documentation retrieval — human-judged, surfaced via tool-intake.
+- **Prerequisites:** per-tool intake via tool-intake WP; one active map per
+  repo (one repo, one index); L12 pins via lint-mcp for any MCP surfaces.
+- **Integration path:** tool-intake per component; worker seat
+  `protocols.mcp_servers` entries via roster PR (§5.4). GitNexus (license)
+  and CodeGraph are CLOSED — ruling 7; never re-litigated.
+
+### §D.26 L7 gate stack completion (DeepSource primary, open-code-review, VulnHuntr, CodeRabbit WATCH)
+- **Canon:** nine-layer L7; Standing Rulings 9, 12; Refinery §2.3/§2.5.
+- **Reconciliation:** the rig's Stage-0 floor runs Semgrep today (WP11).
+  Canon v2.0 names DeepSource analyzers the deterministic gate with Semgrep
+  fallback-only. Ruling: Semgrep remains the *local floor* until this entry
+  activates — a fallback holding the seat until the primary lands is not a
+  violation; running both as required checks would be (one analyzer voice
+  per gate slot).
+- **Includes:** DeepSource analyzers (per-PR deterministic block; AI review
+  OFF locally — one AI voice per change); open-code-review (`ocr diff`,
+  the required AI voice — precision gate); VulnHuntr (scoped: Python web
+  services only, hypotheses not findings, confidence ≥8 → Prove-It);
+  CodeRabbit WATCH row: conditional per-repo successor to the
+  open-code-review seat ONLY on same-10-PR measured evidence (precision,
+  false alarms, convention catches on the same PRs), never fleet-wide,
+  never a second voice, PR-Agent unaffected either way.
+- **Activation trigger:** with §D.1 (Stage 1–2 machinery) — DeepSource and
+  open-code-review land in the Stage-2 lane; open-code-review MAY land
+  earlier into preflight lane 4 (`--semantic`) if §D.14's AsyncReview stays
+  gated (it holds the same Stage-0 semantic seat the register already
+  offers the reviewer seat — record the choice here when made).
+- **Prerequisites:** §D.10 gateway (open-code-review and DeepSource AI
+  features route model calls through LiteLLM; subscription regime has no
+  API lane); runner hardware decision (§D.1).
+- **Integration path:** rig-change WP → CI lane templates → dogfood.
+
+### §D.27 L8 dynamic lanes (Buttercup find-and-patch; OSS-CRS security-skill regression)
+- **Canon:** nine-layer L8; Refinery §2.6 Stage 3.5b (Buttercup) and §2.9
+  (OSS-CRS regression harness).
+- **Includes:** Buttercup campaigns (nightly/weekly, priority services;
+  harness prerequisite per target: build script + fuzz harness + seed corpus
+  + triage queue — recorded as Task Contracts; every candidate patch lands
+  in the human queue; isolated containers, no egress; AGPL-3.0 internal-use
+  compliance); OSS-CRS (fixed targets, fixed budgets, matched-budget fuzzing
+  baseline — credit the delta over dumb fuzzing, never raw bug counts).
+- **Activation trigger:** §D.3 live (ephemeral previews exist) AND first
+  deployed product — life event, human-judged.
+- **Prerequisites:** §D.10 gateway budget ceilings; §D.15 ledger (campaign
+  telemetry); Buttercup trial-first at ~$100 campaign budget.
+- **Integration path:** per-service harness-construction Task Contracts,
+  then campaign lane config as committed config-as-code.

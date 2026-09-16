@@ -18,10 +18,9 @@
 #
 # Declared variable inventory (Canon Compiler §0.6.1 check 4 — every ${...}
 # in this file must resolve against this list):
-#   ${WORKTREE_ROOT}       absolute path of the new worktree (Worktrunk)
-#   ${TASK_CONTRACT_PATH}  path of the active Task Contract relative to the worktree root
-#   ${SESSION_UUID}        UUID of the execution thread (spawn hook)
-# Mapping: the hook's task_contract_path value lands in STATE.md's task_contract field (state.schema.yaml E.2).
+#   /srv/worktrunks/task-42       absolute path of the new worktree (Worktrunk)
+#   .agents/tasks/task-example-s1.md  path of the active Task Contract relative to the worktree root
+#   0f0e0d0c-1111-2222-3333-444455556666        UUID of the execution thread (spawn hook)
 # Rig note (WP9): where the Worktrunk engine lacks a native inject/mount
 # facility, the equivalent steps are expressed as `run` entries invoking
 # rig tools (state-genesis.mjs, boot-assert.mjs). The CONTRACT — order,
@@ -37,14 +36,14 @@ run = ["bun install --frozen-lockfile"]
 [[hooks.post_create.inject]]
 artifact = "STATE.md"
 from_schema = ".agents/schemas/state.schema.yaml"
-to = "${WORKTREE_ROOT}/STATE.md"
-values = { task_contract_path = "${TASK_CONTRACT_PATH}", session_id = "${SESSION_UUID}" }
+to = "/srv/worktrunks/task-42/STATE.md"
+values = { task_contract_path = ".agents/tasks/task-example-s1.md", session_id = "0f0e0d0c-1111-2222-3333-444455556666" }
 
 
 # 3. Daytona sandbox mount injection — the worktree must be visible inside the container
 [[hooks.post_create.mount]]
 engine = "daytona"
-host_path = "${WORKTREE_ROOT}"
+host_path = "/srv/worktrunks/task-42"
 container_path = "/workspace"
 mode = "rw"
 
@@ -52,5 +51,5 @@ mode = "rw"
 # 4. Fail-closed pre-flight assertion — runs AFTER mounts, BEFORE agent boot
 [[hooks.post_create.assert]]
 name = "worktree_visible_in_sandbox"
-exec = "test -f /workspace/${TASK_CONTRACT_PATH} && test -f /workspace/STATE.md"
+exec = "test -f /workspace/.agents/tasks/task-example-s1.md && test -f /workspace/STATE.md"
 on_failure = "abort"   # abort = destroy sandbox, log to trace ledger, never boot the agent

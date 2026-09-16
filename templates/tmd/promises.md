@@ -75,18 +75,21 @@ operating band < this cap). It constrains individual calls, not task sizing.
 - §A.4 Mutation Integrity: actuator-level temp-file + rename (harness contract); watchdog rollback procedure (handbook supervision law).
 - §A.5 Test Determinism: repeated-run flake detection in the scheduled lane (test-runner rerun mode); quarantine list reviewed at the human gate.
 
-## ZONE B — THE STRUCTURE (fixed skeleton)
+## ZONE B — PROJECT BINDINGS (human-authored at onboarding)
 
-Canonical section order: Zone A law (fixed) → Zone C slots in this order:
-§C.1 budget values → §C.2 vendor constraints & limits (incl. AI Gateway cap) →
-§C.3 project-specific temporal law, if any. A correct budget entry is a
-concrete number with units. A correct vendor entry carries: version pin,
-placement constraint, and budget. Pins bump only via manifold PR. An entry
-without a number is invalid — "fast" and "reasonable" are not budgets.
+This file's project bindings — budget values, gateway cap values, vendor constraints — are authored by the
+human at onboarding (project-onboard interview) and bind only what they
+explicitly declare. Zone labels never replace `applies_to:`; they state who
+may author the entry and how it enters the manifold.
 
-## ZONE C — FILLABLE SLOTS (project-specific)
+Canonical slot order: §B.1 budget values → §B.2 vendor constraints & limits
+(incl. AI Gateway cap). A correct budget entry is a concrete number with
+units. A correct vendor entry carries: version pin, placement constraint,
+and budget. Pins bump only via manifold PR. An entry without a number is
+invalid — "fast" and "reasonable" are not budgets.
 
-### §C.1 Budget values
+
+### §B.1 Budget values
 <!-- TEMPLATE_VALUE_REQUIRED.
      Micro-example:
 ```yaml
@@ -97,7 +100,7 @@ budgets:
 -->
 TEMPLATE_VALUE_REQUIRED
 
-### §C.2 Vendor constraints & limits
+### §B.2 Vendor constraints & limits
 <!-- TEMPLATE_VALUE_REQUIRED — one entry per external vendor.
      Micro-example:
 ```yaml
@@ -112,18 +115,37 @@ vendors:
 -->
 TEMPLATE_VALUE_REQUIRED
 
-### §C.3 Project-specific temporal law (optional)
+## ZONE C — PRD-COMPILED ENTRIES (provenance mandatory)
+
+Every Zone C entry carries `derived_from:` (source artifact or external canon)
+and `last_reconciled:` (date/SHA). An entry without both is invalid law. When
+an upstream source changes, grepping `derived_from` enumerates every downstream
+entry needing reconciliation; reconciliation is a governed change event
+(manifold PR), never a silent edit.
+
+### §C.2 Out-of-scope (compiled from the PRD)
+<!-- TEMPLATE_VALUE_REQUIRED — the PRD's out-of-scope list compiles here
+     (promises.md Zone C). Micro-example:
+```yaml
+# - out_of_scope: "No offline mode in this slice"
+#   derived_from: specs/intent/booking.md#out-of-scope
+#   last_reconciled: 2026-09-16
+```
+-->
+TEMPLATE_VALUE_REQUIRED
+
+### §C.1 Project-specific temporal law (PRD-compiled, optional)
 <!-- Add entries ONLY for temporal law unique to this project (idempotency
      keys, outbox patterns, compensating actions). Global law lives in Zone A;
      adding it here is duplication — drift.
      Micro-example:
-     - idempotency: "All POST /orders writes carry a client-generated idempotency key; replays return the original result."
+     # - idempotency: "All POST /orders writes carry a client-generated idempotency key; replays return the original result."
+#   derived_from: specs/prd/booking.md#R7
+#   last_reconciled: 2026-09-16
 -->
 TEMPLATE_VALUE_REQUIRED (or state: none)
 
----
-
-**Manifold Amendment Protocol.** Every change to any manifold file follows
+ Protocol.** Every change to any manifold file follows
 GitOps law: PR only, never direct edits on main; the empirical reason
 documented in the PR body; manifold_version bumped; last_verified advanced on
 merge; the retrieval index over .tmd/ refreshed by the merge hook. A manifold

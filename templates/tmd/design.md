@@ -119,19 +119,18 @@ of every action is mandatory.
 - §A.3–§A.5, §A.7: token lint rules + Stage-3 visual verification (deterministic screenshots against the ephemeral preview; AI visual navigation reserved for volatile generated DOM).
 - §A.6: Stage-3 keyboard-traversal and state-coverage checks; human-gate review for composition violations.
 
-## ZONE B — THE STRUCTURE (fixed skeleton)
+## ZONE B — PROJECT BINDINGS (human-authored at onboarding)
 
-Canonical section order: Zone A law (fixed) → Zone C slots in this order:
-§C.1 Tokens & declared libraries (icon set; semantic color token values;
-radius tokens; type scale IF replacing the default) → §C.2 Component
-primitive inventory → §C.3 Layout law (declared regions per breakpoint).
-A correct token entry is a named value bound to a role. A correct primitive
-entry lists variants and composition rules. A screenshot is illustration,
-never law — law is named values and states.
+This file's project bindings — token-framework instantiation (icon set, semantic token values, primitive inventory, layout regions) — are authored by the
+human at onboarding (project-onboard interview) and bind only what they
+explicitly declare. Zone labels never replace `applies_to:`; they state who
+may author the entry and how it enters the manifold.
 
-## ZONE C — FILLABLE SLOTS (project-specific)
-
-### §C.1 Tokens & declared libraries
+Canonical slot order: §B.1 Tokens & declared libraries → §B.2 Component
+primitive inventory → §B.3 Layout law. A correct token entry is a named value
+bound to a role. A correct primitive entry lists variants and composition
+rules. A screenshot is illustration, never law — law is named values and states.
+### §B.1 Tokens & declared libraries
 <!-- TEMPLATE_VALUE_REQUIRED.
      Micro-example of completed entries:
      - icon_library: "lucide-svelte"
@@ -144,7 +143,7 @@ never law — law is named values and states.
 -->
 TEMPLATE_VALUE_REQUIRED
 
-### §C.2 Component primitive inventory
+### §B.2 Component primitive inventory
 <!-- TEMPLATE_VALUE_REQUIRED — declare the permitted primitives from the
      manifest's UI library.
      Micro-example:
@@ -155,7 +154,7 @@ TEMPLATE_VALUE_REQUIRED
 -->
 TEMPLATE_VALUE_REQUIRED
 
-### §C.3 Layout law
+### §B.3 Layout law
 <!-- TEMPLATE_VALUE_REQUIRED — the declared page regions and per-breakpoint
      container padding.
      Micro-example:
@@ -164,9 +163,26 @@ TEMPLATE_VALUE_REQUIRED
 -->
 TEMPLATE_VALUE_REQUIRED
 
----
+## ZONE C — PRD-COMPILED ENTRIES (provenance mandatory)
 
-**Manifold Amendment Protocol.** Every change to any manifold file follows
+Every Zone C entry carries `derived_from:` (source artifact or external canon)
+and `last_reconciled:` (date/SHA). An entry without both is invalid law. When
+an upstream source changes, grepping `derived_from` enumerates every downstream
+entry needing reconciliation; reconciliation is a governed change event
+(manifold PR), never a silent edit.
+
+### §C.1 PRD-approved design decisions
+<!-- TEMPLATE_VALUE_REQUIRED — design decisions ratified at PRD approval.
+     Micro-example:
+```yaml
+# - decision: "onboarding flow uses a single-column card layout on all breakpoints"
+#   derived_from: specs/prd/booking.md#design
+#   last_reconciled: 2026-09-16
+```
+-->
+TEMPLATE_VALUE_REQUIRED
+
+ Protocol.** Every change to any manifold file follows
 GitOps law: PR only, never direct edits on main; the empirical reason
 documented in the PR body; manifold_version bumped; last_verified advanced on
 merge; the retrieval index over .tmd/ refreshed by the merge hook. A manifold

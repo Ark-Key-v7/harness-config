@@ -93,6 +93,19 @@ for (const f of ["rules.md", "gravity.md", "promises.md", "glossary.md", "design
 }
 check("fully-filled manifold VALID in --strict", lint([TMD, "--strict"], true).code === 0);
 
+// 8b. WP-C2 §3.3: Zone C provenance — an entry missing derived_from fails; a complete one passes
+const gloss = join(TMD, "glossary.md");
+const origGloss = readFileSync(gloss, "utf8");
+const zcAnchor = "## ZONE C — PRD-COMPILED ENTRIES (provenance mandatory)";
+const badEntry = `${zcAnchor}\n\n- term: "Broken"\n  definition: "entry without provenance"\n`;
+const goodEntry = `${zcAnchor}\n\n- term: "Good"\n  definition: "entry with provenance"\n  derived_from: specs/prd/x.md#glossary\n  last_reconciled: 2026-09-16\n`;
+writeFileSync(gloss, origGloss.replace(zcAnchor, badEntry));
+const provRun = lint([TMD], true);
+check("Zone C entry missing derived_from caught (WP-C2 §3.3)", provRun.code === 1 && provRun.out.includes("derived_from"));
+writeFileSync(gloss, origGloss.replace(zcAnchor, goodEntry));
+check("complete Zone C entry with provenance passes (WP-C2 §3.3)", lint([TMD]).code === 0);
+writeFileSync(gloss, origGloss);
+
 // 9. AGENTS.md 50-line cap
 const long = readFileSync(AGENTS, "utf8") + "\nfiller".repeat(30);
 writeFileSync(AGENTS, long);

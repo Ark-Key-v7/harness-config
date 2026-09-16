@@ -14,10 +14,11 @@ _What survives a machine change, what must be rebuilt, and in what order. The ri
 | Node 24.18.1 | `~/.local/node/` | install per pins |
 | Pi 0.84.3 | npm global | `npm i -g @earendil-works/pi-coding-agent@0.84.3 --ignore-scripts` |
 | Kimi OAuth session | `~/.pi/` auth state | re-authenticate (`pi` login flow) |
+| ripgrep (rg) — L0 deterministic proof floor; canon: "codebase-memory-mcp navigates, Serena writes, ripgrep proves" | `ripgrep` 14.1.0 | pinned in `package-pins.json` (WP-C2 §8.5) |
 | Factory floor (worktrunk, qmd, lancedb, semgrep, betterleaks, fallow, pr_agent) | `~/factory-rig/tools/` etc. | install per `package-pins.json` — versions and sha256/integrity hashes are recorded there; verify before use |
 | Rig state files | `~/.pi/agent/*-state.json`, logs | regenerate on use (memory toggles, seat state are per-machine by design) |
 | Deferred tools | — | NOT installed at onboarding; each activates when its register gate fires (spec §6) |
-| Canon handbooks (1.0 / 1.2) | `~/factory-rig/sources/_canon-handbooks/` | copy from the old machine or private storage — currently NOT under git (open rig-change decision: give the canon its own remote) |
+| Canon handbooks (1.0 / 1.2) | `~/factory-rig/sources/_canon-handbooks/` | BY DESIGN outside the rig repo (canon is referenced, never shipped — L5 boundary). Travels by operator copy from the old machine or private storage |
 | Outer floor proofs | `~/factory-rig/validation/*-smoke/` | machine-local fixtures; rebuild on demand, never shipped |
 | Intake clones | `~/factory-rig/sources/_intake/`, `~/factory-rig/sources/amux` | re-clone as needed; amux is deferred (§D.4) |
 

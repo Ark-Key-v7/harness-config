@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "A2A Completion Payload",
+  "type": "object",
+  "required": ["status", "worktrunk_path", "commit_hash", "trace_id", "regime"],
+  "additionalProperties": false,
+  "properties": {
+    "status": {
+      "type": "string",
+      "enum": ["SUCCESS", "FAIL"],
+      "description": "The deterministic exit code. TASK_COMPLETE exists only as status=SUCCESS with all must_haves proven."
+    },
+    "worktrunk_path": {
+      "type": "string",
+      "description": "Absolute path of the Git Worktrunk the worker operated in."
+    },
+    "commit_hash": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{7,40}$",
+      "description": "HEAD commit of the worktree at termination. On FAIL after rollback: the last green commit."
+    },
+    "trace_id": {
+      "type": ["string", "null"],
+      "description": "The X-LiteLLM-Trace-Id for chargeback. Required for gateway-governed engines; null for subscription-governed engines (regime=subscription)."
+    },
+    "regime": {
+      "type": "string",
+      "enum": ["gateway", "subscription"],
+      "description": "The engine's FinOps regime per the Dual FinOps Regime (handbook §6.4)."
+    },
+    "failure_class": {
+      "type": ["string", "null"],
+      "enum": ["type_error", "test_failure", "timeout", "budget_severance", "loop_detected", "manifold_conflict", "scope_denial", null],
+      "description": "Required when status=FAIL; maps to the Failure Taxonomy for ReAct recovery routing."
+    }
+  }
+}

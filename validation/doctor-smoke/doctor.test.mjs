@@ -60,9 +60,9 @@ precedence: ${prec}
 # ${name}
 
 ## ZONE A — THE LAW
-## ZONE B — THE STRUCTURE
-## ZONE C — FILLABLE SLOTS
+## ZONE B — PROJECT BINDINGS (human-authored at onboarding)
 ${registry}
+## ZONE C — PRD-COMPILED ENTRIES (provenance mandatory)
 ## Enforcement
 This law names its wall.
 `);

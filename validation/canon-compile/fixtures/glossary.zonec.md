@@ -91,7 +91,12 @@ procedure is invalid.
 - **Forbidden Synonyms:** `customer`, `user-with-plan`, `account`.
 - **Primary Key:** `subscriberId` (string, ULID).
 -->
-TEMPLATE_VALUE_REQUIRED
+```yaml
+- term: "Practitioner"
+  definition: "Authenticated clinic staff member"
+  derived_from: specs/prd/booking.md#glossary
+  last_reconciled: 2026-09-16
+```
 
 ### §B.1 System identifiers
 <!-- TEMPLATE_VALUE_REQUIRED — one row per identifier.

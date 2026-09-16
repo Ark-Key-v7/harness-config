@@ -47,7 +47,7 @@ Lives in `docs/GOVERNANCE_PLANE_SPEC.md` §6 — statuses current as of this tag
 ## Known open decisions (spec §9)
 
 - Model-class mapping under Kimi-only subscription (provisionally: all classes resolve to the rig's Kimi model; `effort_level` is the live differentiator — stated in every profile's `substitution_bounds`).
-- GitNexus PolyForm Noncommercial license decision (or bake-off resolution: GitNexus vs CodeGraph vs codebase-memory-mcp).
+- CLOSED (canon v2.0 ruling 7): codebase-memory-mcp is the graph engine of record; Graft standby; GitNexus out on license; CodeGraph out, revisit only on measured friction. Register §D.25.
 - Gateway-tier deferral (regime activates when a gateway is adopted).
 - AMUX↔Pi adapter boundary.
 
@@ -257,6 +257,29 @@ After any rig change that alters the ledger above: update this file in the same 
   replace handbook Appendix 2.A templates with the repo's three, so canon
   and repo stop drifting.
 
+
+## WP-C2 — Canon alignment: fifteen laws, zones, nine-layer stack, Canon Compiler (landed 2026-09)
+- Landed: rules.md fifteen-law Anti-Slop Protocol (L11–L15 verbatim; §1 law
+  text adopted as canon, §0.7.1 inventory names recorded as aliases in the
+  enforcement map) + Law Economy statement (15-law budget, placement ladder);
+  zone realignment across all five templates/tmd (Zone B = project bindings,
+  Zone C = PRD-compiled with MANDATORY derived_from/last_reconciled —
+  lint-tmd upgraded to fail-closed); gravity A.7 long-lived-process law +
+  §B.4 registry (L13 support); a2a-completion.schema.json (canon-verbatim) +
+  README post-schema rules + contract/worker/onboard wiring; wt.toml
+  task_contract_path alignment + declared variable inventory + lint-wt-hook
+  enforcement; CANON_MAP §0 nine-layer stack map; register §D.23 (Archon —
+  was a dangling reference caught by the new compiler), §D.25/§D.26/§D.27
+  + §D.4/§D.8/§D.13 nine-layer updates + ripgrep L0 pin; GitNexus decision
+  CLOSED (ruling 7); bin/canon-compile.mjs (9-check fail-closed document
+  gate) + validation/canon-compile fixtures/driver.
+- DEVIATION on record (§9 premise false): the WP asserted a YAML parser was
+  already a lint-tmd dependency — it is not (lint-tmd is regex-based; no
+  node_modules). canon-compile uses in-script structural parsers; zero new
+  dependencies/pins beyond the ripgrep floor pin.
+- Canon-level discrepancy surfaced (mismatch protocol): law 13/14 naming —
+  §1 text ("NO UNBOUNDED LOOPS"/"NO SLEEP-BASED WAITS") is the law; §0.7.1
+  inventory names are aliases. Canon amendment if the operator disagrees.
 
 ## WP-D-6 — Profiles, protocols, and promoted adoptions (landed 2026-09)
 - Landed: five agent-skills promotions (api-and-interface-design,

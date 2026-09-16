@@ -1,0 +1,7 @@
+{
+  "status": "SUCCESS",
+  "worktrunk_path": "/srv/worktrunks/task-42",
+  "commit_hash": "aee71df",
+  "trace_id": null,
+  "regime": "subscription"
+}

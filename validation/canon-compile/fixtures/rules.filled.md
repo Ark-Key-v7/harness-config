@@ -1,6 +1,6 @@
 ---
-manifold_version: "TEMPLATE_VALUE_REQUIRED — semver; bump on any law change, e.g. 1.0.0"
-last_verified: "TEMPLATE_VALUE_REQUIRED — SHA of the commit that last modified this file. NEVER a date."
+manifold_version: "1.0.0"
+last_verified: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
 precedence: 1
 ---
 
@@ -125,7 +125,11 @@ scoped_laws:
     applies_to: tests/**
 ```
 -->
-TEMPLATE_VALUE_REQUIRED
+```yaml
+scoped_laws:
+  - law: NO_UPSTREAM_LEAKS
+    applies_to: src/lib/domain/**
+```
 
 ## ZONE C — PRD-COMPILED ENTRIES (provenance mandatory)
 
@@ -145,7 +149,11 @@ entry needing reconciliation; reconciliation is a governed change event
 #   last_reconciled: 2026-09-16
 ```
 -->
-TEMPLATE_VALUE_REQUIRED
+```yaml
+- constraint: "pagination capped at 50 pages (Law 13)"
+  derived_from: specs/prd/example.md#R4
+  last_reconciled: 2026-09-16
+```
 
 ---
 
