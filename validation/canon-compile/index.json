@@ -265,6 +265,46 @@
       "file": "templates/tmd/rules.md",
       "line": 138
     },
+    "templates/specs/delta.md#added-requirements": {
+      "file": "templates/specs/delta.md",
+      "line": 28
+    },
+    "templates/specs/delta.md#req-domain-nnn-name": {
+      "file": "templates/specs/delta.md",
+      "line": 30
+    },
+    "templates/specs/delta.md#scenario-name": {
+      "file": "templates/specs/delta.md",
+      "line": 43
+    },
+    "templates/specs/delta.md#modified-requirements": {
+      "file": "templates/specs/delta.md",
+      "line": 38
+    },
+    "templates/specs/delta.md#req-domain-nnn-name-must-exist-in-specsdomainsdomainspecmd": {
+      "file": "templates/specs/delta.md",
+      "line": 40
+    },
+    "templates/specs/delta.md#removed-requirements": {
+      "file": "templates/specs/delta.md",
+      "line": 46
+    },
+    "templates/specs/delta.md#req-domain-nnn-name-must-exist-in-the-living-spec": {
+      "file": "templates/specs/delta.md",
+      "line": 48
+    },
+    "templates/specs/domain-spec.md#requirements": {
+      "file": "templates/specs/domain-spec.md",
+      "line": 16
+    },
+    "templates/specs/domain-spec.md#req-domain-nnn-name": {
+      "file": "templates/specs/domain-spec.md",
+      "line": 19
+    },
+    "templates/specs/domain-spec.md#scenario-name": {
+      "file": "templates/specs/domain-spec.md",
+      "line": 23
+    },
     "templates/specs/intent.md#problem": {
       "file": "templates/specs/intent.md",
       "line": 7
