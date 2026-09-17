@@ -91,8 +91,8 @@ the Marks into this file; duplication is drift.
 - Laws 7, 8: promises.md test-determinism gates + test-runner (Stage 1).
 - Law 11 (NO CORPSE CODE): linter (commented/unreachable-code ruleset).
 - Law 12 (NO CLONE-AND-OWN): ast-audit duplication-threshold parameter (threshold calibrated per repo, declared in gravity.md Stack Manifest gates).
-- Law 13 (NO UNBOUNDED LOOPS; inventory alias "BOUND EVERY LOOP"): loop detector + adversarial-review; exemptions via gravity.md §6 long-lived-process declarations (§C slot).
-- Law 14 (NO SLEEP-BASED WAITS; inventory alias "NO SLEEP SYNCHRONIZATION"): test quarantine lane + linter; declared timing utilities are the only exemption.
+- Law 13 (NO UNBOUNDED LOOPS): loop detector + adversarial-review; exemptions via gravity.md §B.4 long-lived-process declarations (Zone B registry).
+- Law 14 (NO SLEEP-BASED WAITS): test quarantine lane + linter; declared timing utilities are the only exemption.
 - Law 15 (NO UNVALIDATED MODEL OUTPUT): model-output taint ruleset (linter class) + schema parser at the trust boundary.
 - Any law without a passing mechanical gate on a given PR routes to adversarial-review (Stage 2) and the Level-6 gate (Stage 4). PR rejection is the consequence instrument for all fifteen laws.
 

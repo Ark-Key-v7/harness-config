@@ -534,6 +534,6 @@ After implementing security-relevant code:
 
 - Prevention here, detection at the gates: this discipline operates at write time; DeepSource (primary) / Semgrep (fallback-only), Betterleaks (VALID secrets block), open-code-review (precision), PR-Agent (adversarial), and VulnHuntr (scoped, Python) are the L7 machinery that verify. A gate finding and this skill disagreeing is a Prove-It hypothesis, not an automatic block.
 - The Security Review Checklist section is invoked by the reviewer seat during pr-review on any diff touching auth, input handling, secrets, or dependencies.
-- LLM-security rules (output untrusted, prompt injection, bounded consumption) align with rules.md L15 (NO UNVALIDATED MODEL OUTPUT) and L13 (BOUND EVERY LOOP); on any conflict the manifold wins.
+- LLM-security rules (output untrusted, prompt injection, bounded consumption) align with rules.md L15 (NO UNVALIDATED MODEL OUTPUT) and L13 (NO UNBOUNDED LOOPS); on any conflict the manifold wins.
 
 **When NOT to Use:** pure formatting/docs diffs with no input, auth, secret, dependency, or destructive-operation surface.

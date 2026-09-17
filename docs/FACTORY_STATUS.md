@@ -294,9 +294,12 @@ After any rig change that alters the ledger above: update this file in the same 
   already a lint-tmd dependency — it is not (lint-tmd is regex-based; no
   node_modules). canon-compile uses in-script structural parsers; zero new
   dependencies/pins beyond the ripgrep floor pin.
-- Canon-level discrepancy surfaced (mismatch protocol): law 13/14 naming —
-  §1 text ("NO UNBOUNDED LOOPS"/"NO SLEEP-BASED WAITS") is the law; §0.7.1
-  inventory names are aliases. Canon amendment if the operator disagrees.
+- Canon-level discrepancy RESOLVED (canon revision 2026-09-17): §0.7.1
+  inventory now cites the §1 names verbatim (operator edit); the alias
+  parentheticals in rules.md §A.4 and the security-and-hardening L13
+  citation are dropped this commit. NOTE: the handbook file was edited in
+  place (no dated predecessor kept — runbook diff-surface rule deviated;
+  delta verified by direct read of the inventory table).
 
 ## WP-D-6 — Profiles, protocols, and promoted adoptions (landed 2026-09)
 - Landed: five agent-skills promotions (api-and-interface-design,
