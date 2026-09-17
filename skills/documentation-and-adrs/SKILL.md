@@ -298,4 +298,5 @@ After documenting:
 
 - ADRs land in the product repo at `docs/decisions/` (or the existing convention — the match-the-convention rule above is retained). ADRs are product-repo documents; rig-law changes are NOT ADRs — they go through the rig-change skill (§5.4).
 - OpenWiki/OpenKB (L3 Truth) ingest whatever the repo carries; this skill's job is that there is something worth ingesting. Publishing is substrate, authoring is this discipline.
+- Staged substrate (WP-STACK): OpenWiki (generator) + OpenKB (read surface) are installed-inert on the machine floor (pinned in package-pins.json); committed truth lands in the OpenWiki/OpenKB store when the substrate activates — authoring law above does not change.
 - A significant architectural decision without an ADR is a reviewer-seat finding on the diff that lands it.
