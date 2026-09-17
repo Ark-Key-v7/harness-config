@@ -135,6 +135,13 @@ Reason class (WP-STACK §2.1): infra-gated (WSL2/image decisions).
 - **Prerequisites:** LanceDB + embedding model decision; trace-ledger existence (§D.12).
 - **Integration path:** new bin/ indexer + commit hook; reuse the projection freshness lockstep pattern (generator + assert in lockstep).
 
+LanceDB scope amendment (WP-MEM §3.4): the adoption carries TWO collections —
+`constraints` (the original TMD dedup, TMD_DEDUP_THRESHOLD 0.95, halt +
+Deduplication PR semantics — original §D.7 trigger unchanged) and `memory`
+(semantic index over memory entries; retrieval-only, no halt semantics —
+activates with §D.32). One engine, two collections, two failure semantics —
+never conflated (same rule as TMD_DEDUP vs SESSION_CACHE thresholds).
+
 ### §D.8 (L6) Token-economy adjuncts (Headroom, Ponytail, Tokenjuice; BetterDB cache; Caveman WATCH)
 - **Canon:** §6.4 adjunct list with seat law; §6.5 BetterDB session cache (SESSION_CACHE_THRESHOLD 0.95).
 - **Activation trigger:** token pain — sustained context-pressure on real tasks (operator-judged); BetterDB specifically when redundant-query loops show up in debugging sessions.
@@ -427,6 +434,8 @@ its trigger line fails validation/canon-register.*
   store — not a separate adoption); Graft standby only; OpenWiki + OpenKB
   documentation substrate; QMD private retrieval (Context7 stays §D.13);
   Docs7 XOR Docusaurus publisher (one publisher per docs property).
+  Memory-substrate role (WP-MEM §5.3): OpenWiki+OpenKB additionally store verified agent memory (project: `<repo>/.agents/memory/`; global: `~/.pi/agent/memory/`) — same seat (L3), no new adoption.
+
 - **Activation trigger:** first governed product repo completes onboarding
   AND a slice's must_haves require blast-radius navigation or committed
   documentation retrieval — human-judged, surfaced via tool-intake.
@@ -478,6 +487,45 @@ friction with the primary (ruling 7); staging a standby is speculative.
 - **Integration path:** rig-change WP → CI lane templates → dogfood.
 
 Reason class (WP-STACK §2.1): money-gated (needs §D.10 lane) + §D.1 machinery.
+
+### §D.32 (L3/L4) Agent memory system
+- **Canon:** operator ruling 2026-09 (WP-MEM) — memory is model output by
+  nature; governed by two skill-local laws (Law Economy: the 15-law global
+  budget is full, so M1/M2 land in `skills/memory/`, not rules.md Zone A):
+  **M1 — recall, never law** (memory is evidence; promotion to law is the
+  human-ratified ladder) and **M2 — provenance or it didn't happen**
+  (derived_from + verified + last_reconciled on every entry).
+- **Contents (four parts, landed WP-MEM):** write path —
+  pi-observational-memory (intake clone pinned `78a1efcf`; installed in the
+  Pi layer; PASSIVE by default; Kimi subprocess models; compaction drafts to
+  `.agents/memory/drafts/`); store — OpenWiki+OpenKB substrate role (§D.25
+  note) with `templates/memory/entry.md` format + `bin/memory-verify.mjs`
+  as the only verify path; retrieval — QMD over `.agents/memory/` +
+  `~/.pi/agent/memory/` (verified entries outrank drafts; 30-day unverified
+  drafts pruned at compaction); index — LanceDB `memory` collection via the
+  §D.7 amendment (retrieval-only, no halt semantics).
+- **Activation trigger:** components STAGED now; LIVE on first governed
+  project adopting the write path for real sessions (operator-ratified
+  enablement — `passive: false` is a project-level roster decision); the
+  §3.1 evaluation-gate verdict records here either way.
+- **Integration path:** rig-change (this WP landed the four parts); per-task
+  activation is seat wiring (roster PR: seat protocol allowlist) — never
+  ad-hoc installs; the LanceDB `memory` collection activates with this
+  entry, the `constraints` collection keeps its original §D.7 trigger.
+- **Jurisdictions (lint/driver-enforced where mechanical):** law never enters
+  memory (reference by path, never restate); contract payloads never
+  compressed into memory (ruling 6); public-library docs enter only via
+  Context7; memory contradicts the manifold → manifold wins automatically.
+- **Evaluation gate (write path):** within one week of real use or 10 tasks
+  (whichever first) — entries useful in ≥1 later session (a retrieval hit
+  that saved re-exploration) OR the extension is removed and the write path
+  falls back to manual memory-note drafting. Verdict recorded HERE.
+- **Deferred verdicts (never re-litigated):** TencentDB-Agent-Memory —
+  DEFERRED (server stack; money+infra-gated; Wiki/Code-Graph collide with
+  L3/L2 seats; owner/ACL/loadout asset model is a multi-agent-team feature —
+  re-evaluate only if teams form). oh-my-pi memory pipeline — REJECTED with
+  the fork (model-written auto-injected memory; its extraction→consolidation
+  pattern is design input, nothing more).
 
 ### §D.27 (L8) L8 dynamic lanes (Buttercup find-and-patch; OSS-CRS security-skill regression)
 - **Canon:** nine-layer L8; Refinery §2.6 Stage 3.5b (Buttercup) and §2.9

@@ -18,3 +18,10 @@ Session-start orientation, kept inside the L8 budget. Prime only the side of the
 5. `git log -10 --oneline` + `git status`, noting open migrations, pending schema changes, or in-progress work in the chosen area.
 
 Output a scannable summary: stack, directory map with one-line purposes, observed patterns and conventions, current state, immediate concerns. Loading only one side keeps the context window light on full-stack codebases — that is the point of the skill.
+
+**Private recall jurisdiction (WP-MEM):** QMD indexes the memory roots
+(`.agents/memory/` project, `~/.pi/agent/memory/` global) plus committed
+truth (docs/, specs/). Memory hits are advisory evidence — cite the entry's
+provenance line when used; `verified: true` entries outrank drafts. Public
+library knowledge never comes from memory — Context7 is its only path.
+

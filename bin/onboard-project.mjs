@@ -125,6 +125,28 @@ for (const d of ["specs/intent", "specs/prd", "specs/plans"]) {
 // specs at onboarding; the first touch baselines the domain).
 mkdirSync(join(ROOT, "specs", "domains"), { recursive: true });
 mkdirSync(join(ROOT, "specs", "changes", "archive"), { recursive: true });
+// --- WP-MEM §3.2: memory scaffold ------------------------------------------------------
+// Project memory at .agents/memory/ (committed, GitOps-durable). Drafts land
+// in drafts/ from session compaction (pi-observational-memory); entries become
+// memory only via bin/memory-verify.mjs (M2: verified flips true only there).
+mkdirSync(join(ROOT, ".agents", "memory", "drafts"), { recursive: true });
+writeFileSync(join(ROOT, ".agents", "memory", "README.md"), `# .agents/memory/ — verified project memory (WP-MEM)
+
+What lives here: verified memory entries — decisions, gotchas, facts,
+preferences, each with evidence and a provenance line (M2). What never lives
+here: law (that is .tmd/ — memory may reference it by path, never restate),
+contract payloads, secrets (Betterleaks lane covers the leak case),
+public-library docs (Context7 is their only entry path).
+
+How entries arrive: session compaction writes DRAFTS to drafts/; a human
+verifies them with \`node ~/.pi/agent/bin/memory-verify.mjs --list\` /
+\`--approve <id>\`. How they are recalled: QMD over this dir + the global
+memory at ~/.pi/agent/memory/ — advisory evidence, cited with provenance;
+the manifold always wins over memory (M1).
+
+How entries become law: they don't, directly. Recurring load-bearing memory
+climbs the promotion ladder (PRD / ADR / manifold PR) with human ratification.
+`);
 writeFileSync(join(ROOT, "specs", "changes", "README.md"), `# specs/changes/ — the change lifecycle (WP-E)
 
 A change package is a folder \`specs/changes/<slug>/\` holding \`delta.md\`

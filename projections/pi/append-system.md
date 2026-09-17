@@ -1,5 +1,5 @@
 <!-- GENERATED FILE — do not hand-edit (WP3, L4). Regenerate: node bin/generate-projections.mjs -->
-<!-- source_head: cc5ea868887fd6372c79784a8ddad3d54f19632b -->
+<!-- source_head: 823c9bd542dc125f72a14856c17a6a9ed7408700 -->
 <!-- projection: pi/append-system.md -->
 
 # Factory projection — Pi append-system (stable part)
@@ -39,6 +39,7 @@ When a task matches a trigger, invoke the named skill — procedure follows, nev
 | context-budget | new session · output quality degraded · trim context · switching tasks · context setup |
 | documentation-and-adrs | write an ADR · document this decision · changelog · API docs · README |
 | interview-me | interview me · grill me · are we sure? · stress-test my thinking · underspecified ask |
+| memory | remember this · what do we know about · recall · memory entry · cite memory |
 | observability-and-instrumentation | instrument this · add telemetry · structured logs · metrics · alerts |
 | performance-optimization | optimize performance · slow page · Core Web Vitals · N+1 query · performance regression · profiling bottleneck |
 | pr-review | review this PR · verify this contract · stage 2 review · adversarial review |
