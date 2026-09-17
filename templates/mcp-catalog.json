@@ -1,0 +1,37 @@
+{
+  "_law": "WP-STACK MCP catalog — the rig-level curated catalog. Projects copy entries into their .pi/.mcp.json ONLY on activation (roster PR, §5.4); presence here means STAGED (installed-inert), never active. Curated by bin/lint-mcp.mjs --catalog: exact pins, stdio-default, no deprecated capabilities (MCP 2026-07-28).",
+  "mcpServers": {
+    "serena": {
+      "command": "/home/kamff/factory-rig/tools/serena/venv/bin/serena",
+      "args": ["--mode", "mcp", "--project", "."],
+      "layer": "L1",
+      "posture": "staged",
+      "pin": "serena-agent 1.7.0 (pip venv)",
+      "note": "memory disabled per canon ruling (ripgrep proves, Serena writes, the index navigates)"
+    },
+    "codebase-memory": {
+      "command": "node",
+      "args": ["/home/kamff/factory-rig/tools/codebase-memory-mcp/node_modules/.bin/codebase-memory-mcp"],
+      "layer": "L2",
+      "posture": "staged",
+      "pin": "codebase-memory-mcp 0.11.0 (npm, --ignore-scripts)",
+      "note": "graph engine of record (ruling 7); LadybugDB embedded — not a separate adoption; one repo, one index"
+    },
+    "context7": {
+      "command": "node",
+      "args": ["/home/kamff/factory-rig/tools/context7/node_modules/.bin/context7-mcp"],
+      "layer": "L4-public",
+      "posture": "staged",
+      "pin": "@upstash/context7-mcp 4.1.1 (npm, --ignore-scripts)",
+      "note": "public docs retrieval; credential-free basic tier"
+    },
+    "headroom": {
+      "command": "/home/kamff/factory-rig/tools/headroom/venv/bin/headroom",
+      "args": ["mcp"],
+      "layer": "L6",
+      "posture": "staged",
+      "pin": "headroom-ai 0.3.4 (pip venv)",
+      "note": "MCP-server mode only; compression exclusions per canon ruling 6: .tmd/, contracts, must_haves, AGENTS.md, A2A payloads are never compressed"
+    }
+  }
+}

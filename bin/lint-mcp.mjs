@@ -26,7 +26,7 @@ let violations = 0;
 const bad = (m) => { violations++; console.error(`INVALID | ${m}`); };
 
 if (!FILE || !existsSync(FILE)) {
-  console.error("usage: node bin/lint-mcp.mjs <.mcp.json> [--allow-http]");
+  console.error("usage: node bin/lint-mcp.mjs <.mcp.json> [--allow-http] | --catalog <mcp-catalog.json>");
   process.exit(1);
 }
 
@@ -91,4 +91,20 @@ if (violations > 0) {
   process.exit(1);
 }
 const count = servers ? Object.keys(servers).length : 0;
+// WP-STACK: catalog mode — same curation law over the rig-level MCP catalog
+// template (templates/mcp-catalog.json), plus catalog-specific checks: every
+// entry names its layer and install posture ("staged"), and the catalog is
+// the single source projects copy entries from on activation.
+if (process.argv.includes("--catalog")) {
+  for (const [name, cfg] of Object.entries(servers ?? {})) {
+    if (!cfg.layer) bad(`catalog entry "${name}": must name its nine-layer seat (layer)`);
+    if (cfg.posture !== "staged") bad(`catalog entry "${name}": catalog entries are staged-inert (posture: "staged")`);
+  }
+  if (violations > 0) {
+    console.error(`\nINVALID — ${violations} violation(s)`);
+    process.exit(1);
+  }
+  console.log(`CURATED CATALOG — ${count} staged server(s), all pinned, layered, and compliant`);
+  process.exit(0);
+}
 console.log(`CURATED — ${count} server(s), all pinned and compliant (empty is valid)`);

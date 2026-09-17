@@ -70,6 +70,7 @@ The following discipline skills are bound to this seat. Their law applies to eve
 - verification-before-completion — no completion claims without fresh verification evidence
 - systematic-debugging — stop-the-line on any unexpected failure
 - context-budget — trim at 75%, cut-first/protect tables, task-critical content last
+- code-simplification — clarity cleanup preserving exact behavior; cleanup slices are their own contracts
 
 ## Floor rules (from constraint-driven-development harvest)
 

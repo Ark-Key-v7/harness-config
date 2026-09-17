@@ -124,5 +124,77 @@
     "status": "installed_validated",
     "note": "L0 floor tool (canon v2.0: ripgrep proves, Serena writes, the index navigates — never substituted). Pinned WP-C2 §8.5.",
     "recorded_by": "WP-C2"
+  },
+  "betterleaks": {
+    "package": "betterleaks",
+    "version": "1.8.1",
+    "seat": "L7 secrets scanner (local Stage-0 floor)",
+    "status": "installed_validated",
+    "note": "gitleaks successor by the gitleaks creator; drop-in CLI compatibility. Binary from GitHub releases v1.8.1 linux_x64 to ~/factory-rig/tools/betterleaks/. Staged WP-STACK.",
+    "recorded_by": "WP-STACK"
+  },
+  "serena": {
+    "package": "serena-agent",
+    "version": "1.7.0",
+    "seat": "L1 symbolic editing (MCP)",
+    "status": "installed_validated",
+    "note": "pip venv at ~/factory-rig/tools/serena/venv; memory disabled; MCP catalog entry 'serena'. Staged WP-STACK.",
+    "recorded_by": "WP-STACK"
+  },
+  "codebase-memory-mcp": {
+    "package": "codebase-memory-mcp",
+    "version": "0.11.0",
+    "seat": "L2 code graph of record (MCP; LadybugDB embedded)",
+    "status": "installed_validated",
+    "note": "npm --prefix ~/factory-rig/tools/codebase-memory-mcp, --ignore-scripts (L12); postinstall fetches its platform binary on first run — version verified 0.11.0. MCP catalog entry 'codebase-memory'. Staged WP-STACK.",
+    "recorded_by": "WP-STACK"
+  },
+  "context7": {
+    "package": "@upstash/context7-mcp",
+    "version": "4.1.1",
+    "seat": "L4-public docs retrieval (MCP)",
+    "status": "installed_validated",
+    "note": "npm --prefix ~/factory-rig/tools/context7, --ignore-scripts. MCP catalog entry 'context7'. Staged WP-STACK.",
+    "recorded_by": "WP-STACK"
+  },
+  "openwiki": {
+    "package": "openwiki",
+    "version": "0.5.2",
+    "seat": "L3 committed-truth docs substrate",
+    "status": "installed_validated",
+    "note": "npm --prefix ~/factory-rig/tools/openwiki, --ignore-scripts. DeepAgents-driven OpenWiki generator/maintainer. Staged WP-STACK.",
+    "recorded_by": "WP-STACK"
+  },
+  "openkb": {
+    "package": "openkb",
+    "version": "1.0.22",
+    "seat": "L3 committed-truth docs substrate (read surface)",
+    "status": "installed_validated",
+    "note": "npm --prefix ~/factory-rig/tools/openkb, --ignore-scripts. Node markdown KB server; launch: node node_modules/openkb/app.js. Staged WP-STACK.",
+    "recorded_by": "WP-STACK"
+  },
+  "qmd": {
+    "package": "qmd",
+    "version": "0.1.2",
+    "seat": "L4-private retrieval (local docs index)",
+    "status": "installed_validated",
+    "note": "pip venv at ~/factory-rig/tools/qmd/venv; CLI: search/collection/document with --db-path. Staged WP-STACK.",
+    "recorded_by": "WP-STACK"
+  },
+  "headroom-ai": {
+    "package": "headroom-ai",
+    "version": "0.3.4",
+    "seat": "L6 token-economy adjunct (MCP-server mode only)",
+    "status": "installed_validated",
+    "note": "pip venv at ~/factory-rig/tools/headroom/venv. MCP catalog entry 'headroom'; compression exclusions per canon ruling 6. Staged WP-STACK.",
+    "recorded_by": "WP-STACK"
+  },
+  "tokenjuice": {
+    "package": "tokenjuice",
+    "version": "0.8.5",
+    "seat": "L6 terminal-output compression pilot",
+    "status": "installed_validated",
+    "note": "npm --prefix ~/factory-rig/tools/tokenjuice, --ignore-scripts. Staged WP-STACK.",
+    "recorded_by": "WP-STACK"
   }
 }

@@ -1,3 +1,5 @@
+Seat map: this document configures the TERMINAL seat (Pi.dev). The ADE seat (ZCode+GLM) is configured in ZCode's own surface; the editor bridge (Zed+ACP) in patches/.
+
 # Provider Setup
 
 ## Active path: Kimi OAuth

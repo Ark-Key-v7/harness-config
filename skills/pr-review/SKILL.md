@@ -95,3 +95,6 @@ If the change touched file layout, conventions, or invariants, run `rules-drift-
 - NEVER substitute the rubric for the deterministic trail, or the trail for the rubric — they are different floors of the same gate.
 - NEVER review against the PR branch's manifold — the standard lives on the
   target branch (Step 0).
+
+**Rig instrument (WP-STACK):** `rg` (ripgrep, L0 proof floor — pinned in package-pins.json) is the review seat's scoped-search instrument for evidence gathering: cited file:line claims come from scoped `rg` runs, not memory.
+

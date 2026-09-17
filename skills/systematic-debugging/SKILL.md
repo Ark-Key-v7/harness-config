@@ -357,3 +357,8 @@ These techniques are part of systematic debugging and available in this director
 - **`references/root-cause-tracing.md`** - Trace bugs backward through call stack to find original trigger
 - **`references/defense-in-depth.md`** - Add validation at multiple layers after finding root cause
 - **`references/condition-based-waiting.md`** - Replace arbitrary timeouts with condition polling
+
+**Blast radius (WP-STACK):** `codebase-memory` (L2 graph of record, STAGED in the MCP catalog) is the blast-radius instrument on activation — the hypothesis's touched-set comes from the graph, verified by scoped `rg`.
+
+**Rig instrument (WP-STACK):** `rg` (ripgrep, L0 proof floor — pinned in package-pins.json) is this skill's scoped-search instrument: every "search the codebase" step runs as a scoped `rg` with an explicit glob, never an unscoped browse.
+

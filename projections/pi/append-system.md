@@ -1,5 +1,5 @@
 <!-- GENERATED FILE — do not hand-edit (WP3, L4). Regenerate: node bin/generate-projections.mjs -->
-<!-- source_head: 8915fb4b22fbb17136bc0d15613059d0cfe6983d -->
+<!-- source_head: cc5ea868887fd6372c79784a8ddad3d54f19632b -->
 <!-- projection: pi/append-system.md -->
 
 # Factory projection — Pi append-system (stable part)
@@ -35,6 +35,7 @@ When a task matches a trigger, invoke the named skill — procedure follows, nev
 | api-and-interface-design | design the API · new endpoint · event schema · public interface · API contract |
 | brainstorming | let's brainstorm · think through this · scope this |
 | browser-testing-with-devtools | test in the browser · verify the UI · browser check · console errors · devtools |
+| code-simplification | simplify this · clean this up · too complex · reduce complexity · refactor for clarity |
 | context-budget | new session · output quality degraded · trim context · switching tasks · context setup |
 | documentation-and-adrs | write an ADR · document this decision · changelog · API docs · README |
 | interview-me | interview me · grill me · are we sure? · stress-test my thinking · underspecified ask |

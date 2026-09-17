@@ -1,12 +1,27 @@
 # CAPABILITY_REGISTER.md — what this rig can do, and what waits for its gate (WP11)
 
-Two halves. **Integrated** = live today, with its surface and driver.
-**Deferred** = registered, with canon source, an explicit *activation
-trigger*, prerequisites, and integration path. The deferred half answers
+Three postures. **Integrated** = live today, with its surface and driver.
+**STAGED** = installed-inert (see the install policy below). **Deferred** =
+registered, with canon source, an explicit *activation trigger*,
+prerequisites, and integration path. The deferred half answers
 "when does this turn on?" — you never have to remember; the triggers below
 are the memory. Machine-readable detection for the subset that is
 filesystem-detectable lives in `docs/activation-triggers.json`, evaluated by
 `bin/check-activations.mjs` at every project onboarding (and standalone).
+
+**Install policy (WP-STACK, operator-ratified):** components install in one of
+three postures. STAGED — free/OSS/credential-free: installed, pinned,
+driver-smoked, inert until invoked; activation is seat wiring + skill
+pointer, not installation. DEFERRED — money-gated (API-billed lanes),
+infra-gated (hardware/hosting decisions), or canon-pilot-gated (swarms,
+campaigns): not installed; the trigger below is the memory. Every component
+landing — staged or deferred-activated — lands as ONE commit of four parts:
+pin (package-pins.json) + install (with smoke driver) + seat wiring
+(profile protocols allowlist, roster PR) + skill pointer (the skill that
+uses the instrument names it). A tool without its four parts is an orphan;
+an orphan is slop.
+
+**Status legend (WP-STACK):** STAGED = installed, pinned, driver-smoked, inert until invoked (activation = seat wiring + skill pointer). Staged components live in `~/factory-rig/tools/` (binaries) and `templates/mcp-catalog.json` (MCP servers, lint-mcp curated).
 
 Deferred integrations are NEVER autonomous (canon §6.4 Meta-Harness; §5.4):
 the agent surfaces a fired trigger, the human ratifies via the rig-change
@@ -68,18 +83,22 @@ machinery (trigger: first dial-2 request), §D.20/§D.21 (life events).
 Canon references use the handbook's own section numbers. "Trigger" is the
 observable condition that makes the item activatable — not a suggestion.
 
-### §D.1 Refinery pipeline machinery (Stages 1–3 core, merge queue, CD handoff)
+### §D.1 (Refinery) Refinery pipeline machinery (Stages 1–3 core, merge queue, CD handoff)
 - **Canon:** CI/CD Integration Engine §2.3–§2.8; §7.1 Phase 3.
-- **Includes:** Stage-1 CI gates (Fallow, ESLint, tsc, bun test); merge queue (batch-then-bisect, pairwise-conflict serialization); Worktrunk adoption (wt.toml leaves the inert register); **cross-worker collision guards (v1.2 §4.4 — pre-ship warning when a worker writes a file another in-flight worker has read; implementation site: the Worktrunk hook layer or a rig service watching worktree state)**; PR-Agent Stage-2 container; CodeQL weekly lane; Stage-4 SLA/auto-merge mechanics; Vercel/Coolify CD routing.
+- **Includes:** Stage-1 CI gates (Fallow, ESLint, tsc, bun test); merge queue (batch-then-bisect, pairwise-conflict serialization); Worktrunk adoption (wt.toml leaves the inert register); **cross-worker collision guards (v1.2 §4.4 — pre-ship warning when a worker writes a file another in-flight worker has read; implementation site: the Worktrunk hook layer or a rig service watching worktree state)**; PR-Agent Stage-2 container; CodeQL weekly lane; Stage-4 SLA/auto-merge mechanics; Vercel/Coolify CD routing. Turborepo (per-project CI dependency — lands with the workflow templates, never machine-floor).
 - **Activation trigger:** the FIRST product repository completes onboarding (auto-detected: `check-activations` T1). PR-Agent specifically also requires §D.10 (gateway) — on the subscription regime it has no API lane until then.
 - **Prerequisites:** product repo on the SCM hub; Stage-0 lane green locally; runner hardware decision (Blacksmith.sh Phase 1 vs Hetzner+Coolify Phase 2).
 - **Integration path:** rig-change WP → GitHub Actions workflow templates added to `templates/` (projected into products at onboard) → dogfood on the product repo.
 
-### §D.2 Execution sandbox (Daytona / rootless Podman dev-container quarantine)
+Reason class (WP-STACK §2.1): infra-gated (runner hardware decision).
+
+### §D.2 (Refinery) Execution sandbox (Daytona / rootless Podman dev-container quarantine)
 - **Canon:** §6.6 Mandate 1; §6.2 execution boundary; Stage 0 runs INSIDE it.
 - **Activation trigger:** first product repo (with §D.1) — canon wants preflight confined, not on the host.
 - **Prerequisites:** Daytona install on WSL2; container image pins.
 - **Integration path:** wt.toml `mount` hook becomes live; preflight gains `--container` mode.
+
+Reason class (WP-STACK §2.1): infra-gated (WSL2/image decisions).
 
 ### §D.3 Convex-dependent lanes (Stage-3 E2E ephemeral previews; schema pipeline)
 - **Canon:** §2.6; §6.2 Convex Mandate; §7.1 Phase 3 (Midscene against preview).
@@ -99,7 +118,7 @@ observable condition that makes the item activatable — not a suggestion.
 - **Prerequisites:** lavish-axi CLI install; local-first serving check.
 - **Integration path:** tool-intake WP; project-onboard Step 3 gains the visual loop.
 
-### §D.6 Betterleaks secrets lane
+### §D.6 (L7) Betterleaks secrets lane
 - **Canon:** §6.3 ("the local agent must execute … Betterleaks" before commit).
 - **Status note:** the binary is present on the machine and preflight lane 3
   runs it (dialect-probed: git/detect/scan verb from --help). Findings BLOCK;
@@ -116,7 +135,7 @@ observable condition that makes the item activatable — not a suggestion.
 - **Prerequisites:** LanceDB + embedding model decision; trace-ledger existence (§D.12).
 - **Integration path:** new bin/ indexer + commit hook; reuse the projection freshness lockstep pattern (generator + assert in lockstep).
 
-### §D.8 Token-economy adjuncts (Headroom, Ponytail, Tokenjuice; BetterDB cache; Caveman WATCH)
+### §D.8 (L6) Token-economy adjuncts (Headroom, Ponytail, Tokenjuice; BetterDB cache; Caveman WATCH)
 - **Canon:** §6.4 adjunct list with seat law; §6.5 BetterDB session cache (SESSION_CACHE_THRESHOLD 0.95).
 - **Activation trigger:** token pain — sustained context-pressure on real tasks (operator-judged); BetterDB specifically when redundant-query loops show up in debugging sessions.
 - **Prerequisites:** per-tool intake (Headroom: MCP-server mode only, compression exclusions preconfigured; Ponytail: vendored as Sovereign Skill Protocol folders; Tokenjuice: pilot with fixture-regressed rules; Caveman stays WATCH).
@@ -124,11 +143,13 @@ observable condition that makes the item activatable — not a suggestion.
 
 Nine-layer update (WP-C2): this entry IS layer L6 — Headroom MCP-server mode only, Tokenjuice terminal-output pilot. Ponytail stays in this entry as vendored skill folders. Caveman stays WATCH (canon ruling 5: unverifiable products do not enter the stack).
 
-### §D.9 Stage-3.5 pilots (Strix agentic pentest; Claw Patrol egress firewall)
+### §D.9 (L8) Stage-3.5 pilots (Strix agentic pentest; Claw Patrol egress firewall)
 - **Canon:** §2.6.5 — both pilot-gated by canon itself (scheduled-only pentest; mechanical allow/deny only, llm_approver forbidden).
 - **Activation trigger:** §D.3 live (Strix needs the ephemeral preview) and first high-privilege agent seat (Claw Patrol).
 - **Prerequisites:** LiteLLM budget ceiling (§D.10); Tailscale mesh (§D.11) for Claw Patrol.
 - **Integration path:** one-month pilots with canon-stated success criteria; CI fixture regression for firewall policy.
+
+Reason class (WP-STACK §2.1): canon-pilot-gated (scheduled campaigns; need deployed product + previews).
 
 ### §D.10 LiteLLM gateway + FinOps gateway regime
 - **Canon:** §6.4 (retries vs fallbacks, circuit breakers, X-LiteLLM-Trace-Id chargeback; one gateway owns the API-billed lane).
@@ -136,11 +157,15 @@ Nine-layer update (WP-C2): this entry IS layer L6 — Headroom MCP-server mode o
 - **Prerequisites:** Docker + Coolify host (local Phase 1 or Hetzner Phase 2); API keys; budget ceilings per seat.
 - **Integration path:** STATE.md `finops.regime` flips per contract; PR-Agent (§D.1) unblocks. Rides along: two-part cache-aware prompt composition (v1.2 §2.4 — stable/dynamic split with `cache_control: ephemeral` on the stable block; projections already implement the split, so gateway adoption only adds the request structuring).
 
+Reason class (WP-STACK §2.1): money-gated (first API-billed engine).
+
 ### §D.11 Hetzner production perimeter
 - **Canon:** §6.1 (Tailscale mesh, UFW 80/443 only, CrowdSec at Traefik, Let's Encrypt).
 - **Activation trigger:** the local→Hetzner migration decision (§1.1) — a life event, not auto-detectable.
 - **Prerequisites:** Hetzner bare metal; Coolify; the Migration Runbook doubles as the build sheet.
 - **Integration path:** infra WP; Claw Patrol/Strix lanes (§D.9) become deployable.
+
+Reason class (WP-STACK §2.1): infra-gated.
 
 ### §D.12 State Survival machinery (ledger replication, rig-rebuild runbook)
 - **Canon:** §6.7 (Litestream off-rig replication; corruption recovery; rebuild-by-script).
@@ -148,13 +173,23 @@ Nine-layer update (WP-C2): this entry IS layer L6 — Headroom MCP-server mode o
 - **Prerequisites:** object storage target; WAL snapshots schedule.
 - **Integration path:** harness config only — never the manifold (canon: backup is factory machinery).
 
-### §D.13 Curated MCP stack + pi-mcp-adapter
+Reason class (WP-STACK §2.1): infra-gated.
+
+### §D.13 (L1/L4-public) Curated MCP stack + pi-mcp-adapter
 - **Canon:** v1.2 §2.11 curation rulings; MCP 2026-07-28 alignment (§6.4 Protocol Alignment).
 - **Status note:** `pi-mcp-adapter` is PINNED, pending install; Serena/Context7 activate on first need.
 - **Activation trigger:** first task needing LSP-grade navigation (Serena) or library docs (Context7) — agent-judged, surfaced via tool-intake.
 - **Integration path:** install adapter → curate servers through `lint-mcp.mjs` → project `.mcp.json`.
 
 Context7 is L4-public in the nine-layer stack; QMD (L4-private) lives in §D.25 — jurisdictions never merge.
+
+**STAGED components (WP-STACK, four parts each):** Serena 1.7.0 (L1 — pin ✓
+package-pins.json, install ✓ tools/serena venv, smoke ✓ stack-staging driver,
+pointer ✓ worker profile + catalog entry `serena`); Context7 4.1.1 (L4-public —
+pin ✓, install ✓ tools/context7, smoke ✓, pointer ✓ context-budget +
+catalog entry `context7`). Status: these components **STAGED** (installed-
+inert); the §D.13 curated-stack entry stays DEFERRED until seat wiring lands
+via roster PR.
 
 ### §D.14 AsyncReview — the Stage-0 semantic pass (third local tool)
 - **Canon:** CI/CD Integration Engine §2.3 — "The agent must trigger
@@ -200,6 +235,8 @@ Context7 is L4-public in the nine-layer stack; QMD (L4-private) lives in §D.25 
 - **Activation trigger:** a task class demands delegation beyond `/seat` switching (single-rig parallel throughput) — human-judged; entangled with the AMUX↔Pi adapter open decision (FACTORY_STATUS §9).
 - **Prerequisites:** §D.15 (trace lineage); per-worker sandbox scopes (integrated: sandbox-guard + contract-scope).
 - **Integration path:** run the canon validation gate as its own WP; until it passes, no mechanism may presume the topology (canon's own conditional).
+
+Reason class (WP-STACK §2.1): canon-pilot-gated (validation experiment).
 
 ### §D.18 Trigger-plane prompt templates (meta-prompts, ADWs, HOP)
 - **Canon:** v1.2 §4.2 (meta-prompts, ADWs, the HOP — the dispatch decision is never automated), §3.5 (the promotion path: spec → template → workflow, climb on evidence), §1.6 (specs are durable assets).
@@ -383,7 +420,7 @@ its trigger line fails validation/canon-register.*
   (§5.4). Skill scripts and JS-execution stay read-only per the skill's own
   security boundaries.
 
-### §D.25 Truth, Retrieval & Publish stack (codebase-memory-mcp, OpenWiki+OpenKB, QMD, Docs7 XOR Docusaurus)
+### §D.25 (L2/L3/L4-private/L5) Truth, Retrieval & Publish stack (codebase-memory-mcp, OpenWiki+OpenKB, QMD, Docs7 XOR Docusaurus)
 - **Canon:** nine-layer stack L2/L3/L4/L5; Standing Rulings 7–8.
 - **Includes:** codebase-memory-mcp as graph engine of record (MIT,
   no-self-write binding; LadybugDB rides inside it as the embedded graph
@@ -399,7 +436,20 @@ its trigger line fails validation/canon-register.*
   `protocols.mcp_servers` entries via roster PR (§5.4). GitNexus (license)
   and CodeGraph are CLOSED — ruling 7; never re-litigated.
 
-### §D.26 L7 gate stack completion (DeepSource primary, open-code-review, VulnHuntr, CodeRabbit WATCH)
+**STAGED components (WP-STACK, four parts each):** codebase-memory-mcp 0.11.0
+(L2 — pin ✓, install ✓ tools/codebase-memory-mcp, smoke ✓ stack-staging
+driver, pointer ✓ systematic-debugging + catalog entry `codebase-memory`);
+OpenWiki 0.5.2 + OpenKB 1.0.22 (L3 — pin ✓, install ✓, smoke ✓, pointer ✓
+documentation-and-adrs rig bindings); QMD 0.1.2 (L4-private — pin ✓, install ✓
+tools/qmd venv, smoke ✓ CLI-level only: the index roundtrip downloads a
+~600M-param embedding model from HF Hub at first use — that cost is paid at
+ACTIVATION; pointer ✓ context-budget). Docs7 XOR Docusaurus (L5) stays
+project-time — a publisher is chosen per docs property, not per machine.
+Status: these components **STAGED**; the §D.25 entry stays DEFERRED until
+activation. Graft stays unstaged — a standby is evaluated only on measured
+friction with the primary (ruling 7); staging a standby is speculative.
+
+### §D.26 (L7) L7 gate stack completion (DeepSource primary, open-code-review, VulnHuntr, CodeRabbit WATCH)
 - **Canon:** nine-layer L7; Standing Rulings 9, 12; Refinery §2.3/§2.5.
 - **Reconciliation:** the rig's Stage-0 floor runs Semgrep today (WP11).
   Canon v2.0 names DeepSource analyzers the deterministic gate with Semgrep
@@ -407,6 +457,8 @@ its trigger line fails validation/canon-register.*
   activates — a fallback holding the seat until the primary lands is not a
   violation; running both as required checks would be (one analyzer voice
   per gate slot).
+  Semgrep ruling (WP-STACK §2.2): Semgrep is the mandated LOCAL Stage-0 floor today by canon's own text (§2.3: "DeepSource analyzers (or the Semgrep fallback where DeepSource is not yet implemented)"). "Fallback-only" governs the Stage-2 per-PR analyzer slot only (one analyzer voice per gate). When DeepSource lands at Stage 2, Semgrep KEEPS the local floor. There is no posture in which Semgrep is removed.
+
 - **Includes:** DeepSource analyzers (per-PR deterministic block; AI review
   OFF locally — one AI voice per change); open-code-review (`ocr diff`,
   the required AI voice — precision gate); VulnHuntr (scoped: Python web
@@ -425,7 +477,9 @@ its trigger line fails validation/canon-register.*
   API lane); runner hardware decision (§D.1).
 - **Integration path:** rig-change WP → CI lane templates → dogfood.
 
-### §D.27 L8 dynamic lanes (Buttercup find-and-patch; OSS-CRS security-skill regression)
+Reason class (WP-STACK §2.1): money-gated (needs §D.10 lane) + §D.1 machinery.
+
+### §D.27 (L8) L8 dynamic lanes (Buttercup find-and-patch; OSS-CRS security-skill regression)
 - **Canon:** nine-layer L8; Refinery §2.6 Stage 3.5b (Buttercup) and §2.9
   (OSS-CRS regression harness).
 - **Includes:** Buttercup campaigns (nightly/weekly, priority services;
@@ -440,3 +494,5 @@ its trigger line fails validation/canon-register.*
   telemetry); Buttercup trial-first at ~$100 campaign budget.
 - **Integration path:** per-service harness-construction Task Contracts,
   then campaign lane config as committed config-as-code.
+
+Reason class (WP-STACK §2.1): canon-pilot-gated (scheduled campaigns; need deployed product + previews).

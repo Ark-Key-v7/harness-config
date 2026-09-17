@@ -14,7 +14,7 @@ version control, commit the handbook set as ONE read-only verbatim snapshot
 (docs/canon/, replaced wholesale on each canon revision, never edited
 piecemeal) — this map references section numbers either way.
 
-**Status vocabulary:** LIVE (enforced/acted upon today) · PARTIAL (some
+**Status vocabulary:** LIVE (enforced/acted upon today) · STAGED (installed, pinned, driver-smoked, inert until invoked — WP-STACK) · PARTIAL (some
 surfaces live, named gaps open) · DEFERRED (registered, activation trigger
 defined in docs/CAPABILITY_REGISTER.md) · SOP (operator discipline, per
 canon's own assignment — not machinery).
@@ -29,14 +29,14 @@ L6 compresses → L7 gates → L8 validates on schedule → L5 publishes.
 
 | Layer | Seat | Component(s) | Rig surface | Status |
 |---|---|---|---|---|
-| L0 Proof | deterministic proof floor | ripgrep (`rg`) | floor tool — `package-pins.json` + PORTABILITY floor list (WP-C2 §8.5) | LIVE |
-| L1 Hands | symbolic editing | Serena (memory disabled) | register §D.13 (curated MCP stack) | DEFERRED (§D.13) |
-| L2 Map | code navigation / blast radius | codebase-memory-mcp primary (LadybugDB is its embedded graph store); Graft standby | register §D.25 (WP-C2 §8.1) | DEFERRED (§D.25) |
-| L3 Truth | committed memory / docs substrate | OpenWiki + OpenKB | register §D.25 | DEFERRED (§D.25) |
-| L4 Retrieval | private/public recall | QMD private; Context7 public | Context7: register §D.13; QMD: register §D.25 | DEFERRED (§D.13/§D.25) |
+| L0 Proof | deterministic proof floor | ripgrep (`rg`) | floor tool — `package-pins.json` + PORTABILITY floor list (WP-C2 §8.5) + stack-staging driver | LIVE (STAGED driver, WP-STACK) |
+| L1 Hands | symbolic editing | Serena (memory disabled) | register §D.13; STAGED (WP-STACK: venv + catalog + driver) | STAGED (§D.13) |
+| L2 Map | code navigation / blast radius | codebase-memory-mcp primary (LadybugDB is its embedded graph store); Graft standby (unstaged — ruling 7) | register §D.25; STAGED (WP-STACK: install + catalog + driver) | STAGED (§D.25) |
+| L3 Truth | committed memory / docs substrate | OpenWiki + OpenKB | register §D.25; STAGED (WP-STACK) | STAGED (§D.25) |
+| L4 Retrieval | private/public recall | QMD private; Context7 public | Context7: register §D.13; QMD: register §D.25; both STAGED (WP-STACK) | STAGED (§D.13/§D.25) |
 | L5 Publish | human/outside-agent publication | Docs7 XOR Docusaurus (one publisher per docs property) | register §D.25 | DEFERRED (§D.25) |
-| L6 Compress | token-economy adjunct | Headroom (MCP-server mode only); Tokenjuice (terminal-output pilot) | register §D.8 | DEFERRED (§D.8) |
-| L7 Gate | PR quality/security gate | DeepSource analyzers (primary), open-code-review (required AI voice), PR-Agent (of record), Betterleaks (VALID blocks), VulnHuntr (scoped), CodeRabbit (WATCH — per-repo conditional successor on same-10-PR evidence) | Betterleaks: §D.6/preflight lane 3 LIVE; PR-Agent: §D.1; rest: register §D.26 (WP-C2 §8.2) | PARTIAL / DEFERRED |
+| L6 Compress | token-economy adjunct | Headroom (MCP-server mode only); Tokenjuice (terminal-output pilot) | register §D.8; both STAGED (WP-STACK: headroom-ai 0.3.4 venv + catalog, tokenjuice 0.8.5 npm) | STAGED (§D.8) |
+| L7 Gate | PR quality/security gate | DeepSource analyzers (primary), open-code-review (required AI voice), PR-Agent (of record), Betterleaks (VALID blocks), VulnHuntr (scoped), CodeRabbit (WATCH — per-repo conditional successor on same-10-PR evidence) | Betterleaks: §D.6/preflight lane 3 — STAGED binary 1.8.1 on the floor (WP-STACK), lane LIVE; PR-Agent: §D.1; rest: register §D.26 (WP-C2 §8.2) | PARTIAL / DEFERRED |
 | L8 Dynamic | scheduled dynamic proof | Strix, Buttercup, OSS-CRS | Strix: §D.9; Buttercup/OSS-CRS: register §D.27 (WP-C2 §8.3) | DEFERRED |
 
 Standing rulings absorbed by this map (canon §4 rulings 4, 7, 8, 9, 11, 12):
@@ -172,7 +172,7 @@ revisions stay traceable.
 | §5.7 Observability — trace ledger, event taxonomy | — | DEFERRED (register §D.15) |
 | §5.8 Consolidated Ruling Registry | canon-resident; rig-side amendments recorded in FACTORY_STATUS open decisions | SOP (ruling: the registry is not duplicated into rig docs — L5) |
 | Appendix A (Claude Code shim) / Appendix B (Codex, reserved) | out of scope — single Pi seat; adoption enters via tool-intake + a ruling-registry amendment | SOP (ruling) |
-| Appendix C (Kimi Code seat) | provider bridge pinned (`package-pins.json`), `docs/provider-setup.md`; the rig's live regime | LIVE |
+| Appendix C (Kimi Code seat) | terminal seat provider path (docs/provider-setup.md); ADE seat = ZCode+GLM (canon ruling 1, configured outside this repo); editor bridge = Zed+ACP (patches/) | LIVE |
 | §4.7 Queue Operations Law (priority, caps, ≤2 attempts, escalation, watchdog D1–D6) | SOP now (FRESH_PROJECT_SOP/OPERATOR_GUIDE); machinery register §D.19 | SOP + DEFERRED |
 | §5.10.1 protected list in code, fail-closed | `extensions/guard.ts` + `bin/guard.mjs` + `bin/guard-list.mjs` (WP-C) | LIVE |
 | §5.10.2 floor ratchet | `bin/floor-ratchet.mjs` + `.agents/floor.json` (WP-C) | LIVE |

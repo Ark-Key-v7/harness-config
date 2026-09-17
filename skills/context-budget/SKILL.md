@@ -318,3 +318,6 @@ After setting up context, confirm:
 - [ ] Context is refreshed when switching between major tasks
 - [ ] During long sessions, context is actively managed: failed attempts and replaced drafts removed, live error and task definition protected
 - [ ] Task-critical content (current error, active constraint) is positioned last in context, not buried under background material
+
+**Staged retrieval/compression instruments (WP-STACK):** Context7 (L4-public docs retrieval) and QMD (L4-private local docs index) are the two recall jurisdictions referenced by `references/scoped-priming.md`; Headroom (L6, MCP-server mode only, canon ruling 6 exclusions: .tmd/, contracts, must_haves, AGENTS.md, A2A payloads never compressed) is the compression adjunct. All three are STAGED in `templates/mcp-catalog.json` / on the machine floor — activation is seat wiring, not installation.
+

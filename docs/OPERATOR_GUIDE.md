@@ -3,6 +3,22 @@
 _Plain-language companion to the runbook and SOP. Read this once; keep it open
 in a tab. Post-restructure paths (v2.1): rig scripts live in `bin/`._
 
+## The seat model (canon rulings 1–3)
+
+**Terminal-output compression (WP-STACK):** `tokenjuice` (L6 pilot) is staged on the machine floor (`~/factory-rig/tools/tokenjuice`, pinned). When terminal-driver output floods a session, pipe it through tokenjuice before pasting — lean compaction for terminal-heavy agent workflows.
+
+
+| Seat | Component | Holds |
+|---|---|---|
+| ADE (default execution) | ZCode + GLM | the agentic environment of record — most work happens here |
+| Terminal | Pi.dev on Kimi OAuth | the mandated terminal seat; headless/scripted work, rig drivers, the ACP bridge's backend |
+| Editor bridge | Zed + ACP | the human surface into the terminal seat — never an execution seat itself |
+
+One execution seat owns a task end-to-end (ruling 3) — a task never splits
+across seats mid-flight; handoff is by file artifact, same as between
+profiles. Cline, Kilo Code, OpenCode, and Antigravity are rejected for the
+active stack (ruling 2).
+
 ## The mental model
 
 You have three recurring situations. Everything else is detail:

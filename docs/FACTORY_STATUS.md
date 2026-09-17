@@ -258,6 +258,30 @@ After any rig change that alters the ledger above: update this file in the same 
   and repo stop drifting.
 
 
+## WP-STACK — stack pre-staging, four-part binding rule, seat-model addendum (landed 2026-09)
+- Landed: corrected install policy in the register (STAGED posture between
+  DEFERRED and LIVE; four-parts law: pin + install + seat wiring + skill
+  pointer — a tool without its four parts is an orphan); seat-model addendum
+  (OPERATOR_GUIDE rulings 1–3 table, provider-setup seat map, CANON_MAP
+  Appendix C row); nine components staged with all four parts: ripgrep
+  (driver), betterleaks 1.8.1 (binary — preflight lane 3 now has its
+  scanner), serena 1.7.0 + codebase-memory-mcp 0.11.0 + context7 4.1.1 +
+  headroom-ai 0.3.4 (MCP catalog `templates/mcp-catalog.json` + lint-mcp
+  --catalog mode), openwiki 0.5.2 + openkb 1.0.22 (L3 substrate),
+  qmd 0.1.2 (L4-private), tokenjuice 0.8.5 (L6 pilot);
+  validation/stack-staging-smoke driver (42 checks); code-simplification
+  Import-Mode adoption (verbatim + E1–E3, worker-seat binding); register
+  layer tags + reason classes + Turborepo in §D.1 includes + the Semgrep
+  local-floor ruling (§2.2).
+- DEVIATIONS on record: (1) one WP commit carries all tools' four parts
+  (the WP's "one commit per tool" and its single-confirmation land order
+  conflict; the four-parts invariant is preserved per tool inside the one
+  commit). (2) qmd smoke is CLI-level only — its index roundtrip downloads
+  a ~600M-param embedding model from HF Hub (network-gated); that cost
+  moves to activation time. (3) codebase-memory-mcp's postinstall fetches
+  its platform binary on first run despite --ignore-scripts (L12 note in
+  its pin). (4) Graft deliberately unstaged (standby — ruling 7).
+
 ## WP-E — Change semantics: living domain specs, deltas, archive merge (landed 2026-09)
 - Landed (OpenSpec model adopted rig-native; CLI REJECTED — §D.30 shelf
   row): templates/specs/{domain-spec,delta}.md; bin/archive-change.mjs —
