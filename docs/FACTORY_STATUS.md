@@ -467,3 +467,33 @@ After any rig change that alters the ledger above: update this file in the same 
   deployed copy) into extensions/; settings block preserved verbatim;
   runtime state gitignored; pin recorded. Deployed-clone law restored:
   after push+pull the config arrives by commit, not by local edit.
+
+## WP-F Phase 4 + 5 — zcode-rig plugin + closeout (landed 2026-09-21)
+- **Phase 4:** `bin/generate-zcode-plugin.mjs` emits `projections/zcode-plugin/`
+  (manifest, 4 seat agents from profiles, commands /rig:preflight +
+  /rig:seat, hooks wiring, verbatim skills tree) — determinism law, L5
+  (authoring copy canonical). Guard scripts are static assets
+  (`templates/zcode-plugin-hooks/`): bash-guard (DANGER adapter;
+  rule-name parity with extensions/bash-guard.ts asserted by driver;
+  unparseable payload = LOUD deny by design) and scope-check
+  (contract-scope.mjs's .pi/scope.json, harness-neutral; absent scope =
+  ungoverned allow; crash = deny). Driver
+  `validation/zcode-plugin-smoke/` 35 checks incl. live deny/allow
+  behavior and byte-identical regeneration. `bin/check-zcode-plane.mjs`
+  (plane check; client-config absence noted, not failed — enablement
+  unverifiable pre-install). PORTABILITY: 2b amended (single-dir symlink
+  supersedes per-skill loop), 2d added (plugin install).
+- **DEVIATIONS on record (Phase 4):** (1) hooks.json uses the
+  Claude-compatible PreToolUse shape per Package A Z.2 [DOCS] — field
+  names UNVERIFIED in-client until first live run (a loud deny will
+  surface any mismatch by design); (2) agent model pinning left as
+  commented slots (V5 UNVERIFIED); (3) seat UserPromptSubmit injection
+  hook (Z.13.1.5) NOT shipped — commands carry /rig:seat as
+  operator-invoked; the injection hook lands with the in-client pass;
+  (4) per-skill 2b loop replaced by dir symlink (improvement, recorded).
+- **Phase 5 closeout:** WP-F complete. Rig surface: 31 skills (nine
+  invocation plane + specialists), four retirements proven by
+  merge-completeness (44) + trigger-parity (15). Remaining UNVERIFIED
+  items (all in-client, operator-observable): hooks schema on first
+  live run; /debug auto-trigger on first live failure; V5 model
+  pinning; V6 wiki. Rollback for each = the named commit.

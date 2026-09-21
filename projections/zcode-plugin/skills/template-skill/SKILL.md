@@ -1,0 +1,160 @@
+---
+name: template-skill
+description: Author or import rig skills. Use when authoring any new procedural loop for the rig, evolving an existing skill, or importing a foreign SKILL.md (conformance pass). Covers both skill classes, the folder anatomy, and the import protocol.
+metadata:
+  author: Agentic SWE Factory
+  version: 2.0.0
+  class: procedural
+  trigger_phrases: ["author a new skill", "create a skill", "new skill", "import this skill", "port this skill", "skill template", "update the skill format"]
+  v2.1: mode router + bake-off protocol (WP-D-5)
+disable-model-invocation: true
+---
+
+## §0A. Two Modes
+
+This skill has exactly two modes. Decide the mode first, say which one you are in.
+
+| Mode | When | Path |
+|---|---|---|
+| **Author Mode** | Creating a skill from scratch — no external source | Sections 1–4 below (the original wireframe), plus §4A–§4C [v2] |
+| **Import Mode** | Porting an existing skill from any external source | §5 Import Mode [v2] — copy + enumerated edits, never paraphrase |
+
+Author Mode is the default only when no source material exists. If the operator names or links an external skill, you are in Import Mode — do not "re-author" it; that is paraphrase under another name.
+
+### SKILL: template-skill (wireframe — Sovereign Skill Protocol)
+
+#### 0. The Two Classes (choose BEFORE writing)
+
+Every rig skill is exactly one class:
+
+**Procedural** — a workflow the agent EXECUTES: steps, drivers, exit codes,
+human gates. Skeleton = sections 1–4 below (unchanged from v1). Examples:
+rig-change, project-onboard, spec-intake, slice-plan, pr-review, tool-intake.
+
+**Discipline** — a law-in-prose the agent INTERNALIZES mid-task: it is read
+while doing other work, not executed as a task. Skeleton = section 4B below.
+Examples: test-driven-development, systematic-debugging,
+verification-before-completion, brainstorming.
+
+If a draft cannot be classified, it is two skills. Split it.
+Discipline skills never invent law: where their content overlaps canon or
+manifold text, they cite by pointer (L5).
+
+#### 1. Trigger Context & Topological Binding
+Invoke this skill protocol based on the YAML frontmatter above. Before
+executing the loop, progressively load and obey the physical laws of the
+repository:
+- Read `/.tmd/rules.md` (the Anti-Slop Protocol is absolute).
+- Read `/.tmd/gravity.md` to ensure your actions respect architectural boundaries.
+- Read any further manifold files the procedure touches — manifold reads are
+  EXPLICIT, never assumed.
+
+Procedural skills keep this section as-is. Discipline skills
+replace it with **Overview** (one paragraph: the technique and why it
+matters, including its canon binding by pointer).
+
+#### 2. Required Tooling
+List the exact tools this skill needs active (e.g., read, grep, bash). A seat
+whose actuation boundary lacks one of these tools MUST NOT invoke this skill.
+
+#### 3. The Procedural Loop (Act → Observe → Exit)
+Execute this exact sequential algorithm. Do not skip steps or hallucinate
+intermediate actions.
+
+##### Step 1: ACT ([action name])
+- Execute: [exact command or tool call].
+
+##### Step 2: OBSERVE ([expected output])
+- If [condition A]: proceed to the fallback action.
+- If [condition B]: proceed to Step 3.
+
+##### Step 3: ACT ([resolution action])
+- [Final execution step.]
+
+##### Step 4: EXIT PROTOCOL
+- [How the loop mathematically terminates, e.g., "when the validator exits 0,
+  report status and stop." Deterministic validation lives in scripts/
+  executables — exit 0 = success, exit 1 = must_haves unsatisfied. The agent
+  is forbidden from marking complete on prose judgment alone.]
+
+#### 4. Local Negative Constraints (Anti-Patterns)
+While executing this specific skill, you are mathematically forbidden from:
+- [Constraint 1]
+- [Constraint 2]
+
+#### 4A. Required section in BOTH classes: When NOT to Use
+Immediately after the class skeleton's opening section, every skill states
+explicit exclusions — symptoms, task types, or conditions where the skill
+must NOT activate. Over-triggering is a routing defect; this section is the
+brake. lint-skills fails on its absence.
+
+#### 4B. Discipline-class skeleton (replaces sections 1–4 for that class)
+1. **Overview** — one paragraph: the technique, why it matters, canon
+   binding by pointer.
+2. **When to Use / When NOT to Use** — both lists required.
+3. **The Iron Law** — the single non-negotiable, in its own code block.
+4. **The Technique** — the complete method: phases/steps/tables, worked
+   examples where they carry weight.
+5. **Rationalization Counters** — a table naming the exact excuses the
+   agent will reach for ("just this once", "it's a small change") and
+   pre-rebutting each.
+6. **Local Negative Constraints** — same law as section 4.
+
+#### 4C. Folder anatomy
+skills/<name>/
+├── SKILL.md        # required — the only required file
+├── scripts/        # optional — executable helpers (pinned, --ignore-scripts)
+├── references/     # optional — progressive-disclosure docs, loaded on demand
+└── assets/         # optional — static resources
+Omit empty folders — an empty folder is noise (lint fails on it).
+
+#### 5. IMPORT MODE — conforming a foreign SKILL.md
+
+### §5.0 Bake-off Protocol (mandatory before any import)
+
+**One skill per seat (L5).** Before importing, name the seat the candidate would occupy (the trigger condition: "this skill runs when …"). Then:
+
+1. **Check the seat.** Look up CAPABILITY_REGISTER.md and the skills/ tree. Is the seat occupied?
+2. **Seat empty** → proceed with Import Mode steps 1–9.
+3. **Seat occupied** → STOP. Run the bake-off:
+   - Read **both** skills in full — the candidate and the incumbent. No skimming; truncated reads invalidate the verdict.
+   - Write a verdict in the rig-change report with exactly one of three outcomes:
+     - **ADOPT NEWCOMER** — incumbent is retired to §D.28 with the reason recorded.
+     - **KEEP INCUMBENT** — candidate rejected; unique blocks may still be harvested (below).
+     - **KEEP ONE + HARVEST** — incumbent keeps the seat; the loser's unique, superior blocks are inserted verbatim with provenance noted in frontmatter (`harvests: [...]`).
+   - Record the verdict and a one-line reason in §D.28 so it is never re-litigated.
+4. **Harvests are verbatim.** A harvested block is copied from the source and inserted at a named location — never summarized. Summarizing a harvest is truncation.
+5. **Unclear seat boundary** (the two skills overlap partially but serve different stages) → escalate `needs_human` with both SKILL.md paths and your proposed boundary. Do not improvise the boundary.
+
+Protocol, in order, no shortcuts:
+When authoring or editing any agent-consumed document, consult `references/writing-for-agents.md` (context pointers, leading words, completion criteria, pruning) and `references/skill-mechanics.md` (frontmatter and invocation mechanics). These complement the superpowers writing-skills patterns: writing-skills governs the authoring workflow; writing-for-agents governs the writing itself.
+1. READ the foreign skill end to end — every file in its folder
+   (SKILL.md, scripts, references). No porting from summaries. Foreign
+   skills are ported by TRANSFORMATION: copy the source file, then apply an
+   enumerated edit list (frontmatter replacement + named substitutions).
+   Never re-author from memory or summary — transformation, not
+   paraphrase, is what makes truncation structurally impossible.
+2. CLASSIFY it (procedural | discipline) per section 0.
+3. STRIP harness-coupling: foreign tool/hook/CLI references are replaced
+   with rig surfaces or removed; record each substitution in the commit
+   message.
+4. CONFORM frontmatter (E.6 contract below) including metadata.class and
+   trigger_phrases.
+5. ADD "When NOT to Use" and any missing class-required sections.
+6. L5 CHECK: restated canon/manifold law → pointer. CONTRADICTED canon →
+   stop, surface the conflict; canon wins unless the operator ratifies a
+   canon amendment.
+7. L12 CHECK: scripts pinned; no curl|sh; no unvetted network calls.
+8. VALIDATE: node bin/lint-skills.mjs; skills driver green; regenerate
+   projections.
+9. Land via rig-change (drivers → §5.4 → commit). One skill or one
+   coherent batch per commit.
+
+---
+Frontmatter contract (E.6, Pi-mapped): name kebab-case matching the folder;
+description trigger-precise (≤1024 chars); metadata.trigger_phrases; Pi
+invocation mapping — `invocation: user` (canon) = `disable-model-invocation:
+true` (Pi). Delete `disable-model-invocation` only for skills the model may
+route to itself. No XML angle brackets anywhere in frontmatter or metadata.
+metadata.class (procedural | discipline) is required from
+format v2.0.0; lint-skills fails on its absence.

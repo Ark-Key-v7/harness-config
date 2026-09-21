@@ -1,0 +1,125 @@
+---
+name: rig-change
+description: Execute the governed rig-change workflow when the operator has new or updated Factory Rig files (extensions, tools, drivers, templates, skills, projections). Use when the operator says they have new rig files, downloaded files to place, or asks to commit and sync harness-config.
+metadata:
+  author: Agentic SWE Factory
+  version: 1.3.0
+  class: procedural
+  trigger_phrases: ["new rig files", "place these files", "update the rig", "commit and sync harness-config", "I downloaded the new version", "canon updated", "new handbook version"]
+---
+
+### SKILL: rig-change — governed rig modification workflow
+
+Canon: §5.4 Meta-Harness Restriction — rig changes are human-ratified. This
+skill prepares everything and the OPERATOR turns the key at step 5. Never
+skip the confirmation.
+ACP frontend rule: when the frontend is ACP (Zed), never invoke the
+interactive input UI (pi-acp cancels it outright) — pose every question as
+plain chat text and proceed only on an explicit typed affirmative; treat
+dismissal, timeout, or ambiguity as non-ratification.
+
+#### 1. Trigger Context & Topological Binding
+You are operating in the harness-config SOURCE repo (~/factory-rig/sources/harness-config).
+Rig law applies: L6 Config-as-Code (every change committed), L12 supply-chain
+policy, and the sync chain — source repo → push → pull into the read-only
+active clone at ~/.pi/agent. The chain is not done until the pull succeeds.
+
+#### When NOT to Use
+- The request touches a product repository's own files (specs, contracts,
+  source) — that is governed-project work, not a rig change.
+- The operator asks the agent to push or sync — those are operator-run by law.
+- No file or spec accompanies the request — there is nothing to classify.
+
+#### 2. Required Tooling
+read, write/edit (target files only), bash (git + node), ls, find.
+
+#### 3. The Procedural Loop (Act → Observe → Exit)
+
+##### Step 1: ACT (intake) — classify the trigger BEFORE any file hunting
+1. **Evidence first, always:** run `git status --short` (and a recent `git log --oneline -3`) in the source repo. Uncommitted or untracked changes there are the PRIMARY signal — an in-flight rig change already present in the working tree. Present that output as the candidate change-set.
+2. **Trigger table** — ask the operator to confirm which trigger applies (never assume; but LEAD WITH the evidence, do not ignore it):
+   - **T1 — Working-tree change:** `git status` shows modified/untracked files in the rig repo. The change-set IS that output; classify each path per the placement table below. Downloads are never consulted.
+   - **T2 — File placement:** operator says they have new/downloaded files to place. ONLY now list candidates: `ls -t /mnt/c/Users/*/Downloads/ | head -30`, ask WHICH files are part of the change, then classify.
+   - **T3 — Canon revision:** trigger is "canon updated" / "new handbook version" — execute the "Canon revision" section of `docs/FACTORY_UPDATE_RUNBOOK.md` (diff old vs new handbook at `~/factory-rig/sources/_canon-handbooks/`, classify deltas, same-commit register + CANON_MAP + FACTORY_STATUS bookkeeping), then rejoin this skill at Step 3 for validation, staging, and ratification.
+3. **Classify** each file (T1/T2) by reading enough of it, per the placement table:
+
+| Artifact | Destination |
+|---|---|
+| extension (`*.ts` with `export default function (pi:`) | `extensions/` |
+| repo tooling (`*.mjs` scripts) | `bin/` |
+| driver (`*.test.mjs`) | `validation/<name>-smoke/` |
+| manifold template | `templates/tmd/` |
+| profile | `templates/agents/profiles/` |
+| skill folder | `skills/<kebab-name>/` |
+| manifold template (`templates/specs/`) | `templates/` |
+| `specs/**` artifacts | PROJECT files — never placed in the rig repo |
+| `.agents/autonomy.json` / `.agents/floor.json` | PROJECT config — never placed by rig-change |
+| spec / docs | `docs/` |
+
+##### Step 2: ACT (place)
+- For T2: copy each file to its destination. For T1: files are already in the tree — the placement list is the path classification from Step 1.
+- Show the operator the full placement list before proceeding.
+
+##### Step 3: OBSERVE (validate — deterministic, exit-code routed)
+- Run the matching driver for every changed artifact: `node validation/<name>-smoke/<name>.test.mjs`
+  - exit 0 → proceed.
+  - exit 1 → STOP. Report the failing checks verbatim. Do not commit. Do not
+    "fix" silently — report and wait for instruction.
+- Run applicable linters: `node bin/lint-tmd.mjs`, `node bin/lint-profiles.mjs`, `node bin/lint-skills.mjs`.
+- If templates/ or bin/ changed: `node bin/generate-projections.mjs && node bin/check-projections.mjs` (drift must be clean).
+
+##### Step 4: ACT (stage and propose)
+- `git status --short` and `git diff --stat`; show the operator.
+- The handoff BEGINS with the ratification read: instruct the operator to
+  run `git diff --cached` and read the full staged diff before answering.
+  The staged-file table is a summary, not evidence — ratification without
+  the read is not ratification.
+- Optional advisory step (diff echo): if the operator pastes the
+  `git diff --cached` output back into the thread, verify it against the
+  ratification table and report discrepancies across exactly five checks,
+  in this order:
+  1. File list matches the table exactly — any extra file, especially
+     under `extensions/`, `templates/`, or `bin/`, is a red flag.
+  2. Scope matches the brief — large unrequested deletions or rewrites
+     are a stop.
+  3. No secrets — keys, tokens, passwords, `.env` content in added lines.
+  4. No law edits outside the brief — governance files changing beyond
+     what the table declared.
+  5. Driver scratch stays untracked — no `??` fixtures staged.
+  The report is advisory only: the typed yes remains the operator's sole
+  act of ratification, and an agent never ratifies its own work.
+- Propose a commit message naming the work package or artifact.
+
+##### Step 5: OBSERVE (human ratification — §5.4)
+- Ask the operator explicitly: "Commit? (yes/no)" — the typed yes authorizes
+  the commit only; push and clone-sync are always operator-run (the operator
+  holds the SSH key).
+- ACP frontend (Zed): ask as plain chat text — never the interactive input
+  UI. Proceed ONLY on an explicit typed "yes"; dismissal, timeout, or
+  ambiguity count as no.
+- If no → leave the working tree staged, report state, EXIT.
+- If yes → proceed.
+
+##### Step 6: ACT (commit, then hand the keys back)
+- `git add <exact paths>` (never `git add -A` — driver scratch must never be swept in)
+- `git commit -m "<agreed message>"`
+- Hand the operator the push + sync commands; NEVER run them yourself:
+  `git push` and `git -C ~/.pi/agent pull --ff-only` are operator-run
+  (the operator holds the SSH key).
+
+##### Step 7: EXIT PROTOCOL
+- The chain is complete ONLY when the operator reports the pull output shows
+  a fast-forward update (the agent never runs the push or the sync).
+- Report: files placed, driver results, commit SHA, the exact operator
+  commands for push + sync. Then stop.
+
+#### 4. Local Negative Constraints (Anti-Patterns)
+- NEVER run `git add -A` or `git add .` — stage exact paths only.
+- NEVER commit with a failing driver (exit 1 anywhere = halt).
+- NEVER skip the §5.4 confirmation, even if the operator said "go ahead" earlier in the session — confirm per change-set.
+- NEVER treat an ACP dismissal, timeout, or ambiguous reply as ratification —
+  only an explicit typed affirmative ratifies.
+- NEVER consult Downloads or hunt for files elsewhere before reading `git status` in the source repo — the working tree is the primary change signal; Downloads is only a T2 fallback.
+- NEVER run `git push` or `git -C ~/.pi/agent pull` — push and clone-sync are
+  always operator-run; the operator holds the SSH key.
+- NEVER modify files under ~/.pi/agent directly; the active clone is read-only and receives changes only via pull.
