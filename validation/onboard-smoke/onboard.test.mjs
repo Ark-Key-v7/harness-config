@@ -62,7 +62,7 @@ const expected = [
   ".tmd/rules.md", ".tmd/gravity.md", ".tmd/promises.md", ".tmd/glossary.md", ".tmd/design.md",
   ".pi/settings.json", ".pi/.mcp.json", ".pi/.gitignore", ".pi/README.md", ".pi/append-system.md",
   ".agents/profiles/scout.md", ".agents/profiles/planner.md", ".agents/profiles/worker.md", ".agents/profiles/reviewer.md",
-  ".agents/skills/rig-change/SKILL.md", ".agents/skills/pr-review/SKILL.md", ".agents/skills/tool-intake/SKILL.md", ".agents/skills/template-skill/SKILL.md",
+  ".agents/skills/rig-change/SKILL.md", ".agents/skills/check/SKILL.md", ".agents/skills/tool-intake/SKILL.md", ".agents/skills/template-skill/SKILL.md",
   ".agents/schemas/state.schema.yaml",
 ];
 const missing = expected.filter((f) => !existsSync(join(PROJ, f)));

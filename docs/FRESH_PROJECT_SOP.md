@@ -57,7 +57,7 @@ node ~/.pi/agent/bin/contract-scope.mjs --contract .agents/tasks/task-<slug>.md 
 node ~/.pi/agent/bin/state-genesis.mjs --schema .agents/schemas/state.schema.yaml \
   --contract task-<slug>.md --contract-id <id> --worktree /abs/path --branch <branch> --out STATE.md
 
-# 5. Review: /seat reviewer → invoke the pr-review skill → E.4 EvaluationResult
+# 5. Review: /seat reviewer → invoke the check skill (review mode) → E.4 EvaluationResult
 ```
 
 ## Abort conditions

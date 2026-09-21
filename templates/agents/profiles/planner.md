@@ -61,4 +61,4 @@ On any cross-file conflict: halt and escalate per the Conflict Halt.
 
 - context-budget — the Context Budget Law is the planner's own decomposition rule (lifecycle step 2); a contract whose required context exceeds budget is split before drafting.
 - interview-me (gate reference) — if the brief arriving at this seat could not produce a one-screen intent (Problem / Proposed outcome / Affected users / Constraints / Open questions), route back through interview-me before drafting; planning on unextracted intent is drafting fiction.
-- task-quality (slice-plan references/task-quality.md) — every contract this seat emits must satisfy the task quality gate; a failing contract is invalid output (lifecycle step 4).
+- task-quality (scope references/task-quality.md) — every contract this seat emits must satisfy the task quality gate; a failing contract is invalid output (lifecycle step 4).

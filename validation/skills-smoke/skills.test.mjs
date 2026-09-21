@@ -53,10 +53,10 @@ const rigOrig = readFileSync(rigChange, "utf8");
 check("shipped skill library VALID (format v2.0.0 + WP-F budgets)", lint().code === 0);
 
 // non-kebab folder
-renameSync(join(SKILLS, "pr-review"), join(SKILLS, "PR_Review"));
+renameSync(join(SKILLS, "document"), join(SKILLS, "PR_Review"));
 const folderRun = lint(true);
 check("non-kebab folder caught", folderRun.code === 1 && folderRun.out.includes("kebab-case"));
-renameSync(join(SKILLS, "PR_Review"), join(SKILLS, "pr-review"));
+renameSync(join(SKILLS, "PR_Review"), join(SKILLS, "document"));
 
 // name/folder mismatch
 writeFileSync(rigChange, rigOrig.replace("name: rig-change", "name: rigchange"));
@@ -134,7 +134,7 @@ check("model-alias spawn directive caught (WP-F)", aliasRun.code === 1 && aliasR
 writeFileSync(rigChange, rigOrig);
 
 // v2.1.0 (WP-F): contract blocks — same NAME, different content across skills
-const prFile = join(SKILLS, "pr-review", "SKILL.md");
+const prFile = join(SKILLS, "document", "SKILL.md");
 const prOrig = readFileSync(prFile, "utf8");
 writeFileSync(rigChange, rigOrig + "\n<!-- SHARED-RULE:START -->\nRule A text.\n<!-- SHARED-RULE:END -->\n");
 writeFileSync(prFile, prOrig + "\n<!-- SHARED-RULE:START -->\nRule B text.\n<!-- SHARED-RULE:END -->\n");

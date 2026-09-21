@@ -61,12 +61,12 @@ CodeRabbit never a second AI voice.
 | §2.5 LanceDB semantic dedup (TMD_DEDUP_THRESHOLD 0.95, halt + Deduplication PR) | — | DEFERRED (register §D.7) |
 | §2.5 commit-triggered re-indexing (QMD / code-graph / LanceDB cadences) | pattern prototyped by `bin/generate-projections.mjs` + `bin/assert-projection-fresh.mjs` (input-head lockstep) | DEFERRED (register §D.7) |
 | §2.5 BetterDB session cache exemption | — | DEFERRED (register §D.8) |
-| Phase 0 Intent & Specification (TCE v2.1 §2.A) | `templates/specs/`, `bin/lint-spec.mjs`, skills `spec-intake`/`slice-plan`, contract `trace:` field | LIVE (WP-A–C; §D.22 closed) |
+| Phase 0 Intent & Specification (TCE v2.1 §2.A) | `templates/specs/`, `bin/lint-spec.mjs`, skills/scope (spec + slices modes, WP-F Phase 2), contract `trace:` field | LIVE (WP-A–C; §D.22 closed) |
 | Provenance headers (`derived_from`/`last_reconciled`) | `templates/tmd/*` Zone C mandatory keys + lint-tmd fail-closed check | LIVE (WP-C2) |
 | spec §0.6.1 Canon Compiler | bin/canon-compile.mjs + fixtures | LIVE (WP-C2) |
 | spec §0.7 Law Economy (15-law budget, placement ladder) | rules.md Zone B statement + lint-tmd | LIVE (WP-C2) |
 | spec §0.3 three-zone model (A fixed / B bindings / C PRD-compiled) | templates/tmd/* retitled + lint-tmd heading + provenance checks | LIVE (WP-C2) |
-| Phase-0 chain + change semantics (living domain specs, deltas, archive merge — OpenSpec model adopted rig-native) | templates/specs/{domain-spec,delta}.md, bin/archive-change.mjs, lint-spec delta/domain lint, spec-intake/slice-plan v2.1.0 | LIVE (WP-E) |
+| Phase-0 chain + change semantics (living domain specs, deltas, archive merge — OpenSpec model adopted rig-native) | templates/specs/{domain-spec,delta}.md, bin/archive-change.mjs, lint-spec delta/domain lint, /scope modes spec.md + slices.md (WP-F Phase 2) | LIVE (WP-E) |
 | Agent memory system (M1/M2, write path, store, retrieval, index) | skills/memory/ + templates/memory/ + bin/memory-verify.mjs + QMD/LanceDB config | LIVE (WP-MEM) |
 
 ## SDLC Stage Map (canonical aliases)
@@ -77,12 +77,12 @@ documents, skills, and gates always use the rig names.
 
 | Rig stage (canonical) | Anthropic SDLC | agent-skills SDLC | Seat / skill bound | Gate artifact |
 |---|---|---|---|---|
-| specs/intent.md | Plan (intent half) | DEFINE /spec | interview-me → spec-intake | intent.md |
-| PRD | Plan | DEFINE /spec | spec-intake | prd.md + falsifiable hypothesis |
-| plan.md | Plan → Design | PLAN /plan | slice-plan (capability map) | plan.md |
+| specs/intent.md | Plan (intent half) | DEFINE /spec | interview-me → /scope (spec mode) | intent.md |
+| PRD | Plan | DEFINE /spec | /scope (spec mode) | prd.md + falsifiable hypothesis |
+| plan.md | Plan → Design | PLAN /plan | /scope (slices mode, capability map) | plan.md |
 | slice + Task Contract | Design → Build | BUILD /build | worker seat (TDD, verification, systematic-debugging bound) | contract + code |
 | Validate / QA gate | Test | VERIFY /test | gate drivers (check:fast/task/full) + E.7 holdout; reviewer seat judges | green driver output |
-| pr-review | Test → Deploy (review half) | REVIEW /review | pr-review (+ rules-drift-check) | review report |
+| check (review mode) | Test → Deploy (review half) | REVIEW /review | check (review mode, + rules-drift-check) | review report |
 | PR merge + release | Deploy | SHIP /ship | operator-gated merge | merged PR |
 | Incident record + floor ratchet | Maintain | (no equivalent) | doctor seat | incident record, floor.json |
 
@@ -102,8 +102,8 @@ documents, skills, and gates always use the rig names.
 | Stage 2 agent-adversarial review (PR-Agent via LiteLLM, .pr_agent.toml; open-code-review pilot; weekly CodeQL) | — | DEFERRED (register §D.1) |
 | Stage 3 E2E (ephemeral Convex preview, Playwright baseline + Midscene semantic fallback, action circuit breaker) | — | DEFERRED (register §D.3) |
 | Stage 3.5 pilots (Strix pentest lane; Claw Patrol egress firewall) | — | DEFERRED, pilot-gated by canon itself (register §D.9) |
-| Stage 4 human gate (24h SLA, staleness rebase, low-risk auto-merge) | `skills/pr-review/` is the rubric surface; SLA/auto-merge need the merge queue | SOP + DEFERRED (register §D.1) |
-| Stage 4 deterministic-trail-first rule ("review begins only after inspecting the full pipeline trail") | `skills/pr-review/` Step 1 — preflight trail is a hard precondition | LIVE (WP11) |
+| Stage 4 human gate (24h SLA, staleness rebase, low-risk auto-merge) | `skills/check/` (review mode) is the rubric surface; SLA/auto-merge need the merge queue | SOP + DEFERRED (register §D.1) |
+| Stage 4 deterministic-trail-first rule ("review begins only after inspecting the full pipeline trail") | `skills/check/` review mode — preflight trail is a hard precondition | LIVE (WP11) |
 | §2.8 CD handoff (Vercel edge / Hetzner+Coolify; agents forbidden from writing deploy scripts) | — | DEFERRED (register §D.1) |
 | §2.9 offline/online evaluations, quality flywheel (turns/cost to converge) | — | DEFERRED (register §D.7) |
 | Merge queue physics (batch-then-bisect, pairwise-conflict serialization, Worktrunk isolation) | `templates/wt.toml` hook contract (inert until Worktrunk adopted) | DEFERRED (register §D.1) |
@@ -112,7 +112,7 @@ documents, skills, and gates always use the rig names.
 
 | Canon element | Rig surface | Status |
 |---|---|---|
-| Ten Marks as reviewer detection methods | `skills/pr-review/` Step 3 + `templates/agents/profiles/reviewer.md` (via `/seat reviewer`) | LIVE |
+| Ten Marks as reviewer detection methods | `skills/check/` review mode + `templates/agents/profiles/reviewer.md` (via `/seat reviewer`) | LIVE |
 | "referenced by pointer, never duplicated into the manifold" | `templates/tmd/rules.md` §2 pointer; L5 driver checks | LIVE |
 | Worker-facing counterpart = Anti-Slop Protocol only | `templates/tmd/rules.md` §1 verbatim | LIVE |
 | Judgment at the gate remains human | skill emits EvaluationResult; human ratifies merge | LIVE (process) |
@@ -177,13 +177,13 @@ revisions stay traceable.
 | §4.7 Queue Operations Law (priority, caps, ≤2 attempts, escalation, watchdog D1–D6) | SOP now (FRESH_PROJECT_SOP/OPERATOR_GUIDE); machinery register §D.19 | SOP + DEFERRED |
 | §5.10.1 protected list in code, fail-closed | `extensions/guard.ts` + `bin/guard.mjs` + `bin/guard-list.mjs` (WP-C) | LIVE |
 | §5.10.2 floor ratchet | `bin/floor-ratchet.mjs` + `.agents/floor.json` (WP-C) | LIVE |
-| §5.10.3 raw output wins / loud skips | pr-review skill law (WP-B); gate.py-class precedence | LIVE (process) |
+| §5.10.3 raw output wins / loud skips | check review-mode law (WP-B, WP-F port); gate.py-class precedence | LIVE (process) |
 | §5.10.4 mutation testing of the gate | `validation/mutations/` (WP-C) | LIVE |
 | §5.6 autonomy dial (0–3, doctor-gated) | `bin/doctor.mjs` + `.agents/autonomy.json` (WP-B) | LIVE (elevation gate; dial ≥2 interlock awaits §D.19 machinery) |
 | E.1 holdout truths (builder-blind, read-denied) | contract template + contract-scope read-deny + `bin/tripwire.mjs` (WP-A/WP-C) | LIVE |
 | §5.8 ruling: headless compaction ban | OPERATOR_GUIDE SOP; escalation routing §4.7 | SOP |
 | §5.8 ruling: headless ask-user → needs_human + proposed answer | `extensions/ask-user.ts` posture doc; machinery §D.19 | SOP + DEFERRED |
-| §5.8 ruling: base-branch rulebook reading | `skills/pr-review/` Step 0 (WP-B) | LIVE |
+| §5.8 ruling: base-branch rulebook reading | `skills/check/` review mode Step 0 (WP-B, WP-F port) | LIVE |
 | §5.8 ruling: Stage-6 loop closure | — | DEFERRED (register §D.20) |
 | §5.8 ruling: agent-config evals | — | DEFERRED (register §D.21) |
 | Appendix §4 A2A Completion Payload Schema | templates/agents/schemas/a2a-completion.schema.json (verbatim) + contract Exit Protocol pointer | LIVE (WP-C2) |

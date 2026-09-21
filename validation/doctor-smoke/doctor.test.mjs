@@ -151,7 +151,7 @@ exit_protocol: emits A2A Completion Payload (E.3)
   const r = doctor(P);
   check("L0 fixture: exit 0 (doctor reports)", r.code === 0);
   check("L0 fixture: max_level 0", r.out.includes("max_level: 0"));
-  check("L0 fixture: specs FAIL names the next action", r.out.includes("spec-intake"));
+  check("L0 fixture: specs FAIL names the next action", r.out.includes("scope skill"));
 }
 
 // --- Level 1 fixture: + specs + autonomy.json ---------------------------------------

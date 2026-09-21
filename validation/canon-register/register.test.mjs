@@ -11,7 +11,7 @@
  *  - docs/activation-triggers.json parses; every trigger id and anchor
  *    appears in the register (the two never drift apart).
  *  - The five canon texts are indexed in CANON_MAP.md.
- *  - Skill wiring: pr-review requires the preflight trail; project-onboard
+ *  - Skill wiring: check review requires the preflight trail (WP-F port); project-onboard
  *    relays activation notices; OPERATOR_GUIDE lists the life events.
  *
  * Run from the repo root: node validation/canon-register/register.test.mjs
@@ -84,10 +84,12 @@ ok("canon map states the no-chunking ruling", /never (chunked|copied)/.test(cmap
 ok("canon map uses the status vocabulary", ["LIVE", "PARTIAL", "DEFERRED", "SOP"].every((s) => cmap.includes(s)));
 
 // --- Skill / guide wiring --------------------------------------------------------------
-const prReview = readFileSync(join(REPO, "skills", "pr-review", "SKILL.md"), "utf8");
-ok("pr-review requires the preflight trail", prReview.includes("preflight.mjs"));
-ok("pr-review states the lane map (one process)", prReview.includes("Review Lanes"));
-ok("pr-review blocks rubric on dirty trail", /automatic FAIL/.test(prReview));
+// WP-F Phase 3: pr-review was absorbed into /check review mode (completeness-
+// gated, validation/merge-completeness); the wiring assertions follow the port.
+const checkReview = readFileSync(join(REPO, "skills", "check", "modes", "review.md"), "utf8");
+ok("check review requires the preflight trail", checkReview.includes("preflight.mjs"));
+ok("check review states the lane map (one process)", checkReview.includes("Lane framing"));
+ok("check review blocks rubric on dirty trail", /automatic FAIL/.test(checkReview));
 const onboard = readFileSync(join(REPO, "skills", "project-onboard", "SKILL.md"), "utf8");
 ok("project-onboard relays activation notices", onboard.includes("ACTIVATION NOTICE"));
 ok("project-onboard forbids autonomous deferred installs", /NEVER integrate a deferred tool/.test(onboard));

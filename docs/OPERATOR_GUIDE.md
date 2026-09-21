@@ -53,8 +53,8 @@ A "task" is one unit of work with a finish line — e.g. "auth session CRUD".
 The contract is its written definition of done. You don't hand-write these
 from scratch; in practice:
 
-Start with `spec-intake` ("new work: <idea>") → it interviews you and drafts
-intent + PRD. Then `slice-plan` ("slice the PRD") → plan + drafted contracts,
+Start with `/scope` ("new work: <idea>") → its spec mode interviews you and drafts
+intent + PRD. Then `/scope` (slices mode, "slice the PRD") → plan + drafted contracts,
 validated. Then scope + seat as before.
 
 ### Fallback: the manual commands
@@ -66,7 +66,7 @@ validated. Then scope + seat as before.
 4. Pick the seat: `/seat worker` (build it), `/seat scout` (explore first), `/seat reviewer` (review after).
 5. Work. Out-of-scope writes are blocked automatically — a block means the
    scope is wrong or the move is wrong; resolve, don't force.
-6. Done → `/seat reviewer` → "run pr-review".
+6. Done → `/seat reviewer` → "run check review".
 
 Steps 2–3 are two commands now; if you want them conversational, that's a
 `task-start` skill — same pattern as `project-onboard` (worth adding when the
@@ -80,7 +80,7 @@ edit a profile, next turn sees it.
 
 ## Skills available globally (post-v2.1)
 
-`rig-change` · `pr-review` · `tool-intake` · `template-skill` · `project-onboard` · `spec-intake` · `slice-plan`
+`rig-change` · `scope` · `architect` · `develop` · `check` · `test` · `document` · `sync` · `debug` (the nine, WP-F) · `project-onboard` · `ship-gate` · `tool-intake` · `template-skill`
 They live at repo-root `skills/` — discovered by Pi everywhere, seeded into
 projects at `.agents/skills/` by onboarding.
 
@@ -121,12 +121,12 @@ Deferred tools stay deferred until their gates fire.
 | Stage | Artifact | Produced by | Invoked how |
 |---|---|---|---|
 | DEFINE intent | `specs/intent/<slug>.md` | you + interview-me | "new work: <idea>" — the interview extracts intent; one screen, no solution detail |
-| DEFINE spec | `specs/prd/<slug>.md` (+ `specs/changes/<slug>/delta.md` for brownfield) | spec-intake skill | continues from intent; hypothesis, metrics, non-goals, Zone-C compile tables; Step 4b drafts the delta (spec-intake v2.1.0) |
-| PLAN | `specs/plans/<slug>.md` + slices | slice-plan skill | "slice the PRD" — slices ≤500 prod lines / ≤12 files, task-quality gate |
+| DEFINE spec | `specs/prd/<slug>.md` (+ `specs/changes/<slug>/delta.md` for brownfield) | /scope (spec mode) | continues from intent; hypothesis, metrics, non-goals, Zone-C compile tables; Step 4b drafts the delta (spec-intake v2.1.0, absorbed WP-F) |
+| PLAN | `specs/plans/<slug>.md` + slices | /scope (slices mode) | "slice the PRD" — slices ≤500 prod lines / ≤12 files, task-quality gate |
 | CONTRACT | `.agents/tasks/task-<slug>.md` | planner seat (or manual template + lint-contract) | "draft a task contract for <slice>"; lint + contract-scope arm the sandbox |
 | BUILD | the diff | worker seat | `/seat worker` — bound disciplines fire automatically (TDD, verification-before-completion, systematic-debugging, context-budget, + domain disciplines: api-and-interface-design, security-and-hardening, observability-and-instrumentation, documentation-and-adrs per the slice) |
 | VERIFY | gate output | gate drivers | the contract's validation_commands + `check:fast/task/full`; E.7 holdout where present |
-| REVIEW | verdict artifact (E.4) | reviewer seat | `/seat reviewer` → "run pr-review" — fresh context, evidenced verdicts |
+| REVIEW | verdict artifact (E.4) | reviewer seat | `/seat reviewer` → "run check review" — fresh context, evidenced verdicts |
 | SHIP | merged PR + deploy verification | ship-gate skill + you | "ship it" — Stage 0 preflight → PR → human gate (24h SLA) → merge → post-merge checks; rig changes take rig-change instead |
 | ARCHIVE | merged `specs/domains/<domain>/spec.md` + dated archive | archive-change.mjs | after merge: `node ~/.pi/agent/bin/archive-change.mjs --change specs/changes/<slug>` — living truth updates, change becomes history |
 | MAINTAIN | incident record + floor ratchet | you + skills | incidents ratchet the floor (`bin/floor-ratchet.mjs`); breaches draft new intent artifacts |

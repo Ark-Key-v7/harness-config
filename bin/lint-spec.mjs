@@ -130,7 +130,7 @@ for (const a of artifacts.filter((a) => a.kind === "plans")) {
 for (const s of slices) {
   if (!s.contract) continue;
   const cPath = join(TASKS, `${s.contract}.md`);
-  if (!existsSync(cPath)) continue; // contract not yet drafted — slice-plan's Step 4, not an orphan
+  if (!existsSync(cPath)) continue; // contract not yet drafted — /scope slices mode Step 4, not an orphan
   const cText = readFileSync(cPath, "utf8");
   const trace = field(cText, "trace");
   const want = `specs/plans/${s.planSlug}.md#${s.sliceId}`;

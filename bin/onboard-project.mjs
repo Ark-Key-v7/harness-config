@@ -151,7 +151,7 @@ writeFileSync(join(ROOT, "specs", "changes", "README.md"), `# specs/changes/ —
 
 A change package is a folder \`specs/changes/<slug>/\` holding \`delta.md\`
 (ADDED/MODIFIED/REMOVED requirements against the living domain specs).
-Lifecycle: spec-intake Step 4b drafts the delta → slices land it (contracts
+Lifecycle: /scope spec mode (ex spec-intake) Step 4b drafts the delta → slices land it (contracts
 carry \`requirements: [REQ-...]\`) → after the reviewer's PASS, the merge
 closes the loop:
 
@@ -201,7 +201,7 @@ Remaining phases are human + agent work, then human ratification (spec WP10):
     The Meta-Harness Restriction applies from that commit.
 
   Then, per task: the chain is intent → PRD → plan → contract (skills
-  spec-intake and slice-plan walk it with you). Draft contracts in
+  /scope (spec + slices modes) walks it with you). Draft contracts in
   .agents/tasks/ from the rig's templates/task-contract.md, validate with
   lint-contract.mjs --gravity (trace: must resolve to a plan slice), and
   resolve scope with contract-scope.mjs before any worker boots.

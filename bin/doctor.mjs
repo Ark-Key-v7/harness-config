@@ -72,7 +72,7 @@ if (!existsSync(tmdDir)) {
 // L1 — spec chain present and clean
 const specsDir = join(TARGET, "specs");
 if (!existsSync(specsDir)) {
-  check(1, "specs/ present, lint-spec clean", false, "scaffold the Phase-0 chain (spec-intake skill) — TCE v2.1 §2.A");
+  check(1, "specs/ present, lint-spec clean", false, "scaffold the Phase-0 chain (scope skill, spec mode) — TCE v2.1 §2.A");
 } else {
   const r = run("lint-spec.mjs", [specsDir, "--strict"]);
   check(1, "specs/ present, lint-spec clean", r.code === 0, "resolve the spec-chain failures lint-spec printed (orphans are lint errors)");

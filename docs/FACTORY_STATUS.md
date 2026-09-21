@@ -411,3 +411,23 @@ After any rig change that alters the ledger above: update this file in the same 
   Phase 3 retirements — until then old names still resolve; (5)
   systematic-debugging STAYS until the /debug trigger-parity check
   (Phase 3 protocol, §4.9) — parallel-run recorded, never silent.
+- **Phase 3 LANDED (2026-09-21): completeness-gated retirements + §5 rewiring.**
+  New gate `validation/merge-completeness/` (44 checks): every retired
+  section mapped to its absorber keyphrase; exit 0 preceded deletion.
+  RETIRED: `spec-intake` → /scope (spec mode); `slice-plan` → /scope
+  (slices mode + references/task-quality.md); `pr-review` → /check
+  (review mode). KEPT: `systematic-debugging` — trigger-parity check is
+  PENDING in-client verification (a mid-build failure auto-invoking
+  /debug on ZCode); per §4.9 it stays until verified, deviation recorded.
+  §5 rewiring: OPERATOR_GUIDE (mental model, skills roster, lifecycle
+  table), FRESH_PROJECT_SOP (review step), CANON_MAP (Phase-0 rows, SDLC
+  Stage Map, Stage-4/Ten-Marks/raw-output/rulebook rows),
+  templates/specs/plan.md, planner/reviewer profiles, bin/doctor.mjs
+  failure hint, bin/onboard-project.mjs texts, bin/lint-spec.mjs
+  comment; driver fixtures repointed (skills-smoke, canon-register,
+  onboard-smoke, pi-acp-patch-smoke). Historical records (WP-D ledgers,
+  the superseded-ruling quote) keep the old names by design.
+  Drivers: lint VALID (32 skills) · skills-smoke 18/18 ·
+  merge-completeness 44/44 · canon-register 184 PASS · doctor-smoke 11 ·
+  onboard-smoke 18 · pi-acp-patch 40 · projections 21 · canon-compile
+  green.

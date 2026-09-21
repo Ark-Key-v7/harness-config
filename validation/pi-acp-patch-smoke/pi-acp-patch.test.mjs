@@ -141,12 +141,12 @@ if (fStart !== -1 && fEnd > fStart) {
       { name: "memory", description: "Toggle project memory injection", source: "extension" },
       { name: "undo", description: "Revert file changes", source: "extension" },
       { name: "handoff", description: "Prompt template", source: "prompt" },
-      { name: "skill:pr-review", description: "Review skill", source: "skill" }
+      { name: "skill:check", description: "Review skill", source: "skill" }
     ]
   };
   const names = toAvailable(registry, { enableSkillCommands: true, includeExtensionCommands: true }).commands.map((c) => c.name);
   check("/seat, /memory, /undo (extension) advertised in available_commands", ["seat", "memory", "undo"].every((n) => names.includes(n)));
-  check("prompt templates and skills still advertised alongside", names.includes("handoff") && names.includes("skill:pr-review"));
+  check("prompt templates and skills still advertised alongside", names.includes("handoff") && names.includes("skill:check"));
 }
 
 // ---- 3b. Behavioral surface: dispatch round-trip ---------------------------
@@ -181,7 +181,7 @@ if (bStart !== -1 && bEnd > bStart) {
     commands: [
       { name: "seat", source: "extension" },
       { name: "memory", source: "extension" },
-      { name: "skill:pr-review", source: "skill" },
+      { name: "skill:check", source: "skill" },
       { name: "handoff", source: "prompt" }
     ]
   };
@@ -196,7 +196,7 @@ if (bStart !== -1 && bEnd > bStart) {
   check("registry not refetched on second dispatch", env.calls.getCommands === 1);
 
   env = mkSession(registry);
-  res = await fn(env.session, "skill:pr-review", "/skill:pr-review", []);
+  res = await fn(env.session, "skill:check", "/skill:check", []);
   check("skill commands NOT bridged (real agent turn; left to normal prompt path)", env.calls.prompt.length === 0 && res === null);
   res = await fn(env.session, "handoff", "/handoff worker", []);
   check("prompt-template commands NOT bridged (expanded by expandSlashCommand)", env.calls.prompt.length === 0 && res === null);

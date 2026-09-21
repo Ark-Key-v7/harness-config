@@ -20,12 +20,12 @@ verbatim from the PRD. Every slice implicitly includes this section.>
 - touches: <directories>
 - produces: <visible, testable output>
 - depends on: <S# or "none">
-- contract: task-<slug>-s1             # drafted by slice-plan
+- contract: task-<slug>-s1             # drafted by /scope (slices mode)
 
 ### S2: …
 
 <Task-quality rules apply to every slice and are referenced, never
-restated (L5): skills/slice-plan/references/task-quality.md —
+restated (L5): skills/scope/references/task-quality.md —
 sizing table, no-placeholders list, Consumes/Produces interface notes,
 never-overwrite rule. A slice that exceeds the caps is decomposed here,
 in the plan, while decomposition is cheap — never mid-execution.>
