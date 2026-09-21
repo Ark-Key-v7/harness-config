@@ -375,3 +375,39 @@ After any rig change that alters the ledger above: update this file in the same 
   Use, Rig bindings, ACT→OBSERVE→EXIT mapping (WP-D-6 precedent).
   lint-skills regex also fixed to tolerate annotated `:START` markers
   (JSM's TOOL-CONSENT format) — caught by the merge, driver-verified.
+- **Phase 2: ALL NINE MERGED (2026-09-21, one commit per skill).**
+  `scope` (absorbs spec-intake v2.1.0 + slice-plan v2.1.0 as modes/
+  spec.md + modes/slices.md, verbatim loops incl. harvested blocks;
+  task-quality.md moved whole; governed continuation E1) · `architect`
+  (9/10 files identical; D-1 canon amendment landed in CANON_MAP §1 per
+  operator pre-authorization) · `develop` (10/10 identical; contract
+  execution + ZCode subagent-per-contract posture E2 = the §1.2
+  amendment) · `check` (pr-review v1.3.0 fully ported into review mode:
+  trail-first, base-branch rulebook, must_haves→evidence, holdout run,
+  Ten-Marks pass, reception rule, E.4/A2A/verified.md exit; verify gains
+  contract must_haves + tier tail) · `test` (TDD precedence E1, REQ-ID
+  traceability bridge, GATE_ONLY→check:fast) · `document` (ship-gate
+  evidence-lead interface, ADR touchpoint) · `sync` (orchestrates
+  archive-change + rules-drift-check + roadmap as steps; Boundaries
+  table verbatim) · `debug` (absorbs systematic-debugging law blocks
+  verbatim: Iron Law, Stop-the-Line, feedback-loop-first, ranked
+  falsifiable hypotheses, DEBUG-tagging, ≤2-attempt escalation,
+  untrusted error output; references/ + scripts/ moved whole).
+  Acceptance per skill = source diff vs pinned clone; byte-identity
+  counts: audit 7/10, scope 10/12, architect 9/10, develop 10/10,
+  check 1/5+ported section, test 3/3, document 5/5, sync 1/2, debug
+  5/5 (refs/scripts). Every changed hunk maps to an enumerated edit or
+  recorded addition in the skill's frontmatter provenance.
+- **Deviations/tools on record (Phase 2):** (1) lint budget overrides
+  imported from JSM's own calibrated table (architect agent-prompt 32KB,
+  design-conversation 29KB) + one for architect/SKILL.md 36KB (rig-law
+  additions); (2) contract-block comparison is whitespace-normalized —
+  upstream /sync carries the TOOL-CONSENT block indented inside a
+  bullet; the words are identical, the nesting differs (recorded, not
+  "fixed" against upstream bytes); (3) E.6 angle-bracket lint caught a
+  WP-F frontmatter violation during the test merge (fixed in place);
+  (4) §5 doc rewiring for retired-name references (OPERATOR_GUIDE
+  lifecycle table, FRESH_PROJECT_SOP, profiles/roster) lands with
+  Phase 3 retirements — until then old names still resolve; (5)
+  systematic-debugging STAYS until the /debug trigger-parity check
+  (Phase 3 protocol, §4.9) — parallel-run recorded, never silent.
