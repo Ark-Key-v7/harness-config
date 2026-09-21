@@ -105,10 +105,11 @@ for (const [skill, map] of Object.entries(ACCOUNTING)) {
   }
 }
 
-// Systematic-debugging parallel-run state (WP-F §4.9): it STAYS until the
-// trigger-parity check verifies /debug auto-invokes on ZCode. Assert the
-// discipline is still present (deleting it before parity is a violation).
-check("systematic-debugging still present (trigger-parity pending)", existsSync(join(REPO, "skills", "systematic-debugging", "SKILL.md")));
+// Systematic-debugging (WP-F §4.9, resolved 2026-09-21): trigger-parity
+// driver (validation/trigger-parity) proved surface parity (phrases +
+// concepts + discovery chain) BEFORE this retirement; live confirmation
+// = first real failure in a fresh session (rollback = revert the commit).
+check("systematic-debugging retired (parity-gated by validation/trigger-parity)", !existsSync(join(REPO, "skills", "systematic-debugging", "SKILL.md")));
 
 console.log("—".repeat(80));
 if (failures > 0) {
