@@ -344,3 +344,25 @@ After any rig change that alters the ledger above: update this file in the same 
   one "When NOT to Use" line each; a Procedural-form mapping section in
   browser-testing-with-devtools) and verified: every diff hunk vs the pinned
   source maps to an enumerated edit or one of these recorded additions.
+
+## WP-F — JSM merger: nine-skill invocation plane (opened 2026-09-21)
+- Decision of record (operator session 2026-09-21): JSM's nine skills
+  (scope/audit/architect/develop/check/test/document/sync/debug) become the
+  invocation plane; the rig keeps the enforcement plane (bins, lint gates,
+  `.tmd/` law, contracts) and the discipline corpus. Build spec:
+  `~/factory-rig/tmp/wp-f-jsm-merger/WP-F-build-spec.md` (all decisions
+  D-1–D-6 resolved). Register: §D.33.
+- **Phase 1 LANDED:** intake clone `sources/_intake/jsm-skills/` @
+  `43b69e44` (v2.0.0, MIT, SHA-verified); `bin/lint-skills.mjs` v2.1.0
+  (WP-F tooling harvest: byte budgets SKILL.md 32KB / support 24KB with 90%
+  warn, description 400-char ratchet WARN — hard cap tightens in Phase 2/3,
+  model-alias spawn-directive ban, contract-block byte-identity +
+  unclosed-marker detection; dash/hyphen bans DECLINED); skills-smoke
+  extended 11 → 18 checks, all green; `bin/token-usage.mjs` +
+  `validation/token-usage-smoke/` (7 checks) — JSM cost-weight model ported
+  to both seats (ZCode rollout JSONL dual usage shapes incl. subagent
+  side-bucketing; Pi session JSONL with cost-object exclusion), live-smoked
+  on real transcripts from both seats.
+- Phases 2–5 PENDING: nine merges (one skill per commit, audit → … → debug)
+  → completeness-gated retirements → `zcode-rig` plugin (Package A Z.13 ∪
+  spec §6; in-client pass absorbs Z.12 V5/V6) → closeout.
