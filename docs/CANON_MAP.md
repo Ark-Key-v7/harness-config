@@ -87,7 +87,7 @@ documents, skills, and gates always use the rig names.
 | Incident record + floor ratchet | Maintain | (no equivalent) | doctor seat | incident record, floor.json |
 
 **Two observations, recorded as canon:**
-1. **"Design" is not a separate rig stage** — it is distributed: architecture decisions live in plan.md (slice-plan) and the Test Contract's seam choices. A standalone Design stage would duplicate the plan seat (L5).
+1. **[SUPERSEDED 2026-09-21, WP-F] "Design" is a stage: /architect owns decision-authorship.** The original ruling ("distributed into slice-plan; a standalone Design stage would duplicate the plan seat") guarded against two seats decomposing work. WP-F splits the jobs: /architect owns decisions (options, value-sourcing, acceptance criteria, ADR + gravity registration via the Amendment Protocol); /scope owns work decomposition (plan, slices, contracts). Different jobs — the L5 duplication risk does not arise. Source: JSM /architect @ 43b69e44. Operator-ratified.
 2. **"Maintain" is the rig's incident-record + floor-ratchet loop** — the closest agent-skills equivalent (shipping-and-launch, deprecation-and-migration) remains shelved adopt-on-trigger. No new stage is added; if recurring maintenance work ever outgrows incident records, that is a rig-change proposal, not an ad-hoc skill.
 
 ## 2. The CI/CD Integration Engine (The Refinery)

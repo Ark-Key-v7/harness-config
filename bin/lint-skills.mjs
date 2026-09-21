@@ -56,6 +56,14 @@ const SUPPORT_MAX_BYTES = 24 * 1024;
 const WARN_RATIO = 0.9;
 const DESC_HARD_MAX = 1024;
 const DESC_WARN = 400;
+// Named per-file budget overrides (WP-F Phase 2): JSM's own checker calibrates
+// heavier budgets for known-heavy files; imported here with reasons. Adding an
+// override is a rig-change event with a reason, never a silent ratchet.
+const BUDGET_OVERRIDES = {
+  "architect/SKILL.md": { bytes: 36 * 1024, reason: "JSM 32KB-equivalent corpus + WP-F rig-law additions" },
+  "architect/agent-prompt.md": { bytes: 32 * 1024, reason: "JSM upstream override (32KB)" },
+  "architect/internal/design-conversation.md": { bytes: 29 * 1024, reason: "JSM upstream override (29KB)" },
+};
 // Spawn-directive alias ban (extend via rig-change when a provider is adopted).
 const MODEL_ALIAS = /(^|\n)[ \t]*model:[ \t]*["']?(haiku|sonnet|opus|fable|kimi|glm|deepseek|qwen|grok|llama|mistral)\b/gi;
 // START markers may carry an annotation before the closing `-->`
@@ -122,9 +130,10 @@ for (const folder of folders) {
   for (const f of mdFiles(join(DIR, folder))) {
     const bytes = Buffer.byteLength(readFileSync(f.abs));
     const isSkill = f.rel === "SKILL.md";
-    const budget = isSkill ? SKILL_MAX_BYTES : SUPPORT_MAX_BYTES;
+    const override = BUDGET_OVERRIDES[`${folder}/${f.rel}`];
+    const budget = override?.bytes ?? (isSkill ? SKILL_MAX_BYTES : SUPPORT_MAX_BYTES);
     const kind = isSkill ? "SKILL.md" : `support ${f.rel}`;
-    if (bytes > budget) violation(folder, `${kind} ${bytes} bytes > ${budget} byte budget (WP-F)`);
+    if (bytes > budget) violation(folder, `${kind} ${bytes} bytes > ${budget} byte budget (WP-F${override ? `, override: ${override.reason}` : ""})`);
     else if (bytes >= budget * WARN_RATIO) warn(folder, `${kind} at ${Math.round((bytes / budget) * 100)}% of its ${budget}-byte budget`);
   }
 
@@ -197,16 +206,21 @@ for (const folder of folders) {
   }
 }
 
-// WP-F: same-NAME blocks must be byte-identical across skills.
+// WP-F: same-NAME blocks must be identical across skills. Comparison is
+// whitespace-normalized (leading indent stripped per line): a block nested in
+// a bullet legitimately carries deeper indentation (JSM's own /sync does);
+// the words are the contract, the nesting is context.
+const normalizeBlock = (c) => c.split("\n").map((l) => l.replace(/^\s+/, "")).join("\n").trim();
 for (const [blockName, list] of contractBlocks) {
   const distinct = new Map();
   for (const entry of list) {
-    if (!distinct.has(entry.content)) distinct.set(entry.content, []);
-    distinct.get(entry.content).push(`${entry.skill}/${entry.rel}`);
+    const key = normalizeBlock(entry.content);
+    if (!distinct.has(key)) distinct.set(key, []);
+    distinct.get(key).push(`${entry.skill}/${entry.rel}`);
   }
   if (distinct.size > 1) {
     const variants = [...distinct.values()].map((locs) => locs.join(", ")).join("  ≠  ");
-    violation("(contract blocks)", `block "${blockName}" differs between skills: ${variants} (WP-F: shared rules stay byte-identical)`);
+    violation("(contract blocks)", `block "${blockName}" differs between skills: ${variants} (WP-F: shared rules stay identical)`);
   }
 }
 
