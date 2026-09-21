@@ -366,3 +366,12 @@ After any rig change that alters the ledger above: update this file in the same 
 - Phases 2–5 PENDING: nine merges (one skill per commit, audit → … → debug)
   → completeness-gated retirements → `zcode-rig` plugin (Package A Z.13 ∪
   spec §6; in-client pass absorbs Z.12 V5/V6) → closeout.
+- **Phase 2 progress: 1/9 — `audit` MERGED (2026-09-21).** JSM audit corpus
+  (SKILL.md + 5 modes + 4 patterns + agent-prompt) byte-copied from the
+  pinned clone; 7 of 10 files byte-identical; enumerated edits E1/E1b
+  (descriptions-only law + governed-project WORKFLOW_SETUP signal), E2
+  (greenfield onboard-scaffold offer), E4 (installs via tool-intake), E5
+  (spec-path reality); recorded additions: E.6 frontmatter, When NOT to
+  Use, Rig bindings, ACT→OBSERVE→EXIT mapping (WP-D-6 precedent).
+  lint-skills regex also fixed to tolerate annotated `:START` markers
+  (JSM's TOOL-CONSENT format) — caught by the merge, driver-verified.

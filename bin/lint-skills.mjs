@@ -58,7 +58,11 @@ const DESC_HARD_MAX = 1024;
 const DESC_WARN = 400;
 // Spawn-directive alias ban (extend via rig-change when a provider is adopted).
 const MODEL_ALIAS = /(^|\n)[ \t]*model:[ \t]*["']?(haiku|sonnet|opus|fable|kimi|glm|deepseek|qwen|grok|llama|mistral)\b/gi;
-const CONTRACT_BLOCK = /<!--\s*([A-Za-z0-9_-]+):START\s*-->([\s\S]*?)<!--\s*\1:END\s*-->/g;
+// START markers may carry an annotation before the closing `-->`
+// (e.g. JSM's `<!-- TOOL-CONSENT:START (identical in /architect, /audit and /sync) -->`).
+const CONTRACT_BLOCK = /<!--\s*([A-Za-z0-9_-]+):START\b[^>]*-->([\s\S]*?)<!--\s*\1:END\s*-->/g;
+const CONTRACT_START = /<!--\s*[A-Za-z0-9_-]+:START\b/g;
+const CONTRACT_END = /<!--\s*[A-Za-z0-9_-]+:END\s*-->/g;
 
 let violations = 0;
 function violation(label, msg) {
@@ -187,8 +191,8 @@ for (const folder of folders) {
       list.push({ skill: folder, rel: f.rel, content: m[2] });
       contractBlocks.set(m[1], list);
     }
-    const starts = (content.match(/<!--\s*[A-Za-z0-9_-]+:START\s*-->/g) ?? []).length;
-    const ends = (content.match(/<!--\s*[A-Za-z0-9_-]+:END\s*-->/g) ?? []).length;
+    const starts = (content.match(CONTRACT_START) ?? []).length;
+    const ends = (content.match(CONTRACT_END) ?? []).length;
     if (starts !== ends) violation(folder, `unclosed contract-block marker in ${f.rel} (${starts} START / ${ends} END) (WP-F)`);
   }
 }
