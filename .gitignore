@@ -50,3 +50,8 @@ trust.json
 /cache/
 /tmp/
 *:Zone.Identifier
+
+# Pi observational-memory + seat runtime state (machine-local, never committed)
+/seat-state.json
+/memory-state.json
+/models-store.json

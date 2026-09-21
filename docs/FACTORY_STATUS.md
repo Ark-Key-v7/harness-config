@@ -431,3 +431,39 @@ After any rig change that alters the ledger above: update this file in the same 
   merge-completeness 44/44 · canon-register 184 PASS · doctor-smoke 11 ·
   onboard-smoke 18 · pi-acp-patch 40 · projections 21 · canon-compile
   green.
+- **Sync chain COMPLETE (operator, 2026-09-21):** push `cc5ea86..b13a51d`
+  (Phases 1–3, 14 commits incl. 3 pre-WP-F) → `~/.pi/agent` pulled
+  fast-forward → stash restored. Deployed clone current; nine-skill
+  surface live on the Pi seat.
+- **Open item (governance): pi-observational-memory was installed directly
+  into the deployed clone** (settings.json block + extensions/ + runtime
+  state files: seat-state.json, memory-state.json, models-store.json) —
+  violates the read-only/pull-only clone law; it jammed the first pull
+  attempt (stash/pull/pop recovered, config preserved). Remediation:
+  formal intake via rig-change from sources/_intake/pi-observational-memory/
+  (pin + extension + settings block + register row), then the deployed
+  clone returns to pure pull-only. Note: its observer/consolidator workers
+  run passively on the Kimi seat — confirm that spend is intended.
+- **Open item (Phase 4 input): systematic-debugging trigger parity** —
+  retire it only after a live ZCode session shows /debug auto-invoking on
+  a mid-build failure.
+
+## WP-F open-item resolutions (landed 2026-09-21, pre-Phase-4)
+- **Trigger parity RESOLVED.** Root cause of the pending state: the
+  PORTABILITY step 2b bootstrap symlink (~/.agents/skills → deployed
+  skills) had never been created on this machine — ZCode had NO discovery
+  path to any rig skill. Created. New gate
+  `validation/trigger-parity/` (15 checks) then proved surface parity
+  (every discipline trigger phrase survives in /debug's frontmatter;
+  activation concepts in the description; Iron Law verbatim in the body;
+  discovery chain live both paths); systematic-debugging RETIRED on that
+  green (merge-completeness assertion inverted to assert absence).
+  DEVIATION on record: behavioral confirmation remains the first real
+  mid-build failure auto-invoking /debug in a fresh ZCode session —
+  surface parity is the proven mechanism; rollback = revert the
+  retirement commit. Rig: 31 skills.
+- **pi-observational-memory FORMALIZED (§D.34).** Extension byte-copied
+  from the pinned shelf (@78a1efc, diff-verified identical to the
+  deployed copy) into extensions/; settings block preserved verbatim;
+  runtime state gitignored; pin recorded. Deployed-clone law restored:
+  after push+pull the config arrives by commit, not by local edit.

@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "discovered_at_utc": "2026-08-25T09:48:05Z",
-  "_policy": "Exact pins only. Install with --ignore-scripts. Never npm audit fix --force. Never curl|sh. A pin advances only via rig-change (§5.4 human ratification).",
+  "_policy": "Exact pins only. Install with --ignore-scripts. Never npm audit fix --force. Never curl|sh. A pin advances only via rig-change (\u00a75.4 human ratification).",
   "node": {
     "version": "24.18.1",
     "status": "installed_validated"
@@ -31,7 +31,7 @@
     "version": "2.31.0",
     "seat": "CORE",
     "status": "pinned_committed_pending_install",
-    "note": "MCP client half (v1.2 §2.11). Adopted, pinned, committed — not built. Peer @earendil-works/pi-ai ^0.84.1 satisfied by pi 0.84.3; engines node>=20 satisfied by node 24.18.1; MCP client 2026-07-28 (@modelcontextprotocol/client 2.0.0). Verified 2026-08-30. Activates with the MCP stack (Curated Servers).",
+    "note": "MCP client half (v1.2 \u00a72.11). Adopted, pinned, committed \u2014 not built. Peer @earendil-works/pi-ai ^0.84.1 satisfied by pi 0.84.3; engines node>=20 satisfied by node 24.18.1; MCP client 2026-07-28 (@modelcontextprotocol/client 2.0.0). Verified 2026-08-30. Activates with the MCP stack (Curated Servers).",
     "recorded_by": "WP8"
   },
   "factory_floor": {
@@ -122,7 +122,7 @@
     "version": "14.1.0",
     "seat": "L0 deterministic proof floor",
     "status": "installed_validated",
-    "note": "L0 floor tool (canon v2.0: ripgrep proves, Serena writes, the index navigates — never substituted). Pinned WP-C2 §8.5.",
+    "note": "L0 floor tool (canon v2.0: ripgrep proves, Serena writes, the index navigates \u2014 never substituted). Pinned WP-C2 \u00a78.5.",
     "recorded_by": "WP-C2"
   },
   "betterleaks": {
@@ -146,7 +146,7 @@
     "version": "0.11.0",
     "seat": "L2 code graph of record (MCP; LadybugDB embedded)",
     "status": "installed_validated",
-    "note": "npm --prefix ~/factory-rig/tools/codebase-memory-mcp, --ignore-scripts (L12); postinstall fetches its platform binary on first run — version verified 0.11.0. MCP catalog entry 'codebase-memory'. Staged WP-STACK.",
+    "note": "npm --prefix ~/factory-rig/tools/codebase-memory-mcp, --ignore-scripts (L12); postinstall fetches its platform binary on first run \u2014 version verified 0.11.0. MCP catalog entry 'codebase-memory'. Staged WP-STACK.",
     "recorded_by": "WP-STACK"
   },
   "context7": {
@@ -196,5 +196,18 @@
     "status": "installed_validated",
     "note": "npm --prefix ~/factory-rig/tools/tokenjuice, --ignore-scripts. Staged WP-STACK.",
     "recorded_by": "WP-STACK"
+  },
+  "observational_memory": {
+    "package": "pi-observational-memory (local source: sources/_intake/pi-observational-memory @ 78a1efc)",
+    "version": "0.1.0",
+    "license": "MIT",
+    "seat": "pi-extension",
+    "status": "installed_validated",
+    "note": "formal intake WP-F open-item remediation 2026-09-21; settings block in settings.json; runtime state gitignored",
+    "runtime_state": [
+      "seat-state.json",
+      "memory-state.json",
+      "models-store.json"
+    ]
   }
 }

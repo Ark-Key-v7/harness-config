@@ -5,5 +5,26 @@
   "lastChangelogVersion": "0.84.3",
   "theme": "dark",
   "defaultProvider": "kimi-coding",
-  "defaultModel": "kimi-for-coding"
+  "defaultModel": "kimi-for-coding",
+  "observational-memory": {
+    "chunkTokens": 5000,
+    "poolTargetTokens": 10000,
+    "consolidateAtPoolTokens": 20000,
+    "tailTokens": 20000,
+    "journeyTargetTokens": 1000,
+    "observerConcurrency": 4,
+    "passive": true,
+    "models": {
+      "observer": {
+        "provider": "kimi-coding",
+        "id": "kimi-for-coding",
+        "thinking": "low"
+      },
+      "consolidator": {
+        "provider": "kimi-coding",
+        "id": "kimi-for-coding",
+        "thinking": "low"
+      }
+    }
+  }
 }
