@@ -17,6 +17,13 @@ The rig clone must be current before anything else: ask the operator to run
 `git -C ~/.pi/agent pull --ff-only` (human pulls the rig — the agent never
 modifies the harness). Manifold reads are explicit: after placement, read
 each `.tmd/` file before proposing any Zone C fill.
+**Precondition (Step 0):** the target must be a git repository — the Zone C
+lock stamps a HEAD SHA. If the directory has no `.git`, print the exact
+commands for the operator to run and stop until confirmed:
+`mkdir -p ~/projects/<name> && cd ~/projects/<name> && git init`
+(the operator runs git commands; the agent never does). Tools are NEVER
+installed into the project — deferred tools surface as ACTIVATION NOTICEs
+and install into the factory on ratification.
 Brownfield targets: the operator says so, and passes `--brownfield`.
 
 #### When NOT to Use
