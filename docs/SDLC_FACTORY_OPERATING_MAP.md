@@ -46,6 +46,26 @@ Three mechanisms, by design:
 
 The anti-pattern, on record: a routing meta-dispatcher was evaluated and rejected — the stage pipeline IS the router.
 
+## Which Run Do I Need? (the selector)
+
+Work arrives as situations, not stages. Find yours; the run chips carry the seat that executes them — **planner** · **worker** · **reviewer** · **operator** (conversational: you and the skill). Seat tags matter on the Pi terminal and headless runs; in a ZCode conversation, you and the skill are the seat.
+
+| # | Situation | When | Run (seat) |
+|---|---|---|---|
+| 1 | Empty folder, new product | once per product | `git init` → **"onboard this project"** → `/scope` (planner) → `/architect` (planner) → `/develop` (worker) → `/check` (operator) → ship-gate |
+| 2 | Live project, new feature | every day | `/scope` "new work…" (planner) → `/develop` (worker) → `/check review` (reviewer) → `/test` (worker) → ship-gate |
+| 3 | Inherited code, 80k lines you didn't write | most common · least taught | `/audit` (scout) → `/scope` enroll + plan (planner) → `/develop` (worker) → `/check` (operator/reviewer) |
+| 4 | Something broke | any time | `/debug` (worker, off-rail) → `/test` (worker) |
+| 5 | Coming back after a break — where was I? | every week, honestly | bare `/scope` (planner) — the roadmap and specs ARE the resume point |
+| 6 | Idea too vague to even scope | front of the funnel | `interview-me` first — `/scope` Step 0 routes here on its own |
+| 7 | A review found problems | after every review | findings → `/develop` targeted (worker), or `/debug` if it's a real bug → re-review (reviewer) |
+| 8 | Performance is off | under load | `webperf-audit` → `performance-optimization` (worker) |
+| 9 | A new tool / MCP / skill is needed | gated | `tool-intake` — the only door tools enter through |
+| 10 | The factory itself needs a change | rare · critical to do right | `rig-change` — never `/develop`, never ship-gate |
+| 11 | Ready to merge and ship | end of every run | `ship-gate` + `/sync` (operator) + `/document` (operator) |
+
+Rows 5 and 7 have no equivalent in other workflows: ours treats state as durable (the files hold the resume point) and findings as input (a review verdict routes work, it doesn't end it).
+
 ## The Two Governing Frameworks
 
 The stage walk below is shaped by two frameworks from the canon. Map them once; every stage names its lane.
@@ -166,36 +186,38 @@ The one rule: the proof floor *proves*, symbolic editing *writes*, the graph *na
 
 ## Appendix: Full Skill Inventory (31)
 
-| Skill | Class | Fires | What it does, plainly |
-|---|---|---|---|
-| scope | procedural | invoked: "new work", "plan/slice this" | Plans the roadmap; its spec mode interviews and writes the intent/PRD/change records; its slices mode breaks approved work into size-capped slices with task contracts |
-| audit | procedural | invoked: "audit this repo" | Reads the real codebase and writes the AGENTS.md context files other skills read; describes, never legislates |
-| architect | procedural | invoked, or on a needs-a-decision row | Runs the decision conversation — options with a recommendation, acceptance criteria, a table naming where every displayed value comes from — and writes the decision record |
-| develop | procedural | invoked: "build this" | Builds the feature from its spec and contract; refuses to invent undocumented decisions; every screen ships complete |
-| check | procedural | invoked: verify or review | Verify: drives the real running app against the spec. Review: a senior read of the diff on a different model family, findings ranked |
-| test | procedural | invoked after verify | Writes the suite that locks in what verify proved; tags each test to the criterion it covers |
-| document | procedural | invoked: PR / changelog / release note / postmortem | Writes the human-facing prose from the real diff; never invents a timeline entry |
-| sync | procedural | invoked around merge | Reconciles context files, roadmap, and spec statuses to what actually shipped; runs the archive merger |
-| debug | procedural | fires on any failure | Reproduces, localizes, tests one hypothesis at a time, fixes at the root, hands back a regression test; two failed fixes means escalate to you with a proposal |
-| project-onboard | procedural | invoked: "onboard this project" | Scaffolds the governance manifold, interviews you for project law, surfaces deferred-tool notices; never commits |
-| ship-gate | procedural | invoked: "ship it" | Drives the change through preflight, PR, your review gate, merge, and rollback |
-| rig-change | procedural | invoked: "new rig files" | The governed path for any change to the factory itself; your typed confirmation is the last step |
-| tool-intake | procedural | on a register trigger, or "adopt this tool" | Pins, smoke-tests, and registers any new tool — the only door tools enter through |
-| template-skill | procedural | invoked: authoring or importing a skill | Defines the skill formats and the import/bake-off protocol |
-| interview-me | discipline | gates /scope's first step | Extracts real intent one question at a time to high confidence |
-| rules-drift-check | procedural | before merge, or inside review | Advises whether the context files still match the code (three drift classes only) |
-| webperf-audit | procedural | invoked: performance audit | Severity-rated web-performance findings; never fabricates a metric |
-| to-questionnaire | procedural | invoked: the answer lives with someone else | Drafts the questionnaire a third party fills in |
-| test-driven-development | discipline | automatic, worker | No production code without a failing test first |
-| verification-before-completion | discipline | automatic, all | No "done" claim without freshly run evidence |
-| context-budget | discipline | automatic, all | Keeps sessions inside the context budget; trims at 75% |
-| api-and-interface-design | discipline | automatic, worker | Public contracts get one version, atomic operations, documented changes |
-| security-and-hardening | discipline | automatic, worker | Threat-models input, auth, secrets, dependencies; destructive actions need your approval |
-| observability-and-instrumentation | discipline | automatic, worker | Production code logs structured, correlated, alertable telemetry |
-| documentation-and-adrs | discipline | automatic, worker | Significant decisions get an architecture decision record; missing one is a review finding |
-| code-simplification | discipline | after green, or when flagged | Simplifies with behavior exactly preserved; ships as its own change |
-| ui-engineering | discipline | automatic, worker, UI | Production-quality, accessible interfaces — not the "AI look" |
-| performance-optimization | discipline | automatic on perf work | Measure first; neutral results revert; correctness gates the metric |
-| browser-testing-with-devtools | procedural | browser-facing work (tool gated) | Real-browser evidence: screenshots, console, network |
-| memory | discipline | automatic, all | What the agent remembers carries provenance or gets deleted; recall advises, never legislates |
-| brainstorming | discipline | before any creative work | Nothing implements before you approve the design |
+The nine workflow skills carry a seat-persona: one identity — the seat and the human word in the same token. Specialists and disciplines follow.
+
+| Skill | Class | Fires | Seat · persona | What it does, plainly |
+|---|---|---|---|---|
+| scope | procedural | invoked: "new work", "plan/slice this" | planner · the challenger | Turns your idea into an ordered plan — and cuts what shouldn't be built before it costs anything; its spec mode interviews and writes the intent/PRD/change records, its slices mode breaks approved work into contracts |
+| audit | procedural | invoked: "audit this repo" | scout · the codebase reader | Reads a codebase you didn't write and writes the context files every other skill trusts — describes, never legislates |
+| architect | procedural | invoked, or on a needs-a-decision row | planner · the decision-maker | Runs the decision conversation — options with a recommendation, acceptance criteria, a table naming where every displayed value comes from — and writes the record; nothing left to a coin flip |
+| develop | procedural | invoked: "build this" | worker · the builder | Builds from spec and contract; refuses to invent what you never decided; every screen ships complete |
+| check | procedural | invoked: verify or review | operator verifies · reviewer reviews — the second opinion | Verify drives the real app against the spec; review has a different model family read what was built, findings ranked |
+| test | procedural | invoked after verify | worker · the lock | Writes the suite that keeps verify's proof proven — the next change can't quietly break what worked — each test tagged to the criterion it covers |
+| document | procedural | invoked: PR / changelog / release note / postmortem | operator · the writer | Writes the human-facing prose from the real diff; never invents a timeline entry |
+| sync | procedural | invoked around merge | operator · the reconciler | Brings context files, roadmap, and spec statuses back to the truth, then runs the archive merger |
+| debug | procedural | fires on any failure | worker, off-rail · the diagnostician | Reproduces, localizes, tests one hypothesis at a time, fixes at the root, hands back a regression test; two failed theories means escalate to you with a proposal |
+| project-onboard | procedural | invoked: "onboard this project" | scout-led, you author | Scaffolds the governance manifold, interviews you for project law, surfaces deferred-tool notices; never commits |
+| ship-gate | procedural | invoked: "ship it" | operator + reviewer lane | Drives the change through preflight, PR, your review gate, merge, and rollback |
+| rig-change | procedural | invoked: "new rig files" | operator, always | The governed path for any change to the factory itself; your typed confirmation is the last step |
+| tool-intake | procedural | on a register trigger, or "adopt this tool" | operator ratifies | Pins, smoke-tests, and registers any new tool — the only door tools enter through |
+| template-skill | procedural | invoked: authoring or importing a skill | operator + rig-change | Defines the skill formats and the import/bake-off protocol |
+| interview-me | discipline | gates /scope's first step | planner | Extracts real intent one question at a time to high confidence |
+| rules-drift-check | procedural | before merge, or inside review | reviewer, advisory | Advises whether the context files still match the code (three drift classes only) |
+| webperf-audit | procedural | invoked: performance audit | operator · metric-honest | Severity-rated web-performance findings; never fabricates a metric |
+| to-questionnaire | procedural | invoked: the answer lives with someone else | operator | Drafts the questionnaire a third party fills in |
+| test-driven-development | discipline | automatic, worker | worker · the red-green law | No production code without a failing test first |
+| verification-before-completion | discipline | automatic, all | every seat | No "done" claim without freshly run evidence |
+| context-budget | discipline | automatic, all | every seat | Keeps sessions inside the context budget; trims at 75% |
+| api-and-interface-design | discipline | automatic, worker | worker | Public contracts get one version, atomic operations, documented changes |
+| security-and-hardening | discipline | automatic, worker | worker | Threat-models input, auth, secrets, dependencies; destructive actions need your approval |
+| observability-and-instrumentation | discipline | automatic, worker | worker | Production code logs structured, correlated, alertable telemetry |
+| documentation-and-adrs | discipline | automatic, worker | worker | Significant decisions get an architecture decision record; missing one is a review finding |
+| code-simplification | discipline | after green, or when flagged | worker | Simplifies with behavior exactly preserved; ships as its own change |
+| ui-engineering | discipline | automatic, worker, UI | worker | Production-quality, accessible interfaces — not the "AI look" |
+| performance-optimization | discipline | automatic on perf work | worker | Measure first; neutral results revert; correctness gates the metric |
+| browser-testing-with-devtools | procedural | browser-facing work (tool gated) | operator or worker | Real-browser evidence: screenshots, console, network |
+| memory | discipline | automatic, all | every seat | What the agent remembers carries provenance or gets deleted; recall advises, never legislates |
+| brainstorming | discipline | before any creative work | every seat | Nothing implements before you approve the design |
