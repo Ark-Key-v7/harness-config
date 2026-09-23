@@ -69,22 +69,24 @@ CodeRabbit never a second AI voice.
 | Phase-0 chain + change semantics (living domain specs, deltas, archive merge — OpenSpec model adopted rig-native) | templates/specs/{domain-spec,delta}.md, bin/archive-change.mjs, lint-spec delta/domain lint, /scope modes spec.md + slices.md (WP-F Phase 2) | LIVE (WP-E) |
 | Agent memory system (M1/M2, write path, store, retrieval, index) | skills/memory/ + templates/memory/ + bin/memory-verify.mjs + QMD/LanceDB config | LIVE (WP-MEM) |
 
-## SDLC Stage Map (canonical aliases)
+## SDLC Stage Map (canonical)
 
-The rig's pipeline is isomorphic to the two industry SDLC framings. The rig's
-stage names are canonical; the others are aliases for communication only —
-documents, skills, and gates always use the rig names.
+The rig's stage names are canonical and self-sufficient (WP-F cleanup,
+2026-09-21: industry-framework aliases were WP-era cross-framework bridging,
+retained in git history only). Stage purposes and bindings:
 
-| Rig stage (canonical) | Anthropic SDLC | agent-skills SDLC | Seat / skill bound | Gate artifact |
-|---|---|---|---|---|
-| specs/intent.md | Plan (intent half) | DEFINE /spec | interview-me → /scope (spec mode) | intent.md |
-| PRD | Plan | DEFINE /spec | /scope (spec mode) | prd.md + falsifiable hypothesis |
-| plan.md | Plan → Design | PLAN /plan | /scope (slices mode, capability map) | plan.md |
-| slice + Task Contract | Design → Build | BUILD /build | worker seat (TDD, verification, systematic-debugging bound) | contract + code |
-| Validate / QA gate | Test | VERIFY /test | gate drivers (check:fast/task/full) + E.7 holdout; reviewer seat judges | green driver output |
-| check (review mode) | Test → Deploy (review half) | REVIEW /review | check (review mode, + rules-drift-check) | review report |
-| PR merge + release | Deploy | SHIP /ship | operator-gated merge | merged PR |
-| Incident record + floor ratchet | Maintain | (no equivalent) | doctor seat | incident record, floor.json |
+| Rig stage (canonical) | Purpose | Seat / skill bound | Gate artifact |
+|---|---|---|---|
+| specs/intent.md | one screen of pure intent | interview-me → /scope (spec mode) | intent.md |
+| PRD | the falsifiable what | /scope (spec mode) | prd.md + falsifiable hypothesis |
+| decision | load-bearing choices made on purpose | /architect | decision spec + ADR |
+| plan.md | size-capped vertical slices | /scope (slices mode) | plan.md |
+| slice + Task Contract | the executable definition of done | worker seat (TDD, verification, debug bound) | contract + code |
+| Validate / QA gate | watched proof | gate drivers (check:fast/task/full) + E.7 holdout; reviewer seat judges | green driver output |
+| check (review mode) | evidenced verdict, fresh model family | check (review mode, + rules-drift-check) | review report |
+| PR merge + release | merged, verified, rollback-able | operator-gated merge via ship-gate | merged PR |
+| archive | living truth updated, change becomes history | /sync (archive merger) | merged domain spec |
+| Incident record + floor ratchet | incidents raise the floor | doctor seat | incident record, floor.json |
 
 **Two observations, recorded as canon:**
 1. **[SUPERSEDED 2026-09-21, WP-F] "Design" is a stage: /architect owns decision-authorship.** The original ruling ("distributed into slice-plan; a standalone Design stage would duplicate the plan seat") guarded against two seats decomposing work. WP-F splits the jobs: /architect owns decisions (options, value-sourcing, acceptance criteria, ADR + gravity registration via the Amendment Protocol); /scope owns work decomposition (plan, slices, contracts). Different jobs — the L5 duplication risk does not arise. Source: JSM /architect @ 43b69e44. Operator-ratified.

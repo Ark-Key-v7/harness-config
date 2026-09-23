@@ -497,3 +497,17 @@ After any rig change that alters the ledger above: update this file in the same 
   items (all in-client, operator-observable): hooks schema on first
   live run; /debug auto-trigger on first live failure; V5 model
   pinning; V6 wiki. Rollback for each = the named commit.
+
+## Rig-change 2026-09-21 — operating map + onboarding precondition (§5.4: operator-instructed)
+- `docs/SDLC_FACTORY_OPERATING_MAP.md` (new; supersedes the SOP_SKILLS
+  draft): full factory operating map — governance/Zones, invocation model,
+  constraint-lifecycle + Refinery framework mappings, 11-stage walk with
+  overview table, tool stack with named tools per layer, 31-skill appendix.
+  CANON_MAP SDLC Stage Map cleaned: alias columns out, purpose column in,
+  decision + archive rows added.
+- `skills/project-onboard` v1.2.1: Step 0 git precondition (prints
+  mkdir/git-init for the operator, stops until confirmed) + tools-never-
+  install-into-projects law restated at the action point.
+- Machine-side (outside this repo): ~/.zcode/AGENTS.md bootstrap (ungoverned
+  repos route to onboarding). Drivers: lint VALID · skills-smoke 18/18 ·
+  canon-register 188 PASS.
