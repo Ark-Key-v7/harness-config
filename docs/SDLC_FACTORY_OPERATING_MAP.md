@@ -53,7 +53,7 @@ Work arrives as situations, not stages. Find yours; the run chips carry the seat
 | # | Situation | When | Run (seat) |
 |---|---|---|---|
 | 1 | Empty folder, new product | once per product | `git init` → **"onboard this project"** → `/scope` (planner) → `/architect` (planner) → `/develop` (worker) → `/check` (operator) → ship-gate |
-| 2 | Live project, new feature | every day | `/scope` "new work…" (planner) → `/develop` (worker) → `/check review` (reviewer) → `/test` (worker) → ship-gate |
+| 2 | Live project, new feature | every day | `/scope` "new work…" (planner) → `/develop` (worker) → `/check verify` (operator) → `/test` (worker) → `/check review` (reviewer) → ship-gate |
 | 3 | Inherited code, 80k lines you didn't write | most common · least taught | `/audit` (scout) → `/scope` enroll + plan (planner) → `/develop` (worker) → `/check` (operator/reviewer) |
 | 4 | Something broke | any time | `/debug` (worker, off-rail) → `/test` (worker) |
 | 5 | Coming back after a break — where was I? | every week, honestly | bare `/scope` (planner) — the roadmap and specs ARE the resume point |
@@ -102,7 +102,7 @@ The walk at a glance:
 | 4. PLAN | size-capped vertical slices | `specs/plans/<slug>.md` |
 | 5. CONTRACT | the executable definition of done | `.agents/tasks/task-*.md` |
 | 6. BUILD | the diff, inside scope, under disciplines | working code, migrations applied |
-| 7. VERIFY | watched proof, not green checkmarks | the evidence ledger |
+| 7. VERIFY + TEST | watched proof, then the lock | the evidence ledger + the suite |
 | 8. REVIEW | an evidenced verdict, fresh model family | verdict record + PASS marker |
 | 9. SHIP | merged, verified, rollback-able | merged PR + deploy verification |
 | 10. ARCHIVE | living truth updated | merged domain spec + dated archive |
@@ -128,20 +128,20 @@ The executable definition of done. **Produces** `.agents/tasks/task-<slug>-s<N>.
 ### 6. BUILD
 The diff — inside scope, under disciplines. **Produces** working code with migrations applied and live. **Seat:** worker agent + `/develop` (on ZCode the whole build may be an isolated worker subagent — one contract, one blast radius). **Skills (automatic):** test-first (no production code without a failing test), verification, security, observability, interface design, UI standards — per what the slice touches. **Gate:** the contract's validation commands + the tier's owed tail; goal-backward verification against must_haves; verify steps derived per criterion and per value-source row. **Mistakes:** inventing a decision mid-build (the gate: stop and route to `/architect`, or record the assumption — flagged until ratified); old and new code coexisting; a generated-but-unapplied migration ticked as done.
 
-### 7. VERIFY
-Watched proof, not green checkmarks. **Produces** an evidence ledger (URLs, screenshots, request/response pairs, commands + exit codes). **Seat:** operator + `/check verify`. **Gate:** "no evidence, no ✅" — every pass cites a recorded artifact; per-criterion verdicts; one miss fails all. Holdout truths are NOT run here (builder-blind; they belong to review). **Mistakes:** trusting green tests to prove the feature exists; degrading to "looks right in the code".
+### 7. VERIFY, then TEST — prove it, then lock it
+Watched proof, then the lock. **Produces** an evidence ledger (URLs, screenshots, request/response pairs, commands + exit codes), then the suite that keeps it proven. **Seat:** operator + `/check verify`, then `/test` (worker). **Gate:** "no evidence, no ✅" — every pass cites a recorded artifact; per-criterion verdicts; one miss fails all. Then `/test` writes the suite tagged per criterion, so the next change can't quietly break what worked. Holdout truths are NOT run here (builder-blind; they belong to review). **Mistakes:** trusting green tests to prove the feature exists; degrading to "looks right in the code"; a fabricated pass.
 
 ### 8. REVIEW
 An evidenced verdict by a fresh mind. **Produces** the verdict record + findings file + the PASS marker the archive step consumes. **Seat:** reviewer agent — `/check review`, run on a *different model family* than authored the code (never within-family; degrade loudly if only one family exists). **Gate:** deterministic trail first (a blocked preflight is an automatic fail); the target branch's law is read, never the PR's own; every truth evidenced; the holdout run raw; the Ten Marks rubric (handbook Part V — read, never paraphrased). **Mistakes:** reviewing from the author's session; a reviewer that edits; rubric without trail or trail without rubric.
 
 ### 9. SHIP
-Merged, verified, rollback-able. **Produces** a merged PR + deploy verification. **Seat:** operator + `ship-gate`. **Gate:** the PR description leads with deterministic evidence (`/document` produces that lead); preflight green; your 24-hour gate; a written rollback plan before deploy. **Rig changes take `rig-change` instead — anything under the harness-config repo never rides ship-gate.** **Mistakes:** narrative-only PR bodies; bypassing a check "just this once" (that moment is the rig earning its keep).
+Merged, verified, rollback-able. **Produces** a merged PR + deploy verification. **Seat:** operator + `ship-gate`. **Gate:** the PR description leads with deterministic evidence (`/document` produces that lead); preflight green; your 24-hour gate; a written rollback plan before deploy. **Boundary note: this stage is for product repos.** A change to the factory itself never rides ship-gate — it routes through `rig-change` in the harness-config repo, a different flow entirely. **Mistakes:** narrative-only PR bodies; bypassing a check "just this once" (that moment is the rig earning its keep).
 
 ### 10. ARCHIVE
 Living truth updated; the change becomes history. **Produces** the merged `specs/domains/<domain>/spec.md` + dated archive. **Seat:** `/sync` (it runs the deterministic merger). **Gate:** verified work only (the merger consumes review's PASS marker); no hand-edits to living specs (the guard halts). **Mistakes:** archiving unverified work; editing a living spec by hand.
 
 ### 11. MAINTAIN
-Incidents make the floor higher. **Produces** incident records + a ratcheted floor. **Seat:** operator + floor tooling. **The loop:** incident → ratchet the floor → optionally a new intent. A bug that reveals missing law proposes a manifold amendment — your pen, via `rig-change` (system evolution: the law learns, not just the code). **Mistakes:** fixing the bug without the ratchet; letting the agent amend law.
+Incidents make the floor higher. **Produces** incident records + a ratcheted floor. **Seat:** `/debug` starts most incidents (root cause, not symptom); you close the loop with the floor tooling. **The loop:** incident → `/debug` fixes at the root → regression test locks it → the floor ratchets → optionally a new intent. **Two law levels, never confused:** if the root cause reveals missing **project law** (an anti-pattern the product's `.tmd/` should forbid), the fix is a manifold amendment — your PR on the project, advancing `last_verified` (the Amendment Protocol). If the flaw is in the **factory machinery itself**, that is `rig-change` on the factory repo — a different repo, a different flow. **Mistakes:** fixing the bug without the ratchet; letting the agent amend law at either level; routing a project-law fix through the factory repo.
 
 ## The design.md Walkthrough
 
@@ -192,12 +192,12 @@ The nine workflow skills carry a seat-persona: one identity — the seat and the
 |---|---|---|---|---|
 | scope | procedural | invoked: "new work", "plan/slice this" | planner · the challenger | Turns your idea into an ordered plan — and cuts what shouldn't be built before it costs anything; its spec mode interviews and writes the intent/PRD/change records, its slices mode breaks approved work into contracts |
 | audit | procedural | invoked: "audit this repo" | scout · the codebase reader | Reads a codebase you didn't write and writes the context files every other skill trusts — describes, never legislates |
-| architect | procedural | invoked, or on a needs-a-decision row | planner · the decision-maker | Runs the decision conversation — options with a recommendation, acceptance criteria, a table naming where every displayed value comes from — and writes the record; nothing left to a coin flip |
-| develop | procedural | invoked: "build this" | worker · the builder | Builds from spec and contract; refuses to invent what you never decided; every screen ships complete |
+| architect | procedural | invoked, or on a needs-a-decision row | planner · the decision-maker | Makes a real decision — a stack, a data model, a page design — and writes it as a record: options with a recommendation, acceptance criteria, a table naming where every displayed value comes from; nothing left to a coin flip |
+| develop | procedural | invoked: "build this" | worker · the builder | Builds a feature — user interface or backend — from its spec and contract; refuses to invent what you never decided; every screen ships complete |
 | check | procedural | invoked: verify or review | operator verifies · reviewer reviews — the second opinion | Verify drives the real app against the spec; review has a different model family read what was built, findings ranked |
 | test | procedural | invoked after verify | worker · the lock | Writes the suite that keeps verify's proof proven — the next change can't quietly break what worked — each test tagged to the criterion it covers |
 | document | procedural | invoked: PR / changelog / release note / postmortem | operator · the writer | Writes the human-facing prose from the real diff; never invents a timeline entry |
-| sync | procedural | invoked around merge | operator · the reconciler | Brings context files, roadmap, and spec statuses back to the truth, then runs the archive merger |
+| sync | procedural | invoked around merge | operator · the reconciler | Brings context files, roadmap, and spec statuses back in line with the code, then runs the archive merger, so the next session starts from the truth |
 | debug | procedural | fires on any failure | worker, off-rail · the diagnostician | Reproduces, localizes, tests one hypothesis at a time, fixes at the root, hands back a regression test; two failed theories means escalate to you with a proposal |
 | project-onboard | procedural | invoked: "onboard this project" | scout-led, you author | Scaffolds the governance manifold, interviews you for project law, surfaces deferred-tool notices; never commits |
 | ship-gate | procedural | invoked: "ship it" | operator + reviewer lane | Drives the change through preflight, PR, your review gate, merge, and rollback |
