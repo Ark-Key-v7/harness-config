@@ -9,4 +9,4 @@ Source of truth: `harness-config` (this tree is a projection; `node bin/generate
 
 Install (PORTABILITY step 2c): local marketplace path or git URL; one-time, client-level. Onboarding never copies this plugin — project law only.
 
-Generated from source_head e9da118f81cd.
+Generated from source_head 1c77fc3e61be.
