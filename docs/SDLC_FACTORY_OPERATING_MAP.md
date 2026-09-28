@@ -36,7 +36,9 @@ Three mechanisms, by design:
 
 **Seats** — four role profiles (`scout`, `planner`, `worker`, `reviewer`) that determine which discipline skills are in force. On **Pi**, a seat is injected every turn (`/seat <role>` switches). On **ZCode**, seats are the plugin's **agent definitions** — spawnable subagent types, each to gain its declared skill set. There is deliberately **no `/build` skill**: building is the worker (or `/develop`) acting under contract. There is deliberately no ship machinery beyond `ship-gate`: deployment is GitOps routing; agents never write deploy scripts.
 
-**Workflow skills (procedural — invoked by name or trigger phrase).** The nine: `/scope`, `/audit`, `/architect`, `/develop`, `/check`, `/test`, `/document`, `/sync`, `/debug`. Plus the specialists: `project-onboard`, `ship-gate`, `rig-change`, `tool-intake`, `template-skill`, `interview-me`, `rules-drift-check`, `webperf-audit`, `to-questionnaire`.
+**Workflow skills (procedural — invoked by name or trigger phrase).** The nine: `/scope`, `/audit`, `/architect`, `/develop`, `/check`, `/test`, `/document`, `/sync`, `/debug`. 
+
+Plus the specialists: `project-onboard`, `ship-gate`, `rig-change`, `tool-intake`, `template-skill`, `interview-me`, `rules-drift-check`, `webperf-audit`, `to-questionnaire`.
 
 **Discipline skills (bound to seats — fire automatically, never invoked).** Worker: `test-driven-development`, `verification-before-completion`, `context-budget`, `api-and-interface-design`, `security-and-hardening`, `observability-and-instrumentation`, `documentation-and-adrs`, `code-simplification`, `ui-engineering`. Scout: `context-budget`. Planner: `interview-me` gate + task-quality rules. Reviewer: `verification-before-completion`, `rules-drift-check`, review reception rules. All seats: `memory`.
 
@@ -135,13 +137,13 @@ Watched proof, then the lock. **Produces** an evidence ledger (URLs, screenshots
 An evidenced verdict by a fresh mind. **Produces** the verdict record + findings file + the PASS marker the archive step consumes. **Seat:** reviewer agent — `/check review`, run on a *different model family* than authored the code (never within-family; degrade loudly if only one family exists). **Gate:** deterministic trail first (a blocked preflight is an automatic fail); the target branch's law is read, never the PR's own; every truth evidenced; the holdout run raw; the Ten Marks rubric (handbook Part V — read, never paraphrased). **Mistakes:** reviewing from the author's session; a reviewer that edits; rubric without trail or trail without rubric.
 
 ### 9. SHIP
-Merged, verified, rollback-able. **Produces** a merged PR + deploy verification. **Seat:** operator + `ship-gate`. **Gate:** the PR description leads with deterministic evidence (`/document` produces that lead); preflight green; your 24-hour gate; a written rollback plan before deploy. **Boundary note: this stage is for product repos.** A change to the factory itself never rides ship-gate — it routes through `rig-change` in the harness-config repo, a different flow entirely. **Mistakes:** narrative-only PR bodies; bypassing a check "just this once" (that moment is the rig earning its keep).
+Merged, verified, rollback-able. **Produces** a merged PR + deploy verification. **Seat:** operator + `ship-gate`. **Gate:** the PR description leads with deterministic evidence (`/document` produces that lead); preflight green; your 24-hour gate; a written rollback plan before deploy. **Mistakes:** narrative-only PR bodies; bypassing a check "just this once" (that moment is the rig earning its keep).
 
 ### 10. ARCHIVE
 Living truth updated; the change becomes history. **Produces** the merged `specs/domains/<domain>/spec.md` + dated archive. **Seat:** `/sync` (it runs the deterministic merger). **Gate:** verified work only (the merger consumes review's PASS marker); no hand-edits to living specs (the guard halts). **Mistakes:** archiving unverified work; editing a living spec by hand.
 
 ### 11. MAINTAIN
-Incidents make the floor higher. **Produces** incident records + a ratcheted floor. **Seat:** `/debug` starts most incidents (root cause, not symptom); you close the loop with the floor tooling. **The loop:** incident → `/debug` fixes at the root → regression test locks it → the floor ratchets → optionally a new intent. **Two law levels, never confused:** if the root cause reveals missing **project law** (an anti-pattern the product's `.tmd/` should forbid), the fix is a manifold amendment — your PR on the project, advancing `last_verified` (the Amendment Protocol). If the flaw is in the **factory machinery itself**, that is `rig-change` on the factory repo — a different repo, a different flow. **Mistakes:** fixing the bug without the ratchet; letting the agent amend law at either level; routing a project-law fix through the factory repo.
+Incidents make the floor higher. **Produces** incident records + a ratcheted floor. **Seat:** `/debug` starts most incidents (root cause, not symptom); you close the loop with the floor tooling. **The loop:** incident → `/debug` fixes at the root → regression test locks it → the floor ratchets → optionally a new intent. If the root cause reveals missing **project law** (an anti-pattern the product's `.tmd/` should forbid), the fix is a manifold amendment — your PR on the project repo, advancing `last_verified` (the Amendment Protocol). **Mistakes:** fixing the bug without the ratchet; letting the agent amend law.
 
 ## The design.md Walkthrough
 
@@ -188,7 +190,7 @@ The one rule: the proof floor *proves*, symbolic editing *writes*, the graph *na
 
 The nine workflow skills carry a seat-persona: one identity — the seat and the human word in the same token. Specialists and disciplines follow.
 
-| Skill | Class | Fires | Seat · persona | What it does, plainly |
+| Skill | Class | Fires | Seat · persona | What it does |
 |---|---|---|---|---|
 | scope | procedural | invoked: "new work", "plan/slice this" | planner · the challenger | Turns your idea into an ordered plan — and cuts what shouldn't be built before it costs anything; its spec mode interviews and writes the intent/PRD/change records, its slices mode breaks approved work into contracts |
 | audit | procedural | invoked: "audit this repo" | scout · the codebase reader | Reads a codebase you didn't write and writes the context files every other skill trusts — describes, never legislates |
