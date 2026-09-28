@@ -519,3 +519,12 @@ After any rig change that alters the ledger above: update this file in the same 
   E.5 + C.1 self-report verified). Two-profile architecture + version-bump law
   recorded. OPEN: /debug behavioral (bar never crossed), V5, V6 wiki, plugin
   skills workspace-scoping, double-discovery policy. Plugin 0.1.1.
+
+## Rig-change 2026-09-28 — C.5 seat-injection hook (plugin 0.1.2)
+- `UserPromptSubmit → seat-inject.mjs`: carries the active seat profile into
+  every prompt (state from /rig:seat; profile = the seat's rendered agent,
+  frontmatter stripped; 16KB ceiling, loud truncation). Informs, never
+  blocks — all failure paths WARN + exit 0. Driver 63 checks (7 new: wiring,
+  on/off/corrupt/unknown paths, frontmatter strip). Version-bump law first
+  applied: 0.1.1 → 0.1.2. Verification in-client pending reinstall (§D.35 R1
+  pattern: expect [zcode-rig:seat] context on first prompted turn per seat).

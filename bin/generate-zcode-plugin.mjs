@@ -120,6 +120,9 @@ writeFileSync(join(OUT, "hooks", "hooks.json"), JSON.stringify({
       { matcher: "Bash", hooks: [{ type: "command", command: "node ${ZCODE_PLUGIN_ROOT}/hooks/bash-guard.mjs" }] },
       { matcher: "Write|Edit", hooks: [{ type: "command", command: "node ${ZCODE_PLUGIN_ROOT}/hooks/scope-check.mjs" }] },
     ],
+    UserPromptSubmit: [
+      { hooks: [{ type: "command", command: "node ${ZCODE_PLUGIN_ROOT}/hooks/seat-inject.mjs" }] },
+    ],
   },
 }, null, 2) + "\n");
 
@@ -127,7 +130,7 @@ writeFileSync(join(OUT, "hooks", "hooks.json"), JSON.stringify({
 mkdirSync(join(OUT, ".zcode-plugin"));
 writeFileSync(join(OUT, ".zcode-plugin", "plugin.json"), JSON.stringify({
   name: "zcode-rig",
-  version: "0.1.1",
+  version: "0.1.2",
   description: "Factory rig invocation + enforcement plane for ZCode: the workflow skills, seat agents, and fail-closed guard hooks (WP-F; generated — never hand-edit).",
   source_head: HEAD,
 }, null, 2) + "\n");
