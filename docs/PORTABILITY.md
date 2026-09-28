@@ -70,15 +70,17 @@ mkdir -p ~/.agents && ln -sfn ~/.pi/agent/skills ~/.agents/skills
 #       #   "plugins": [{ "name": "zcode-rig", "source": "./zcode-rig" }] }
 #     Then: Settings → Plugin Management → Discover → + → local directory →
 #     /home/<user>/factory-rig/tmp/zcode-marketplace → install zcode-rig → enable.
-#     The plugin carries skills (zcode-rig: namespace), commands (/rig-preflight,
-#     /rig-seat — flat names), and the fail-closed guard hooks — the ONLY hook
+#     The plugin carries skills (zcode-rig: namespace), commands (/rig-preflight — flat names), and the fail-closed guard hooks — the ONLY hook
 #     scope executing beyond user-level (verified live: PreToolUse Bash →
 #     bash-guard, Write|Edit → scope-check, loud DENYs observed; hook commands
 #     MUST use ${ZCODE_PLUGIN_ROOT} substitution — ZCODE_RIG_ROOT does not exist,
 #     and a failed hook is a recoverable error = silent pass).
-#     LAW (no update button exists): the client caches a versioned COPY at
-#     install time — bump the plugin version in the generator on EVERY
-#     plugin-affecting rig change, then reinstall from the marketplace.
+#     LAW (observed 2026-09-28): the client AUTO-UPDATES plugin content from
+#     the marketplace source (the symlink → deployed clone), so a rig pull
+#     that changes the plugin reaches the client on its next sync — but the
+#     client also caches versioned copies, so bump the plugin version in the
+#     generator on EVERY plugin-affecting rig change to keep installs
+#     identifiable and auditable.
 #     Onboarding never copies this plugin; projects get law only.
 #     Verify: `node ~/.pi/agent/bin/check-zcode-plane.mjs` (exit 0 = plane OK).
 
@@ -96,6 +98,10 @@ mkdir -p ~/.agents && ln -sfn ~/.pi/agent/skills ~/.agents/skills
 #     NOT the invocation surface. Rendered agents reference roster-laws.md at
 #     the ABSOLUTE deployed path — the generator rewrites it at render time.
 #     New sessions only: agent files load at session start.
+#     SEATS ON ZCODE ARE NATIVE SUBAGENTS (operator decision 2026-09-28): the
+#     seat IS the subagent (system prompt = profile law, isolated context).
+#     There is NO /rig:seat command and NO seat-injection hook on this seat —
+#     Pi's seat-switch machinery is Pi-only; seat-state.json is not read here.
 
 # 3. Prove the rig
 cd ~/factory-rig/sources/harness-config

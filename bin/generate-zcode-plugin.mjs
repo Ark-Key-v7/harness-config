@@ -13,7 +13,6 @@
  *   projections/zcode-plugin/agents/<role>.md           — profiles → subagent defs
  *   projections/zcode-plugin/skills/**                  — verbatim copy of skills/
  *   projections/zcode-plugin/commands/rig-preflight.md  — calls preflight --staged
- *   projections/zcode-plugin/commands/rig-seat.md       — writes seat state (operator-invoked)
  *   projections/zcode-plugin/hooks/hooks.json           — [HARNESS-ENFORCE] wiring
  *   projections/zcode-plugin/hooks/*.mjs                — fail-closed guards (copied
  *                                                          verbatim from templates/zcode-plugin-hooks/)
@@ -97,16 +96,6 @@ description: Refinery Stage 0 — Semgrep injection floor + contract lint over s
 
 Relay the output verbatim. BLOCKED is a stop, not a suggestion.
 `);
-writeFileSync(join(OUT, "commands", "rig-seat.md"), `---
-name: rig:seat
-description: Switch the active seat profile (scout | planner | worker | reviewer | off) — operator-invoked by construction
----
-
-Write the seat selection to \`~/.pi/agent/seat-state.json\` as
-\`{ "seat": "<role>" }\` (create or update), then confirm. Seats are law:
-never self-switch; the operator runs this command.
-`);
-
 // --- hooks/ (static fail-closed assets copied verbatim + wiring) ---------------
 mkdirSync(join(OUT, "hooks"));
 for (const f of readdirSync(HOOKS_SRC)) cpSync(join(HOOKS_SRC, f), join(OUT, "hooks", f));
@@ -120,9 +109,6 @@ writeFileSync(join(OUT, "hooks", "hooks.json"), JSON.stringify({
       { matcher: "Bash", hooks: [{ type: "command", command: "node ${ZCODE_PLUGIN_ROOT}/hooks/bash-guard.mjs" }] },
       { matcher: "Write|Edit", hooks: [{ type: "command", command: "node ${ZCODE_PLUGIN_ROOT}/hooks/scope-check.mjs" }] },
     ],
-    UserPromptSubmit: [
-      { hooks: [{ type: "command", command: "node ${ZCODE_PLUGIN_ROOT}/hooks/seat-inject.mjs" }] },
-    ],
   },
 }, null, 2) + "\n");
 
@@ -130,7 +116,7 @@ writeFileSync(join(OUT, "hooks", "hooks.json"), JSON.stringify({
 mkdirSync(join(OUT, ".zcode-plugin"));
 writeFileSync(join(OUT, ".zcode-plugin", "plugin.json"), JSON.stringify({
   name: "zcode-rig",
-  version: "0.1.2",
+  version: "0.1.4",
   description: "Factory rig invocation + enforcement plane for ZCode: the workflow skills, seat agents, and fail-closed guard hooks (WP-F; generated — never hand-edit).",
   source_head: HEAD,
 }, null, 2) + "\n");

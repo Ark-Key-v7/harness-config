@@ -28,7 +28,7 @@ let manifestOk = false;
 try { const m = JSON.parse(readFileSync(join(PLUGIN, ".zcode-plugin", "plugin.json"), "utf8")); manifestOk = m.name === "zcode-rig" && typeof m.source_head === "string"; } catch {}
 check("plugin.json manifest exists + parses", manifestOk);
 for (const f of ["agents/scout.md", "agents/planner.md", "agents/worker.md", "agents/reviewer.md",
-  "commands/rig-preflight.md", "commands/rig-seat.md", "hooks/hooks.json", "hooks/bash-guard.mjs", "hooks/scope-check.mjs", "README.md"]) {
+  "commands/rig-preflight.md", "hooks/hooks.json", "hooks/bash-guard.mjs", "hooks/scope-check.mjs", "README.md"]) {
   check(`structure: ${f}`, existsSync(join(PLUGIN, f)));
 }
 for (const f of ["scope", "architect", "develop", "check", "test", "document", "sync", "debug", "audit"]) {
@@ -59,45 +59,15 @@ for (const f of ["scope", "architect", "develop", "check", "test", "document", "
   }
   const manifest = JSON.parse(readFileSync(join(PLUGIN, ".zcode-plugin", "plugin.json"), "utf8"));
   check("hooks.json uses ZCODE_PLUGIN_ROOT substitution (§D.35 R1)", readFileSync(join(PLUGIN, "hooks", "hooks.json"), "utf8").includes("${ZCODE_PLUGIN_ROOT}"));
-  check("plugin version is 0.1.2 (bump law §D.35 + C.5)", manifest.version === "0.1.2");
+  // seat machinery REMOVED by operator decision 2026-09-28: seats are native subagents on ZCode
+  check("no rig-seat command (seats = native subagents)", !existsSync(join(PLUGIN, "commands", "rig-seat.md")));
+  check("no UserPromptSubmit injection hook", !JSON.parse(readFileSync(join(PLUGIN, "hooks", "hooks.json"), "utf8")).hooks?.UserPromptSubmit);
+  check("no seat-inject.mjs in plugin", !existsSync(join(PLUGIN, "hooks", "seat-inject.mjs")));
+  check("scope-check deny message carries the channel law", readFileSync(join(PLUGIN, "hooks", "scope-check.mjs"), "utf8").includes("forcing is forbidden"));
+  check("plugin version is 0.1.4 (bump law §D.35 + seat-machinery removal)", manifest.version === "0.1.4");
 }
 
-// --- seat-injection hook (C.5) ---------------------------------------------------
-{
-  const hooksJson2 = JSON.parse(readFileSync(join(PLUGIN, "hooks", "hooks.json"), "utf8"));
-  check("hooks.json wires UserPromptSubmit -> seat-inject", hooksJson2.hooks?.UserPromptSubmit?.some((e) => (e.matcher ?? "*") === "*" && e.hooks?.[0]?.command?.includes("seat-inject.mjs")));
-  check("structure: hooks/seat-inject.mjs", existsSync(join(PLUGIN, "hooks", "seat-inject.mjs")));
 
-  const run = (env) => {
-    try {
-      return { code: 0, out: execFileSync(process.execPath, [join(PLUGIN, "hooks", "seat-inject.mjs")], { encoding: "utf8", env: { ...process.env, ...env }, stdio: ["pipe", "pipe", "pipe"] }).toString() };
-    } catch (e) { return { code: e.status ?? 1, out: (e.stdout ?? "").toString() }; }
-  };
-  const tmp = mkdtempSync(join(tmpdir(), "seat-inject-"));
-
-  // on-path: worker state injects the profile (identity + skill set), exit 0, never blocks
-  writeFileSync(join(tmp, "worker.json"), JSON.stringify({ seat: "worker" }));
-  const rOn = run({ ZCODE_RIG_STATE_FILE: join(tmp, "worker.json"), ZCODE_PLUGIN_ROOT: PLUGIN });
-  check("seat-inject on: injects worker profile law", rOn.code === 0 && rOn.out.includes("Active seat: worker") && rOn.out.includes("PROFILE: Worker") && rOn.out.includes("Skill set (law for this seat)"));
-  check("seat-inject on: frontmatter stripped", !rOn.out.startsWith("---"));
-
-  // off-path: no output, exit 0
-  writeFileSync(join(tmp, "off.json"), JSON.stringify({ seat: "off" }));
-  const rOff = run({ ZCODE_RIG_STATE_FILE: join(tmp, "off.json"), ZCODE_PLUGIN_ROOT: PLUGIN });
-  check("seat-inject off: silent, exit 0", rOff.code === 0 && rOff.out.trim() === "");
-
-  // warn-path: corrupt state never blocks
-  writeFileSync(join(tmp, "corrupt.json"), "{not json");
-  const rBad = run({ ZCODE_RIG_STATE_FILE: join(tmp, "corrupt.json"), ZCODE_PLUGIN_ROOT: PLUGIN });
-  check("seat-inject corrupt state: WARN, exit 0 (informs, never blocks)", rBad.code === 0 && rBad.out.includes("WARN"));
-
-  // unknown seat: WARN, exit 0
-  writeFileSync(join(tmp, "ghost.json"), JSON.stringify({ seat: "architect" }));
-  const rGhost = run({ ZCODE_RIG_STATE_FILE: join(tmp, "ghost.json"), ZCODE_PLUGIN_ROOT: PLUGIN });
-  check("seat-inject unknown seat: WARN, exit 0", rGhost.code === 0 && rGhost.out.includes('unknown seat "architect"'));
-
-  rmSync(tmp, { recursive: true, force: true });
-}
 const hooksJson = JSON.parse(readFileSync(join(PLUGIN, "hooks", "hooks.json"), "utf8"));
 check("hooks.json wires Bash PreToolUse -> bash-guard", hooksJson.hooks?.PreToolUse?.some((e) => e.matcher === "Bash" && e.hooks?.[0]?.command?.includes("bash-guard.mjs")));
 check("hooks.json wires Write|Edit PreToolUse -> scope-check", hooksJson.hooks?.PreToolUse?.some((e) => e.matcher === "Write|Edit" && e.hooks?.[0]?.command?.includes("scope-check.mjs")));

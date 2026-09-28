@@ -41,7 +41,7 @@ try {
     return rel === wp || rel.startsWith(wp + "/");
   });
   if (!ok) {
-    console.error(`[zcode-rig:scope-check] DENY: ${rel} not in contract write scope (${write.join(", ")}) — resolve the scope, never force`);
+    console.error(`[zcode-rig:scope-check] DENY: ${rel} not in contract write scope (${write.join(", ")}) — resolve the scope, never force. Re-accomplishing this write through the Bash channel or any other route is forcing, and forcing is forbidden.`);
     process.exit(2);
   }
   process.exit(0);

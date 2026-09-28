@@ -20,16 +20,6 @@
           }
         ]
       }
-    ],
-    "UserPromptSubmit": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node ${ZCODE_PLUGIN_ROOT}/hooks/seat-inject.mjs"
-          }
-        ]
-      }
     ]
   }
 }
