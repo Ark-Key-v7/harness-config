@@ -2,5 +2,5 @@
   "name": "zcode-rig",
   "version": "0.1.4",
   "description": "Factory rig invocation + enforcement plane for ZCode: the workflow skills, seat agents, and fail-closed guard hooks (WP-F; generated — never hand-edit).",
-  "source_head": "6cb7bf6759a09cd55f9a39f4bb07863518101968"
+  "source_head": "312231d9cf00ef228d5c719bfd103afa2805d8b5"
 }
