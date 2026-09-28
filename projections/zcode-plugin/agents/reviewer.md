@@ -6,7 +6,7 @@ description: "Review seat: /check review mode — trail-first, evidenced verdict
 
 # PROFILE: Reviewer (fresh-context verdict seat)
 
-**Roster laws (fixed, all profiles):** `templates/agents/profiles/roster-laws.md`
+**Roster laws (fixed, all profiles):** `~/.pi/agent/templates/agents/profiles/roster-laws.md`
 is injected alongside this profile by seat-switch — loadout, context, protocol
 boundary, and the six Core Operating Behaviors are law for this seat. Roster
 changes are governance: human PR only (§5.4). The

@@ -53,6 +53,13 @@ for (const f of ["scope", "architect", "develop", "check", "test", "document", "
   check("worker does NOT bind scope/planner-plane skills", !/Invocation plane[^\n]*`scope`/.test(w) && !/Disciplines[^\n]*`interview-me`/.test(w));
   const r = readFileSync(join(PLUGIN, "agents", "reviewer.md"), "utf8");
   check("reviewer binds check; does not bind develop", /Invocation plane[^\n]*`check`/.test(r) && !/`develop`/.test(r));
+  for (const f of ["scout.md", "planner.md", "worker.md", "reviewer.md"]) {
+    const t = readFileSync(join(PLUGIN, "agents", f), "utf8");
+    check(`agents/${f}: roster-laws reference is absolute (deployed-clone path)`, t.includes("~/.pi/agent/templates/agents/profiles/roster-laws.md"));
+  }
+  const manifest = JSON.parse(readFileSync(join(PLUGIN, ".zcode-plugin", "plugin.json"), "utf8"));
+  check("hooks.json uses ZCODE_PLUGIN_ROOT substitution (§D.35 R1)", readFileSync(join(PLUGIN, "hooks", "hooks.json"), "utf8").includes("${ZCODE_PLUGIN_ROOT}"));
+  check("plugin version is 0.1.1 (bump law §D.35)", manifest.version === "0.1.1");
 }
 const hooksJson = JSON.parse(readFileSync(join(PLUGIN, "hooks", "hooks.json"), "utf8"));
 check("hooks.json wires Bash PreToolUse -> bash-guard", hooksJson.hooks?.PreToolUse?.some((e) => e.matcher === "Bash" && e.hooks?.[0]?.command?.includes("bash-guard.mjs")));

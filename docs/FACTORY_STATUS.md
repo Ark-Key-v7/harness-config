@@ -511,3 +511,11 @@ After any rig change that alters the ledger above: update this file in the same 
 - Machine-side (outside this repo): ~/.zcode/AGENTS.md bootstrap (ungoverned
   repos route to onboarding). Drivers: lint VALID · skills-smoke 18/18 ·
   canon-register 188 PASS.
+
+## Rig-change 2026-09-28 — C.2 in-client verification record (§D.35)
+- Hooks plane PROVEN live (template-var fix `${ZCODE_PLUGIN_ROOT}`; silent-pass
+  failure mode observed and closed). Commands green incl. fail-closed refusal.
+  Seats live via the Windows-profile bridge (PORTABILITY 2e; Agent-tool spawn,
+  E.5 + C.1 self-report verified). Two-profile architecture + version-bump law
+  recorded. OPEN: /debug behavioral (bar never crossed), V5, V6 wiki, plugin
+  skills workspace-scoping, double-discovery policy. Plugin 0.1.1.

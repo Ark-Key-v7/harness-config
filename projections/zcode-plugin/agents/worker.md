@@ -6,7 +6,7 @@ description: "Execution seat: builds inside contract scope under bound disciplin
 
 # PROFILE: Worker (execution seat)
 
-**Roster laws (fixed, all profiles):** `templates/agents/profiles/roster-laws.md`
+**Roster laws (fixed, all profiles):** `~/.pi/agent/templates/agents/profiles/roster-laws.md`
 is injected alongside this profile by seat-switch — loadout, context, protocol
 boundary, and the six Core Operating Behaviors are law for this seat. Roster
 changes are governance: human PR only (§5.4).

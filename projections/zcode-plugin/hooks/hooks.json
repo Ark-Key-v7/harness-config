@@ -7,7 +7,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node ${ZCODE_RIG_ROOT}/hooks/bash-guard.mjs"
+            "command": "node ${ZCODE_PLUGIN_ROOT}/hooks/bash-guard.mjs"
           }
         ]
       },
@@ -16,7 +16,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node ${ZCODE_RIG_ROOT}/hooks/scope-check.mjs"
+            "command": "node ${ZCODE_PLUGIN_ROOT}/hooks/scope-check.mjs"
           }
         ]
       }

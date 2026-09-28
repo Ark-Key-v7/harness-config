@@ -76,7 +76,11 @@ function renderSkillSet(profileText) {
 }
 
 for (const f of ["scout.md", "planner.md", "worker.md", "reviewer.md"]) {
-  const body = readFileSync(join(PROFILES_SRC, f), "utf8");
+  let body = readFileSync(join(PROFILES_SRC, f), "utf8");
+  // ZCode seat has no rig-root context: rewrite rig-relative law references
+  // to the absolute deployed-clone path (§D.35 R3 finding — seats could not
+  // resolve `templates/agents/profiles/roster-laws.md`)
+  body = body.replaceAll("templates/agents/profiles/roster-laws.md", "~/.pi/agent/templates/agents/profiles/roster-laws.md");
   const role = f.replace(".md", "");
   const front = `---\nname: ${role}\ndescription: "${ROLE_DESC[role]}"\n# model: pin per WP-F D-5 after in-client V5 verification (UNVERIFIED — do not cite as law yet)\n---\n\n`;
   writeFileSync(join(OUT, "agents", f), front + body + renderSkillSet(body));
@@ -113,8 +117,8 @@ writeFileSync(join(OUT, "hooks", "hooks.json"), JSON.stringify({
   _comment: "[HARNESS-ENFORCE] zcode-rig guard plane — plugin scope is the ONLY hook scope executing beyond user-level (Package A V2). Fail-closed scripts; canonical law in the authoring repo.",
   hooks: {
     PreToolUse: [
-      { matcher: "Bash", hooks: [{ type: "command", command: "node ${ZCODE_RIG_ROOT}/hooks/bash-guard.mjs" }] },
-      { matcher: "Write|Edit", hooks: [{ type: "command", command: "node ${ZCODE_RIG_ROOT}/hooks/scope-check.mjs" }] },
+      { matcher: "Bash", hooks: [{ type: "command", command: "node ${ZCODE_PLUGIN_ROOT}/hooks/bash-guard.mjs" }] },
+      { matcher: "Write|Edit", hooks: [{ type: "command", command: "node ${ZCODE_PLUGIN_ROOT}/hooks/scope-check.mjs" }] },
     ],
   },
 }, null, 2) + "\n");
@@ -123,7 +127,7 @@ writeFileSync(join(OUT, "hooks", "hooks.json"), JSON.stringify({
 mkdirSync(join(OUT, ".zcode-plugin"));
 writeFileSync(join(OUT, ".zcode-plugin", "plugin.json"), JSON.stringify({
   name: "zcode-rig",
-  version: "0.1.0",
+  version: "0.1.1",
   description: "Factory rig invocation + enforcement plane for ZCode: the workflow skills, seat agents, and fail-closed guard hooks (WP-F; generated — never hand-edit).",
   source_head: HEAD,
 }, null, 2) + "\n");
