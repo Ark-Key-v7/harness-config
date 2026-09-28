@@ -1,5 +1,5 @@
 <!-- GENERATED FILE — do not hand-edit (WP3, L4). Regenerate: node bin/generate-projections.mjs -->
-<!-- source_head: 823c9bd542dc125f72a14856c17a6a9ed7408700 -->
+<!-- source_head: 2257803cde608ee6850d433f200ae66852a371fb -->
 <!-- projection: pi/append-system.md -->
 
 # Factory projection — Pi append-system (stable part)
@@ -33,25 +33,30 @@ When a task matches a trigger, invoke the named skill — procedure follows, nev
 | Skill | Trigger phrases |
 |---|---|
 | api-and-interface-design | design the API · new endpoint · event schema · public interface · API contract |
+| architect | architect · design this feature · decide the stack · pick a database · design the data model · we need a decision · architect the auth · ratify the assumption |
+| audit | audit · audit this repo · bootstrap project context · write AGENTS.md · document this codebase · gap fill the docs · audit src folder |
 | brainstorming | let's brainstorm · think through this · scope this |
 | browser-testing-with-devtools | test in the browser · verify the UI · browser check · console errors · devtools |
+| check | check · verify this feature · run the app and verify · review this PR · review the diff · verify this contract · stage 2 review · adversarial review · fresh eyes review |
 | code-simplification | simplify this · clean this up · too complex · reduce complexity · refactor for clarity |
 | context-budget | new session · output quality degraded · trim context · switching tasks · context setup |
+| debug | debug · debug this · find the root cause · systematic debugging · why is this failing · fix this bug · anything is failing · throwing · or behaving wrong |
+| develop | develop · build this feature · build the spec · scaffold from the spec · implement the contract · build now · build the page |
+| document | document · write the PR body · changelog entry · release notes · write the postmortem · write it up |
 | documentation-and-adrs | write an ADR · document this decision · changelog · API docs · README |
 | interview-me | interview me · grill me · are we sure? · stress-test my thinking · underspecified ask |
 | memory | remember this · what do we know about · recall · memory entry · cite memory |
 | observability-and-instrumentation | instrument this · add telemetry · structured logs · metrics · alerts |
 | performance-optimization | optimize performance · slow page · Core Web Vitals · N+1 query · performance regression · profiling bottleneck |
-| pr-review | review this PR · verify this contract · stage 2 review · adversarial review |
 | project-onboard | start a new project · onboard this project · set up the manifold · new repo setup |
 | rig-change | new rig files · place these files · update the rig · commit and sync harness-config · I downloaded the new version · canon updated · new handbook version |
 | rules-drift-check | check rules drift · rules file stale · AGENTS.md drift · fold into review pass |
+| scope | scope · plan this · slice this · slice the PRD · draft contracts · draft a task contract · new work · I have an idea · start a feature · draft an intent · write a PRD · new intent · plan the next slice · what should I build next |
 | security-and-hardening | security review · hardening · STRIDE · secrets hygiene · input handling |
 | ship-gate | ship it · open a PR · merge this · release · ready to ship |
-| slice-plan | plan this · slice this · slice the PRD · draft contracts · draft a task contract |
-| spec-intake | new work · I have an idea · start a feature · draft an intent · write a PRD · new intent |
-| systematic-debugging | debug this · find the root cause · systematic debugging |
+| sync | sync · sync the docs · reconcile after merge · update the context files · close the loop on this change |
 | template-skill | author a new skill · create a skill · new skill · import this skill · port this skill · skill template · update the skill format |
+| test | test · write tests · test the change · cover the diff with tests · lock in the tests |
 | test-driven-development | tdd · write the test first · test driven |
 | to-questionnaire | to questionnaire · questionnaire for · ask the expert · handoff questions |
 | tool-intake | install a tool · adopt this skill · a register trigger fired · add an MCP server · tool intake |

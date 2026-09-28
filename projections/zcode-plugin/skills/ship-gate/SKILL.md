@@ -98,6 +98,20 @@ Immediately after merge, verify the deploy:
 6. Confirm rollback mechanism works (dry run if possible)
 ```
 
+### Step 4.5 — Worktree close-out (merge + delete law, W-1)
+
+After merge and post-merge verification pass, the task's execution surface is
+closed out — a worktree that survives its task is unpruned isolation debt:
+
+1. `git worktree remove ../<repo>-<slug>` (refuse `--force` on a dirty tree —
+   dirt after merge means unmerged artifacts; resolve, never discard).
+2. Delete the branch: `git branch -d feat/<slug>` (lowercase `-d` only: it
+   refuses an unmerged branch — that refusal is a check, not an obstacle).
+3. Only then mark the task CLOSED in STATE.md / the contract's exit record.
+
+Baseline (no worktree was spawned): step 2 alone applies — the branch is
+deleted after merge; the law is the same, the surface is smaller.
+
 ### Step 5 — Release posture (when the project has users)
 
 Ship behind flags; advance on evidence:

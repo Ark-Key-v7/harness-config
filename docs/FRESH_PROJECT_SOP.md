@@ -53,9 +53,37 @@ node ~/.pi/agent/bin/contract-scope.mjs --contract .agents/tasks/task-<slug>.md 
 #    In Pi:  /seat worker      (scout for recon, planner for specs, reviewer for review)
 #    The guard now blocks out-of-scope writes automatically.
 
-# 4. Worktree execution (if used): STATE.md genesis per task
+# 4. Worktree execution — Worktree Activation Law (W-1)
+#    All three isolation scenarios are the APPLIED design of this rig; each
+#    activates at its named trigger. Above every trigger: fresh worktree per
+#    task contract, branched from origin/main (a copy of the exact moment of
+#    main), merge-back via the ship-gate, then worktree + branch deletion.
+#
+#    S-a PARALLEL SESSIONS    — trigger: a second in-flight task contract on
+#                               the same repository. Each contract gets its own
+#                               worktree + scope file; sessions never share.
+#    S-b SPLIT ATTENTION      — trigger: an agent building while the operator
+#                               keeps the main checkout open (review, inspect,
+#                               or build elsewhere). The agent's session owns
+#                               the worktree; main stays clean and readable.
+#    S-c UNATTENDED EXECUTION — trigger: any session running without live
+#                               operator attention (Goal Mode, long refine
+#                               loops, Automations when §D.19 lands). Worktree
+#                               is MANDATORY here: wt.toml fail-closed boot +
+#                               STATE.md are the recovery surface.
+#
+#    Below every trigger (baseline: single interactive session at concurrency
+#    1), a feature branch alone satisfies isolation — the worktree is
+#    invoked, not defaulted into.
+#
+#    Spawn sequence (one block, in order):
+git fetch origin && git worktree add ../<repo>-<slug> -b feat/<slug> origin/main
+node ~/.pi/agent/bin/contract-scope.mjs --contract .agents/tasks/task-<slug>.md \
+  --gravity .tmd/gravity.md --out ../<repo>-<slug>/.pi/scope.json
 node ~/.pi/agent/bin/state-genesis.mjs --schema .agents/schemas/state.schema.yaml \
-  --contract task-<slug>.md --contract-id <id> --worktree /abs/path --branch <branch> --out STATE.md
+  --contract task-<slug>.md --contract-id <id> --worktree /abs/path --branch feat/<slug> --out ../<repo>-<slug>/STATE.md
+#    Then open ../<repo>-<slug> as the session workspace (ZCode) or cd (Pi).
+#    Close-out is ship-gate Step 4.5: merge → verify → delete worktree + branch.
 
 # 5. Review: /seat reviewer → invoke the check skill (review mode) → E.4 EvaluationResult
 ```
