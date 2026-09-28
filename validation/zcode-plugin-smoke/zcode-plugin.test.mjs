@@ -10,7 +10,7 @@
  * Exit 0 = ALL PASS.
  */
 
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -33,6 +33,26 @@ for (const f of ["agents/scout.md", "agents/planner.md", "agents/worker.md", "ag
 }
 for (const f of ["scope", "architect", "develop", "check", "test", "document", "sync", "debug", "audit"]) {
   check(`skills/: ${f}/ present in plugin`, existsSync(join(PLUGIN, "skills", f, "SKILL.md")));
+}
+
+// --- skill-set bindings (C.1) ---------------------------------------------------
+{
+  const skillDirs = new Set(readdirSync(join(PLUGIN, "skills")).filter((d) => existsSync(join(PLUGIN, "skills", d, "SKILL.md"))));
+  for (const f of ["scout.md", "planner.md", "worker.md", "reviewer.md"]) {
+    const t = readFileSync(join(PLUGIN, "agents", f), "utf8");
+    check(`agents/${f}: Skill-set section present`, t.includes("## Skill set (law for this seat)"));
+    const inv = t.match(/Invocation plane[^\n]*?:\s*(.*)\.\n/), dis = t.match(/Disciplines[^\n]*?:\s*(.*)\.\n/);
+    const names = [];
+    for (const m of [inv, dis]) if (m) for (const x of m[1].matchAll(/`([a-z0-9-]+)`/g)) names.push(x[1]);
+    check(`agents/${f}: declares at least one skill`, names.length > 0);
+    const unknown = names.filter((n) => !skillDirs.has(n));
+    check(`agents/${f}: every declared skill exists in plugin skills/ (unknown: ${unknown.join(",") || "none"})`, unknown.length === 0);
+  }
+  const w = readFileSync(join(PLUGIN, "agents", "worker.md"), "utf8");
+  check("worker binds develop on the invocation plane", /Invocation plane[^\n]*`develop`/.test(w));
+  check("worker does NOT bind scope/planner-plane skills", !/Invocation plane[^\n]*`scope`/.test(w) && !/Disciplines[^\n]*`interview-me`/.test(w));
+  const r = readFileSync(join(PLUGIN, "agents", "reviewer.md"), "utf8");
+  check("reviewer binds check; does not bind develop", /Invocation plane[^\n]*`check`/.test(r) && !/`develop`/.test(r));
 }
 const hooksJson = JSON.parse(readFileSync(join(PLUGIN, "hooks", "hooks.json"), "utf8"));
 check("hooks.json wires Bash PreToolUse -> bash-guard", hooksJson.hooks?.PreToolUse?.some((e) => e.matcher === "Bash" && e.hooks?.[0]?.command?.includes("bash-guard.mjs")));

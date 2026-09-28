@@ -24,6 +24,9 @@ actuation_boundary:
 tmd_read_path: [.tmd/rules.md, .tmd/gravity.md]
 write_scope: none
 read_scope: sub_graph+closure                 # the scout's assigned slice + declared dependency closure
+skill_bindings:
+  invocation: [audit]              # on operator request only — AI-context bootstrap (greenfield/whole-repo modes)
+  disciplines: [context-budget, memory]
 ```
 
 ### Identity: Scout — reconnaissance and synthesis, never mutation

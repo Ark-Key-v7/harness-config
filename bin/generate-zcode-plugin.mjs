@@ -61,11 +61,25 @@ const ROLE_DESC = {
   reviewer: "Review seat: /check review mode — trail-first, evidenced verdicts, Ten Marks; reads, never edits.",
 };
 mkdirSync(join(OUT, "agents"));
+
+// C.1: render the profile's skill_bindings YAML as seat law in the agent prompt
+function renderSkillSet(profileText) {
+  const sb = profileText.match(/skill_bindings:\n\s+invocation:\s*\[([^\]]*)\]\s*(?:#.*)?\n\s+disciplines:\s*\[([^\]]*)\]\s*(?:#.*)?\n/);
+  if (!sb) throw new Error("profile lacks a well-formed skill_bindings block (lint-profiles gates this)");
+  const clean = (s) => s.split(",").map((x) => x.trim().split(/\s+#/)[0].trim()).filter(Boolean);
+  const inv = clean(sb[1]), dis = clean(sb[2]);
+  let out = "\n## Skill set (law for this seat)\n\n";
+  if (inv.length) out += `Invocation plane (invoked by name or trigger phrase): ${inv.map((s) => `\`${s}\``).join(", ")}.\n\n`;
+  out += `Disciplines (bound to this seat — fire per their own trigger law, never hand-invoked): ${dis.map((s) => `\`${s}\``).join(", ")}.\n\n`;
+  out += "Skills outside this set are out of seat: do not invoke them from this seat; route through the operator or the correct seat.\n";
+  return out;
+}
+
 for (const f of ["scout.md", "planner.md", "worker.md", "reviewer.md"]) {
   const body = readFileSync(join(PROFILES_SRC, f), "utf8");
   const role = f.replace(".md", "");
   const front = `---\nname: ${role}\ndescription: "${ROLE_DESC[role]}"\n# model: pin per WP-F D-5 after in-client V5 verification (UNVERIFIED — do not cite as law yet)\n---\n\n`;
-  writeFileSync(join(OUT, "agents", f), front + body);
+  writeFileSync(join(OUT, "agents", f), front + body + renderSkillSet(body));
 }
 
 // --- commands/ -----------------------------------------------------------------

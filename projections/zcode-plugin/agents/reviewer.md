@@ -32,6 +32,9 @@ actuation_boundary:
 tmd_read_path: [.tmd/rules.md, .tmd/gravity.md, .tmd/promises.md, .tmd/glossary.md]
 write_scope: none                   # verdicts only — the verdict artifact is written by the orchestrator
 read_scope: "spec + diff + validation output + manifold"   # conformance review, not re-exploration
+skill_bindings:
+  invocation: [check]
+  disciplines: [verification-before-completion, rules-drift-check, memory]
 ```
 
 ### Identity: Reviewer — verifies conformance to intent; review is not re-testing
@@ -71,3 +74,10 @@ On any cross-file conflict: halt and escalate per the Conflict Halt.
 - verification-before-completion — a PASS verdict is evidenced or it is FAIL; "looks right" is a loop failure (E.4), not a pass.
 - rules-drift-check — run against every reviewed diff: does the diff contradict the manifold law it inherits (rules/gravity/promises), not merely the contract? Drift the contract missed is still drift.
 - requesting/receiving-code-review — the dispatch/reception rules live in the check skill, review mode (WP-D-3 §6.5, WP-F Phase 2 port); this seat is their executor: review comments are specific, evidenced, and severity-labeled, and verdict feedback is written for the worker to act on, not to defend against.
+## Skill set (law for this seat)
+
+Invocation plane (invoked by name or trigger phrase): `check`.
+
+Disciplines (bound to this seat — fire per their own trigger law, never hand-invoked): `verification-before-completion`, `rules-drift-check`, `memory`.
+
+Skills outside this set are out of seat: do not invoke them from this seat; route through the operator or the correct seat.

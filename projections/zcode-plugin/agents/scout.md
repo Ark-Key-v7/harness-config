@@ -30,6 +30,9 @@ actuation_boundary:
 tmd_read_path: [.tmd/rules.md, .tmd/gravity.md]
 write_scope: none
 read_scope: sub_graph+closure                 # the scout's assigned slice + declared dependency closure
+skill_bindings:
+  invocation: [audit]              # on operator request only — AI-context bootstrap (greenfield/whole-repo modes)
+  disciplines: [context-budget, memory]
 ```
 
 ### Identity: Scout — reconnaissance and synthesis, never mutation
@@ -65,3 +68,10 @@ Conflict Halt — you are forbidden from resolving conflicting law yourself.
 ## Bound disciplines (fire automatically, no invocation needed)
 
 - context-budget — trim at 75%, cut-first/protect tables, task-critical content last. A scout that blows the context ceiling produces a degraded findings artifact; the budget law applies to exploration exactly as to execution.
+## Skill set (law for this seat)
+
+Invocation plane (invoked by name or trigger phrase): `audit`.
+
+Disciplines (bound to this seat — fire per their own trigger law, never hand-invoked): `context-budget`, `memory`.
+
+Skills outside this set are out of seat: do not invoke them from this seat; route through the operator or the correct seat.

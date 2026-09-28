@@ -24,6 +24,9 @@ actuation_boundary:
 tmd_read_path: [.tmd/rules.md, .tmd/gravity.md, .tmd/promises.md, .tmd/glossary.md, .tmd/design.md]
 write_scope: specs-only              # /.agents/tasks/ and plan artifacts — NEVER /src/
 read_scope: full-manifold            # manifold + relevant sub-graphs: planning requires the whole law
+skill_bindings:
+  invocation: [scope]
+  disciplines: [interview-me, context-budget, memory]
 ```
 
 ### Identity: Planner — drafts Task Contracts and plans, touches no code

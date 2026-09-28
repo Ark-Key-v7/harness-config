@@ -27,7 +27,7 @@ const ROSTER_LAW = {
   "reviewer.md": { write_scope: "none",        noWriteTools: true,  read_scope: null },
 };
 
-const E5_KEYS = ["profile:", "compute_physics:", "model_class:", "effort_level:", "substitution_bounds:", "actuation_boundary:", "tool_allowlist:", "command_allowlist:", "tmd_read_path:", "write_scope:", "read_scope:"];
+const E5_KEYS = ["profile:", "compute_physics:", "model_class:", "effort_level:", "substitution_bounds:", "actuation_boundary:", "tool_allowlist:", "command_allowlist:", "tmd_read_path:", "write_scope:", "read_scope:", "skill_bindings:"];
 const WIREFRAME_SECTIONS = ["System Directive", "Mandatory Topological Binding", "Tooling & Capability Constraints", "Execution Lifecycle"];
 
 let violations = 0;
@@ -48,6 +48,21 @@ for (const [file, law] of Object.entries(ROSTER_LAW)) {
 
   for (const k of E5_KEYS) if (!text.includes(k)) violation(file, `missing E.5 key ${k}`);
   for (const s of WIREFRAME_SECTIONS) if (!text.includes(s)) violation(file, `missing wireframe section "${s}"`);
+
+  // C.1 skill_bindings: two lists, every name must exist in skills/
+  const sb = text.match(/skill_bindings:\n\s+invocation:\s*\[([^\]]*)\]\s*(?:#.*)?\n\s+disciplines:\s*\[([^\]]*)\]\s*(?:#.*)?\n/);
+  if (!sb) {
+    violation(file, "skill_bindings block malformed (need invocation: [...] + disciplines: [...])");
+  } else {
+    const skillsDir = join(ROOT, "skills");
+    for (const name of [...sb[1].split(","), ...sb[2].split(",")]) {
+      const n = name.trim().split(/\s+#/)[0].trim();
+      if (!n) continue;
+      // existence check runs where the skills corpus is present (source repo);
+      // fixture-based drivers validate names against the plugin projection instead
+      if (existsSync(skillsDir) && !existsSync(join(skillsDir, n, "SKILL.md"))) violation(file, `skill_bindings names unknown skill "${n}"`);
+    }
+  }
 
   if (!text.includes(`write_scope: ${law.write_scope}`)) violation(file, `roster law: write_scope must be "${law.write_scope}"`);
   if (law.read_scope && !text.includes(`read_scope: ${law.read_scope}`)) violation(file, `roster law: read_scope must be "${law.read_scope}"`);

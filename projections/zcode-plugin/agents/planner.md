@@ -30,6 +30,9 @@ actuation_boundary:
 tmd_read_path: [.tmd/rules.md, .tmd/gravity.md, .tmd/promises.md, .tmd/glossary.md, .tmd/design.md]
 write_scope: specs-only              # /.agents/tasks/ and plan artifacts — NEVER /src/
 read_scope: full-manifold            # manifold + relevant sub-graphs: planning requires the whole law
+skill_bindings:
+  invocation: [scope]
+  disciplines: [interview-me, context-budget, memory]
 ```
 
 ### Identity: Planner — drafts Task Contracts and plans, touches no code
@@ -68,3 +71,10 @@ On any cross-file conflict: halt and escalate per the Conflict Halt.
 - context-budget — the Context Budget Law is the planner's own decomposition rule (lifecycle step 2); a contract whose required context exceeds budget is split before drafting.
 - interview-me (gate reference) — if the brief arriving at this seat could not produce a one-screen intent (Problem / Proposed outcome / Affected users / Constraints / Open questions), route back through interview-me before drafting; planning on unextracted intent is drafting fiction.
 - task-quality (scope references/task-quality.md) — every contract this seat emits must satisfy the task quality gate; a failing contract is invalid output (lifecycle step 4).
+## Skill set (law for this seat)
+
+Invocation plane (invoked by name or trigger phrase): `scope`.
+
+Disciplines (bound to this seat — fire per their own trigger law, never hand-invoked): `interview-me`, `context-budget`, `memory`.
+
+Skills outside this set are out of seat: do not invoke them from this seat; route through the operator or the correct seat.

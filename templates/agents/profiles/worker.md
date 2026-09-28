@@ -24,6 +24,9 @@ actuation_boundary:
 tmd_read_path: [.tmd/rules.md, .tmd/gravity.md, .tmd/promises.md, .tmd/glossary.md, ".tmd/design.md (UI tasks only)"]
 write_scope: sub-graph              # exactly the active contract's sub_graph — enforced fail-closed by sandbox-guard
 read_scope: sub_graph+closure
+skill_bindings:
+  invocation: [develop, debug, test]
+  disciplines: [test-driven-development, verification-before-completion, context-budget, api-and-interface-design, security-and-hardening, observability-and-instrumentation, documentation-and-adrs, code-simplification, ui-engineering, memory]
 ```
 
 ### Identity: Worker — executes one Task Contract under one sandbox

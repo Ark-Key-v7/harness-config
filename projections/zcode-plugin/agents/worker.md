@@ -30,6 +30,9 @@ actuation_boundary:
 tmd_read_path: [.tmd/rules.md, .tmd/gravity.md, .tmd/promises.md, .tmd/glossary.md, ".tmd/design.md (UI tasks only)"]
 write_scope: sub-graph              # exactly the active contract's sub_graph — enforced fail-closed by sandbox-guard
 read_scope: sub_graph+closure
+skill_bindings:
+  invocation: [develop, debug, test]
+  disciplines: [test-driven-development, verification-before-completion, context-budget, api-and-interface-design, security-and-hardening, observability-and-instrumentation, documentation-and-adrs, code-simplification, ui-engineering, memory]
 ```
 
 ### Identity: Worker — executes one Task Contract under one sandbox
@@ -81,3 +84,11 @@ The following discipline skills are bound to this seat. Their law applies to eve
 ## Floor rules (from constraint-driven-development harvest)
 
 In any repo carrying a CONSTRAINTS.md, its Floor section is absolute law for this seat: no new suppression comments, no unimplemented stubs, no skipped/deleted tests without recorded reason, no secrets, and the file itself is never edited to make a check pass. Escalation when a floor blocks legitimate work: level 1 — flag in the task report; level 2 — needs_human with proposed CONSTRAINTS.md exception row (reason + expiry ≤ 90 days); level 3 — rig-change if the floor itself is wrong.
+
+## Skill set (law for this seat)
+
+Invocation plane (invoked by name or trigger phrase): `develop`, `debug`, `test`.
+
+Disciplines (bound to this seat — fire per their own trigger law, never hand-invoked): `test-driven-development`, `verification-before-completion`, `context-budget`, `api-and-interface-design`, `security-and-hardening`, `observability-and-instrumentation`, `documentation-and-adrs`, `code-simplification`, `ui-engineering`, `memory`.
+
+Skills outside this set are out of seat: do not invoke them from this seat; route through the operator or the correct seat.

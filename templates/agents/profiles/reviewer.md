@@ -26,6 +26,9 @@ actuation_boundary:
 tmd_read_path: [.tmd/rules.md, .tmd/gravity.md, .tmd/promises.md, .tmd/glossary.md]
 write_scope: none                   # verdicts only — the verdict artifact is written by the orchestrator
 read_scope: "spec + diff + validation output + manifold"   # conformance review, not re-exploration
+skill_bindings:
+  invocation: [check]
+  disciplines: [verification-before-completion, rules-drift-check, memory]
 ```
 
 ### Identity: Reviewer — verifies conformance to intent; review is not re-testing
