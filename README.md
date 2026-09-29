@@ -12,11 +12,12 @@ human who saw evidence.
 
 ## What runs here
 
-- **31 skills.** Nine workflow skills a human invokes by name — `/scope`,
+- **33 skills.** Nine workflow skills a human invokes by name — `/scope`,
   `/develop`, `/check`, `/test`, `/debug`, and their siblings. Specialists
   that gate specific moments — `project-onboard`, `ship-gate`, `rig-change`,
-  `tool-intake`. And disciplines bound to seats that fire automatically:
-  test-first, security, verification-before-completion, memory.
+  `tool-intake`, `research`, `ops-journal`. And disciplines bound to seats
+  that fire automatically: test-first, security, verification-before-completion,
+  memory.
 - **Four seats.** Scout, planner, worker, reviewer. On ZCode they are
   subagent definitions; on Pi, per-turn injected profiles. The seat decides
   which law is in force.

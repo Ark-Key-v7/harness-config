@@ -8,7 +8,7 @@ description: "Spec-chain and contract authoring seat: drafts plans and task cont
 
 **Roster laws (fixed, all profiles):** `~/.pi/agent/templates/agents/profiles/roster-laws.md`
 is injected alongside this profile by seat-switch — loadout, context, protocol
-boundary, and the six Core Operating Behaviors are law for this seat. Roster
+boundary, and the seven Core Operating Behaviors are law for this seat. Roster
 changes are governance: human PR only (§5.4).
 
 ```yaml

@@ -2,7 +2,7 @@
 
 **Roster laws (fixed, all profiles):** `templates/agents/profiles/roster-laws.md`
 is injected alongside this profile by seat-switch — loadout, context, protocol
-boundary, and the six Core Operating Behaviors are law for this seat. Roster
+boundary, and the seven Core Operating Behaviors are law for this seat. Roster
 changes are governance: human PR only (§5.4). The
 reviewer MUST NOT inherit the worker's session (agent-adversarial review:
 an agent reviewing its own context carries its own confirmation bias).

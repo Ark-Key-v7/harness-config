@@ -35,6 +35,14 @@ Build production-quality user interfaces that are accessible, performant, and vi
 
 ## Component Architecture
 
+### Direction Before Code (CF46, 2026-09-29)
+
+Before writing any UI, commit to an explicit aesthetic direction in one line — brutalist, editorial, refined-minimal, playful, industrial, luxury: pick the one the product's audience and purpose actually call for, and state it. On a governed project, `design.md` Zone C is the visual law and wins over any invented direction; when no law rules, the stated direction governs every subsequent choice (typography weight, spacing rhythm, color temperature) so the result is intentional rather than defaulted. Never converge on the same safe look across unrelated work — variation is the point.
+
+### Canonical Example Before Library Code
+
+Never implement code against a library component (design system, UI kit, chart lib) without first consulting a canonical usage example — the library's own demo, docs snippet, or an existing use in this codebase. This eliminates the two classic failure classes: wrong prop usage and missing dependencies. If no example exists, write the smallest throwaway probe first and confirm it renders before building on it.
+
 ### File Structure
 
 Colocate everything related to a component:

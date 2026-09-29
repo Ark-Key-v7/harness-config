@@ -37,6 +37,13 @@ Measure before optimizing. Performance work without measurement is guessing — 
 | **INP** (Interaction to Next Paint) | ≤ 200ms | ≤ 500ms | > 500ms |
 | **CLS** (Cumulative Layout Shift) | ≤ 0.1 | ≤ 0.25 | > 0.25 |
 
+**Dual-threshold budgets (CF46, 2026-09-29):** every perf acceptance criterion
+carries a pass threshold AND a target — "LCP < 2.5s (target < 2.0s)", "main
+bundle < 500KB gzipped", "queries < 100ms (target < 50ms)". The threshold is
+the gate; the target is what the next slice aims at. Both the before and after
+measurements are documented in the task report — a fix that can't show its
+numbers didn't happen (verification-before-completion applies to metrics too).
+
 ## The Optimization Workflow
 
 ```

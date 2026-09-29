@@ -333,7 +333,7 @@ After any rig change that alters the ledger above: update this file in the same 
   (ci-cd/shipping harvests, verbatim, provenance in-file); profile
   `actuation_boundary.protocols` block in all four seats (deny-default) +
   lint-profiles §4.4 check; roster discipline bindings (scout/planner/
-  reviewer); roster-laws.md (six Core Operating Behaviors, verbatim harvest)
+  reviewer); roster-laws.md (six harvested Core Operating Behaviors + CF46 7th)
   injected by seat-switch ahead of the profile (16KB concat cap asserted);
   §D.24/§D.28/§D.29/§D.30 register updates; T5-skill-shelf trigger;
   OPERATOR_GUIDE stage map; validation/wpd6-smoke driver.
@@ -622,3 +622,67 @@ After any rig change that alters the ledger above: update this file in the same 
   agentic-swe-factory directly.
 - Full driver suite green this time: zcode-plugin smoke 61/61, plane check,
   projections drift-clean.
+
+## Rig-change 2026-09-29 — ghost identity root-caused: the wrapper's .claude-plugin manifest
+- The ZCode-Rig ghost survived registry/cache/snapshot cleaning because the
+  wrapper carries TWO manifests: .zcode-plugin/marketplace.json AND
+  .claude-plugin/marketplace.json (Claude-format convention — the one the
+  client actually reads for discovery). The .claude-plugin copy still listed
+  zcode-rig 0.1.0 with the pre-rename description; every client refresh
+  rebuilt its snapshot from it. Fixed machine-side (manifest →
+  agentic-swe-factory 0.3.0, client snapshot flushed); PORTABILITY 2d now
+  documents BOTH manifests + the both-must-match law.
+- Lesson: the wrapper is machine-local hand-built plumbing with NO drift
+  check on its manifests beyond check-zcode-plane's .zcode-plugin probe.
+  Candidate follow-up (register note): extend check-zcode-plane to verify
+  both manifests agree.
+
+## Rig-change 2026-09-29 — CF46 intake adoption: 2 new skills, 5 nuggets, 10 seat upgrades (plugin 0.4.0)
+- Source: ClaudeFast v4.6 (`~/factory-rig/sources/_intake/v4.6/`, 15 agents + 15 skills
+  + 2 hooks + context patterns). Full-deck analysis by 3 exploration passes; verdicts:
+  most content covered-and-stronger in the rig; adopted the genuine increments below.
+  Source license UNVERIFIED — everything re-voiced in rig language, near-zero verbatim
+  text; provenance blocks carry the note.
+- NEW skills (31 → 33, both template-skill Import Mode re-voice):
+  - `research` (procedural, scout-bound): 4-phase evidence methodology, source ladder
+    (L3 committed truth → memory → Context7 L4 → web fallback, exhaust-internal law),
+    calibrated evidence language (5 licensed phrasings), source credibility/recency,
+    five binary research-handoff gates, no-implementation law, subagent fetch economy.
+  - `ops-journal` (procedural, invoked): remote-infra evidence trail — pre-work snapshot,
+    documentation levels scaling with blast radius, Risk+Rollback before mutative ops,
+    one-command-at-a-time, validate-before-cut-over, emergency-access ladder (provider
+    console first), recovery protocol, ops cadence. Vendor bodies excluded by design.
+- Five nuggets landed: verbatim-ask propagation (roster law 7, all seats); asymmetric
+  context doctrine (context-budget: coordinator conserves, collectors maximize);
+  migration mode in /check verify (feature inventory, no unmapped features, parity
+  verification + three-way out-of-scope disambiguation); aesthetic-direction-first +
+  canonical-demo-before-library-code (ui-engineering); doc-fetch in cheap subagent
+  (context-budget MCP table + scoped-priming).
+- Seat/lens upgrades: scout — calibrated evidence language as bound-discipline;
+  scope task-quality — 1-4h sizing band, research slicing, +20% buffer, completeness
+  bar ("no major architectural questions remain"), Build/Modify/Use gap tables; debug —
+  anti-thrash stop-loss (time-based, complements ≤2-attempts), never-guess-configuration,
+  evidence-per-causal-level, fix bar extended ("error handling improved"); check
+  review-guide — prevention-first test lens (20/80 risk, critical paths not line
+  coverage), security findings with component status + Effort×Impact, performance
+  findings with dual-threshold budgets; memory — age-based retention tiers
+  (FULL <7d / MODERATE 7-30d / SUMMARY 30-90d / MINIMAL >90d, provenance survives);
+  security-and-hardening — archive-after-use for privileged artifacts;
+  performance-optimization — dual-threshold budget convention; observability —
+  environment-scoped instrumentation (never localhost/preview tracking).
+- Six→seven Core Operating Behaviors across profiles + docs (roster law 7 added).
+- DISPOSITIONS on record — REJECTED with rationale: skill-rules.json trigger-hook plane
+  (a second routing engine; the stage pipeline is the router, description-triggering
+  is native), LLM-judged permission hook (nondeterministic + prompt-injectable where
+  the rig runs deterministic fail-closed guards), mandatory auto-commit on session end
+  (conflicts with gate law — commits ride green preflight + human merge). NOT INHERITED
+  (security smells in source, flagged for re-derivation): AWS S3 AmazonS3FullAccess
+  policy contradicting its own least-privilege guidance; Postgres exposed publicly on
+  a nonstandard port guarded by password+Fail2ban only.
+- DOMAIN-PLUGIN DISPOSITION (operator ruling): vendor bodies in the intake
+  (payments/webhooks, infra/Cloudflare/VPS runbooks, analytics/SEO, n8n, idea-to-product)
+  seed a FUTURE second marketplace plugin under the planned Web+App development
+  architecture project — updated by that project's canon law, not the factory's.
+  Intake shelf note: _intake/v4.6/INTAKE-SHELF-NOTE.md.
+- Roster count references updated to 33 (README, operating map incl. selector rows 12-13
+  + appendix rows, plugin description). Plugin 0.4.0; smoke pin 0.4.0.

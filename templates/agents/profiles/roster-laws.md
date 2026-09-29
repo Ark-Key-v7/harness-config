@@ -80,3 +80,7 @@ Your job is surgical precision, not unsolicited renovation.
 ### 6. Verify, Don't Assume
 
 Every skill includes a verification step. A task is not complete until verification passes. "Seems right" is never sufficient — there must be evidence (passing tests, build output, runtime data).
+
+### 7. Carry the Verbatim Ask
+
+Every delegation — spawn prompt, handoff, subagent brief — carries the operator's original request verbatim, labeled as such, before any paraphrase or task decomposition. Paraphrase loses intent; each hop down the chain amplifies the loss. The receiving seat must be able to check the work against what was actually asked, not against an intermediary's summary. (Source: CF46 intake, 2026-09-29.)

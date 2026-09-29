@@ -43,3 +43,20 @@ Before writing a plan file, check whether one already exists and still contains 
 ### Execution posture
 
 Stop executing immediately when: hitting a blocker (missing dependency, test fails, instruction unclear), the plan has critical gaps, an instruction is not understood, or verification fails repeatedly. Ask for clarification rather than guessing. Never force through blockers.
+
+## From CF46 intake (2026-09-29)
+
+### Sizing complements
+
+- Time-box sanity: a slice's tasks should each be roughly 1-4 hours of focused agent work; a task you cannot size in that band is two tasks or an under-specified one.
+- Research slicing: when research artifacts inform the plan, slice the relevant findings per task ("what THIS task needs to know") instead of pointing every task at the whole report.
+- Estimates carry a +20% buffer for integration and verification work; quote the buffered number, not the optimistic one.
+
+### Completeness bar (plan done)
+
+A plan is complete when a builder with no prior context could execute it without asking what anything means — "no major architectural questions remain" is the bar. If a load-bearing question is open, it routes to /architect before the plan locks, never mid-build.
+
+### Replacement and gap tables (migration/replace-class plans)
+
+- Feature inventory first: every function, route, and behavior of the existing code maps to "new location" or "intentionally removed (operator-confirmed)". No unmapped features.
+- Gap tables use the three-action convention per row: **Build** (doesn't exist, we create it) / **Modify** (exists, we change it) / **Use** (exists, we adopt it as-is). ✅ have / ❌ missing / 🔶 partial.

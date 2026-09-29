@@ -43,6 +43,14 @@ The **test signal** has three states, judge accordingly:
 
 Do not write tests, that's /test's job. Flag a gap only when it's `none-yet`.
 
+## Quality lenses (CF46, 2026-09-29)
+
+Three findings conventions sharpen the priority-order inspection above:
+
+- **Prevention-first test lens**: judge coverage by risk, not by line count — name the critical paths (auth, data integrity, money, user journeys) and check those first; "the 20% of tests that validate 80% of the risk" is the bar. Line-coverage percentages are not findings.
+- **Security findings carry status**: when the change touches auth, data exposure, or tenancy, report per affected component a status (✅ secure / ⚠️ needs attention / ❌ vulnerable) and rank fixes in an Effort×Impact frame (quick-win-high-impact first), not just severity.
+- **Performance findings carry budgets**: a perf finding states the measured value, the pass threshold, and the target ("LCP 3.1s — passes at <2.5s, target <2.0s"). "Could be faster" without a number is a nit, not a finding.
+
 ---
 
 ## Severity scale

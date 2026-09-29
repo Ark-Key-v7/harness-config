@@ -359,6 +359,14 @@ if (!success) return res.status(429).end();
 
 ## Secrets Management
 
+**Archive-after-use (CF46, 2026-09-29):** any privileged artifact created for
+a bounded run — a temporary credential, a $0 migration product, a scoped
+token, an elevated role, a shared allowlist — is revoked or archived the
+moment its run completes, in the same session that created it. Leaving it
+"for later" turns a one-run tool into a standing vulnerability; revocation
+does not undo what the artifact already granted, which is exactly why the
+window must close.
+
 ```
 .env files:
   ├── .env.example  → Committed (template with placeholder values)

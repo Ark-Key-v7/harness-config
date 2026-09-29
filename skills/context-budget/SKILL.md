@@ -168,6 +168,8 @@ The context window is not a filing cabinet — it's a working desk. As a session
 
 **Start trimming at 75% capacity, not 100%.** By the time the window is genuinely full, the model's attention is already fragmented across too many signals. The 75% threshold gives room to compress gracefully rather than cut desperately mid-task.
 
+**The doctrine is asymmetric by seat (CF46, 2026-09-29): a coordinator conserves context; a collector maximizes it.** The seat delegating work (planner, orchestrator) keeps its own window lean — coordination, decisions, and user communication — and pushes exploration into subagents. A seat executing collection (scout, a spawned worker) should over-collect: read the relevant files completely, load the examples, gather more than strictly needed. Its window dies at handoff anyway, so unused capacity is wasted opportunity and under-collection is what produces degraded output. Over-collection is safe; under-collection fails.
+
 ### What to cut first
 
 | Content | When to cut |
@@ -211,7 +213,7 @@ For richer context, use Model Context Protocol servers:
 
 | MCP Server | What It Provides | Rig status |
 |-----------|-----------------|-----------|
-| **Context7** | Auto-fetches relevant documentation for libraries | Installed via bootstrap (WP-F); fires on library-docs need |
+| **Context7** | Auto-fetches relevant documentation for libraries | Installed via bootstrap (WP-F); fires on library-docs need. Run the fetch in a cheap subagent and relay only the condensed, relevant extract — never page raw docs into the coordinating context |
 | **Chrome DevTools** | Live browser state, DOM, console, network | Optional; used by webperf-audit Deep mode when configured |
 | **PostgreSQL** | Direct database schema and query results | Install only when a product repo needs it |
 | **Filesystem** | Project file access and search | Native in the harness; no MCP needed |

@@ -76,12 +76,21 @@ mkdir -p ~/.agents && ln -sfn ~/.pi/agent/skills ~/.agents/skills
 #     Linux absolute paths only (Windows C:\ and \\wsl.localhost UNC forms fail).
 #     Wrapper (once per machine; machine-local — under sources/ for
 #     discoverability, never hand-edited, rebuilt by this recipe):
-#       mkdir -p ~/factory-rig/sources/zcode-marketplace/.zcode-plugin
+#       mkdir -p ~/factory-rig/sources/zcode-marketplace/.zcode-plugin ~/factory-rig/sources/zcode-marketplace/.claude-plugin
 #       ln -sfn ~/.pi/agent/projections/zcode-plugin ~/factory-rig/sources/zcode-marketplace/agentic-swe-factory
-#       # write .zcode-plugin/marketplace.json: { "name": "factory-rig-local",
-#       #   "plugins": [{ "name": "agentic-swe-factory", "source": "./agentic-swe-factory" }] }
+#       # write TWO manifests with IDENTICAL plugin entries:
+#       #   .zcode-plugin/marketplace.json  AND  .claude-plugin/marketplace.json
+#       # { "name": "factory-rig-local", "owner": { "name": "<user>" },
+#       #   "plugins": [{ "name": "agentic-swe-factory", "source": "./agentic-swe-factory",
+#       #     "description": "<plugin.json description>", "version": "<plugin.json version>" }] }
 #     Then: Settings → Plugin Management → Discover → + → local directory →
 #     /home/<user>/factory-rig/sources/zcode-marketplace → install agentic-swe-factory → enable.
+#     LAW (2026-09-29, learned the hard way): the client discovers through the
+#     .claude-plugin manifest (Claude-format convention) — a stale one keeps
+#     serving the old identity across every refresh, and Install fails with
+#     "Unsupported or missing plugin source". Both manifests must carry the
+#     same plugin entry on every identity change; check-zcode-plane verifies
+#     the .zcode-plugin one, verify the .claude-plugin one by hand.
 #     (Moved here from tmp/ 2026-09-29 — load-bearing plumbing does not live
 #     in the scratch dir; check-zcode-plane verifies the wrapper and points
 #     back at this recipe when it is missing.)

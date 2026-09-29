@@ -45,6 +45,13 @@ QUESTIONS ON-CALL WILL ASK:
 
 If you can't name the questions, you're not ready to instrument — you'll log everything and learn nothing.
 
+**Environment-scoped instrumentation (CF46, 2026-09-29):** tracking and
+telemetry fire only where the data is real. Analytics scripts, event
+beacons, and third-party trackers are gated to production
+environments — never localhost, never preview/staging deploys — whether by
+environment check or domain allowlist. Test-environment signals pollute the
+metrics every later decision trusts.
+
 ### 2. Pick the right signal for each question
 
 | Signal | Answers | Cost profile | Example |

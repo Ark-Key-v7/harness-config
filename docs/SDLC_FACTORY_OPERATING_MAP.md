@@ -4,7 +4,7 @@ One narrative map of the factory: the law it runs under, the two frameworks that
 
 ## Introduction
 
-The factory is a software development system built on one principle: **the human engineers constraints; the agent generates syntax inside them.** Its moving parts — 31 skills, 4 seats, a governance manifold, a nine-layer tool stack, a spec chain — are each documented somewhere. This is the one document answering the Tuesday-morning question: **"I'm staring at a piece of work — what do I invoke, in what order, and why?"**
+The factory is a software development system built on one principle: **the human engineers constraints; the agent generates syntax inside them.** Its moving parts — 33 skills, 4 seats, a governance manifold, a nine-layer tool stack, a spec chain — are each documented somewhere. This is the one document answering the Tuesday-morning question: **"I'm staring at a piece of work — what do I invoke, in what order, and why?"**
 
 Without it, three failure modes creep in: the operator becomes the routing layer (the day they forget which skill precedes which, the factory runs wrong until a gate fails); skills become shelf-ware (the wrong skill produces no error, just quietly worse output); and the lifecycle and the skill list drift apart (a future skill lands and nobody knows where it plugs in).
 
@@ -38,13 +38,13 @@ Three mechanisms, by design:
 
 **Workflow skills (procedural — invoked by name or trigger phrase).** The nine: `/scope`, `/audit`, `/architect`, `/develop`, `/check`, `/test`, `/document`, `/sync`, `/debug`. 
 
-Plus the specialists: `project-onboard`, `ship-gate`, `rig-change`, `tool-intake`, `template-skill`, `interview-me`, `rules-drift-check`, `webperf-audit`, `to-questionnaire`.
+Plus the specialists: `project-onboard`, `ship-gate`, `rig-change`, `tool-intake`, `template-skill`, `interview-me`, `rules-drift-check`, `webperf-audit`, `to-questionnaire`, `research`, `ops-journal`.
 
 **Discipline skills (bound to seats — fire automatically, never invoked).** Worker: `test-driven-development`, `verification-before-completion`, `context-budget`, `api-and-interface-design`, `security-and-hardening`, `observability-and-instrumentation`, `documentation-and-adrs`, `code-simplification`, `ui-engineering`. Scout: `context-budget`. Planner: `interview-me` gate + task-quality rules. Reviewer: `verification-before-completion`, `rules-drift-check`, review reception rules. All seats: `memory`.
 
 **One mechanical nuance:** Pi enforces discipline firing by per-turn profile injection; ZCode enforces it by agent definition plus description-triggering (the same mechanism that auto-fires `/debug` on failures). Routed on both seats — by different physics.
 
-**Roster laws** (injected with every profile): minimal loadout, fresh context, protocol boundary, the six Core Operating Behaviors.
+**Roster laws** (injected with every profile): minimal loadout, fresh context, protocol boundary, the seven Core Operating Behaviors.
 
 The anti-pattern, on record: a routing meta-dispatcher was evaluated and rejected — the stage pipeline IS the router.
 
@@ -65,6 +65,8 @@ Work arrives as situations, not stages. Find yours; the run chips carry the seat
 | 9 | A new tool / MCP / skill is needed | gated | `tool-intake` — the only door tools enter through |
 | 10 | The factory itself needs a change | rare · critical to do right | `rig-change` — never `/develop`, never ship-gate |
 | 11 | Ready to merge and ship | end of every run | `ship-gate` + `/sync` (operator) + `/document` (operator) |
+| 12 | A question needs evidence before building | front of the funnel, or mid-plan | `/research` (scout) → findings feed `/scope` or `/architect` |
+| 13 | Remote host work (VPS, DNS, server config) | infra tasks | `/ops-journal` (operator + worker under contract) |
 
 Rows 5 and 7 have no equivalent in other workflows: ours treats state as durable (the files hold the resume point) and findings as input (a review verdict routes work, it doesn't end it).
 
@@ -210,6 +212,8 @@ The nine workflow skills carry a seat-persona: one identity — the seat and the
 | rules-drift-check | procedural | before merge, or inside review | reviewer, advisory | Advises whether the context files still match the code (three drift classes only) |
 | webperf-audit | procedural | invoked: performance audit | operator · metric-honest | Severity-rated web-performance findings; never fabricates a metric |
 | to-questionnaire | procedural | invoked: the answer lives with someone else | operator | Drafts the questionnaire a third party fills in |
+| research | procedural | invoked: "research this", "look it up" | scout · the evidence engineer | Answers a question with evidence before building — internal sources first, then Context7, then web; findings artifact with claims at calibrated strength; no implementation while it runs (CF46) |
+| ops-journal | procedural | invoked: remote host work | operator + worker under contract | Remote infrastructure with an evidence trail: pre-work snapshot, per-command journal scaling with blast radius, Risk + Rollback before mutative ops, cut-over safety, emergency-access ladder (CF46) |
 | test-driven-development | discipline | automatic, worker | worker · the red-green law | No production code without a failing test first |
 | verification-before-completion | discipline | automatic, all | every seat | No "done" claim without freshly run evidence |
 | context-budget | discipline | automatic, all | every seat | Keeps sessions inside the context budget; trims at 75% |

@@ -47,8 +47,10 @@ When a task matches a trigger, invoke the named skill — procedure follows, nev
 | interview-me | interview me · grill me · are we sure? · stress-test my thinking · underspecified ask |
 | memory | remember this · what do we know about · recall · memory entry · cite memory |
 | observability-and-instrumentation | instrument this · add telemetry · structured logs · metrics · alerts |
+| ops-journal | ops journal · server work · vps · ssh into · server config · infra change · dns change · deploy to the server · emergency access · locked out |
 | performance-optimization | optimize performance · slow page · Core Web Vitals · N+1 query · performance regression · profiling bottleneck |
 | project-onboard | start a new project · onboard this project · set up the manifold · new repo setup |
+| research | research · research this · find out · look it up · compare options · what is the current best · evidence for · investigate before building |
 | rig-change | new rig files · place these files · update the rig · commit and sync harness-config · I downloaded the new version · canon updated · new handbook version |
 | rules-drift-check | check rules drift · rules file stale · AGENTS.md drift · fold into review pass |
 | scope | scope · plan this · slice this · slice the PRD · draft contracts · draft a task contract · new work · I have an idea · start a feature · draft an intent · write a PRD · new intent · plan the next slice · what should I build next |

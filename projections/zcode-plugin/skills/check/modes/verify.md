@@ -28,6 +28,7 @@ Any Agent Skills client on macOS, Linux, or Windows. Run/launch snippets are ref
 
 - Feature mode (default): the change adds or alters behavior. Confirm it does the new thing (Steps 1 to 5).
 - Refactor / regression mode: the change is behavior preserving (a refactor, a dedup, a rename; the task or spec says "behavior must not change"). "Works" means identical before and after: capture observable outputs before the change, capture them after, and diff. Automate it; this is the safety net for a project with no test runner.
+- Migration mode: the change replaces or relocates existing behavior (rewrite, port, framework swap). Before anything runs, the contract must carry a **feature inventory**: every function, route, and behavior of the old code mapped to its new location or explicitly marked removed with the operator's confirmation — "no unmapped features" is the gate. Verify by parity: same inputs to old and new must produce matching outputs (use the Step 0a worktree technique on the old ref). "Tests pass but functionality missing vs the old code" is a FAIL.
 
 ### Step 0a: Refactor mode: before/after diff (spawn a subagent)
 

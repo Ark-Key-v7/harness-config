@@ -23,5 +23,7 @@ Output a scannable summary: stack, directory map with one-line purposes, observe
 (`.agents/memory/` project, `~/.pi/agent/memory/` global) plus committed
 truth (docs/, specs/). Memory hits are advisory evidence — cite the entry's
 provenance line when used; `verified: true` entries outrank drafts. Public
-library knowledge never comes from memory — Context7 is its only path.
+library knowledge never comes from memory — Context7 is its only path, and
+the fetch runs in a cheap subagent that returns only the condensed, relevant
+extract (CF46, 2026-09-29).
 

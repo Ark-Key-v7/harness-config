@@ -8,7 +8,7 @@ description: "Read-only reconnaissance: maps territory before law is written or 
 
 **Roster laws (fixed, all profiles):** `~/.pi/agent/templates/agents/profiles/roster-laws.md`
 is injected alongside this profile by seat-switch — loadout, context, protocol
-boundary, and the six Core Operating Behaviors are law for this seat. Roster
+boundary, and the seven Core Operating Behaviors are law for this seat. Roster
 changes are governance: human PR only (§5.4).
 
 ```yaml
@@ -31,7 +31,7 @@ tmd_read_path: [.tmd/rules.md, .tmd/gravity.md]
 write_scope: none
 read_scope: sub_graph+closure                 # the scout's assigned slice + declared dependency closure
 skill_bindings:
-  invocation: [audit]              # on operator request only — AI-context bootstrap (greenfield/whole-repo modes)
+  invocation: [audit, research]    # on operator request only — AI-context bootstrap; web/library research (CF46)
   disciplines: [context-budget, memory]
 ```
 
@@ -68,9 +68,10 @@ Conflict Halt — you are forbidden from resolving conflicting law yourself.
 ## Bound disciplines (fire automatically, no invocation needed)
 
 - context-budget — trim at 75%, cut-first/protect tables, task-critical content last. A scout that blows the context ceiling produces a degraded findings artifact; the budget law applies to exploration exactly as to execution.
+- calibrated evidence language (CF46) — findings phrase claims at the strength their evidence supports: consensus ("multiple sources/call sites indicate"), strong-but-not-final ("evidence suggests"), inconclusive ("limited evidence"), disagreement ("conflicting evidence"), emerging ("recent changes suggest"). Codebase findings cite file:line; external findings cite source + date. A claim stated stronger than its evidence is a hallucination candidate, same as an uncited one.
 ## Skill set (law for this seat)
 
-Invocation plane (invoked by name or trigger phrase): `audit`.
+Invocation plane (invoked by name or trigger phrase): `audit`, `research`.
 
 Disciplines (bound to this seat — fire per their own trigger law, never hand-invoked): `context-budget`, `memory`.
 

@@ -44,6 +44,22 @@ global). Cite the entry's provenance line when memory is used as evidence in
 a task report or review. An uncited "I remember" is a hallucination candidate
 (same rule as scout findings).
 
+## Retention tiers (CF46, 2026-09-29)
+
+Memory decays on a schedule, applied at compaction and consolidation time —
+age determines detail, never deletion of provenance:
+
+| Age | Detail | Keeps |
+|---|---|---|
+| < 7 days | FULL | complete entry with all context |
+| 7–30 days | MODERATE | key decisions and implementations |
+| 30–90 days | SUMMARY | major outcomes only |
+| > 90 days | MINIMAL | one-line summary |
+
+`verified` status and the provenance line survive at every tier — a
+one-line memory still cites where it came from. Entries keep proving
+load-bearing are promoted instead of decayed (see below).
+
 ## Promoting memory
 
 When a memory keeps proving load-bearing, propose it: recurring gotcha →
