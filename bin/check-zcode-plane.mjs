@@ -25,6 +25,21 @@ req("plugin projection exists (projections/zcode-plugin/)", existsSync(join(ROOT
 req("discovery symlink live (~/.agents/skills → deployed skills)", existsSync(join(homedir(), ".agents", "skills", "debug", "SKILL.md")));
 req("ZCode client present (~/.zcode)", existsSync(join(homedir(), ".zcode")));
 try { JSON.parse(readFileSync(join(homedir(), ".zcode", "cli", "config.json"), "utf8")); req("client config parses (~/.zcode/cli/config.json)", true); } catch { console.log("NOTE | no ~/.zcode/cli/config.json yet (nothing user-configured; expected before the 2c install — enablement becomes checkable after it)"); }
+// Marketplace wrapper (PORTABILITY 2d): the client discovers the plugin
+// through a local-directory marketplace at ~/factory-rig/sources/zcode-marketplace.
+// Missing wrapper = plugin auto-update is down (cache keeps last content; the
+// discovery-symlink fallback still governs) — WARN, not DEGRADED, recoverable
+// by re-running the 2d recipe and re-registering in the client.
+{
+  const mk = join(homedir(), "factory-rig", "sources", "zcode-marketplace");
+  let wrapperOk = false;
+  try {
+    const m = JSON.parse(readFileSync(join(mk, ".zcode-plugin", "marketplace.json"), "utf8"));
+    wrapperOk = m.name === "factory-rig-local" && existsSync(join(mk, "zcode-rig", ".zcode-plugin", "plugin.json"));
+  } catch {}
+  if (wrapperOk) req("marketplace wrapper live (sources/zcode-marketplace → deployed projection)", true);
+  else console.log(`WARN | marketplace wrapper missing/stale at ${mk} — plugin auto-update is down; rebuild per docs/PORTABILITY.md step 2d, then re-register the marketplace in the client`);
+}
 // Seat-subagent drift check (§D.35 R3/2e): the client loads subagents from the
 // Windows profile; those copies must match the deployed projection.
 {

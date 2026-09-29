@@ -561,3 +561,18 @@ After any rig change that alters the ledger above: update this file in the same 
   read-only across all cycles. Not §D.20 (production loop closure — the
   deploy-monitoring ruling keeps its own trigger). Plugin 0.1.6. SDLC map
   stage 8 carries the loop for the human reader.
+
+## Rig-change 2026-09-29 — marketplace wrapper relocated to sources/ (operator ruling)
+- Wrapper moved machine-side: ~/factory-rig/tmp/zcode-marketplace →
+  ~/factory-rig/sources/zcode-marketplace (operator: discoverability —
+  load-bearing plumbing does not live in the scratch dir). Symlink target
+  unchanged (absolute). Client re-registration at the new path is
+  operator-run (client-side setting). zcode-port/ scratch removed
+  post-landing; §D.35 citation updated to note it.
+- check-zcode-plane now verifies the wrapper (manifest parses, name
+  factory-rig-local, zcode-rig symlink resolves to the deployed
+  projection); missing → WARN with the 2d rebuild pointer. WARN not
+  DEGRADED: the discovery-symlink fallback still governs and the plugin
+  cache keeps last-synced content.
+- PORTABILITY: 2c tree + 2d recipe + not-travel table updated to the new
+  path; tmp/ annotated "scratch only — nothing load-bearing lives here".
