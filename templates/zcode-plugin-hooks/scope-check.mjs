@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * zcode-rig sandbox-guard hook (Write|Edit matcher). Enforces the active
+ * sdlc-factory sandbox-guard hook (Write|Edit matcher). Enforces the active
  * task contract's write scope from <cwd>/.pi/scope.json — the same file
  * bin/contract-scope.mjs emits for the Pi seat (harness-neutral format,
  * Z.13.1.1). Fail-closed: crash => exit 2. Absent scope => ungoverned
@@ -27,13 +27,13 @@ try {
   const scope = JSON.parse(readFileSync(scopePath, "utf8"));
   const write = Array.isArray(scope.write) ? scope.write : [];
   if (write.length === 0) {
-    console.error("[zcode-rig:scope-check] DENY: scope present but write list empty");
+    console.error("[sdlc-factory:scope-check] DENY: scope present but write list empty");
     process.exit(2);
   }
   const target = isAbsolute(filePath) ? filePath : resolve(cwd, filePath);
   const rel = relative(cwd, target);
   if (rel.startsWith("..")) {
-    console.error(`[zcode-rig:scope-check] DENY: ${filePath} outside project root`);
+    console.error(`[sdlc-factory:scope-check] DENY: ${filePath} outside project root`);
     process.exit(2);
   }
   const ok = write.some((w) => {
@@ -41,11 +41,11 @@ try {
     return rel === wp || rel.startsWith(wp + "/");
   });
   if (!ok) {
-    console.error(`[zcode-rig:scope-check] DENY: ${rel} not in contract write scope (${write.join(", ")}) — resolve the scope, never force. Re-accomplishing this write through the Bash channel or any other route is forcing, and forcing is forbidden.`);
+    console.error(`[sdlc-factory:scope-check] DENY: ${rel} not in contract write scope (${write.join(", ")}) — resolve the scope, never force. Re-accomplishing this write through the Bash channel or any other route is forcing, and forcing is forbidden.`);
     process.exit(2);
   }
   process.exit(0);
 } catch (e) {
-  console.error(`[zcode-rig:scope-check] DENY (fail-closed): ${e?.message ?? e}`);
+  console.error(`[sdlc-factory:scope-check] DENY (fail-closed): ${e?.message ?? e}`);
   process.exit(2);
 }

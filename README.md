@@ -29,7 +29,7 @@ human who saw evidence.
   deterministic trail, holdout truths the builder cannot see, a review on a
   different model family than wrote the code, and a merge that stays human.
 - **Projections.** The same corpus rendered per host: the active Pi clone
-  (`~/.pi/agent`) and the zcode-rig plugin the ZCode client installs from
+  (`~/.pi/agent`) and the sdlc-factory plugin the ZCode client installs from
   the local marketplace.
 
 ## A piece of work, end to end

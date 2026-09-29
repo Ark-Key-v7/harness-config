@@ -25,7 +25,7 @@ function check(label, cond) { checks++; if (cond) console.log(`PASS  | ${label}`
 
 // --- structure -----------------------------------------------------------------
 let manifestOk = false;
-try { const m = JSON.parse(readFileSync(join(PLUGIN, ".zcode-plugin", "plugin.json"), "utf8")); manifestOk = m.name === "zcode-rig" && typeof m.source_head === "string"; } catch {}
+try { const m = JSON.parse(readFileSync(join(PLUGIN, ".zcode-plugin", "plugin.json"), "utf8")); manifestOk = m.name === "sdlc-factory" && typeof m.source_head === "string"; } catch {}
 check("plugin.json manifest exists + parses", manifestOk);
 for (const f of ["agents/scout.md", "agents/planner.md", "agents/worker.md", "agents/reviewer.md",
   "commands/rig-preflight.md", "hooks/hooks.json", "hooks/bash-guard.mjs", "hooks/scope-check.mjs", "README.md"]) {
@@ -77,7 +77,7 @@ for (const f of ["scope", "architect", "develop", "check", "test", "document", "
     check("sync-zcode-seats: user-created subagents left untouched", out3.includes("my-own-agent.md") && existsSync(join(tmp3, "my-own-agent.md")));
   } catch (e) { check("sync-zcode-seats: runs clean", false); }
   rmSync(tmp3, { recursive: true, force: true });
-  check("plugin version is 0.1.4 (bump law §D.35 + seat-machinery removal)", manifest.version === "0.1.4");
+  check("plugin version is 0.2.0 (bump law §D.35 + sdlc-factory rename)", manifest.version === "0.2.0");
 }
 
 

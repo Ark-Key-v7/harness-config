@@ -1,6 +1,6 @@
 {
-  "name": "zcode-rig",
-  "version": "0.1.7",
+  "name": "sdlc-factory",
+  "version": "0.2.0",
   "description": "The Software Factory on ZCode — a governed SDLC you run as skills, seats, and gates: onboard a project, scope it into specs and contracts, build under law, prove it works, review on a fresh model, ship through the gate. 31 skills, four seats, one operating map.",
-  "source_head": "20f2dd30ebdf4b8e3e55ee7fb4d0ccb2690ce115"
+  "source_head": "f5e1e478385b5fc282a21f1b0bd1335a05953f05"
 }

@@ -589,3 +589,25 @@ After any rig change that alters the ledger above: update this file in the same 
   a deliberate rig-change because hooks.json binds the enforcement plane to
   `plugin.zcode-rig@factory-rig-local` (a missed string re-creates the
   §D.35 silent-pass failure). Candidates: factory-rig / sdlc-factory.
+
+## Rig-change 2026-09-29 — plugin renamed zcode-rig → sdlc-factory (0.2.0, operator ruling)
+- Operator picked sdlc-factory. Renamed the plugin IDENTITY only: manifest
+  name, hooks _comment, hook DENY prefixes (`[sdlc-factory:bash-guard]` /
+  `[sdlc-factory:scope-check]`), README title + namespace references,
+  check-zcode-plane output + wrapper-symlink check. The projection DIRECTORY
+  (projections/zcode-plugin/) keeps its name — it names the host projection,
+  not the plugin. Command vocabulary (/rig-preflight, rig-change) unchanged —
+  factory words, not plugin identity. The client derives the hook source
+  (`plugin.sdlc-factory@factory-rig-local`) from the manifest at install;
+  no literal source string existed to miss. §D.35 evidence strings remain
+  historical (identity note added).
+- Machine-side: wrapper symlink renamed (zcode-rig → sdlc-factory, same
+  target) + marketplace.json plugin entry updated. Operator client-side:
+  refresh marketplace → remove zcode-rig → install sdlc-factory → enable;
+  fresh sessions namespace skills sdlc-factory:.
+- PROCESS MISS OWNED: the smoke driver's pinned version assertion (0.1.4)
+  was never re-run after the 0.1.5/0.1.6/0.1.7 bumps — three changesets
+  landed with a failing driver (lint-skills + check-projections ran; the
+  plugin smoke driver did not). Pin updated to 0.2.0 with this changeset;
+  every future plugin-affecting rig-change MUST run
+  validation/zcode-plugin-smoke/zcode-plugin.test.mjs.
