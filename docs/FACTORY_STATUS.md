@@ -528,3 +528,9 @@ After any rig change that alters the ledger above: update this file in the same 
   message (O6 evidence stands; general bash-channel gap stays OPEN). Driver
   59 checks incl. absence guards on the removed machinery. PORTABILITY 2e
   notes the native-subagent seat model; 2d auto-update correction kept.
+
+## Rig-change 2026-09-29 — seat-sync actuator (§D.35 R3/2e closed)
+- bin/sync-zcode-seats.mjs: the ONLY sanctioned copier of seat subagents to
+  the Windows profile (byte-verified, user-created subagents untouched).
+  check-zcode-plane gains a drift WARN. PORTABILITY 2e rewritten around it.
+  Driver 61. Seats were drifted live when the check landed — synced green.

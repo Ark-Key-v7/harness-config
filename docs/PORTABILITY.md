@@ -88,10 +88,12 @@ mkdir -p ~/.agents && ln -sfn ~/.pi/agent/skills ~/.agents/skills
 #     The desktop app is Windows-native: Settings → Subagents reads the WINDOWS
 #     profile (C:\Users\<user>\.zcode\agents\), NOT WSL-side ~/.zcode; the
 #     plugin's agents/ dir does NOT load as subagents in this client build.
-#     Bridge (re-run after every plugin version bump):
-#       mkdir -p /mnt/c/Users/<user>/.zcode/agents
-#       cp ~/.pi/agent/projections/zcode-plugin/agents/{scout,planner,worker,reviewer}.md \
-#          /mnt/c/Users/<user>/.zcode/agents/
+#     Bridge — the SANCTIONED COPIER (never hand-edit the Windows-side files):
+#       node ~/.pi/agent/bin/sync-zcode-seats.mjs
+#     Re-run after every pull that touches agents/ (or whenever
+#     check-zcode-plane warns SEAT DRIFT). User-created subagent files in the
+#     same folder are left untouched by design. New sessions only: agent files
+#     load at session start.
 #     Verified live: the four seats list in the Subagents tab and spawn via the
 #     Agent tool (subagent_type: worker etc.) inside WSL project sessions,
 #     self-reporting E.5 identity + C.1 skill set. The @ composer mention is

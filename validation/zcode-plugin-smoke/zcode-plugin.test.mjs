@@ -64,6 +64,19 @@ for (const f of ["scope", "architect", "develop", "check", "test", "document", "
   check("no UserPromptSubmit injection hook", !JSON.parse(readFileSync(join(PLUGIN, "hooks", "hooks.json"), "utf8")).hooks?.UserPromptSubmit);
   check("no seat-inject.mjs in plugin", !existsSync(join(PLUGIN, "hooks", "seat-inject.mjs")));
   check("scope-check deny message carries the channel law", readFileSync(join(PLUGIN, "hooks", "scope-check.mjs"), "utf8").includes("forcing is forbidden"));
+  // seat-sync actuator (§D.35 R3/2e): the ONLY sanctioned copier to the Windows profile
+  const tmp3 = mkdtempSync(join(tmpdir(), "seat-sync-"));
+  writeFileSync(join(tmp3, "my-own-agent.md"), "---\nname: mine\n---\nuser-created");
+  try {
+    const out3 = execFileSync(process.execPath, [join(REPO, "bin", "sync-zcode-seats.mjs")], {
+      encoding: "utf8",
+      env: { ...process.env, ZCODE_RIG_SEAT_SRC: join(PLUGIN, "agents"), ZCODE_RIG_SEAT_DST: tmp3 },
+      stdio: ["pipe", "pipe", "pipe"],
+    }).toString();
+    check("sync-zcode-seats: copies all four seats byte-verified", ["scout", "planner", "worker", "reviewer"].every((s) => out3.includes(`${s}.md synced`)));
+    check("sync-zcode-seats: user-created subagents left untouched", out3.includes("my-own-agent.md") && existsSync(join(tmp3, "my-own-agent.md")));
+  } catch (e) { check("sync-zcode-seats: runs clean", false); }
+  rmSync(tmp3, { recursive: true, force: true });
   check("plugin version is 0.1.4 (bump law §D.35 + seat-machinery removal)", manifest.version === "0.1.4");
 }
 
