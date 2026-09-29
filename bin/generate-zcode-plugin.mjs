@@ -116,20 +116,23 @@ writeFileSync(join(OUT, "hooks", "hooks.json"), JSON.stringify({
 mkdirSync(join(OUT, ".zcode-plugin"));
 writeFileSync(join(OUT, ".zcode-plugin", "plugin.json"), JSON.stringify({
   name: "zcode-rig",
-  version: "0.1.6",
-  description: "Factory rig invocation + enforcement plane for ZCode: the workflow skills, seat agents, and fail-closed guard hooks (WP-F; generated — never hand-edit).",
+  version: "0.1.7",
+  description: "The Software Factory on ZCode — a governed SDLC you run as skills, seats, and gates: onboard a project, scope it into specs and contracts, build under law, prove it works, review on a fresh model, ship through the gate. 31 skills, four seats, one operating map.",
   source_head: HEAD,
 }, null, 2) + "\n");
-writeFileSync(join(OUT, "README.md"), `# zcode-rig (generated — WP-F Phase 4)
+writeFileSync(join(OUT, "README.md"), `# zcode-rig — the Software Factory on ZCode
 
-Source of truth: \`harness-config\` (this tree is a projection; \`node bin/generate-zcode-plugin.mjs\` regenerates byte-identically). Version tracks the rig release.
+This plugin is the factory as you install it on this host: the skills you
+invoke, the seats that execute them, and the fail-closed hooks that keep
+every session inside the law. The full story — every stage, seat, and gate —
+lives in the source repo's **docs/SDLC_FACTORY_OPERATING_MAP.md**.
 
-- \`skills/\` — the rig skill corpus (namespaced \`zcode-rig:\` by the plugin loader).
-- \`agents/\` — seat profiles as subagent definitions; pin models after V5 verification.
+- \`skills/\` — the rig skill corpus (namespaced \`zcode-rig:\` by the plugin loader): nine workflow skills you invoke by name, specialists that gate specific moments, and seat disciplines that fire automatically.
+- \`agents/\` — the four seats (scout, planner, worker, reviewer) as subagent definitions; the seat decides which law is in force.
 - \`commands/\` — \`/rig-preflight\` (Refinery Stage-0 gate, operator- or ship-gate-invoked). Seats have no command: they are the native subagents in \`agents/\`.
 - \`hooks/\` — [HARNESS-ENFORCE] fail-closed guards: bash DANGER class + contract write-scope. Canonical law: the authoring repo's extensions + bins.
 
-Install (PORTABILITY step 2c): local marketplace path or git URL; one-time, client-level. Onboarding never copies this plugin — project law only.
+Install (PORTABILITY step 2c): local marketplace path or git URL; one-time, client-level. The factory updates this plugin on every rig pull — never edit it here; it regenerates byte-identically from \`harness-config\` (\`node bin/generate-zcode-plugin.mjs\`). Onboarding never copies this plugin — projects get law only.
 
 Generated from source_head ${HEAD.slice(0, 12)}.
 `);

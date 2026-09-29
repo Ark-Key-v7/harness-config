@@ -576,3 +576,16 @@ After any rig change that alters the ledger above: update this file in the same 
   cache keeps last-synced content.
 - PORTABILITY: 2c tree + 2d recipe + not-travel table updated to the new
   path; tmp/ annotated "scratch only — nothing load-bearing lives here".
+
+## Rig-change 2026-09-29 — human-facing plugin description + repo README (operator ruling)
+- Operator finding: the plugin description and the repo README were
+  machine-trail, not operator prose. plugin.json description rewritten
+  (the factory as the installer meets it: skills, seats, gates, the
+  operator loop); plugin README intro rewritten around the same story;
+  repo README rewritten Pi-era → factory-first (constitution, what runs
+  here, the end-to-end run, the four standing rules, layout table) with
+  the old mechanical rules preserved inside it. Plugin 0.1.7.
+- Open: plugin NAME (zcode-rig) — operator inclined to rename; deferred to
+  a deliberate rig-change because hooks.json binds the enforcement plane to
+  `plugin.zcode-rig@factory-rig-local` (a missed string re-creates the
+  §D.35 silent-pass failure). Candidates: factory-rig / sdlc-factory.
