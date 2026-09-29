@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * sdlc-factory bash-guard hook (WP-F Phase 4; Z.13-D1 adapter over the shared
+ * agentic-swe-factory bash-guard hook (WP-F Phase 4; Z.13-D1 adapter over the shared
  * rule source). Canonical DANGER law: extensions/bash-guard.ts (§5.4 PR to
  * change). Fail-closed: ANY internal error => exit 2 (deny).
  * Reads the tool-call payload from stdin (JSON with tool_input.command),
@@ -42,7 +42,7 @@ try {
     // A non-empty payload we cannot parse is a schema mismatch or corruption:
     // deny loudly (the harness schema is [UNVERIFIED] until the in-client pass;
     // a loud deny reports it, a silent allow hides it).
-    console.error("[sdlc-factory:bash-guard] DENY (fail-closed): unparseable payload — hook schema mismatch; report via rig-change");
+    console.error("[agentic-swe-factory:bash-guard] DENY (fail-closed): unparseable payload — hook schema mismatch; report via rig-change");
     process.exit(2);
   }
   if (!command && process.argv[2]) command = process.argv.slice(2).join(" ");
@@ -50,12 +50,12 @@ try {
     let hit = false;
     try { hit = rule.test(command); } catch { hit = true; /* rule error => deny */ }
     if (hit) {
-      console.error(`[sdlc-factory:bash-guard] DENY (DANGER ${rule.name}) — §5.4 PR to change; canonical: extensions/bash-guard.ts`);
+      console.error(`[agentic-swe-factory:bash-guard] DENY (DANGER ${rule.name}) — §5.4 PR to change; canonical: extensions/bash-guard.ts`);
       process.exit(2);
     }
   }
   process.exit(0);
 } catch (e) {
-  console.error(`[sdlc-factory:bash-guard] DENY (fail-closed): ${e?.message ?? e}`);
+  console.error(`[agentic-swe-factory:bash-guard] DENY (fail-closed): ${e?.message ?? e}`);
   process.exit(2);
 }

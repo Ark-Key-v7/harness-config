@@ -611,3 +611,14 @@ After any rig change that alters the ledger above: update this file in the same 
   plugin smoke driver did not). Pin updated to 0.2.0 with this changeset;
   every future plugin-affecting rig-change MUST run
   validation/zcode-plugin-smoke/zcode-plugin.test.mjs.
+
+## Rig-change 2026-09-29 — plugin renamed sdlc-factory → agentic-swe-factory (0.3.0, operator ruling)
+- Same-day second rename (operator: sdlc-factory "sucks"; agentic-swe-factory
+  matches the author signature in every skill's frontmatter). Full mechanical
+  pass: manifest, hooks _comment + DENY prefixes, README, PORTABILITY,
+  check-zcode-plane, smoke driver pin (0.3.0), register identity note.
+  Interim sdlc-factory never shipped to the client — no install record
+  existed; the client goes zcode-rig (orphan, to be removed) →
+  agentic-swe-factory directly.
+- Full driver suite green this time: zcode-plugin smoke 61/61, plane check,
+  projections drift-clean.

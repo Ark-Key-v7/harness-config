@@ -1,5 +1,5 @@
 {
-  "_comment": "[HARNESS-ENFORCE] sdlc-factory guard plane — plugin scope is the ONLY hook scope executing beyond user-level (Package A V2). Fail-closed scripts; canonical law in the authoring repo.",
+  "_comment": "[HARNESS-ENFORCE] agentic-swe-factory guard plane — plugin scope is the ONLY hook scope executing beyond user-level (Package A V2). Fail-closed scripts; canonical law in the authoring repo.",
   "hooks": {
     "PreToolUse": [
       {

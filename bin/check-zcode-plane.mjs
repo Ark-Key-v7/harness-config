@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * check-zcode-plane.mjs — WP-F Phase 4 (Package A Z.13-D2): verifies the
- * sdlc-factory plane is installed and enabled on this machine's ZCode client.
+ * agentic-swe-factory plane is installed and enabled on this machine's ZCode client.
  * Run it from doctor context or standalone. Exit 0 = plane present;
  * exit 1 = absent/degraded (a governed repo on this machine is unguarded
  * on the ADE seat — V2).
@@ -35,7 +35,7 @@ try { JSON.parse(readFileSync(join(homedir(), ".zcode", "cli", "config.json"), "
   let wrapperOk = false;
   try {
     const m = JSON.parse(readFileSync(join(mk, ".zcode-plugin", "marketplace.json"), "utf8"));
-    wrapperOk = m.name === "factory-rig-local" && existsSync(join(mk, "sdlc-factory", ".zcode-plugin", "plugin.json"));
+    wrapperOk = m.name === "factory-rig-local" && existsSync(join(mk, "agentic-swe-factory", ".zcode-plugin", "plugin.json"));
   } catch {}
   if (wrapperOk) req("marketplace wrapper live (sources/zcode-marketplace → deployed projection)", true);
   else console.log(`WARN | marketplace wrapper missing/stale at ${mk} — plugin auto-update is down; rebuild per docs/PORTABILITY.md step 2d, then re-register the marketplace in the client`);
@@ -55,5 +55,5 @@ try { JSON.parse(readFileSync(join(homedir(), ".zcode", "cli", "config.json"), "
     else req("seat subagents in sync with deployed projection (Windows profile)", true);
   }
 }
-if (bad > 0) { console.error(`\nsdlc-factory plane DEGRADED (${bad} missing): governed repos are unguarded on the ADE seat (V2). Install per docs/PORTABILITY.md step 2c.`); process.exit(1); }
-console.log("\nsdlc-factory plane OK.");
+if (bad > 0) { console.error(`\nagentic-swe-factory plane DEGRADED (${bad} missing): governed repos are unguarded on the ADE seat (V2). Install per docs/PORTABILITY.md step 2c.`); process.exit(1); }
+console.log("\nagentic-swe-factory plane OK.");

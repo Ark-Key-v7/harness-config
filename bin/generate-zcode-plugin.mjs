@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * generate-zcode-plugin.mjs — WP-F Phase 4: emits projections/zcode-plugin/,
- * the source of truth for the `sdlc-factory` ZCode plugin (spec §6, Package A
+ * the source of truth for the `agentic-swe-factory` ZCode plugin (spec §6, Package A
  * Z.13 design ∪ WP-F payload).
  *
  * Generated, NEVER hand-edited (L5: authoring copy canonical). Same
@@ -49,7 +49,7 @@ for (const dir of [SKILLS_SRC, PROFILES_SRC, HOOKS_SRC]) {
 rmSync(OUT, { recursive: true, force: true });
 mkdirSync(OUT, { recursive: true });
 
-// --- skills/ (verbatim; the plugin loader namespaces them sdlc-factory:) ------
+// --- skills/ (verbatim; the plugin loader namespaces them agentic-swe-factory:) ------
 cpSync(SKILLS_SRC, join(OUT, "skills"), { recursive: true });
 
 // --- agents/ (profiles → subagent definitions) ------------------------------
@@ -103,7 +103,7 @@ for (const f of readdirSync(HOOKS_SRC)) cpSync(join(HOOKS_SRC, f), join(OUT, "ho
 // per Package A Z.2 docs (exit 2 deny); the in-client pass must confirm field
 // names before law cites this file.
 writeFileSync(join(OUT, "hooks", "hooks.json"), JSON.stringify({
-  _comment: "[HARNESS-ENFORCE] sdlc-factory guard plane — plugin scope is the ONLY hook scope executing beyond user-level (Package A V2). Fail-closed scripts; canonical law in the authoring repo.",
+  _comment: "[HARNESS-ENFORCE] agentic-swe-factory guard plane — plugin scope is the ONLY hook scope executing beyond user-level (Package A V2). Fail-closed scripts; canonical law in the authoring repo.",
   hooks: {
     PreToolUse: [
       { matcher: "Bash", hooks: [{ type: "command", command: "node ${ZCODE_PLUGIN_ROOT}/hooks/bash-guard.mjs" }] },
@@ -115,19 +115,19 @@ writeFileSync(join(OUT, "hooks", "hooks.json"), JSON.stringify({
 // --- manifest + README -----------------------------------------------------------
 mkdirSync(join(OUT, ".zcode-plugin"));
 writeFileSync(join(OUT, ".zcode-plugin", "plugin.json"), JSON.stringify({
-  name: "sdlc-factory",
-  version: "0.2.0",
+  name: "agentic-swe-factory",
+  version: "0.3.0",
   description: "The Software Factory on ZCode — a governed SDLC you run as skills, seats, and gates: onboard a project, scope it into specs and contracts, build under law, prove it works, review on a fresh model, ship through the gate. 31 skills, four seats, one operating map.",
   source_head: HEAD,
 }, null, 2) + "\n");
-writeFileSync(join(OUT, "README.md"), `# sdlc-factory — the Software Factory on ZCode
+writeFileSync(join(OUT, "README.md"), `# agentic-swe-factory — the Software Factory on ZCode
 
 This plugin is the factory as you install it on this host: the skills you
 invoke, the seats that execute them, and the fail-closed hooks that keep
 every session inside the law. The full story — every stage, seat, and gate —
 lives in the source repo's **docs/SDLC_FACTORY_OPERATING_MAP.md**.
 
-- \`skills/\` — the rig skill corpus (namespaced \`sdlc-factory:\` by the plugin loader): nine workflow skills you invoke by name, specialists that gate specific moments, and seat disciplines that fire automatically.
+- \`skills/\` — the rig skill corpus (namespaced \`agentic-swe-factory:\` by the plugin loader): nine workflow skills you invoke by name, specialists that gate specific moments, and seat disciplines that fire automatically.
 - \`agents/\` — the four seats (scout, planner, worker, reviewer) as subagent definitions; the seat decides which law is in force.
 - \`commands/\` — \`/rig-preflight\` (Refinery Stage-0 gate, operator- or ship-gate-invoked). Seats have no command: they are the native subagents in \`agents/\`.
 - \`hooks/\` — [HARNESS-ENFORCE] fail-closed guards: bash DANGER class + contract write-scope. Canonical law: the authoring repo's extensions + bins.
