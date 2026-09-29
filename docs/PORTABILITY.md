@@ -43,6 +43,12 @@ git clone ~/factory-rig/sources/harness-config ~/.pi/agent   # or clone from Git
 #     pull that ADDS a new skill — ln -sfn overwrites cleanly.
 #     Caveat: non-Pi hosts may ignore `disable-model-invocation` frontmatter;
 #     treat an auto-triggered rig skill there as a proposal, not authority.
+#     DISCOVERY PRECEDENCE (operator ruling 2026-09-29, §D.35 O5): the
+#     zcode-rig plugin (zcode-rig: namespace) is the CANONICAL rig skill
+#     surface on this seat wherever it is present; the ~/.agents/skills
+#     symlink remains the COVERAGE fallback for contexts where the plugin
+#     surface does not reach (observed: default task UIs) — never remove it
+#     while that gap (O4) stands.
 mkdir -p ~/.agents && ln -sfn ~/.pi/agent/skills ~/.agents/skills
 #     (WP-F: single-dir symlink supersedes the per-skill loop — a pull that
 #      adds a skill is covered with no re-run.)
