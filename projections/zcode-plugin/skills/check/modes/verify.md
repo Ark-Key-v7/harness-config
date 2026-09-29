@@ -108,6 +108,9 @@ Watch server/console logs for errors or warnings even when the UI "looks" fine.
 | API | the exact request line, the HTTP status, and the key fields of the body |
 | CLI / job | the exact command, its exit code, and the stdout/stderr excerpt |
 | Data layer | the query you ran against the live schema, and its result |
+| Fix / perf change | the before artifact alongside the after: the bug's reproduction (from the incident record, or re-driven on the base ref), or the baseline measurement for a metric move |
+
+A fix or a metric move is proven by the pair: when the before-state isn't already recorded (`/debug`'s reproduction, the perf audit's baseline), capture it first — drive the broken behavior or take the baseline on the base ref (the Step 0a worktree technique) — then the after. Cite both; the after alone proves only the current state, not the change.
 
 You cite these in the report. A behavior with no recorded evidence is not verified, however sure you are.
 

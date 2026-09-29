@@ -22,6 +22,10 @@ One line, imperative mood, ≤ 72 chars. Match the project's commit convention i
 - <key change, grouped logically, not a raw commit dump>
 - <key change>
 
+## Before / after
+
+<For a fix or a metric move: the pair, cited from the verify evidence ledger — the before artifact (repro screenshot/error, baseline number) and the after (fixed behavior, new number). Write "new surface — no before-state" when the change adds something that didn't exist.>
+
 ## How to test / verify
 
 - <the steps or commands a reviewer runs to confirm it works>
@@ -39,5 +43,6 @@ One line, imperative mood, ≤ 72 chars. Match the project's commit convention i
 Rules:
 - Group changes by intent, not by file or commit. A reviewer wants the story, not `git log`.
 - Keep "What" skimmable. A busy reviewer reads it first.
+- Never narrate a number you can't cite: every before/after figure traces to the verify evidence ledger or the recorded measurement.
 - If review findings exist for this change, reference accepted residual risks under "Risk & rollout".
 - Do not invent test steps. Derive them from the actual tests or the change's behaviour.

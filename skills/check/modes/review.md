@@ -89,6 +89,8 @@ If the user passed `uncommitted`, force `MODE=uncommitted` regardless of branch.
 
 De-duplicate the file list. Exclude lock files and generated output (`dist/`, `build/`, `.next/`, `coverage/`) from the count, but the subagent still sees the full diff.
 
+**Depth gate (diff size).** Sum added + deleted lines across the kept files only (`git diff --numstat` over the same range; skip the excluded paths). Over 1,000 changed lines: this is a **heavy review** — pass `HEAVY_DIFF: <N> changed lines — full scope coverage` in the spawn prompt and say "heavy review, <N> lines" in the relay tail. Large diffs are where rubric misses hide: on governed projects the optional rules-drift step becomes mandatory, and scope coverage is never trimmed to save effort. Precision over recall still governs each individual finding.
+
 If the change set is empty: stop and tell the engineer there's nothing to review (make a change first, or point /check review at a branch). Do not spawn.
 
 ### 3. Gather lightweight pointers (do NOT read heavy files here)
@@ -114,6 +116,7 @@ Resolve this skill's folder to an absolute path (you, the main agent, already re
   4. Recent spec paths (read if relevant), or inline the relevant spec text if your client gives subagents no file access
   5. The test signal (`configured` / `none-by-design` / `none-yet`) so it judges test adequacy correctly; never nag for tests on a `none-by-design` project
   6. Output path for findings: `docs/reviews/<date>-<branch>.md`
+  7. Depth flag: when the Step 2 depth gate marked the diff heavy, `HEAVY_DIFF: <N> changed lines — full scope coverage`
 
 ### 5. Relay the result
 
@@ -164,7 +167,7 @@ On a governed project (`.tmd/` present), the flow above IS the reviewer seat's p
 
 **Model families (WP-F D-5).** `Another model` / the contrast table resolve across the rig's provider seats: author-GLM → reviewer-Kimi, author-Kimi → reviewer-GLM, plus any configured OAuth family; never within-family, never a haiku-class reviewer. The fresh-seat requirement is satisfied on ZCode by spawning the review as an isolated subagent; on Pi, by a fresh reviewer seat.
 
-**Optional step: rules drift.** If the change touched file layout, conventions, or invariants, run `rules-drift-check` (reference it — L5) against the diff range and attach its advisory report.
+**Optional step: rules drift.** If the change touched file layout, conventions, or invariants, run `rules-drift-check` (reference it — L5) against the diff range and attach its advisory report. The Step 2 depth gate makes this step mandatory on a heavy diff.
 
 ---
 

@@ -116,7 +116,7 @@ writeFileSync(join(OUT, "hooks", "hooks.json"), JSON.stringify({
 mkdirSync(join(OUT, ".zcode-plugin"));
 writeFileSync(join(OUT, ".zcode-plugin", "plugin.json"), JSON.stringify({
   name: "zcode-rig",
-  version: "0.1.4",
+  version: "0.1.5",
   description: "Factory rig invocation + enforcement plane for ZCode: the workflow skills, seat agents, and fail-closed guard hooks (WP-F; generated — never hand-edit).",
   source_head: HEAD,
 }, null, 2) + "\n");

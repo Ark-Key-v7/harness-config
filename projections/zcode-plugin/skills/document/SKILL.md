@@ -6,7 +6,7 @@ metadata:
   author: "Agentic SWE Factory (ported: jsmastery-pro/skills, MIT)"
   class: procedural
   trigger_phrases: ["document", "write the PR body", "changelog entry", "release notes", "write the postmortem", "write it up"]
-  version: 1.0.0
+  version: 1.1.0
   provenance:
     source: jsmastery-pro/skills (skills/document @ 43b69e44c9ca905fe3a3418ccdf4102255e20d40)
     method: "byte-copy + enumerated edits; acceptance = source diff"

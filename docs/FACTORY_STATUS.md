@@ -534,3 +534,18 @@ After any rig change that alters the ledger above: update this file in the same 
   the Windows profile (byte-verified, user-created subagents untouched).
   check-zcode-plane gains a drift WARN. PORTABILITY 2e rewritten around it.
   Driver 61. Seats were drifted live when the check landed — synced green.
+
+## Rig-change 2026-09-29 — review-lane amendments (playbook intake)
+- /check review v2.1.0: depth gate — a diff over 1,000 changed lines
+  (locks/generated excluded) runs the heavy path: HEAVY_DIFF in the spawn
+  prompt, rules-drift mandatory on governed projects, "heavy review" named
+  in the relay tail. Source: software-factory playbook intake.
+- /check verify v2.1.0: evidence-ledger Fix/perf row — a fix or a metric
+  move is proven by the before/after pair; the before artifact comes from
+  the incident record or is re-driven on the base ref (Step 0a technique).
+  /document pr template v1.1.0 gains the Before/after section and the
+  never-narrate-an-uncited-number rule. Plugin 0.1.5.
+- Intake dispositions (no code): bounded auto-re-review loop held for a
+  design ruling; default-deny spend posture reserved as §D.10 design
+  guidance; Coder Agents' attribution argument recorded as §D.15 priority
+  evidence. SDD-course playbook: no gaps — canon superset.
