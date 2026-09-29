@@ -7,7 +7,7 @@ metadata:
   author: "Agentic SWE Factory (ported: jsmastery-pro/skills, MIT; absorbs pr-review v1.3.0)"
   class: procedural
   trigger_phrases: ["check", "verify this feature", "run the app and verify", "review this PR", "review the diff", "verify this contract", "stage 2 review", "adversarial review", "fresh eyes review"]
-  version: 2.1.0
+  version: 2.2.0
   provenance:
     source: "jsmastery-pro/skills (skills/check @ 43b69e44c9ca905fe3a3418ccdf4102255e20d40) + rig pr-review v1.3.0"
     method: "byte-copy + enumerated edits; acceptance = source diff (JSM files) + verbatim port (pr-review procedure)"

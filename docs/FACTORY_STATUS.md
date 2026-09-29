@@ -549,3 +549,15 @@ After any rig change that alters the ledger above: update this file in the same 
   design ruling; default-deny spend posture reserved as §D.10 design
   guidance; Coder Agents' attribution argument recorded as §D.15 priority
   evidence. SDD-course playbook: no gaps — canon superset.
+
+## Rig-change 2026-09-29 — bounded re-review loop (playbook intake, operator-ratified)
+- /check review v2.2.0 (governed section): a failing verdict with a task
+  contract routes work automatically — findings → /develop targeted → owed
+  validation + preflight → /check verify re-driven → fresh cross-family
+  re-review, E.4 iteration incremented. Cap: initial review + TWO automatic
+  re-reviews; still failing at iteration 3 → needs_human with the findings
+  summary. Scope-violation/Registry errors bypass the loop (a gate is never
+  looped around); the operator can halt any cycle; the reviewer stays
+  read-only across all cycles. Not §D.20 (production loop closure — the
+  deploy-monitoring ruling keeps its own trigger). Plugin 0.1.6. SDLC map
+  stage 8 carries the loop for the human reader.
