@@ -1,6 +1,6 @@
 {
   "name": "agentic-swe-factory",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "The Software Factory on ZCode — a governed SDLC you run as skills, seats, and gates: onboard a project, scope it into specs and contracts, build under law, prove it works, review on a fresh model, ship through the gate. 33 skills, four seats, one operating map.",
-  "source_head": "4faa3a1891f0ecc7e865571433f097f473efd571"
+  "source_head": "0559885e91965983afc93a92cd1d625818ff77d3"
 }

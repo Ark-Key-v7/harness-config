@@ -3,7 +3,7 @@ name: rig-change
 description: Execute the governed rig-change workflow when the operator has new or updated Factory Rig files (extensions, tools, drivers, templates, skills, projections). Use when the operator says they have new rig files, downloaded files to place, or asks to commit and sync harness-config.
 metadata:
   author: Agentic SWE Factory
-  version: 1.3.0
+  version: 1.4.0
   class: procedural
   trigger_phrases: ["new rig files", "place these files", "update the rig", "commit and sync harness-config", "I downloaded the new version", "canon updated", "new handbook version"]
 ---
@@ -112,6 +112,16 @@ read, write/edit (target files only), bash (git + node), ls, find.
   a fast-forward update (the agent never runs the push or the sync).
 - Report: files placed, driver results, commit SHA, the exact operator
   commands for push + sync. Then stop.
+- **Seat law handoff (CF46 law, 2026-09-29):** if the change-set touched
+  `templates/agents/profiles/` (or any path that lands in the plugin's
+  `agents/`), the handoff MUST add, after the push + sync commands:
+  `node ~/.pi/agent/bin/sync-zcode-seats.mjs` — the Windows profile is the
+  ONLY subagent surface the client reads, and the copier reads the DEPLOYED
+  clone, so it is meaningful only AFTER the pull (running it earlier updates
+  nothing and must never be reported as "seats updated"). The operator may
+  have installed the post-merge auto-sync hook (PORTABILITY 2e) — say so if
+  unsure, never assume the hook exists. `check-zcode-plane` WARNs on seat
+  drift until the sync runs.
 
 #### 4. Local Negative Constraints (Anti-Patterns)
 - NEVER run `git add -A` or `git add .` — stage exact paths only.

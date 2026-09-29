@@ -118,6 +118,14 @@ mkdir -p ~/.agents && ln -sfn ~/.pi/agent/skills ~/.agents/skills
 #     check-zcode-plane warns SEAT DRIFT). User-created subagent files in the
 #     same folder are left untouched by design. New sessions only: agent files
 #     load at session start.
+#     Optional auto-sync (machine-local, operator-installed once per machine):
+#       printf '#!/bin/sh\ngit diff --name-only ORIG_HEAD HEAD 2>/dev/null | grep -q "templates/agents/profiles" && node "$HOME/.pi/agent/bin/sync-zcode-seats.mjs" || true\n' >> ~/.pi/agent/.git/hooks/post-merge
+#       chmod +x ~/.pi/agent/.git/hooks/post-merge
+#     The hook calls the sanctioned copier after any pull that changed seat
+#     law — seats then never need a manual sync. It is machine-local git
+#     config (not tracked content); re-install it from this recipe on a new
+#     machine. The copier reads the DEPLOYED clone, so it is only meaningful
+#     AFTER the pull — running it between commit and pull updates nothing.
 #     Verified live: the four seats list in the Subagents tab and spawn via the
 #     Agent tool (subagent_type: worker etc.) inside WSL project sessions,
 #     self-reporting E.5 identity + C.1 skill set. The @ composer mention is

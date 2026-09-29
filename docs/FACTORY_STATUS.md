@@ -686,3 +686,16 @@ After any rig change that alters the ledger above: update this file in the same 
   Intake shelf note: _intake/v4.6/INTAKE-SHELF-NOTE.md.
 - Roster count references updated to 33 (README, operating map incl. selector rows 12-13
   + appendix rows, plugin description). Plugin 0.4.0; smoke pin 0.4.0.
+
+## Rig-change 2026-09-29 — seat-law handoff rule (operator finding)
+- Operator finding: seat upgrades never reached the Windows profile without a
+  manual reminder — the rig-change flow predated the §D.35 seat bridge and
+  had no sync step, and sync-zcode-seats copies from the DEPLOYED clone, so
+  running it pre-pull updates nothing (observed live during CF46: sync
+  reported success against stale projections).
+- rig-change v1.4.0: Step 7 gains the seat-law handoff — changesets touching
+  templates/agents/profiles/ must append the post-pull sync command to the
+  operator handoff and never report seats updated pre-pull.
+- PORTABILITY 2e gains the optional post-merge auto-sync hook (machine-local,
+  operator-installed; calls the sanctioned copier on pulls that touch seat
+  law). Plugin 0.4.1; smoke pin 0.4.1.
