@@ -82,6 +82,10 @@ invoke this skill.
 - Remind the operator: from the first commit onward,
   `node ~/.pi/agent/bin/preflight.mjs --staged` runs before every commit
   (Refinery Stage 0, canon §6.3).
+- Remind the operator: the autonomy dial (in-loop worker dispatch) is NOT
+  set at onboarding — it activates after the first ratified contracts, per
+  the protocol in `docs/FRESH_PROJECT_SOP.md` §Autonomy dial (doctor verdict
+  → operator-ratified `.agents/autonomy.json`, GitOps-committed).
 
 ##### Final step: seed the quality bar
 

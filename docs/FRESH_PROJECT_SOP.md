@@ -107,3 +107,20 @@ node ~/.pi/agent/bin/state-genesis.mjs --schema .agents/schemas/state.schema.yam
   ≤1500 total). Oversized work is decomposed in the plan, never mid-execution.
 - Headless operation: an unattended worker approaching the context ceiling
   escalates — it never compacts.
+
+## Autonomy dial — activation protocol (when ready, not at onboarding)
+
+After the first ratified contracts exist, the project may raise its autonomy
+dial (in-loop dispatch: the main session spawns worker subagents on ratified
+contracts, one per contract, parallel when sub-graphs are disjoint):
+
+1. `node ~/.pi/agent/bin/doctor.mjs` in the project — it computes the verdict
+   from deterministic checks; `--require N` tests a target. FAIL rows name
+   the exact deficiencies; fix those first.
+2. Commit `.agents/autonomy.json`:
+   `{ "dial": N (≤ doctor's verdict), "ratified_by": "operator",
+      "ratified_at": "<date>", "merge_queue_live": false, "notes": "" }`.
+3. Dial 1 = the agent stages, you merge. Demotion is instant, no gate.
+   Dial 2+ gates (auto-merge, watchdog) await §D.19 machinery.
+
+The dial lives in the project repo — it is project law, GitOps-committed.

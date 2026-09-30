@@ -715,3 +715,11 @@ After any rig change that alters the ledger above: update this file in the same 
 - Memory carrier clarification (no change): the verified-memory pipeline is
   integrated and live-by-design (compaction drafts → bin/memory-verify.mjs
   → QMD recall); it activates with the first governed project's sessions.
+
+## Rig-change 2026-09-29 — dial activation protocol placed in onboarding (operator finding)
+- Operator: "I will surely forget the activation dial protocol" — placed at
+  the point of need: FRESH_PROJECT_SOP gains the full Autonomy-dial protocol
+  (doctor verdict → operator-ratified .agents/autonomy.json, GitOps-committed,
+  dial semantics); project-onboard v1.3.0 Step 5 handoff reminds the operator
+  the dial is NOT set at onboarding but after first ratified contracts, with
+  the SOP pointer. Plugin 0.4.2; smoke pin 0.4.2.
