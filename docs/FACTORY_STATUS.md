@@ -723,3 +723,10 @@ After any rig change that alters the ledger above: update this file in the same 
   dial semantics); project-onboard v1.3.0 Step 5 handoff reminds the operator
   the dial is NOT set at onboarding but after first ratified contracts, with
   the SOP pointer. Plugin 0.4.2; smoke pin 0.4.2.
+
+## Rig-change 2026-09-29 — dial surfacing moved to a live project surface (operator finding)
+- Operator: FRESH_PROJECT_SOP is rig-side docs — never read inside a project
+  session; the dial reminder needed a live surface. scope replan mode 5c now
+  surfaces the dial option once (governed project + ratified contracts + no
+  .agents/autonomy.json), pointing at the SOP protocol; surface, never set.
+- Scope v1.3.1 (replan 5c).

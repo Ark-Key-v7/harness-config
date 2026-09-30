@@ -6,7 +6,7 @@ metadata:
   author: "Agentic SWE Factory (ported: jsmastery-pro/skills, MIT; absorbs spec-intake v2.1.0 + slice-plan v2.1.0)"
   class: procedural
   trigger_phrases: ["scope", "plan this", "slice this", "slice the PRD", "draft contracts", "draft a task contract", "new work", "I have an idea", "start a feature", "draft an intent", "write a PRD", "new intent", "plan the next slice", "what should I build next"]
-  version: 2.1.0
+  version: 2.1.1
   provenance:
     source: "jsmastery-pro/skills (skills/scope @ 43b69e44c9ca905fe3a3418ccdf4102255e20d40) + rig spec-intake v2.1.0 + rig slice-plan v2.1.0"
     method: "byte-copy + enumerated edits; acceptance = source diff (JSM files) + verbatim port (rig procedures)"
