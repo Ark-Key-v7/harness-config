@@ -12,7 +12,7 @@ human who saw evidence.
 
 ## What runs here
 
-- **33 skills.** Nine workflow skills a human invokes by name — `/scope`,
+- **34 skills.** Nine workflow skills a human invokes by name — `/scope`,
   `/develop`, `/check`, `/test`, `/debug`, and their siblings. Specialists
   that gate specific moments — `project-onboard`, `ship-gate`, `rig-change`,
   `tool-intake`, `investigate`, `ops-journal`. And disciplines bound to seats

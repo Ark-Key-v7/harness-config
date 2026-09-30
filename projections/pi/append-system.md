@@ -1,5 +1,5 @@
 <!-- GENERATED FILE — do not hand-edit (WP3, L4). Regenerate: node bin/generate-projections.mjs -->
-<!-- source_head: d47795f0932b58f415f08771119d7adb0eb1f687 -->
+<!-- source_head: bc43afe3366d8c98ad39be284145e304c730fce4 -->
 <!-- projection: pi/append-system.md -->
 
 # Factory projection — Pi append-system (stable part)
@@ -37,6 +37,7 @@ When a task matches a trigger, invoke the named skill — procedure follows, nev
 | audit | audit · audit this repo · bootstrap project context · write AGENTS.md · document this codebase · gap fill the docs · audit src folder |
 | brainstorming | let's brainstorm · think through this · scope this |
 | browser-testing-with-devtools | test in the browser · verify the UI · browser check · console errors · devtools |
+| challenge | challenge this · challenge the spec · what are we assuming · find the assumptions · stress-test the plan · before I ratify |
 | check | check · verify this feature · run the app and verify · review this PR · review the diff · verify this contract · stage 2 review · adversarial review · fresh eyes review |
 | code-simplification | simplify this · clean this up · too complex · reduce complexity · refactor for clarity |
 | context-budget | new session · output quality degraded · trim context · switching tasks · context setup |

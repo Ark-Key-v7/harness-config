@@ -746,3 +746,24 @@ After any rig change that alters the ledger above: update this file in the same 
   0.3.0 / "31 skills". Both now: ./agentic-swe-factory, 0.4.3, "33 skills".
 - Plugin 0.4.3; smoke pin 0.4.3. Historical FACTORY_STATUS entries keep
   their original names (a log is not rewritten).
+
+## Rig-change 2026-09-30 — NEW skill: challenge (rig-native, operator directive)
+- Operator brief: "an agent persona that finds/chooses the assumptions to
+  test and runs the research skill on its own reasoning loop" — the true
+  assistant alongside the operator. Rig-native design, no upstream source:
+  the factory's gates all check operator-directed work; challenge generates
+  the questions.
+- `challenge` (procedural, operator conversation, dispatches investigate):
+  chain position architect → challenge → ratify. Mines a draft spec's
+  claims into three classes (verified / assumed / unstated — unstated is
+  the target), ranks by blast radius × uncertainty, caps at 5 per run,
+  dispatches each as an /investigate brief with an explicit falsifier.
+  Verdicts: confirmed (calibrated strength) / refuted (halts downstream
+  tests, surfaces immediately) / untestable-at-budget (names what would
+  settle it). Appends "## Assumption verdicts" to the spec's rationale.md
+  only — never the spec body; refuted ⇒ "spec must change before
+  ratification". Dial-0 lawful (read-only inquiry; autonomy of inquiry is
+  a separate axis from autonomy of execution). Growth law: a missed
+  assumption class routes back into its own lens list via rig-change.
+- Skills 33 → 34; plugin 0.4.4; smoke pin 0.4.4; wrapper manifests synced
+  (34 skills, 0.4.4).
