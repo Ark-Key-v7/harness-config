@@ -206,7 +206,7 @@ TEMPLATE_VALUE_REQUIRED
 ## ZONE C — PRD-COMPILED ENTRIES (provenance mandatory)
 
 Every Zone C entry carries `derived_from:` (source artifact or external canon)
-and `last_reconciled:` (date/SHA). An entry without both is invalid law. When
+and `last_reconciled:` (date/SHA). For vendor and stack entries, `derived_from:` cites the authoritative instrument — the vendor's MCP server, a governing vendor skill, or official documentation — never operator assumption; assumptions are surfaced for validation, never codified as law. (CF46, 2026-09-29) An entry without both is invalid law. When
 an upstream source changes, grepping `derived_from` enumerates every downstream
 entry needing reconciliation; reconciliation is a governed change event
 (manifold PR), never a silent edit.

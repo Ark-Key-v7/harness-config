@@ -699,3 +699,19 @@ After any rig change that alters the ledger above: update this file in the same 
 - PORTABILITY 2e gains the optional post-merge auto-sync hook (machine-local,
   operator-installed; calls the sanctioned copier on pulls that touch seat
   law). Plugin 0.4.1; smoke pin 0.4.1.
+
+## Rig-change 2026-09-29 — parallel dispatch made visible + Zone C instrument rule (operator findings)
+- Operator finding: contract parallelism existed in machinery (Agent tool +
+  per-spawn write scope) but nowhere in the map. Operating map gains the
+  "Parallel dispatch (in-loop, dial-gated)" pattern: independent contracts,
+  one worker per contract, one message = parallel, dial >= 1 precondition,
+  §D.19 remains the out-of-loop trigger.
+- Operator finding: Zone C vendor/stack entries must cite authoritative
+  instruments, never operator assumption. All five manifold templates' ZONE C
+  provenance paragraph gains: derived_from cites the vendor's MCP server, a
+  governing vendor skill, or official documentation; assumptions are surfaced
+  for validation, never codified as law. Vendor instruments arrive via
+  tool-intake (§D.13 curated per-product MCP wiring).
+- Memory carrier clarification (no change): the verified-memory pipeline is
+  integrated and live-by-design (compaction drafts → bin/memory-verify.mjs
+  → QMD recall); it activates with the first governed project's sessions.
