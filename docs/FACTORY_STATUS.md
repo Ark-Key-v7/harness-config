@@ -730,3 +730,19 @@ After any rig change that alters the ledger above: update this file in the same 
   surfaces the dial option once (governed project + ratified contracts + no
   .agents/autonomy.json), pointing at the SOP protocol; surface, never set.
 - Scope v1.3.1 (replan 5c).
+
+## Rig-change 2026-09-30 — skill rename: research → investigate (operator finding)
+- Operator: "research" reads as market/data-collection research; the skill's
+  actual job is pre-build assumption-killing in service of a decision.
+  Renamed skills/research → skills/investigate (git mv, no content change to
+  the methodology); description, operating map (specialists list, selector
+  row 12, skill table), register skills row, README, scout invocation
+  binding [audit, investigate] all follow. Trigger phrases intentionally
+  KEEP "research this" / "look it up" — the invocation language doesn't
+  change, only the skill's name.
+- Wrapper-manifest loose ends fixed in the same pass (factory-rig machine
+  side, hand-built plumbing): .zcode-plugin manifest still pointed at
+  ./sdlc-factory (pre-rename source path) and both wrappers still said
+  0.3.0 / "31 skills". Both now: ./agentic-swe-factory, 0.4.3, "33 skills".
+- Plugin 0.4.3; smoke pin 0.4.3. Historical FACTORY_STATUS entries keep
+  their original names (a log is not rewritten).

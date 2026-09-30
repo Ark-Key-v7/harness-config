@@ -77,7 +77,7 @@ for (const f of ["scope", "architect", "develop", "check", "test", "document", "
     check("sync-zcode-seats: user-created subagents left untouched", out3.includes("my-own-agent.md") && existsSync(join(tmp3, "my-own-agent.md")));
   } catch (e) { check("sync-zcode-seats: runs clean", false); }
   rmSync(tmp3, { recursive: true, force: true });
-  check("plugin version is 0.4.2 (bump law §D.35 + dial protocol in onboarding)", manifest.version === "0.4.2");
+  check("plugin version is 0.4.3 (bump law §D.35 + rename investigate in skills)", manifest.version === "0.4.3");
 }
 
 

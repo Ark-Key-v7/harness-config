@@ -1,7 +1,7 @@
 ---
-name: research
+name: investigate
 allowed-tools: Read, Grep, Glob, Write, Agent
-description: "Run /research to answer a question with evidence before building: internal sources first (committed truth, memory, codebase), then Context7 for library docs, then web search as fallback. Produces a findings artifact with claims at calibrated strength, sources, and open gaps. No implementation while it runs."
+description: "Run /investigate to answer a question with evidence before building: internal sources first (committed truth, memory, codebase), then Context7 for library docs, then web search as fallback. Produces a findings artifact with claims at calibrated strength, sources, and open gaps. No implementation while it runs."
 metadata:
   author: "Agentic SWE Factory (CF46 intake: mechanisms from ClaudeFast v4.6 deep-researcher + session-types/research, re-voiced; source license unverified — near-zero verbatim text)"
   class: procedural

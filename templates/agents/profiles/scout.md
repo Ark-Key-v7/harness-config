@@ -25,7 +25,7 @@ tmd_read_path: [.tmd/rules.md, .tmd/gravity.md]
 write_scope: none
 read_scope: sub_graph+closure                 # the scout's assigned slice + declared dependency closure
 skill_bindings:
-  invocation: [audit, research]    # on operator request only — AI-context bootstrap; web/library research (CF46)
+  invocation: [audit, investigate]  # on operator request only — AI-context bootstrap; web/library investigation (CF46)
   disciplines: [context-budget, memory]
 ```
 
