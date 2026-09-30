@@ -49,7 +49,7 @@ file, guard inert).
 - Driver exit 0 → proceed. Exit 1 → STOP, report failures verbatim, never commit.
 
 ##### Step 5: ACT (external skills only: alignment pass)
-- For third-party SKILL.md files: purge anything violating Spine/canon (persona injection, instruction-file-boundary violations, non-deterministic validation). Map to the E.6 contract (template-skill wireframe). Document the adaptation in the skill folder.
+- For third-party SKILL.md files: purge anything violating Spine/canon (persona injection, instruction-file-boundary violations, non-deterministic validation). Map to the E.6 contract (skill-authoring wireframe). Document the adaptation in the skill folder.
 
 ##### Step 6: ACT (manifest entry)
 - Update the register row (status, pin, date) in GOVERNANCE_PLANE_SPEC.md via the rig-change skill — register edits are rig changes.

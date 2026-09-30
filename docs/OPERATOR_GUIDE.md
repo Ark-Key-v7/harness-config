@@ -80,7 +80,7 @@ edit a profile, next turn sees it.
 
 ## Skills available globally (post-v2.1)
 
-`rig-change` · `scope` · `architect` · `develop` · `check` · `test` · `document` · `sync` · `debug` (the nine, WP-F) · `project-onboard` · `ship-gate` · `tool-intake` · `template-skill`
+`rig-change` · `scope` · `architect` · `develop` · `check` · `test` · `document` · `sync` · `debug` (the nine, WP-F) · `project-onboard` · `ship-gate` · `tool-intake` · `skill-authoring`
 They live at repo-root `skills/` — discovered by Pi everywhere, seeded into
 projects at `.agents/skills/` by onboarding.
 

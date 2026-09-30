@@ -1,12 +1,13 @@
 ---
-name: template-skill
+name: skill-authoring
 description: Author or import rig skills. Use when authoring any new procedural loop for the rig, evolving an existing skill, or importing a foreign SKILL.md (conformance pass). Covers both skill classes, the folder anatomy, and the import protocol.
 metadata:
   author: Agentic SWE Factory
-  version: 2.0.0
+  version: 2.1.0
   class: procedural
   trigger_phrases: ["author a new skill", "create a skill", "new skill", "import this skill", "port this skill", "skill template", "update the skill format"]
-  v2.1: mode router + bake-off protocol (WP-D-5)
+  v2.1: mode router + bake-off protocol (WP-D-5); renamed from template-skill (2026-09-30, operator finding — the name read as a starter template, not the authoring authority)
+  harvests: ["skill-creator 0.1.0 (@zcode/skill-creator-plugin, MIT) — Test prompts / Reviewing the draft / Improving the skill, verbatim, as §4D"]
 disable-model-invocation: true
 ---
 
@@ -16,12 +17,12 @@ This skill has exactly two modes. Decide the mode first, say which one you are i
 
 | Mode | When | Path |
 |---|---|---|
-| **Author Mode** | Creating a skill from scratch — no external source | Sections 1–4 below (the original wireframe), plus §4A–§4C [v2] |
+| **Author Mode** | Creating a skill from scratch — no external source | Sections 1–4 below (the original wireframe), plus §4A–§4D [v2] |
 | **Import Mode** | Porting an existing skill from any external source | §5 Import Mode [v2] — copy + enumerated edits, never paraphrase |
 
 Author Mode is the default only when no source material exists. If the operator names or links an external skill, you are in Import Mode — do not "re-author" it; that is paraphrase under another name.
 
-### SKILL: template-skill (wireframe — Sovereign Skill Protocol)
+### SKILL: skill-authoring (wireframe — Sovereign Skill Protocol)
 
 #### 0. The Two Classes (choose BEFORE writing)
 
@@ -107,6 +108,56 @@ skills/<name>/
 ├── references/     # optional — progressive-disclosure docs, loaded on demand
 └── assets/         # optional — static resources
 Omit empty folders — an empty folder is noise (lint fails on it).
+
+#### 4D. Behavioral smoke — the test-prompt loop (Author Mode; VERBATIM harvest)
+
+> Verbatim from **skill-creator 0.1.0** (`@zcode/skill-creator-plugin`, MIT, ZCode
+> official plugin) — sections *Test prompts*, *Reviewing the draft*, *Improving the
+> skill*, harvested into Author Mode at WP-D-5 (2026-09-30). Rig mapping: rig skills
+> deploy via the rig chain, never hand-placed into a discovery directory, so "make
+> sure the draft is on disk where ZCode can discover it" reads as "regenerate
+> projections (or test from the working-tree skill path) before the run"; a "fresh
+> ZCode turn" is a fresh session that loads the draft skill and receives the prompt.
+> The text below is otherwise unmodified.
+
+##### Test prompts
+
+After writing the draft, come up with 2–3 realistic test prompts — the kind of thing a user would actually type, with concrete file paths, column names, casual phrasing, even typos. Share them with the user: "Here are a few cases I want to try. Anything to add or change?"
+
+Then run them: load the draft skill, hand the model the test prompt, and inspect what happens. ZCode does not currently spawn parallel evaluation subagents, so do this one prompt at a time and look at each result with the user.
+
+##### Reviewing the draft
+
+For each test prompt:
+
+1. Make sure the draft skill is on disk where ZCode can discover it (one of the directories listed above).
+2. In a fresh ZCode turn, give the test prompt to the model. Either let the description trigger the skill, or use `/skill <name> <prompt>` to force-load it.
+3. Look at the result *with the user*. Did the skill trigger? Did the output match what they wanted? Where did it go off the rails?
+
+Note both the *result* and the *trace*: if the skill caused the model to do a bunch of busywork (re-reading the same files, writing a throwaway script, going in circles), the skill is probably over-prescribing or unclear. That's a signal to cut, not to add more rules.
+
+##### Improving the skill
+
+This is the heart of the loop. You ran the test prompts, the user reviewed the outputs, now make the skill better.
+
+How to think about improvements:
+
+1. **Generalize from feedback.** You and the user are iterating on a handful of examples for speed, but the skill needs to work for inputs neither of you has seen. If a stubborn issue resists targeted edits, try a different framing or metaphor instead of layering more constraints. Fiddly overfit rules and oppressive MUSTs make the skill worse over time.
+
+2. **Keep the prompt lean.** Remove things that aren't pulling their weight. If the model is wasting tokens on busywork the skill encouraged, delete the offending guidance and see what happens.
+
+3. **Explain the why.** Today's models reason well when given context. Even if the user's feedback is terse or frustrated, work out what they actually want and transmit that understanding into the instructions. Reframing usually beats more enforcement.
+
+4. **Look for repeated work.** If every test run independently wrote the same helper script or took the same multi-step approach, bundle the script under `scripts/` and have the skill point at it. Write it once instead of having the model reinvent it every time.
+
+Then loop:
+
+1. Apply the improvements.
+2. Rerun the test prompts.
+3. Show the user the new outputs.
+4. Keep going until they're happy or further changes stop helping.
+
+**Wireframe integration:** in Author Mode, §4D runs AFTER the draft passes lint and drivers (§5 step 8's spirit, applied to authored skills) and BEFORE the rig-change landing (§5 step 9) — form first, then behavior, then the gate. A skill that fails its behavioral smoke goes back to the wireframe, not to the operator as a finished candidate.
 
 #### 5. IMPORT MODE — conforming a foreign SKILL.md
 

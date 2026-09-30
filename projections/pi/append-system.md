@@ -1,5 +1,5 @@
 <!-- GENERATED FILE — do not hand-edit (WP3, L4). Regenerate: node bin/generate-projections.mjs -->
-<!-- source_head: bc43afe3366d8c98ad39be284145e304c730fce4 -->
+<!-- source_head: ccc025184cc0d8b62457f97977550d1af04b0537 -->
 <!-- projection: pi/append-system.md -->
 
 # Factory projection — Pi append-system (stable part)
@@ -57,8 +57,8 @@ When a task matches a trigger, invoke the named skill — procedure follows, nev
 | scope | scope · plan this · slice this · slice the PRD · draft contracts · draft a task contract · new work · I have an idea · start a feature · draft an intent · write a PRD · new intent · plan the next slice · what should I build next |
 | security-and-hardening | security review · hardening · STRIDE · secrets hygiene · input handling |
 | ship-gate | ship it · open a PR · merge this · release · ready to ship |
+| skill-authoring | author a new skill · create a skill · new skill · import this skill · port this skill · skill template · update the skill format |
 | sync | sync · sync the docs · reconcile after merge · update the context files · close the loop on this change |
-| template-skill | author a new skill · create a skill · new skill · import this skill · port this skill · skill template · update the skill format |
 | test | test · write tests · test the change · cover the diff with tests · lock in the tests |
 | test-driven-development | tdd · write the test first · test driven |
 | to-questionnaire | to questionnaire · questionnaire for · ask the expert · handoff questions |

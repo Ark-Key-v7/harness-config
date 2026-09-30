@@ -38,7 +38,7 @@ Three mechanisms, by design:
 
 **Workflow skills (procedural — invoked by name or trigger phrase).** The nine: `/scope`, `/audit`, `/architect`, `/develop`, `/check`, `/test`, `/document`, `/sync`, `/debug`. 
 
-Plus the specialists: `project-onboard`, `ship-gate`, `rig-change`, `tool-intake`, `template-skill`, `interview-me`, `rules-drift-check`, `webperf-audit`, `to-questionnaire`, `investigate`, `challenge`, `ops-journal`.
+Plus the specialists: `project-onboard`, `ship-gate`, `rig-change`, `tool-intake`, `skill-authoring`, `interview-me`, `rules-drift-check`, `webperf-audit`, `to-questionnaire`, `investigate`, `challenge`, `ops-journal`.
 
 **Discipline skills (bound to seats — fire automatically, never invoked).** Worker: `test-driven-development`, `verification-before-completion`, `context-budget`, `api-and-interface-design`, `security-and-hardening`, `observability-and-instrumentation`, `documentation-and-adrs`, `code-simplification`, `ui-engineering`. Scout: `context-budget`. Planner: `interview-me` gate + task-quality rules. Reviewer: `verification-before-completion`, `rules-drift-check`, review reception rules. All seats: `memory`.
 
@@ -160,7 +160,7 @@ Concrete example, a new web app: you create the folder, `git init`, say *"onboar
 
 ## The Shelf: How Skills Enter the Factory
 
-Sources are pinned clones under `~/factory-rig/sources/_intake/`. Adoption is always `template-skill` Import Mode: byte-copy + enumerated edits, a bake-off against the incumbent, provenance in frontmatter — never a fresh fetch, never an ad-hoc install. Worked examples: **adopted** — `code-simplification` (verbatim + enumerated edits, worker-bound); **rejected** — the OpenSpec CLI (a second invocation plane; its change-tracking semantics were rebuilt rig-native instead as the archive merger). The shelf is a disposition record, not a to-do list.
+Sources are pinned clones under `~/factory-rig/sources/_intake/`. Adoption is always `skill-authoring` Import Mode: byte-copy + enumerated edits, a bake-off against the incumbent, provenance in frontmatter — never a fresh fetch, never an ad-hoc install. Worked examples: **adopted** — `code-simplification` (verbatim + enumerated edits, worker-bound); **rejected** — the OpenSpec CLI (a second invocation plane; its change-tracking semantics were rebuilt rig-native instead as the archive merger). The shelf is a disposition record, not a to-do list.
 
 ## The Operational Tool Stack
 
@@ -212,7 +212,7 @@ The nine workflow skills carry a seat-persona: one identity — the seat and the
 | ship-gate | procedural | invoked: "ship it" | operator + reviewer lane | Drives the change through preflight, PR, your review gate, merge, and rollback |
 | rig-change | procedural | invoked: "new rig files" | operator, always | The governed path for any change to the factory itself; your typed confirmation is the last step |
 | tool-intake | procedural | on a register trigger, or "adopt this tool" | operator ratifies | Pins, smoke-tests, and registers any new tool — the only door tools enter through |
-| template-skill | procedural | invoked: authoring or importing a skill | operator + rig-change | Defines the skill formats and the import/bake-off protocol |
+| skill-authoring | procedural | invoked: authoring or importing a skill | operator + rig-change | Defines the skill formats and the import/bake-off protocol; behavioral smoke via test prompts (harvested from skill-creator, MIT) |
 | interview-me | discipline | gates /scope's first step | planner | Extracts real intent one question at a time to high confidence |
 | rules-drift-check | procedural | before merge, or inside review | reviewer, advisory | Advises whether the context files still match the code (three drift classes only) |
 | webperf-audit | procedural | invoked: performance audit | operator · metric-honest | Severity-rated web-performance findings; never fabricates a metric |

@@ -50,7 +50,7 @@ Where canon law is enforced:
 
 - **Law changes by ratification only.** Changes to this repository go
   through `rig-change` — the agent drafts, the human turns the key. Tools
-  enter only through `tool-intake`; skills are adopted by `template-skill`
+  enter only through `tool-intake`; skills are adopted by `skill-authoring`
   import with a bake-off, never ad-hoc.
 - **No evidence, no done.** Every claim cites a freshly run artifact.
   A fabricated pass is the one output this factory must never produce.

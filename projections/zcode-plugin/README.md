@@ -12,4 +12,4 @@ lives in the source repo's **docs/SDLC_FACTORY_OPERATING_MAP.md**.
 
 Install (PORTABILITY step 2c): local marketplace path or git URL; one-time, client-level. The factory updates this plugin on every rig pull — never edit it here; it regenerates byte-identically from `harness-config` (`node bin/generate-zcode-plugin.mjs`). Onboarding never copies this plugin — projects get law only.
 
-Generated from source_head bc43afe3366d.
+Generated from source_head ccc025184cc0.

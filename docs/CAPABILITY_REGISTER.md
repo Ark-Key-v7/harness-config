@@ -53,7 +53,7 @@ skill, a driver proves it, the chain lands it.
 | Manifold linter | Header law (last_verified = SHA), Zone discipline, template/strict modes | `bin/lint-tmd.mjs` | `validation/tmd/` |
 | Profile linter | Sovereign profile format law (incl. substitution_bounds) | `bin/lint-profiles.mjs` | `validation/profiles/` |
 | Skill linter | SKILL.md format gate (E.6 frontmatter + format v2.0.0: metadata.class, When NOT to Use, no empty folders) | `bin/lint-skills.mjs` | `validation/skills/` |
-| Skills (global, post-v2.1; format v2.0.0) | rig-change · pr-review · tool-intake · template-skill · project-onboard · spec-intake · slice-plan · ship-gate (rig-native, WP-D-6 §7) · webperf-audit · rules-drift-check · to-questionnaire (procedural) · test-driven-development · verification-before-completion · systematic-debugging · brainstorming (discipline class, WP-D2 ports) · ui-engineering · performance-optimization · interview-me · context-budget (discipline class, WP-D-3 agent-skills ports; template-skill v2.0.0 is the two-class wireframe; WP-D-4 ports: rules-drift-check, to-questionnaire) · api-and-interface-design · security-and-hardening · observability-and-instrumentation · documentation-and-adrs (discipline class, WP-D-6 §3 promotions) · browser-testing-with-devtools (procedural, WP-D-6 §3.5 — actuation gated at §D.24) · investigate · ops-journal (procedural, CF46 intake 2026-09-29 — investigate is scout-bound; ops-journal covers remote-infra journaling, vendor-neutral) · challenge (procedural, rig-native 2026-09-30 — assumption audit: pre-ratification inquiry loop, appends verdicts to rationale.md) | repo-root `skills/` | `validation/skills/` |
+| Skills (global, post-v2.1; format v2.0.0) | rig-change · pr-review · tool-intake · skill-authoring · project-onboard · spec-intake · slice-plan · ship-gate (rig-native, WP-D-6 §7) · webperf-audit · rules-drift-check · to-questionnaire (procedural) · test-driven-development · verification-before-completion · systematic-debugging · brainstorming (discipline class, WP-D2 ports) · ui-engineering · performance-optimization · interview-me · context-budget (discipline class, WP-D-3 agent-skills ports; skill-authoring v2.1.0 is the two-class wireframe; WP-D-4 ports: rules-drift-check, to-questionnaire) · api-and-interface-design · security-and-hardening · observability-and-instrumentation · documentation-and-adrs (discipline class, WP-D-6 §3 promotions) · browser-testing-with-devtools (procedural, WP-D-6 §3.5 — actuation gated at §D.24) · investigate · ops-journal (procedural, CF46 intake 2026-09-29 — investigate is scout-bound; ops-journal covers remote-infra journaling, vendor-neutral) · challenge (procedural, rig-native 2026-09-30 — assumption audit: pre-ratification inquiry loop, appends verdicts to rationale.md) | repo-root `skills/` | `validation/skills/` |
 | Supply-chain floor (canon §6.6 M2/M3) | --ignore-scripts, exact pins, frozen lockfiles | `package-pins.json` + runbook gates | `validation/pi-layer/` |
 | Outer machine floor | semgrep, pr-agent tool installs + smoke fixtures (machine-local, not the repo) | `~/factory-rig/tools/` | outer `validation/` |
 | Spec chain linter (Phase 0) | Schema + back-reference/orphan check + provenance headers for specs/intent, prd, plans | `bin/lint-spec.mjs` + `templates/specs/` | `validation/spec-smoke/` |
@@ -299,7 +299,7 @@ standing rule below).
 - **Activation trigger:** NONE for this entry (disposition record). The
   `adopt-on-trigger` rows carry their own trigger: a slice's must_haves
   first demanding the domain.
-- **Prerequisites:** template-skill v2.0.0 (IMPORT MODE + bake-off
+- **Prerequisites:** skill-authoring v2.1.0 (IMPORT MODE + bake-off
   protocol) — the import protocol is the gate, no re-audit needed.
 - **Integration path:** n/a — this entry is the record; candidate imports
   land via rig-change, one skill per commit.
@@ -324,8 +324,10 @@ standing rule below).
 
 | OpenSpec CLI (@fission-ai/openspec): openspec init, /opsx:* commands, profiles, custom schemas | REJECTED | harness glue / second invocation plane (agent-skills commands ruling); its change semantics (living specs, deltas, archive merge) adopted rig-native in WP-E. The CLI is never installed — the merger is bin/archive-change.mjs |
 **Standing rule:** any future skill candidate from any source goes through
-template-skill Import Mode with a bake-off against the seat incumbent. The
+skill-authoring Import Mode with a bake-off against the seat incumbent. The
 shelf is a disposition record, not a to-do list.
+
+| skill-creator 0.1.0 (@zcode/skill-creator-plugin, ZCode official, MIT) | KEEP ONE + HARVEST | bake-off 2026-09-30 vs the skill-authoring incumbent: no governance, no class system, no import law — but its behavioral test-prompt loop (draft → 2–3 realistic prompts → fresh-turn run → result AND trace review → generalize/lean/why/bundle) is the rig's missing half (we tested form, never behavior). Harvested verbatim as skill-authoring §4D with a rig-mapping note; the creator's discovery-paths section is superseded by rig deployment law |
 
 ### §D.28 Brainstorming visual companion (shelved at WP-D-2 adoption)
 - **Sources location:** all shelved source material lives as SHA-pinned clones under `~/factory-rig/sources/_intake/<repo>/` (agent-skills @ 48cb1168, superpowers @ b36e082, cole @ fb2e876, matt @ 3cca18b). The register is the disposition record (git); `_intake/` is the physical shelf (machine state); adoption is Import Mode from the pinned clone, never a fresh fetch.
@@ -338,7 +340,7 @@ shelf is a disposition record, not a to-do list.
 - **Prerequisites:** tooling decision + smoke driver + L12 pin review of
   the companion server.
 - **Integration path:** re-adopt `visual-companion.md` from the local
-  superpowers clone into `skills/brainstorming/` via template-skill
+  superpowers clone into `skills/brainstorming/` via skill-authoring
   IMPORT MODE (transformation-spec method, WP-D build spec).
 
 ### §D.29 Agent-skills candidate shelf (WP-D-3 disposition record)
@@ -553,7 +555,7 @@ Reason class (WP-STACK §2.1): canon-pilot-gated (scheduled campaigns; need depl
 - **Status: Phase 4 LANDED 2026-09-21** — `projections/zcode-plugin/` (generated by `bin/generate-zcode-plugin.mjs`; determinism law; freshness = byte-identical regeneration in `validation/zcode-plugin-smoke/`, 35 checks incl. live guard behavior + rule-name parity with extensions/bash-guard.ts); guards are fail-closed Node scripts (unparseable payload = loud deny); `bin/check-zcode-plane.mjs` (doctor-side V2 check); PORTABILITY 2d + 2b amendment (single-dir discovery symlink). V-joint closures: V1 closed rig-side (fail-closed-in-script, driver-proven); V4 closed (plugin namespacing); V5 partially closed rig-side (capability-first prose + agents/ pin slots) — behavioral half UNVERIFIED pending in-client pass (hooks.json schema fields, model pinning, enablement state; also V6 wiki pass unchanged). Phase 5 closeout landed same day.
 - **Phase 2 LANDED 2026-09-21 (9/9 merges; one commit per skill)** — audit, scope (+spec-intake/slice-plan absorption), architect (+D-1 canon amendment), develop (+§1.2 subagent-posture amendment), check (+pr-review full port), test, document, sync, debug (+systematic-debugging absorption, parallel-run until trigger parity). All skills E.6-conformant, lint-skills VALID (35), skills-smoke 18/18, canon-register green. Phase 3 PENDING: completeness-gated retirements (spec-intake, slice-plan, pr-review; systematic-debugging after trigger parity) + §5 doc rewiring. Phases 4–5 PENDING (zcode-rig plugin, closeout).
 - **Activation trigger:** NONE — operator-ratified (2026-09-21); phases land via rig-change. (No watch row for upstream's "Hardening" skill: future candidates of any source are governed by the §D.30 standing rule; WP-F §12 D-6 resolved by dissolution.)
-- **Prerequisites:** template-skill v2.0.0 IMPORT MODE (the gate for every merge); lint-skills v2.1.0 (budgets apply to merged bodies); `bin/token-usage.mjs` (WP-F §7, cost-weight port) driver-smoked per seat before LIVE.
+- **Prerequisites:** skill-authoring v2.1.0 IMPORT MODE (the gate for every merge); lint-skills v2.1.0 (budgets apply to merged bodies); `bin/token-usage.mjs` (WP-F §7, cost-weight port) driver-smoked per seat before LIVE.
 - **Integration path:** Phase 2 merges → Phase 3 retirements → Phase 4 plugin (`projections/zcode-plugin/`, Package A Z.13 design ∪ WP-F §6; absorbs Z.12 open items V5/V6; renamed `zcode-rig` → `agentic-swe-factory` 2026-09-29) → Phase 5 closeout (FACTORY_STATUS + V-joint closure rows).
 - **Reason class:** operator decision gate — coherence + legibility gap closure (workflow connective tissue: living roadmap, repeatable audit, owed-decision gate, post-merge sync, cross-model review, human-runnable verify artifact); upstream MIT + pinned.
 

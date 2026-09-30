@@ -767,3 +767,26 @@ After any rig change that alters the ledger above: update this file in the same 
   assumption class routes back into its own lens list via rig-change.
 - Skills 33 → 34; plugin 0.4.4; smoke pin 0.4.4; wrapper manifests synced
   (34 skills, 0.4.4).
+
+## Rig-change 2026-09-30 — skill-authoring: rename + behavioral-smoke harvest (bake-off vs skill-creator)
+- Operator asked how template-skill compares to the official skill-creator
+  plugin (@zcode/skill-creator-plugin 0.1.0, MIT). Bake-off verdict (recorded
+  in the register's §D.27 disposition table): KEEP ONE + HARVEST — no
+  governance, no class system, no import law on their side, but their
+  behavioral test-prompt loop is the rig's missing half: we validated a new
+  skill's FORM (lint, drivers) and never its BEHAVIOR.
+- Renamed `template-skill` → `skill-authoring` (operator finding, same class
+  as research → investigate: the name read as a starter template, not the
+  authoring authority). All references follow: README, operating map
+  (specialists, intake-adoption prose, skill table row), operator guide,
+  register (skills row + §D prerequisites + standing rule), tool-intake,
+  lint-skills header comment, onboard-smoke expected-files list. Historical
+  FACTORY_STATUS entries keep original names.
+- VERBATIM harvest (MIT verified — license field in package.json): Test
+  prompts / Reviewing the draft / Improving the skill, inserted as
+  skill-authoring §4D "Behavioral smoke", with a rig-mapping note (rig
+  skills deploy via the chain, never hand-placed into discovery dirs; fresh
+  turn = fresh session). Author Mode path now §4A–§4D; wireframe integration
+  rule: lint/drivers → behavioral smoke → rig-change landing.
+- skill-authoring v2.0.0 → 2.1.0; plugin 0.4.5; smoke pin 0.4.5; wrapper
+  manifests synced.

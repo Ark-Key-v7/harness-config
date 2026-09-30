@@ -15,7 +15,7 @@
  *   a "When NOT to Use" section; empty folders inside a skill dir fail
  * - v2.0.0 amendment (WP-D-2): the Act → Observe → Exit body form is
  *   required for procedural skills only — the discipline-class skeleton
- *   (template-skill §4B) replaces sections 1–4, so discipline skills
+ *   (skill-authoring §4B) replaces sections 1–4, so discipline skills
  *   legitimately carry no ACT/OBSERVE/EXIT steps
  *
  * v2.1.0 (WP-F — tooling harvest, jsmastery-pro/skills @ 43b69e44):
