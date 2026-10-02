@@ -116,7 +116,7 @@ writeFileSync(join(OUT, "hooks", "hooks.json"), JSON.stringify({
 mkdirSync(join(OUT, ".zcode-plugin"));
 writeFileSync(join(OUT, ".zcode-plugin", "plugin.json"), JSON.stringify({
   name: "agentic-swe-factory",
-  version: "0.4.6",
+  version: "0.4.7",
   description: "The Software Factory on ZCode — a governed SDLC you run as skills, seats, and gates: onboard a project, scope it into specs and contracts, build under law, prove it works, review on a fresh model, ship through the gate. 35 skills, four seats, one operating map.",
   source_head: HEAD,
 }, null, 2) + "\n");

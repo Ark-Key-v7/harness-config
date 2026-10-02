@@ -830,3 +830,27 @@ After any rig change that alters the ledger above: update this file in the same 
   selector: both threads + the governed extension (criteria trace into
   contracts' must_haves; verification-before-completion binds at every
   tier). Docs-only change — no plugin content touched, no version bump.
+
+## Rig-change 2026-10-03 — skill-authoring v2.2.0: audit vs Claude's current authoring best practices (operator audit)
+- Operator requested a corpus + authoring-skill audit against Anthropic's
+  current skill-authoring best-practices doc. Verdict: structurally ahead
+  (deterministic validation > their feedback loops; byte budgets > their
+  500-line rule; references one level deep; capability-first defaults;
+  no time-sensitive content in law). Adopted the genuine increments:
+- §4E Degrees of freedom (re-voiced): one dial per step — low (narrow
+  bridge: pin commands, drivers live here) / medium (template with
+  parameters) / high (open field: goal + criteria, heuristics not scripts);
+  all-low ⇒ it's a script (move core to scripts/), all-high ⇒ question the
+  skill's existence. Author Mode path now §4A–§4E.
+- §4D smoke-on-pinned-model rule: seat-bound skills are smoke-tested under
+  the model class that runs them (scout's pinned class), never the session
+  model — our multi-model answer, sharper than "test on Haiku/Sonnet/Opus".
+- writing-for-agents gains Format hygiene: third-person descriptions; TOC
+  for references >100 lines; fully-qualified MCP tool names (Server:tool).
+- Skipped with reasons on record: gerund renaming (triggers run off
+  descriptions; 35 renames = churn), copyable checklists (drivers enforce
+  better), feedback loops (already stronger). Corpus audit found one
+  pre-existing flag: interview-me description 485 chars (only cap warning;
+  tighten at next touch).
+- skill-authoring v2.1.0 → 2.2.0; plugin 0.4.7; smoke pin 0.4.7; wrapper
+  manifests synced. No other skills touched.

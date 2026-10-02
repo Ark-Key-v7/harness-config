@@ -3,10 +3,11 @@ name: skill-authoring
 description: Author or import rig skills. Use when authoring any new procedural loop for the rig, evolving an existing skill, or importing a foreign SKILL.md (conformance pass). Covers both skill classes, the folder anatomy, and the import protocol.
 metadata:
   author: Agentic SWE Factory
-  version: 2.1.0
+  version: 2.2.0
   class: procedural
   trigger_phrases: ["author a new skill", "create a skill", "new skill", "import this skill", "port this skill", "skill template", "update the skill format"]
   v2.1: mode router + bake-off protocol (WP-D-5); renamed from template-skill (2026-09-30, operator finding — the name read as a starter template, not the authoring authority)
+  v2.2: degrees-of-freedom dial (§4E) + smoke-on-pinned-model rule (§4D); format-hygiene bullets in writing-for-agents (2026-10-03, audit vs Claude's current authoring best practices)
   harvests: ["skill-creator 0.1.0 (@zcode/skill-creator-plugin, MIT) — Test prompts / Reviewing the draft / Improving the skill, verbatim, as §4D"]
 disable-model-invocation: true
 ---
@@ -17,7 +18,7 @@ This skill has exactly two modes. Decide the mode first, say which one you are i
 
 | Mode | When | Path |
 |---|---|---|
-| **Author Mode** | Creating a skill from scratch — no external source | Sections 1–4 below (the original wireframe), plus §4A–§4D [v2] |
+| **Author Mode** | Creating a skill from scratch — no external source | Sections 1–4 below (the original wireframe), plus §4A–§4E [v2] |
 | **Import Mode** | Porting an existing skill from any external source | §5 Import Mode [v2] — copy + enumerated edits, never paraphrase |
 
 Author Mode is the default only when no source material exists. If the operator names or links an external skill, you are in Import Mode — do not "re-author" it; that is paraphrase under another name.
@@ -157,7 +158,17 @@ Then loop:
 3. Show the user the new outputs.
 4. Keep going until they're happy or further changes stop helping.
 
-**Wireframe integration:** in Author Mode, §4D runs AFTER the draft passes lint and drivers (§5 step 8's spirit, applied to authored skills) and BEFORE the rig-change landing (§5 step 9) — form first, then behavior, then the gate. A skill that fails its behavioral smoke goes back to the wireframe, not to the operator as a finished candidate.
+**Wireframe integration:** in Author Mode, §4D runs AFTER the draft passes lint and drivers (§5 step 8's spirit, applied to authored skills) and BEFORE the rig-change landing (§5 step 9) — form first, then behavior, then the gate. A skill that fails its behavioral smoke goes back to the wireframe, not to the operator as a finished candidate. **Smoke on the model class that will RUN the skill**: seat-bound skills execute on pinned cheap models, so a scout-bound skill is smoke-tested under the scout's model class, never the session model — what reads clearly at one capability tier can under-read at another.
+
+#### 4E. Degrees of freedom (Author Mode)
+
+Match each step's specificity to how fragile the operation is — one dial per step, not one per skill:
+
+- **Low — a narrow bridge.** Fragile, error-prone, order-critical: migrations, cut-overs, manifest edits. Pin it — exact command, exact sequence, "do not modify the command." Validators and deterministic drivers live here.
+- **Medium — a preferred pattern.** A right way with room to adapt: report shapes, config templates. Give the template with parameters and named defaults.
+- **High — an open field.** Many valid paths, context decides: code review, design conversation, triage classification. Give the goal and the acceptance criteria, then trust the model to route — heuristics, not scripts.
+
+The failure is symmetric: over-pinning an open field buries judgment under ceremony and trains busywork; under-pinning a narrow bridge is how migrations run out of order. While drafting, label each step low/medium/high in your head. A skill that comes out all-low is a script — move the deterministic core into `scripts/` (§4C) and keep the skill as the instructions around it; a skill that is all-high needs a reason to exist at all.
 
 #### 5. IMPORT MODE — conforming a foreign SKILL.md
 
