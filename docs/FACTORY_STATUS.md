@@ -818,3 +818,15 @@ After any rig change that alters the ledger above: update this file in the same 
   explicit (onboard first; its audit sweep subsumes the row's /audit
   opening). Two further test prompts listed for post-deploy fresh sessions.
 - Skills 34 → 35; plugin 0.4.6; smoke pin 0.4.6; wrapper manifests synced.
+
+## Map amendment 2026-09-30 — the two unifying threads stated (operator finding)
+- Comparison vs JSM's published workflow guides (lineage check, not a
+  bake-off — the nine ARE the WP-F merge): flow complete, nothing missing.
+  Gap found at map level only: the two threads that make the sequence cohere
+  — numbered acceptance criteria (architect → develop → check verify → test)
+  and workflow depth tiers (Prototype → Alpha → Beta → GA) — lived only
+  inside the skills; the map never stated them.
+- Added "The two unifying threads (JSM lineage, WP-F merge)" under the
+  selector: both threads + the governed extension (criteria trace into
+  contracts' must_haves; verification-before-completion binds at every
+  tier). Docs-only change — no plugin content touched, no version bump.

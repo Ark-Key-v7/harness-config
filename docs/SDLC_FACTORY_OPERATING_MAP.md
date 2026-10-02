@@ -72,6 +72,13 @@ Work arrives as situations, not stages. Find yours; the run chips carry the seat
 
 Rows 5 and 7 have no equivalent in other workflows: ours treats state as durable (the files hold the resume point) and findings as input (a review verdict routes work, it doesn't end it).
 
+### The two unifying threads (JSM lineage, WP-F merge)
+
+The sequence is held together by two threads that run through every stage — inherited with the nine-skill merge, so they live in the skills; stated here so the map answers for them:
+
+1. **Numbered acceptance criteria.** `/architect` writes them into the decision record; `/develop`'s check steps trace every build to them; `/check verify` runs them against the real running app; `/test` locks them in as the suite. A feature is never done in prose — it is done against its numbered criteria. On a governed project the criteria trace one step further: into the contracts' `must_haves`.
+2. **Workflow depth.** Set in `/scope`, overridable per run: Prototype → Alpha → Beta → GA. Each tier adds gates — Prototype is build plus self check; Alpha/Beta/GA pull in verify, test, review, document. Depth scales ceremony with stakes, not with enthusiasm — and `verification-before-completion` binds across all seats at every tier, so no tier allows an unevidenced "done".
+
 ### Parallel dispatch (in-loop, dial-gated)
 
 When the roadmap holds two or more **independent contracts** (disjoint sub-graphs — the gravity Registry is what makes "independent" checkable), the main session may dispatch them concurrently: multiple Agent-tool invocations in one message, `subagent_type: worker`, **one contract per worker** — each carries its contract, its sub-graph's read closure, and the manifold; write scope is fail-closed per spawn, so two workers cannot collide by construction. Preconditions: the contracts are ratified, and the project's autonomy dial is ≥ 1 (`node ~/.pi/agent/bin/doctor.mjs` computes the verdict; the dial is operator-ratified in `.agents/autonomy.json`). Governance on every dispatch: verification-before-completion binds in the worker, failures escalate `needs_human` with a proposed answer, review runs per contract with the bounded re-review loop, and merges stay at the gate. Out-of-loop dispatch (the factory scheduling workers unattended) is the deferred machinery — register §D.19, trigger: first dial-2 request.
