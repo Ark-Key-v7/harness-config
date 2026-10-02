@@ -1,5 +1,5 @@
 <!-- GENERATED FILE — do not hand-edit (WP3, L4). Regenerate: node bin/generate-projections.mjs -->
-<!-- source_head: ccc025184cc0d8b62457f97977550d1af04b0537 -->
+<!-- source_head: e63b80c7ea0a020abfe93217a12fa67a7175ad37 -->
 <!-- projection: pi/append-system.md -->
 
 # Factory projection — Pi append-system (stable part)
@@ -63,6 +63,7 @@ When a task matches a trigger, invoke the named skill — procedure follows, nev
 | test-driven-development | tdd · write the test first · test driven |
 | to-questionnaire | to questionnaire · questionnaire for · ask the expert · handoff questions |
 | tool-intake | install a tool · adopt this skill · a register trigger fired · add an MCP server · tool intake |
+| triage | triage these files · triage this folder · what do I have here · analyze these materials · best course of action · where do I start · someone sent me this project |
 | ui-engineering | build a component · new page · accessible UI · responsive layout · fix the UI · looks AI-generated |
 | verification-before-completion | verify before done · evidence before claims |
 | webperf-audit | performance audit · audit CWV · Core Web Vitals analysis · webperf audit · audit this page's performance |

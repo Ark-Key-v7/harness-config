@@ -790,3 +790,31 @@ After any rig change that alters the ledger above: update this file in the same 
   rule: lint/drivers → behavioral smoke → rig-change landing.
 - skill-authoring v2.0.0 → 2.1.0; plugin 0.4.5; smoke pin 0.4.5; wrapper
   manifests synced.
+
+## Rig-change 2026-09-30 — NEW skill: triage (rig-native; first skill through §4D behavioral smoke)
+- Operator brief: "upload external assets and ask the best course of action
+  before initiating the SDLC workflow" — the front door the selector table
+  assumed but did not contain. Authored through skill-authoring Author Mode
+  (procedural; investigate-shaped), per the new §4D order: form → behavior →
+  gate.
+- `triage` (procedural, operator conversation, dispatches scout): read-only
+  reception for externally-received material. Step 0 inventory; Step 1 three
+  read-only scout sweeps (codebase / claims documents / assets) with
+  inline-capability fallback; Step 2 reconcile code vs spec vs AGENTS.md
+  (assumed, never verified, until code-backed — investigate language law)
+  and classify to one selector row; Step 3 route recommendation. Owns one
+  artifact: TRIAGE.md at the material root, consumed by onboarding/audit.
+- The guardrail (anti-dispatcher): read-only + recommendation-only, runs
+  once before the funnel, never invokes the run it names. Distinct from the
+  rejected routing meta-dispatcher (which chose skills mid-pipeline); triage
+  classifies into the selector and stops.
+- Behavioral smoke (§4D, fresh-context subagent run on a synthetic inherited
+  fixture): verdict correct (row 3), guardrails held (single authorized
+  write, no self-started runs), no busywork. Trace surfaced 3 defects, all
+  fixed before landing: (1) selector pointer had no location — now names the
+  deployed map path, classify-by-resolution not memory; (2) no fallback
+  documented for sessions without dispatch — capability-first inline note
+  added; (3) chain ambiguity onboard-vs-audit — pre-governance rule made
+  explicit (onboard first; its audit sweep subsumes the row's /audit
+  opening). Two further test prompts listed for post-deploy fresh sessions.
+- Skills 34 → 35; plugin 0.4.6; smoke pin 0.4.6; wrapper manifests synced.
