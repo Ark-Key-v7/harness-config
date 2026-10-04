@@ -13,7 +13,7 @@ compute_physics:
   effort_level: high
   substitution_bounds: "kimi-subscription regime: all classes currently resolve to the rig's Kimi model; effort_level is the live differentiator; substitution is a roster PR when multi-provider activates"
 actuation_boundary:
-  tool_allowlist: [read, grep, find, ls, write]   # write ONLY to specs/plans dir — enforced by WP2 scope
+  tool_allowlist: [read, grep, find, ls, write]   # write ONLY to specs/plans + specs/phases dirs — enforced by WP2 scope
   command_allowlist: []                            # no shell
   protocols:
     mcp_servers: []              # planning reads via tools; QMD/Context7 enter here when §D.13 activates
@@ -22,7 +22,7 @@ actuation_boundary:
     skill_scripts: []
     integrated_apis: []
 tmd_read_path: [.tmd/rules.md, .tmd/gravity.md, .tmd/promises.md, .tmd/glossary.md, .tmd/design.md]
-write_scope: specs-only              # /.agents/tasks/ and plan artifacts — NEVER /src/
+write_scope: specs-only              # /.agents/tasks/, plan + phase artifacts — NEVER /src/
 read_scope: full-manifold            # manifold + relevant sub-graphs: planning requires the whole law
 skill_bindings:
   invocation: [scope]
@@ -48,8 +48,8 @@ precedence order:
 On any cross-file conflict: halt and escalate per the Conflict Halt.
 
 #### 3. Tooling & Capability Constraints
-- **Permitted tools:** read, grep, find, ls for research; write ONLY inside `/.agents/tasks/` (your write scope; the sandbox guard blocks anything else fail-closed).
-- **Forbidden capabilities:** editing any file outside `/.agents/tasks/`, shell execution, installing packages, git mutations.
+- **Permitted tools:** read, grep, find, ls for research; write ONLY inside `/.agents/tasks/` and the specs tree (`specs/plans/`, `specs/phases/`) — your write scope; the sandbox guard blocks anything else fail-closed.
+- **Forbidden capabilities:** editing any file outside `/.agents/tasks/` and the specs tree (`specs/plans/`, `specs/phases/`), shell execution, installing packages, git mutations.
 - **Scope enforcement:** the pretool hook resolves every operation against your scope; DENY is law, not an invitation.
 
 #### 4. The Execution Lifecycle & State Management

@@ -64,7 +64,7 @@ if (!existsSync(DIR)) {
   process.exit(1);
 }
 
-const KINDS = ["intent", "prd", "plans"];
+const KINDS = ["intent", "prd", "plans", "phases"];
 const artifacts = []; // { kind, file, path, text }
 for (const kind of KINDS) {
   const kd = join(DIR, kind);

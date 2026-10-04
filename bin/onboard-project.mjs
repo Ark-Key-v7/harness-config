@@ -86,7 +86,7 @@ for (const [, dst] of PLACEMENTS) if (existsSync(join(ROOT, dst))) collisions.pu
 for (const [, dst] of DIR_COPIES) {
   if (existsSync(join(ROOT, dst)) && readdirSync(join(ROOT, dst)).length > 0) collisions.push(`${dst}/ (non-empty)`);
 }
-for (const d of ["specs/intent", "specs/prd", "specs/plans"]) {
+for (const d of ["specs/intent", "specs/prd", "specs/plans", "specs/phases"]) {
   if (existsSync(join(ROOT, d)) && readdirSync(join(ROOT, d)).filter((f) => f !== ".gitkeep").length > 0) collisions.push(`${d}/ (non-empty)`);
 }
 if (collisions.length > 0) {
@@ -111,9 +111,9 @@ mkdirSync(join(ROOT, ".agents", "tasks"), { recursive: true });
 
 // --- Phase-0 chain scaffold (TCE v2.1 §2.A) -----------------------------------------
 // specs/ lives at project root, outside .tmd/ — work artifacts, not law.
-// The three templates stay in the rig (referenced, never duplicated); the
+// The templates stay in the rig (referenced, never duplicated); the
 // scaffold creates the empty chain segments only.
-for (const d of ["specs/intent", "specs/prd", "specs/plans"]) {
+for (const d of ["specs/intent", "specs/prd", "specs/plans", "specs/phases"]) {
   mkdirSync(join(ROOT, d), { recursive: true });
   const keep = join(ROOT, d, ".gitkeep");
   if (!existsSync(keep)) copyFileSync(join(RIG, "templates", "specs", ".gitkeep"), keep);
@@ -180,7 +180,7 @@ const head = readFileSync(join(ROOT, ".pi", "append-system.md"), "utf8").match(/
 
 console.log(`ONBOARDED (scaffolding): ${ROOT}`);
 console.log(`  placed: ${placed} items — AGENTS.md, .tmd/ (5), .pi/ (5), .agents/ (profiles, skills, schemas, tasks/)`);
-console.log(`  specs/: Phase-0 chain scaffolded (intent/ prd/ plans/ — TCE v2.1 §2.A); contracts now carry a trace: back-reference and a holdout: pointer (.agents/tasks/<contract_id>.holdout.md — authored at review time, builder-blind, read-denied to the worker seat)`);
+console.log(`  specs/: Phase-0 chain scaffolded (intent/ prd/ plans/ phases/ — TCE v2.1 §2.A); contracts now carry a trace: back-reference and a holdout: pointer (.agents/tasks/<contract_id>.holdout.md — authored at review time, builder-blind, read-denied to the worker seat)`);
 console.log(`  projection: append-system.md at source_head ${head}`);
 console.log(`  validation: lint-tmd (template mode) PASS, lint-mcp PASS`);
 

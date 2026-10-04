@@ -1,5 +1,5 @@
 <!-- GENERATED FILE — do not hand-edit (WP3, L4). Regenerate: node bin/generate-projections.mjs -->
-<!-- source_head: 1f0e8ef5afab357cbc6c69f2dec43bc4a40d83e5 -->
+<!-- source_head: 1350eed6fd7c5eba97f6fbc0958fca67a7a5eb0a -->
 <!-- projection: pi/append-system.md -->
 
 # Factory projection — Pi append-system (stable part)
@@ -54,8 +54,9 @@ When a task matches a trigger, invoke the named skill — procedure follows, nev
 | project-onboard | start a new project · onboard this project · set up the manifold · new repo setup |
 | rig-change | new rig files · place these files · update the rig · commit and sync harness-config · I downloaded the new version · canon updated · new handbook version |
 | rules-drift-check | check rules drift · rules file stale · AGENTS.md drift · fold into review pass |
-| scope | scope · plan this · slice this · slice the PRD · draft contracts · draft a task contract · new work · I have an idea · start a feature · draft an intent · write a PRD · new intent · plan the next slice · what should I build next |
+| scope | scope · plan this · slice this · slice the PRD · draft contracts · draft a task contract · new work · I have an idea · start a feature · draft an intent · write a PRD · new intent · plan the next slice · what should I build next · draft a phase spec · new phase · next phase |
 | security-and-hardening | security review · hardening · STRIDE · secrets hygiene · input handling |
+| sentinel | sentinel · run the sentinel · what needs attention · check product signals · scan for signals · decision brief · anything fire |
 | ship-gate | ship it · open a PR · merge this · release · ready to ship |
 | skill-authoring | author a new skill · create a skill · new skill · import this skill · port this skill · skill template · update the skill format |
 | sync | sync · sync the docs · reconcile after merge · update the context files · close the loop on this change |

@@ -1,12 +1,12 @@
 ---
 name: scope
 allowed-tools: Bash, Read, Grep, Glob, Write, Edit, Agent, AskUserQuestion
-description: "Run /scope to turn a product idea into a living, coarse scope in docs/scope/ and keep it current: plan a new product, plan the next slice, enroll one named feature, or run with no argument to reconcile after shipping and queue what is next. Seeds WHAT to build; /architect designs, /develop builds."
+description: "Run /scope to turn a product idea into a living, coarse scope in docs/scope/ and keep it current: plan a new product, plan the next slice, enroll one named feature, or run with no argument to reconcile after shipping and queue what is next. Seeds WHAT to build; /architect designs, /develop builds. Product arcs run as phases: ordered milestones, each carried by a just-in-time phase spec this skill drafts and consumes."
 metadata:
   author: "Agentic SWE Factory (ported: jsmastery-pro/skills, MIT; absorbs spec-intake v2.1.0 + slice-plan v2.1.0)"
   class: procedural
-  trigger_phrases: ["scope", "plan this", "slice this", "slice the PRD", "draft contracts", "draft a task contract", "new work", "I have an idea", "start a feature", "draft an intent", "write a PRD", "new intent", "plan the next slice", "what should I build next"]
-  version: 2.1.1
+  trigger_phrases: ["scope", "plan this", "slice this", "slice the PRD", "draft contracts", "draft a task contract", "new work", "I have an idea", "start a feature", "draft an intent", "write a PRD", "new intent", "plan the next slice", "what should I build next", "draft a phase spec", "new phase", "next phase"]
+  version: 2.2.0
   provenance:
     source: "jsmastery-pro/skills (skills/scope @ 43b69e44c9ca905fe3a3418ccdf4102255e20d40) + rig spec-intake v2.1.0 + rig slice-plan v2.1.0"
     method: "byte-copy + enumerated edits; acceptance = source diff (JSM files) + verbatim port (rig procedures)"
@@ -16,6 +16,7 @@ metadata:
       - "E3 (SKILL.md rig bindings): workflow tier header maps to contract tier: field (WP-F D-2); Prototype/Alpha/Beta/GA tags preserved"
       - "E4 (SKILL.md rig bindings): never edit .tmd/ law; missing sub_graph is a stop-and-route"
       - "E5 (SKILL.md rig bindings): roadmap header records the tier project default; per-feature tags become contract tiers"
+      - "E6 (SKILL.md rig bindings, 2026-10-03): phase milestones — product arcs and brownfield waves run as phases with just-in-time phase specs (templates/specs/phase.md); single-feature work skips the phase form"
     additions:
       - "E.6 frontmatter metadata block (author, class, trigger_phrases incl. absorbed spec-intake/slice-plan trigger surfaces, version, provenance)"
       - "When NOT to Use section (format v2.0.0 requirement)"
@@ -130,6 +131,7 @@ Do not read the other mode files unless the inferred behavior changes. All commo
 - **Status vocabulary bridge (E2).** Roadmap statuses stay JSM-canonical (`planned/in-progress/done/existing/dropped`); rig chain artifacts carry their own approval states; `/sync` + `archive-change.mjs` reconcile both against what shipped.
 - **Tier ↔ contract (E3/E5).** The scope header `**Workflow:**` line is the project default; a feature's `· tier` tag overrides it; both land as the contract's `tier:` field at slicing (WP-F D-2: ratified at slice approval, inviolable after, floor never tier-conditional).
 - **Law is untouchable (E4).** Never create or edit `.tmd/` files. Slices name registered sub_graphs; a missing sub_graph is a stop-and-route (fix gravity via the Amendment Protocol), never an edit.
+- **Phase milestones (E6).** Product arcs and brownfield development waves run as phases: ordered milestones, each carried by a just-in-time **phase spec** (`templates/specs/phase.md`; the project's own placement convention wins, e.g. `docs/specs/`) — goal, build, constraints, numbered acceptance checks, explicit not-in-this-phase. The phase spec is that milestone's bundled intent, PRD, and decision input: it feeds the chain, and slicing decomposes it into contracts when the milestone is too big for one. Write the phase spec just before its phase starts, never all upfront. A single small feature skips the phase form and runs the chain directly.
 
 ## Procedural form (ACT → OBSERVE → EXIT)
 

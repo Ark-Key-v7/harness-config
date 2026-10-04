@@ -125,6 +125,17 @@ The walk at a glance:
 | 10. ARCHIVE | living truth updated | merged domain spec + dated archive |
 | 11. MAINTAIN | incidents raise the floor | incident record + ratcheted floor |
 
+**The chain runs per milestone.** Product-shaped work decomposes into
+**phases** — ordered milestones, each carried by a just-in-time **phase
+spec** (`templates/specs/phase.md`; projects place them per their own
+convention, e.g. `docs/specs/`): goal, build, constraints, numbered
+acceptance checks, explicit not-in-this-phase. The phase spec is that
+milestone's bundled intent, PRD, and decision input — it feeds the chain
+rather than replacing it, and slices mode decomposes it into contracts
+when the milestone is too big for one. Written just before the phase
+starts, never all upfront. Brownfield continuation waves receive new
+phase specs; single-feature work skips the phase form entirely.
+
 Each stage below: **purpose → produces → seat → skills → gate → mistakes.**
 
 ### 1. DEFINE — intent
